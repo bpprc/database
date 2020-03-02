@@ -1,0 +1,55 @@
+{% extends "database/base.html" %}
+{% block content %}
+
+
+		<br>
+		<b>General Statistics</b>
+
+		<table class="table">
+			<thead>
+				<tr>
+						<th>No</th>
+						<th>Category</th>
+						<th>Total Count</th>
+						<th>Holotype Count</th>
+				</tr>
+
+      {% for key,value in category_count.items %}
+
+					<tr>
+						<td> {{ forloop.counter }} </td>
+						<td> {{ key }} </td>
+						<td> {{ value.0 }} </td>
+						<td> {{ value.1 }} </td>
+					</tr>
+    {% endfor %}
+			<thead>
+		<table>
+	<br>
+	<br>
+			<!DOCTYPE html>
+			<html lang="en">
+			<head>
+			  <link rel="stylesheet" type="text/css" href="https://cdn.bokeh.org/bokeh/release/bokeh-1.4.0.min.css" />
+			  <link rel="stylesheet" type="text/css" href="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-1.4.0.min.css" />
+			  <link rel="stylesheet" type="text/css" href="https://cdn.bokeh.org/bokeh/release/bokeh-tables-1.4.0.min.css" />
+
+			  <style>
+			  </style>
+
+			  <title>Bokeh</title>
+			</head>
+			<body>
+			    <h1>  </h1>
+			      {{div| safe }}
+			</body>
+
+			  <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-1.4.0.min.js"> </script>
+			  <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-1.4.0.min.js"> </script>
+			  <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-1.4.0.min.js" > </script>
+			  <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-1.4.0.min.js"> </script>
+			  {{script | safe }}
+
+			</html>
+
+{% endblock content %}

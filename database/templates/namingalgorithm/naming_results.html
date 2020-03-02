@@ -1,0 +1,26 @@
+{% extends "database/base.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+
+  <body>
+  <td class="pgm_list" width="100%"><h2>Naming Algorithm </h2></td>
+  <br>
+  </body>
+  </html>
+
+  <form action="{% url 'naming_algorithm' %}" method="post">
+    {% csrf_token %}
+    <br>
+    <br>
+    <h4> The predicted name of the sequence: {{ context.predicted_name }} </h4> <br>
+    <h4> Do you want to add the predicted name {{ context.predicted_name }} to the database ? </h4> <br>
+    <h4>The percentage identity {{ context.percentage_identity }} to the database sequence </h4> <br>
+    <input type="submit" name="{{ context.predicted_name }}" value="Yes"> &nbsp &nbsp &nbsp
+    <input type="submit" name="No" value="No">
+    <br>
+  </form>
+</head>
+
+{% endblock content %}

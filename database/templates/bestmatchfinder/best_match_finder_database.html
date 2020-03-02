@@ -1,0 +1,42 @@
+{% extends "database/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
+{% endblock extrahead %}
+
+{% block content %}
+{% load static %}
+
+  <body>
+
+  <br></br>
+  <br></br>
+  <br></br>
+  
+  <td class="pgm_list" width="100%"><h2>Search Database</h2></td>
+  <br>
+  <form action="/bestmatchfinder_database_sequence_run/" method="post">
+  <div class="g-recaptcha" data-sitekey="6Leqs7UUAAAAAKB3sQiwP-s09lzzu6OGXNyAB4nJ"></div>
+
+    {% csrf_token %}
+    {{ form |crispy }}
+    <button type="submit" class="btn btn-secondary"  >Submit</button>
+  </form>
+
+  </body>
+  </html>
+
+
+{% endblock content %}
+
+{% block extrajs %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#id_protein_id1').chosen();
+    $('#id_protein_id2').chosen();
+  });
+
+</script>
+{% endblock %}

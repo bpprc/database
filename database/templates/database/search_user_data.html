@@ -1,0 +1,126 @@
+{% extends "database/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<head>
+	<title>Home</title>
+	<meta Charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="{% static 'database/cc.css' %}">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
+	</head>
+	<br> </br>
+	<br> </br>
+	<br> </br>
+				<body>
+					<div class="container">
+						<br>
+							<a href="{% url 'clear_session_database' %}" > Clear Session </a>
+							<br>
+								<form action="" id="analysis_form" name="database_id" method="POST">
+  {% csrf_token %}
+
+									<table border="3" class="parent" cellspacing="0" width="80%">
+										<thead>
+											<tr>
+												<th>
+													<a href="{% url 'clear_session_database' %}"  class="glyphicon glyphicon-trash"></a>
+												</th>
+												<th>Name </th>
+												<th>Oldname </th>
+												<th>Accession Number </th>
+											</tr>
+        {% for protein in proteins %}
+        {% if protein.name in selected_groups %}
+
+											<tr>
+												<td>
+													<a href="/remove_cart/{{ protein.id }}"
+
+														<span class="glyphicon glyphicon-trash"></span>
+													</td>
+													<td>{{ protein.name }}</td>
+													<td>{{ protein.oldname }}</td>
+													<td>
+														<a href=" https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a>
+													</td>
+												</tr>
+        {% endif %}
+        {% endfor %}
+
+
+											</thead>
+										</table>
+									</form>
+									<br>
+										<br>
+											<br>
+												<b>You uploaded the below sequences </b>
+												<br>
+													<br>
+														<a href="{% url 'clear_session_user_data' %}" > Clear Session </a>
+														<br>
+															<table border="3" class="parent" cellspacing="0" width="65%">
+																<thead>
+																	<tr>
+																		<th>
+																			<a href="{% url 'clear_session_user_data' %}"  class="glyphicon glyphicon-trash"></a>
+																		</th>
+																		<th>Name </th>
+																		<th>Oldname </th>
+																	</tr>
+          {% for record in userdata %}
+
+																	<tr>
+																		<td>
+																			<a href="{% url 'user_data_remove' record.id %}"
+
+																				<span class="glyphicon glyphicon-trash"></span>
+																			</td>
+																			<td>{{ record.name }}</td>
+																			<td>-</td>
+																		</tr>
+          {% endfor %}
+
+
+																	</thead>
+																</table>
+																<a href="{% url 'download_sequences' %}"> Download sequences </a>
+																<br>
+																	<br>
+																		<b>Append your sequences to the analysis</b>
+																		<form action="{% url 'user_data' %}" method="post">
+      {% csrf_token %}
+
+																			<textarea name="fulltextarea" placeholder="Paste fasta sequence" rows="20" cols="85"></textarea>
+																			<br/>
+																			<br/>
+																				<button type="submit" class="btn btn-secondary"> Add to Cart </button>
+																			</form>
+
+											<br/>
+											<form action="" method="post">
+											{% csrf_token %}
+											<br>
+											<br>
+											<input type="submit" class="btn btn-secondary" value="Submit to Cluster analysis"/>
+											<br>
+											<br>
+											</form>
+
+{% endblock content %}
+																		</body>
+																	</html>
+
+{% block extrajs %}
+
+
+
+																	<script>
+  $("#analysis_form").change(function() {
+    $(".xxx1:checkbox").attr('checked', this.checked);
+  });
+</script>
+
+{% endblock %}

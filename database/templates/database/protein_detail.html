@@ -1,0 +1,49 @@
+{% extends "database/base.html" %}
+{% load static %}
+{% load render_table from django_tables2 %}
+
+
+{% block content %}
+
+
+{% for protein in proteins %}
+
+<p><strong>Accession :</strong> &nbsp; {{ protein.accession }} </p>
+
+<p><strong>Length: </strong> &nbsp; {{ protein.get_sequence_length }} </p>
+
+<div class="column" style="word-break: break-all;"> <p> <strong> Sequence:  </strong> &nbsp; {{ protein.fastasequence|upper }} </p> </div>
+
+<p><strong> Aromaticity : </strong> {{ protein.get_sequence_aromaticity }} &nbsp; </p>
+<p><strong> Predicted Molecular Weight : </strong> {{ protein.get_sequence_molecular_weight }} &nbsp; </p>
+<p><strong> Sequence Instability Index : </strong> {{ protein.get_sequence_instability_index }} &nbsp;  </p>
+<p><strong> Sequence Isoelectric Point : </strong> {{ protein.get_sequence_isoelectric_point }} &nbsp; </p>
+
+
+{% endfor %}
+<br>
+<br>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://cdn.bokeh.org/bokeh/release/bokeh-1.4.0.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-1.4.0.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.bokeh.org/bokeh/release/bokeh-tables-1.4.0.min.css" />
+
+  <style>
+  </style>
+
+  <title>Bokeh</title>
+</head>
+<body>
+    <strong> Aminoacid composition </strong>
+      {{div| safe }}
+</body>
+
+  <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-1.4.0.min.js"> </script>
+  <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-1.4.0.min.js"> </script>
+  <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-1.4.0.min.js" > </script>
+  <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-1.4.0.min.js"> </script>
+  {{script | safe }}
+
+</html>
+
+{% endblock %}

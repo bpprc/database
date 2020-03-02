@@ -1,0 +1,206 @@
+[04/Feb/2020 14:59:03] ERROR [bestmatchfinder.align:33] ########################################
+# Program: needle
+# Rundate: Tue  4 Feb 2020 14:59:03
+# Commandline: needle
+#    -datafile EBLOSUM62
+#    -auto
+#    -asequence /var/folders/7q/fm4_f1n12rgdkm2_hm4bwgzw0000gq/T/tmpahffqx5u
+#    -bsequence /Users/suresh/development/january/database/media/fastasequence_files/fastaApp1Aa1_eMHFWSB
+#    -sprotein1
+#    -sprotein2
+#    -auto
+#    -stdout
+# Align_format: srspair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: LO018304.1
+# 2: App1Aa1
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 2088
+# Identity:       0/2088 ( 0.0%)
+# Similarity:     0/2088 ( 0.0%)
+# Gaps:        2088/2088 (100.0%)
+# Score: 0.0
+# 
+#
+#=======================================
+
+LO018304.1         1 TGGAAAATGAAACAGCCCTGGGAGCAGGGGTAGCGCGTCCTCCCTCGCTA     50
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1        51 AGAAGTAATAACCAAGAAGTAACAACCAACAAGTAACAGTTGACAGTCAA    100
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       101 TGGTTAAGTACAGCCGAAATCAAGAAAAATTAACAAAAAAGTGATAAGCA    150
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       151 TTTCTGCTAAATTTGACATATACCAGTTATGTCTTGTAAACCCAGAGTTA    200
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       201 ATTAGAAATTCCTGAGTTTGATCAAATAAAGGATATTGTTGACGGGTTCC    250
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       251 CTTTAGAATAATAAATAGGTAGTTATGCAGAAATTGGAAGCTAATATGAC    300
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       301 GGAAAGCAATTCTCGCAGACCTGTTTCTCTCTCAGATAGAGAAGTGCAAG    350
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       351 TCGTAGAGTTAGTGGCTAGTGGATTAACCAATCAAGAAATTTCAGAAAAA    400
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       401 CTGGAAATTAGTAAGCGTACCGTTGACAATCATATTAGTAACATTCTAAC    450
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       451 AAAAACTGCCACCGATAACCGAGTTTCATTAGTGCGTTGGGCCTTGCAAT    500
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       501 GGGGCAAGGTTTGTCTGGATGATATTAATTGCTGTTCTCTACCAGTTGTG    550
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       551 ACCACTGAGGATGAAACAGAAGTGATCATTTCTTCTTCAGTAGAATAGCA    600
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       601 GAAAAAAATAGGTTAATTTTGAATGCAAACAGTTAAACAAAAACAAAAAC    650
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       651 TTCGCTATCAATTTCGCTGTCCGAAACTTCCCTTAACCGTTTATCGGGAA    700
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       701 GTTGCTGCCCATTTACGACAGGTGGAAGGAGTGGACACGGGGTTAATTGC    750
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       751 AACTCACATTAGTCACGATCAAATCCCGCCAGAATTTGATTATACCCAAA    800
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       801 GTCAAGTGGGTAGTTTATGGATTGAATATGATCACAGCCAAAATCCAGAA    850
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       851 ATTCGTGAACAGATTGATCAAATTTTGGCGTATTATAATGATCGTTATGG    900
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       901 CGTCTGGGAAACAATCGATCCGCCACAGGACTAACGATTAATTGAGAAAC    950
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1       951 CAATGGAACTAATTAAAGCATTACGAGGAACACGGGATATTCTGCCTGAT   1000
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1001 GAAATAGGATATTGGCAATGGGTTGAATCTATTGCTAGGGATGTTTTATT   1050
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1051 TAAGGCAAATTATCAAGAAATTCGCACCCCAATTTTTGAACAAACGGCTT   1100
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1101 TATTTGAACGGGGTATCGGGGAAGCGACGGATGTTGTCGGGAAAGAAATG   1150
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1151 TATACCTTTGTTGACCGAGGTGAACGCTCTGTTACCCTGCGTCCAGAGGG   1200
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1201 AACAGCCGGAGTCGTTCGCAGCTTTATTGAAAACAAACTCCACGCCACAT   1250
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1251 CTGGGGCGCAACGGTTATGGTATACTGGGCCGATGTTTCGCTATGAACGC   1300
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1301 CCCCAAGCCGGACGTCAACGACAGTTTCATCAAATTGGGGTTGAGGTGTT   1350
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1351 AGGAAGTCGGGATGCTAGGGCTGATGTGGAAGTGATTGCGATCGCCACAA   1400
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1401 ATTTATTAAAAACCTTGGGATTAAAGAATTTAAACCTTAACTTAAATTCC   1450
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1451 GTCGGAAATTCAAGCGATCGCCAAGCCTATCGTCAAGCTTTAGTTGATTA   1500
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1501 TTTAAGCCAATATCAAGACGAATTAGATCCCGATTCTCAGGATCGATTAT   1550
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1551 CCCGAAATCCCTTAAGAATTTTAGATAGTAAACACCCACGCACCCAAGAA   1600
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1601 ATTGTTCAGGATGCTCCGAGTATTTTAGAATATTTAGGAGATGATTCCCG   1650
+                                                                       
+App1Aa1            0 --------------------------------------------------      0
+
+LO018304.1      1651 CGCTCATTTTGAACAGGTTAAACAGCTATT--------------------   1680
+                                                                       
+App1Aa1            1 ------------------------------MEKYMLLAQFPAEKTLNETD     20
+
+LO018304.1      1680 --------------------------------------------------   1680
+                                                                       
+App1Aa1           21 IPSATLQLLTGKQAGVARPGGIFTKEDLINIKLYVKKGLSLPFNLEEVKN     70
+
+LO018304.1      1680 --------------------------------------------------   1680
+                                                                       
+App1Aa1           71 YLGYQRVDIPGLEPEDIHILFEEIRTHSLSWSGVENDIMQQSMDLEIVGK    120
+
+LO018304.1      1680 --------------------------------------------------   1680
+                                                                       
+App1Aa1          121 QITETGGNIISIINEMPIIERIKKKLGELSDRQLASITYTNEDKEVSYAL    170
+
+LO018304.1      1680 --------------------------------------------------   1680
+                                                                       
+App1Aa1          171 EEILDNMKNDIQKQQRKTEKVKTEVSDFKLKLIGGRLSNGGIAFGLQPQV    220
+
+LO018304.1      1680 --------------------------------------------------   1680
+                                                                       
+App1Aa1          221 ENKRKLMKDNKMSVNIKDLDDKITEKKTEIIQLKQDYDKFVGLAFSGIVG    270
+
+LO018304.1      1680 --------------------------------------------------   1680
+                                                                       
+App1Aa1          271 GLIGLAITGGIFGAKAEEVRKRKNTLIEEVRGLEESIKGKRALQESMASL    320
+
+LO018304.1      1680 --------------------------------------------------   1680
+                                                                       
+App1Aa1          321 SIDFSDIDTRLLDAEVALNHLDYMWQSMLTQINASRDKFAEINDALKLTS    370
+
+LO018304.1      1680 --------------------------------------   1680
+                                                           
+App1Aa1          371 FITKFQQVISPWKDVEGSAKQLVKVFDEALKEYKQRYN    408
+
+
+#---------------------------------------
+#---------------------------------------
+

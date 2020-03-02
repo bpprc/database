@@ -1,0 +1,205 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+				<!-- Bootstrap CSS -->
+				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+				<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+					<link rel="stylesheet" type="text/css" href="{% static 'database/main.css' %}">
+						<link rel="stylesheet" type="text/css" href="{% static 'database/table.css' %}">
+
+
+
+    {% block extrahead %}{% endblock %}
+
+    {% if title %}
+
+
+							<title>Bacterial Pesticidal Protein Database </title>
+    {% else %}
+
+
+							<title>Bacterial Pesticidal Protein Database</title>
+    {% endif %}
+
+						</head>
+						<body>
+							<header class="site-header">
+								<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+
+										<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+											<span class="navbar-toggler-icon"></span>
+										</button>
+										<div class="collapse navbar-collapse" id="navbarToggle">
+											<div class="navbar-nav mr-auto">
+												<a class="nav-item nav-link" href="{% url 'home' %}">
+													<strong> Bacterial Pesticidal Protein Database
+														</strong>
+													</a>
+												</div>
+												<div class="dropdown">
+													<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														BPPRC
+													</button>
+													<div class="dropdown-menu" aria-labelledby="Database">
+														<a class="dropdown-item" href="{% url 'about_page' %}">About</a>
+													</div>
+												</div>
+												<div class="dropdown">
+												  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												    Database
+												  </button>
+												  <div class="dropdown-menu" aria-labelledby="Database">
+												    <a class="dropdown-item" href="{% url 'database' %}">Database</a>
+												    <a class="dropdown-item" href="{% url 'search_database' %}">Search</a>
+														<a class="dropdown-item" href="{% url 'download_data' %}">Download data</a>
+												  </div>
+												</div>
+												<div class="dropdown">
+													<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														BestMatchFinder
+													</button>
+													<div class="dropdown-menu" aria-labelledby="BestMatchFinder">
+														<a class="dropdown-item" href="{% url 'bestmatchfinder_home' %}">Search by sequence</a>
+														<a class="dropdown-item" href="{% url 'bestmatchfinder_database' %}">Search using name</a>
+													</div>
+												</div>
+												<div class="dropdown">
+													<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														Analysis
+													</button>
+													<div class="dropdown-menu" aria-labelledby="Analysis">
+														<a class="dropdown-item" href="">Domain analysis</a>
+														<a class="dropdown-item" href="{% url 'statistics' %}">Statistics</a>
+														<a class="dropdown-item" href="">Dendogram</a>
+													</div>
+												</div>
+												<div class="dropdown">
+													<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														Download & Install
+													</button>
+													<div class="dropdown-menu" aria-labelledby="Download & Install">
+														<a class="dropdown-item" target="_blank" href="https://github.com/Amrithasuresh/BPPRC">Github</a>
+													</div>
+												</div>
+												<div class="dropdown">
+													<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														Older version
+													</button>
+													<div class="dropdown-menu" aria-labelledby="database">
+														<a class="dropdown-item" target="_blank" href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/">database</a>
+													</div>
+												</div>
+												<div class="dropdown">
+													<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														Submit your sequence
+													</button>
+													<div class="dropdown-menu" aria-labelledby="database">
+														<a class="dropdown-item" target="_blank" href="{% url 'submit' %}">Submit your sequence to the database</a>
+													</div>
+												</div>
+												<div class="dropdown">
+													<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														Help
+													</button>
+													<div class="dropdown-menu" aria-labelledby="Help">
+														<a class="dropdown-item" href="">FAQ</a>
+														<a class="dropdown-item" href="">Acknowledgement</a>
+														<a class="dropdown-item" href="">Documentation</a>
+													</div>
+												</div>
+											<div class="navbar-nav ml-auto mr-5">
+												<a class="nav-item nav-link" id="x" href="{% url 'view_cart' %}">Cart (<span id="cart-value" style="border-radius: 10px;"></span>)</a>
+												<a class="nav-item nav-link" href="">Feedback</a>
+												<a class="nav-item nav-link" href="">Share</a>
+											</div>
+										</div>
+								</nav>
+							</header>
+							<main role="main" class="container">
+								<div class="row">
+									<div class="col-md-10">
+										{% if messages %}
+										{% for message in messages %}
+											 <div class="alert alert-{{ message.tags }}">
+												{{ message }}
+											</div>
+											{% endfor %}
+											{% endif %}
+          						{% block content %}{% endblock %}
+									</div>
+								</div>
+							</div>
+							</div>
+
+							<br></br>
+							<br></br>
+
+							<div id="logo" class="text-left">
+							<strong> Developed and Maintained by </strong>
+							</br>
+							<img src="/media/CU.png" alt="CU" width="100" height="80">
+							<img src="/media/UF.svg" alt="UF" width="120" height="100">
+							<img src="/media/US.png" alt="US" width="100" height="80">
+							</div>
+
+						</main>
+						<!-- Optional JavaScript -->
+						<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+						<script type="text/javascript">
+						function getCartValue() {
+							if (window.XMLHttpRequest) {
+								// code for IE7+, Firefox, Chrome, Opera, Safari
+								xmlhttp=new XMLHttpRequest();
+							} else {  // code for IE6, IE5
+								xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+							}
+							xmlhttp.onreadystatechange=function() {
+								if (this.readyState==4 && this.status==200) {
+									res = JSON.parse(this.responseText)
+									document.getElementById("cart-value").innerHTML = res['number_of_proteins'];
+								}
+							}
+							xmlhttp.open("GET","/cart_value/",true);
+							xmlhttp.send();
+						}
+						getCartValue()
+						</script>
+						<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+						<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+						<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e15f717049202001249138f&product=inline-share-buttons&cms=sop' async='async'></script>
+
+
+						<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+						<script>
+						window.cookieconsent.initialise({
+						  "palette": {
+						    "popup": {
+						      "background": "#efefef",
+						      "text": "#404040"
+						    },
+						    "button": {
+						      "background": "#8ec760",
+						      "text": "#ffffff"
+						    }
+						  },
+						  "theme": "classic",
+						  "content": {
+						    "message": "We use cookies to make sure you have a better experience on the site.",
+						    "dismiss": "Got it!",
+						    "href": "{% url 'privacy_policy' %}"
+						  }
+						});
+						</script>
+
+	 				 {% block extrajs %}{% endblock %}
+
+
+					</body>
+				</html>

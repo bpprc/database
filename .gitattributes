@@ -1,0 +1,4 @@
+*.py linguist-language=Python
+*.js linguist-language=JavaScript
+*.html linguist-language=HTML
+BPPRC/static/* linguist-vendored

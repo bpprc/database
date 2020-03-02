@@ -1,0 +1,35 @@
+{% extends "database/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+
+
+  <b>Choose the domain to do the analysis</b>
+  <br>
+  <form name="domain_type" action="{% url 'domain_anlaysis' %}" method="post">
+    {% csrf_token %}
+    {{ form.domain_type | as_crispy_field  }}
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <div class="g-recaptcha" data-sitekey="6Leqs7UUAAAAAKB3sQiwP-s09lzzu6OGXNyAB4nJ"></div>
+    
+    <input type="submit" class="btn btn-secondary" value="Submit to Cluster analysis"/>
+    <br>
+    <br>
+  </form>
+
+ <br>
+ <br>
+
+{% endblock content %}
+
+{% block extrajs %}
+<script>
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  })();
+</script>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "database/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'database/cc.css' %}">
+
+{% block content %}
+
+<br> </br>
+<br> </br>
+<br> </br>
+
+<html>
+<body>
+
+<h2>Type in protein name(s) to search the database </h2>
+<br>
+Examples:
+<br>
+<h8> Cry1Aa1 <h8> <br>
+<h8> Cry32B <h8> <br>
+<h8> Xpp22 <h8> <br>
+<h8> Cry41, Cry42, Cry43 <h8> <br>
+
+
+<form method="post" action="/search_database/">
+  {% csrf_token %}
+
+       {{ form.search_term | as_crispy_field }}
+       {{ form.search_fields | as_crispy_field }}
+
+      <button type="submit" class="btn btn-secondary" > Search </button>
+</form>
+
+
+<div style="color: blue">
+					{% for id in match %}
+					<table border="5px" width="300px">
+					<th>Name</th>
+					<tr class='parent'>
+							<td>{{ id.name }}</td>
+							<td>{{ id.oldname }}</td>
+							<td> <a href=" https://www.ncbi.nlm.nih.gov/protein/{{ id.accession }}" target="_blank"> {{ nomenclature.accession }} </a> </td>
+					</tr>
+					</table>
+					{% endfor %}
+	</div>
+
+{% endblock content %}
+
+</body>
+</html>

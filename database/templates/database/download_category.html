@@ -1,0 +1,24 @@
+{% extends "database/base.html" %}
+{% load static %}
+{% block content %}
+
+<br> </br>
+<br> </br>
+<br> </br>
+
+<div id="wrapper">
+  <p> <b> Download the fasta sequences by categories </b> </p>
+      {% for description in descriptions %}
+        <li>
+            <a href="/download_category_{{ description.name|lower }}" >
+              {{ description.name }} </a>
+              <a> - {{ description.description }} </a>
+        </li>
+        {% endfor %}
+        <li>
+          <a href="/download_category_all" > All </a>
+          <a> - Download all the categories</a>
+        </li>
+</div>
+
+{% endblock content %}

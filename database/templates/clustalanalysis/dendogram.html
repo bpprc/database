@@ -1,0 +1,15 @@
+{% extends "database/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+
+
+<pre> {{ tree }} </pre>
+<br>
+<br>
+<form>
+	<input type="button" class="btn btn-secondary" value="Back" onclick="window.history.back()" />
+</form>
+{% endblock content %}

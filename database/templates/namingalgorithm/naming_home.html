@@ -1,0 +1,15 @@
+{% extends "database/base.html" %}
+{% block content %}
+{% load static %}
+
+  <b><strong><h2>Naming Algorithm &nbsp;</h2></strong></b>
+
+  <form action="{% url 'run_naming_algorithm' %}" method="post">
+    {% csrf_token %}
+    <textarea name="fulltextarea" placeholder="Paste fasta sequence" rows="15" cols="80"></textarea>
+    <br></br>
+    <input type="submit" value="Submit!"/>
+
+  </form>
+
+{% endblock content %}

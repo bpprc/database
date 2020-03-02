@@ -1,0 +1,16 @@
+{% extends "database/base.html" %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+
+
+    <b><strong><p> The following details are successfully submitted to the database &nbsp;</p> </strong></b>
+    <b><strong><p>You will be contacted shortly. &nbsp;</p> </strong></b>
+    <p>{{ form.data.name }} &nbsp;</p>
+    <p>{{ form.data.year }} &nbsp;</p>
+    <p>{{ form.data.fastasequence }} &nbsp;</p>
+    <p>{{ form.data.email }} &nbsp;</p>
+
+
+{% endblock content %}

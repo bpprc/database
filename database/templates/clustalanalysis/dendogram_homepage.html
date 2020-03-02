@@ -1,0 +1,33 @@
+{% extends "database/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+
+
+  <b>Choose the domain to do the analysis</b>
+  <br>
+  <form name="domain_type" action="{% url 'dendogram' %}" method="post">
+  <div class="g-recaptcha" data-sitekey="6Leqs7UUAAAAAKB3sQiwP-s09lzzu6OGXNyAB4nJ"></div>
+    {% csrf_token %}
+    {{ form | crispy }}
+    <input type="submit" class="btn btn-secondary" value="Submit"/>
+    <br>
+    <br>
+  </form>
+
+ <br>
+ <br>
+
+{% endblock content %}
+
+
+{% block extrajs %}
+<script>
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  })();
+</script>
+
+{% endblock %}

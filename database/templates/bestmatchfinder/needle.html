@@ -1,0 +1,62 @@
+{% extends "database/base.html" %}
+
+{% block content %}
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+        </style>
+        </head>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h2>The bestmatch results are shown in the table. </h2>
+        <body>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Identity Percentage</th>
+              <th>Alignment</th>
+            </tr>
+
+            {% for row in align %}
+              <tr>
+                <td>{{row.3}}</td>
+                <td>{{row.2}}</td>
+                <td><a href="#" class="view-sequence-link" data-index="{{forloop.counter}}">View alignment</a></td>
+              </tr>
+            {% endfor %}
+          </thead>
+        </table>
+      <br> </br>
+      <br> </br
+      <br> </br>
+      <br> </br>
+        <div class="align-sequences">
+          {% for row in align %}
+            <div class="align-sequence" id="sequence-{{forloop.counter}}">
+              <pre>{{row.4}}</pre>
+            </div>
+          {% endfor %}
+        </div>
+{% endblock content %}
+
+
+{% block extrajs %}
+<script>
+  $(document).ready(function() {
+    $('.align-sequence').hide();
+    $('.view-sequence-link').click(function() {
+      $('.align-sequence').hide();
+      var sequenceIndex = $(this).attr('data-index')
+      $('#sequence-' + sequenceIndex).show();
+
+    })
+  })
+</script>
+{% endblock extrajs %}

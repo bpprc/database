@@ -1,0 +1,30 @@
+{% extends "database/base.html" %}
+{% block content %}
+{% load static %}
+
+<head>
+	<title>Home</title>
+	<meta Charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="{% static 'database/cc.css' %}">
+	</head>
+	<div>
+	<span class="font-weight-bold">Pesticidal proteins are newly categorized into the following categories.</span>
+	<br> </br>
+	</div>
+	<div class="view overlay zoom">
+		<div id="wrapper">
+			<ul id="circles">
+				{% for prefix in category_prefixes %}
+				<li>
+					<a href="/categorize_database_{{ prefix|lower }}" >
+						<div class="circle">
+							<div>{{ prefix }}</div>
+						</div>
+					</a>
+				</li>
+					{% endfor %}
+			</div>
+		</div>
+
+
+{% endblock content %}

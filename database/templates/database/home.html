@@ -1,0 +1,113 @@
+{% extends "database/base.html" %}
+{% block content %}
+
+<br> </br>
+<h2 class="text-center"> Welcome to Pesticidal Protein Database </h2>
+<br> </br>
+
+
+<div class="card-deck">
+        <div class="card text-center">
+            <div class="card-block">
+                <h4 class="card-title">Search</h4>
+                <p class="card-text">
+                    Search the Name
+                    <br> Search by Oldname
+                    <br> Search by Accession
+                    <br>
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'search_database' %}"> Link</a>
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <div class="card-block">
+                <h4 class="card-title">BestMatchFinder</h4>
+                <p class="card-text">
+                    Search BestMatchFinder
+                    <br> Compare two sequences
+                    <br> Compare two database sequences
+                    <br>
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'bestmatchfinder_home' %}"> Link</a>
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <div class="card-block">
+                <h4 class="card-title">Downloads</h4>
+                <p class="card-text">
+                    Download sequences by category
+                    <br>
+                    <br>
+                    <br>
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'download_data' %}">
+                   Link
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-deck mt-4">
+        <div class="card text-center">
+            <div class="card-block">
+                <h4 class="card-title">Submit your sequence</h4>
+                <p class="card-text">
+                    Submit sequences to the database
+                    <br>
+                    <br>
+                    <br>
+                </p>
+            </div>
+            <div class="card-footer">
+              <a href="{% url 'submit' %}">
+                Link
+              </a>
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <div class="card-block">
+                <h4 class="card-title">Older version</h4>
+                <p class="card-text">
+                    Bt nomenclature
+                    <br>
+                    <br>
+                    <br>
+                </p>
+            </div>
+            <div class="card-footer">
+              <a href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/" target="_blank">
+                Link
+              </a>
+            </div>
+        </div>
+        <div class="card text-center">
+            <div class="card-block">
+                <h4 class="card-title">Help</h4>
+                <p class="card-text">
+                    Tutorial
+                    <br>Documentation
+                    <br>
+                    <br>
+                </p>
+            </div>
+            <div class="card-footer">
+              <a href="">
+                Link
+              </a>
+            </div>
+        </div>
+    </div>
+
+
+	<br> </br>
+  <br> </br>
+  <br> </br>
+{% endblock content %}

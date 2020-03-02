@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>database.migrations package &#8212; BPPR 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="bestmatchfinder package" href="bestmatchfinder.html" />
+    <link rel="prev" title="database package" href="database.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bestmatchfinder.html" title="bestmatchfinder package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="database.html" title="database package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="database.html" accesskey="U">database package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="database-migrations-package">
+<h1>database.migrations package<a class="headerlink" href="#database-migrations-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-database.migrations.0001_initial">
+<span id="database-migrations-0001-initial-module"></span><h2>database.migrations.0001_initial module<a class="headerlink" href="#module-database.migrations.0001_initial" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="database.migrations.0001_initial.Migration">
+<em class="property">class </em><code class="sig-prename descclassname">database.migrations.0001_initial.</code><code class="sig-name descname">Migration</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#database.migrations.0001_initial.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="database.migrations.0001_initial.Migration.dependencies">
+<code class="sig-name descname">dependencies</code><em class="property"> = []</em><a class="headerlink" href="#database.migrations.0001_initial.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="database.migrations.0001_initial.Migration.initial">
+<code class="sig-name descname">initial</code><em class="property"> = True</em><a class="headerlink" href="#database.migrations.0001_initial.Migration.initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="database.migrations.0001_initial.Migration.operations">
+<code class="sig-name descname">operations</code><em class="property"> = [&lt;CreateModel  name='Description', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;), ('description', &lt;django.db.models.fields.TextField&gt;)], options={'ordering': ('name',)}&gt;, &lt;CreateModel  name='PesticidalProteinDatabase', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;), ('oldname', &lt;django.db.models.fields.CharField&gt;), ('accession', &lt;django.db.models.fields.CharField&gt;), ('year', &lt;django.db.models.fields.CharField&gt;), ('fastasequence', &lt;django.db.models.fields.TextField&gt;), ('uploaded', &lt;django.db.models.fields.DateTimeField&gt;), ('fastasequence_file', &lt;django.db.models.fields.files.FileField&gt;)], options={'ordering': ('name',)}&gt;, &lt;CreateModel  name='ProteinDetail', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('accession', &lt;django.db.models.fields.CharField&gt;), ('fastasequence', &lt;django.db.models.fields.TextField&gt;), ('fulllength', &lt;django.db.models.fields.TextField&gt;), ('position_N', &lt;django.db.models.fields.TextField&gt;), ('domain_N', &lt;django.db.models.fields.TextField&gt;), ('pfam_N', &lt;django.db.models.fields.TextField&gt;), ('position_M', &lt;django.db.models.fields.TextField&gt;), ('domain_M', &lt;django.db.models.fields.TextField&gt;), ('pfam_M', &lt;django.db.models.fields.TextField&gt;), ('position_C', &lt;django.db.models.fields.TextField&gt;), ('domain_C', &lt;django.db.models.fields.TextField&gt;), ('pfam_C', &lt;django.db.models.fields.TextField&gt;)]&gt;, &lt;CreateModel  name='UserUploadData', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('session_key', &lt;django.db.models.fields.CharField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;), ('fastasequence', &lt;django.db.models.fields.TextField&gt;)]&gt;]</em><a class="headerlink" href="#database.migrations.0001_initial.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-database.migrations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-database.migrations" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">database.migrations package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-database.migrations.0001_initial">database.migrations.0001_initial module</a></li>
+<li><a class="reference internal" href="#module-database.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="database.html"
+                        title="previous chapter">database package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="bestmatchfinder.html"
+                        title="next chapter">bestmatchfinder package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/database.migrations.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bestmatchfinder.html" title="bestmatchfinder package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="database.html" title="database package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="database.html" >database package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Suresh Pannerselvam.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.0.
+    </div>
+  </body>
+</html>

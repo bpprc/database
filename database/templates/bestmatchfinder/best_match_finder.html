@@ -1,0 +1,47 @@
+{% extends "database/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+
+  <br></br>
+  <br></br>
+  <br></br>
+
+  <td class="pgm_list" width="100%"><h2>Search Database</h2></td>
+  <br>
+
+  <p> Paste sequence into the box below in fasta format </p>
+>Name
+<br>
+MDNNPNINECIPYNCLSNPEVEVLGGERIETGYTPIDISLSLTQFL ...
+<br>
+<br>
+
+  <b><strong> Query sequence&nbsp;</strong></b> <div class="d-inline-block text-right w-50"> <a href="#" class="ml-auto example-sequence-button">Use example sequence</a></div>
+  <form action="{% url 'run_needle_server' %}" method="post" >
+  <div class="g-recaptcha" data-sitekey="6Leqs7UUAAAAAKB3sQiwP-s09lzzu6OGXNyAB4nJ"></div>
+
+    {% csrf_token %}
+    {{ form |crispy }}
+    <button type="submit" class="btn btn-secondary"  >Submit</button>
+    <input class="btn btn-secondary"  type="reset" value="Clear">
+  </form>
+
+
+
+{% endblock content %}
+
+{% block extrajs %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<script>
+
+  var str = ' >WP_132352567.1 alpha-xenorhabdolysin family binary toxin subunit A [Photorhabdus khanii]\nMEKYMLLAQFPAEKTLNETDIPSATLQLLTGKQAGVARPGGIFTKEDLINIKLYVKKGLSLPFNLEEVKNYLGYQRVDIPGLEPEDIHILFEEIRTHSLSWSGVENDIMQQSMDLEIVGKQITETGGNIISIINEMPIIERIKKKLGELSDRQLASITYTNEDKEVSYALEEILDNMKNDIQKQQRKTEKVKTEVSDFKLKLIGGRLSNGGIAFGLQPQVENKRKLMKDNKMSVNIKDLDDKITEKKTEIIQLKQDYDKFVGLAFSGIVGGLIGLAITGGIFGAKAEEVRKRKNTLIEEVRGLEESIKGKRALQESMASLSIDFSDIDTRLLDAEVALNHLDYMWQSMLT QINASRDKFAEINDALKLTSFITKFQQVISPWKDVEGSAKQLVKVFDEALKEYKQRYN ';
+  console.log(str);
+  $(document).ready(function() {
+    $('.example-sequence-button').click(function() {
+      $('#id_sequence_in_form').val(str);
+    })
+  });
+
+</script>
+{% endblock %}

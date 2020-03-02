@@ -1,0 +1,42 @@
+{% extends "database/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+
+  <b><strong>Submit your sequence to the database &nbsp;</strong></b>
+  <form action="{% url 'submit' %}" method="POST">
+  {% csrf_token %}
+  {{ form|crispy }}
+
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <div class="g-recaptcha" data-sitekey="6Leqs7UUAAAAAKB3sQiwP-s09lzzu6OGXNyAB4nJ"></div>
+
+  <button type="submit" class="btn btn-primary">Post</button>
+  </form>
+
+
+</head>
+
+{% endblock content %}
+
+
+
+{% block extrajs %}
+
+<script type="text/javascript">
+
+  $('.js-captcha-refresh').click(function (evt) {
+      evt.preventDefault();
+      $.getJSON("/captcha/refresh/", function (result) {
+          $('.captcha').attr('src', result['image_url']);
+          $('#id_captcha_0').val(result['key'])
+      });
+
+
+  });
+
+</script>
+
+{% endblock %}
