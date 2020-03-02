@@ -2,11 +2,14 @@
 
 import re
 import os.path
+import os
 import subprocess
 import time
 from django.conf import settings
 from Bio.Emboss.Applications import NeedleCommandline
 from database.models import PesticidalProteinDatabase
+
+NEEDLE_PATH = os.environ.get("NEEDLE_PATH")
 
 
 def cmdline(command):
@@ -24,7 +27,8 @@ def cmdline(command):
 def run_needle(file1, file2):
     """This loads the bestmatchfinder homepage."""
 
-    cmd = 'needle -datafile EBLOSUM62 -auto Y' + ' -asequence ' + file1 +' -bsequence ' + file2 +  ' -sprotein1 Y -sprotein2 Y ' + ' -auto -stdout'
+    cmd = NEEDLE_PATH + 'needle -datafile EBLOSUM62 -auto Y' + ' -asequence ' + \
+        file1 + ' -bsequence ' + file2 + ' -sprotein1 Y -sprotein2 Y ' + ' -auto -stdout'
     # print(cmd)
     results = cmdline(cmd).decode("utf-8")
     # print(results)
