@@ -2,6 +2,7 @@
 
 import re
 import os.path
+import os
 import subprocess
 import time
 from django.conf import settings
@@ -10,6 +11,9 @@ from database.models import PesticidalProteinDatabase
 import logging
 
 logger = logging.getLogger(__name__)
+
+NEEDLE_PATH = os.environ.get("NEEDLE_PATH")
+
 
 def cmdline(command):
     """This loads the bestmatchfinder homepage."""
@@ -26,7 +30,8 @@ def cmdline(command):
 def blast_two_sequences(file1, file2):
     """This loads the bestmatchfinder homepage."""
 
-    cmd = 'needle -datafile EBLOSUM62 -auto Y' + ' -asequence ' + file1 +' -bsequence ' + file2 +  ' -sprotein1 Y -sprotein2 Y ' + ' -auto -stdout'
+    cmd = NEEDLE_PATH + 'needle -datafile EBLOSUM62 -auto Y' + ' -asequence ' + \
+        file1 + ' -bsequence ' + file2 + ' -sprotein1 Y -sprotein2 Y ' + ' -auto -stdout'
     # print(cmd)
     results = cmdline(cmd).decode("utf-8")
     # logger.error("results of needle command line")
@@ -41,14 +46,15 @@ def blast_two_sequences(file1, file2):
 def run_bug(query_data):
     """This loads the bestmatchfinder homepage."""
 
-    PPD_proteins = PesticidalProteinDatabase.objects.exclude(fastasequence_file__isnull=True).exclude(fastasequence_file='')
+    PPD_proteins = PesticidalProteinDatabase.objects.exclude(
+        fastasequence_file__isnull=True).exclude(fastasequence_file='')
     # print('DB query time', time.time() - start_time)
     # for query in query_data:
     empty = []
     initial = 0
     align = ''
 
-    #take the scaffold sequence one by one
+    # take the scaffold sequence one by one
     results_list = []
 
     for protein in PPD_proteins:
@@ -83,7 +89,7 @@ def run_bug(query_data):
             # print('Unable to convert identity_percentage {} for object {}'.format(identity_percentage, protein))
             identity_percentage = 0.0
 
-        #this has scaffold file name , query file name and identity percentage
+        # this has scaffold file name , query file name and identity percentage
         l = s, query_data, identity_percentage, protein.name, results
         # l = protein.name, identity_percentage, results
         # l = files[i], ordered_query_fastafiles[j], identity_percentage
@@ -92,6 +98,6 @@ def run_bug(query_data):
             empty = l
             initial = float(l[2])
             align = results
-            #print(l)
+            # print(l)
     results_list = sorted(results_list, key=lambda x: x[2], reverse=True)[:10]
     return results_list
