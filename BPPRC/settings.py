@@ -213,4 +213,4 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 
 CSRF_COOKIE_SECURE = True
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = ['www.bpprc.org', 'bpprc.org']
+# CSRF_TRUSTED_ORIGINS = ['www.bpprc.org', 'bpprc.org']
