@@ -7,6 +7,18 @@ from django.contrib import admin
 from django.utils import timezone
 from django.core.files.base import ContentFile
 
+
+class PesticidalProteinPrivateDatabase(models.Model):
+    """
+    """
+    name = models.CharField(max_length=15, blank=True, null=False)
+    oldname = models.CharField(max_length=105, blank=True, null=False)
+    accession = models.CharField(max_length=25, blank=True, null=False)
+    year = models.CharField(max_length=5, blank=True, null=False)
+    fastasequence = models.TextField(blank=True, null=False)
+    uploaded = models.DateTimeField('Uploaded', default=timezone.now)
+
+
 class PesticidalProteinDatabase(models.Model):
     """
     """
@@ -16,12 +28,12 @@ class PesticidalProteinDatabase(models.Model):
     year = models.CharField(max_length=5, blank=True, null=False)
     fastasequence = models.TextField(blank=True, null=False)
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
-    fastasequence_file = models.FileField(upload_to='fastasequence_files/', null=True, blank=True)
+    fastasequence_file = models.FileField(
+        upload_to='fastasequence_files/', null=True, blank=True)
     # protein_metadata = PesticidalProteinDatabaseManager()
 
     class Meta:
         ordering = ('name',)
-
 
     def publish(self):
         self.published_date = timezone.now()
@@ -34,7 +46,7 @@ class PesticidalProteinDatabase(models.Model):
         # TODO clear out old file before saving new one?
         filename = 'fasta{}'.format(self.name)
         file_contents = '>{}\n{}\n'.format(self.name, self.fastasequence)
-        #print(file_contents)
+        # print(file_contents)
         content = ContentFile(file_contents)
         self.fastasequence_file.save(filename, content, save=False)
         super().save(*args, **kwargs)
@@ -68,7 +80,7 @@ class PesticidalProteinDatabase(models.Model):
 
     def get_sequence_count_aminoacids(self):
         x = ProteinAnalysis(self.fastasequence)
-        return x.count_amino_acids()  #how to draw histogram
+        return x.count_amino_acids()  # how to draw histogram
 
     def get_sequence_get_amino_acids_percent(self):
         x = ProteinAnalysis(self.fastasequence)
@@ -151,6 +163,7 @@ class UserUploadData(models.Model):
     session_key = models.CharField(max_length=40, default=None)
     name = models.CharField(max_length=15, blank=True, null=False)
     fastasequence = models.TextField(blank=True, null=False)
+
 
 class FeedbackData(models.Model):
     """ """
