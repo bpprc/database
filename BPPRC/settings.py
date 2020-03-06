@@ -148,6 +148,11 @@ MEDIA_URL = "/media/"
 # print("MEDIA_ROOT", os.path.join(BASE_DIR, 'media'))
 # print("STATIC_ROOT", os.path.join(BASE_DIR, "static"))
 # print("STATIC_URL", '/static/')
+# path for temp folder
+TEMP_DIR = os.path.join(BASE_DIR, "temp")
+
+# Number of days to keep temp files
+TEMP_LIFE = 5
 
 NEEDLE_PATH = os.environ.get('NEEDLE_PATH', '')
 BLAST_PATH = os.environ.get('BLAST_PATH', '')
