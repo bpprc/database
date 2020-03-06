@@ -144,10 +144,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
 
-print("MEDIA_URL", "/media/")
-print("MEDIA_ROOT", os.path.join(BASE_DIR, 'media'))
-print("STATIC_ROOT", os.path.join(BASE_DIR, "static"))
-print("STATIC_URL", '/static/')
+# print("MEDIA_URL", "/media/")
+# print("MEDIA_ROOT", os.path.join(BASE_DIR, 'media'))
+# print("STATIC_ROOT", os.path.join(BASE_DIR, "static"))
+# print("STATIC_URL", '/static/')
 
 NEEDLE_PATH = os.environ.get('NEEDLE_PATH', '')
 BLAST_PATH = os.environ.get('BLAST_PATH', '')
