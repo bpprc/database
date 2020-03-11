@@ -9,11 +9,13 @@ ALLOWED_AMINOACIDS = set(IUPACProtein.letters)
 # maximum number of query sequences in form
 NEEDLE_MAX_NUMBER_SEQ_IN_INPUT = 1
 
-#Error messages
+# Error messages
 NEEDLE_CORRECT_SEQ_ERROR_MSG = "please paste correct sequence!"
 NEEDLE_CORRECT_SEQ_TOO_SHORT_ERROR_MSG = "Too short sequence!"
 NEEDLE_SEQUENCE_TYPE = "Currently, protein sequence is allowed"
-NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG = "Too many sequences, maximum is {}".format(NEEDLE_MAX_NUMBER_SEQ_IN_INPUT)
+NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG = "Too many sequences, maximum is {}".format(
+    NEEDLE_MAX_NUMBER_SEQ_IN_INPUT)
+
 
 def validate_sequence(sequence: str, sequence_is_protein=True):
     """ Validate protein sequence """
@@ -37,7 +39,7 @@ def validate_sequence(sequence: str, sequence_is_protein=True):
     if record_count > NEEDLE_MAX_NUMBER_SEQ_IN_INPUT:
         raise forms.ValidationError(NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG)
 
-    #read sequence from the written temporary file
+    # read sequence from the written temporary file
     sequence_in_file = SeqIO.parse(tmp_seq.name, "fasta")
     # print(sequence_in_file.seq)
     sequence = None
@@ -52,28 +54,33 @@ def validate_sequence(sequence: str, sequence_is_protein=True):
 
     return tmp_seq.name
 
+
 def check_allowed_letters(seq, allowed_letter_as_set):
     """ Validate sequence: Rise an error if sequence contains undesirable letter."""
 
-    #set of unique letters in sequence
+    # set of unique letters in sequence
     seq_set = set(seq)
 
-    not_allowed_letters_in_seq = [x for x in seq_set if str(x).upper() not in allowed_letter_as_set]
+    not_allowed_letters_in_seq = [x for x in seq_set if str(
+        x).upper() not in allowed_letter_as_set]
 
     if len(not_allowed_letters_in_seq) > 0:
         raise forms.ValidationError(
-            "This sequence type cannot contain letters: " + ", ".join(not_allowed_letters_in_seq)
+            "This sequence type cannot contain letters: " +
+            ", ".join(not_allowed_letters_in_seq)
         )
 
+
 def check_protein_nucleotide(seq):
-    sequence_is_protein = check_allowed_letters(str(sequence), ALLOWED_AMINOACIDS)
+    sequence_is_protein = check_allowed_letters(
+        str(sequence), ALLOWED_AMINOACIDS)
     return sequence_is_protein
 
 
 class SearchForm(forms.Form):
     # search_term = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, required=False,
     #
-                                           # choices=SEARCH_CHOICES)
+    # choices=SEARCH_CHOICES)
     SEARCH_CHOICES = (
         ('name', 'NAME'),
         ('oldname', 'OLDNAME'),
@@ -90,14 +97,16 @@ class SearchForm(forms.Form):
         data = self.cleaned_data['search_term']
 
         if data is None:
-            raise ValidationError("Please provide the keywords to search in the database")
+            raise ValidationError(
+                "Please provide the keywords to search in the database")
 
         return data
 
 
 class UserSubmittedSequenceAnalysis(forms.ModelForm):
 
-    sequences_in_form = forms.CharField(widget=forms.Textarea, required=False, label="protein sequence")
+    sequences_in_form = forms.CharField(
+        widget=forms.Textarea, required=False, label="protein sequence")
 
     def clean_sequences_in_form(self):
         sequences_in_form = self.cleaned_data['sequences_in_form']
@@ -106,8 +115,8 @@ class UserSubmittedSequenceAnalysis(forms.ModelForm):
         return sequences_in_form
 
     class Meta:
-        model =  PesticidalProteinDatabase
-        fields = ['name', 'fastasequence' ]
+        model = PesticidalProteinDatabase
+        fields = ['name', 'sequence']
 
 
 class FeedbackDataForm(forms.ModelForm):

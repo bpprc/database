@@ -33,7 +33,7 @@ def home(request):
 
     categories = \
         PesticidalProteinDatabase.objects.order_by(
-            'name').values_list('name', flat=True).distinct() #why you need flat=True
+            'name').values_list('name', flat=True).distinct()  # why you need flat=True
 
     for category in categories:
         cat = category[:3]
@@ -42,7 +42,6 @@ def home(request):
             count = category_holotype_count.get(cat, 0)
             count += 1
             category_holotype_count[cat] = count
-
 
     category_count['Holotype'] = total_holotype
 
@@ -52,21 +51,23 @@ def home(request):
             category_prefixes.append(prefix)
 
     for category in category_prefixes:
-        count = PesticidalProteinDatabase.objects.filter(name__istartswith=category).count()
-        category_count[category] = [count, category_holotype_count.get(category, 0)]
-
+        count = PesticidalProteinDatabase.objects.filter(
+            name__istartswith=category).count()
+        category_count[category] = [
+            count, category_holotype_count.get(category, 0)]
 
     context = \
         {'category_prefixes': category_prefixes,
-         'category_count': category_count,}
+         'category_count': category_count, }
 
     return render(request, 'database/home.html', context)
+
 
 def about_page(request):
     return render(request, 'database/about_page.html')
 
-def statistics(request):
 
+def statistics(request):
     """Loads the homepage."""
     category_count = {}
     category_holotype_count = {}
@@ -75,7 +76,7 @@ def statistics(request):
 
     categories = \
         PesticidalProteinDatabase.objects.order_by(
-            'name').values_list('name', flat=True).distinct() #why you need flat=True
+            'name').values_list('name', flat=True).distinct()  # why you need flat=True
 
     for category in categories:
         cat = category[:3]
@@ -85,7 +86,6 @@ def statistics(request):
             count += 1
             category_holotype_count[cat] = count
 
-
     category_count['Holotype'] = [total_holotype] * 2
 
     for category in categories:
@@ -94,8 +94,10 @@ def statistics(request):
             category_prefixes.append(prefix)
 
     for category in category_prefixes:
-        count = PesticidalProteinDatabase.objects.filter(name__istartswith=category).count()
-        category_count[category] = [count, category_holotype_count.get(category, 0)]
+        count = PesticidalProteinDatabase.objects.filter(
+            name__istartswith=category).count()
+        category_count[category] = [
+            count, category_holotype_count.get(category, 0)]
 
     # print(category_prefixes)
     # print(category_count)
@@ -111,13 +113,13 @@ def statistics(request):
     prefix_count_dictionary.pop('Holotype', None)
     print(prefix_count_dictionary)
 
-
-    data = pd.Series(prefix_count_dictionary).reset_index(name='value').rename(columns={'index':'category'})
-    data['angle'] = data['value']/data['value'].sum() * 2*pi
+    data = pd.Series(prefix_count_dictionary).reset_index(
+        name='value').rename(columns={'index': 'category'})
+    data['angle'] = data['value'] / data['value'].sum() * 2 * pi
     data['color'] = Category20c[len(prefix_count_dictionary)]
 
     p = figure(plot_height=600, plot_width=800, title="Pie Chart", toolbar_location=None,
-            tools="hover", tooltips="@category: @value")
+               tools="hover", tooltips="@category: @value")
 
     # p.wedge(x=0, y=1, radius=0.4,
     #         start_angle=cumsum('angle', include_zero=True), end_angle=cumsum('angle'),
@@ -127,35 +129,37 @@ def statistics(request):
             start_angle=cumsum('angle', include_zero=True), end_angle=cumsum('angle'),
             line_color="royalblue", fill_color='color', legend_group='category', source=data)
 
-
     script, div = components(p)
-
 
     context = \
         {'category_prefixes': category_prefixes,
          'category_count': category_count,
-         'script': script, 'div':div}
+         'script': script, 'div': div}
 
     return render(request, 'database/statistics.html', context)
+
 
 def privacy_policy(request):
     return render(request, 'database/privacy-policy.html', context)
 
 
 def _sorted_nicely(l, sort_key=None):
-
     """ Sort the given iterable in the way that humans expect. https://blog.codinghorror.com/sorting-for-humans-natural-sort-order/ """
-    convert = lambda text: int(text) if text.isdigit() else text
+    def convert(text): return int(text) if text.isdigit() else text
     if sort_key is None:
-        alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+        def alphanum_key(key): return [convert(c)
+                                       for c in re.split('([0-9]+)', key)]
     else:
-        alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', getattr(key, sort_key)) ]
-    return sorted(l, key = alphanum_key)
+        def alphanum_key(key): return [convert(c) for c in re.split(
+            '([0-9]+)', getattr(key, sort_key))]
+    return sorted(l, key=alphanum_key)
+
 
 def categorize_database(request, category=None):
     """Categorize the protein database with unqiue, first three letter pattern."""
 
-    proteins = PesticidalProteinDatabase.objects.filter(name__istartswith=category)
+    proteins = PesticidalProteinDatabase.objects.filter(
+        name__istartswith=category)
     proteins = _sorted_nicely(proteins, sort_key='name')
     context = \
         {'proteins': proteins,
@@ -182,7 +186,6 @@ def database(request):
          'descriptions': Description.objects.all()}
     return render(request, 'database/database.html', context)
 
-
     # if request.method == 'POST':
     #     form = SearchForm(search_term=request.POST)
     #
@@ -203,9 +206,12 @@ def database(request):
 #             return render(request, 'database/search_page_update.html', form)
 #
 #     return HttpResponseRedirect('/search_database_home/')
+
+
 def search_database_home(request):
     form = SearchForm()
     return render(request, 'database/search_page.html', {'form': form})
+
 
 def search_database(request):
     """Returns the results based on the search query."""
@@ -222,13 +228,13 @@ def search_database(request):
             if field_type == 'name':
                 q_objects = Q()
                 for search in searches:
-                    q_objects.add(Q(name__icontains=search) , Q.OR)
+                    q_objects.add(Q(name__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
             elif field_type == 'oldname':
                 q_objects = Q()
                 for search in searches:
-                    q_objects.add(Q(oldname__icontains=search) , Q.OR)
+                    q_objects.add(Q(oldname__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
 
@@ -246,9 +252,8 @@ def search_database(request):
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
 
-            return render(request, 'database/search_results.html', { 'proteins' : proteins })
+            return render(request, 'database/search_results.html', {'proteins': proteins})
     return HttpResponseRedirect('/search_database_home/')
-
 
 
 def add_cart(request):
@@ -298,9 +303,9 @@ def cart_value(request):
     selected_values = request.session.get('list_names')
     if selected_values:
         number_of_proteins = len(selected_values)
-        return HttpResponse(json.dumps({'number_of_proteins':number_of_proteins}), content_type='application/json')
+        return HttpResponse(json.dumps({'number_of_proteins': number_of_proteins}), content_type='application/json')
     else:
-        return HttpResponse(json.dumps({'number_of_proteins':None}), content_type='application/json')
+        return HttpResponse(json.dumps({'number_of_proteins': None}), content_type='application/json')
 
 
 def view_cart(request):
@@ -315,7 +320,8 @@ def view_cart(request):
                'selected_groups': selected_values, 'userdata': userdata}
     if selected_values:
         profile_length = len(selected_values)
-        message_profile = "Selected {} proteins added to the cart".format(profile_length)
+        message_profile = "Selected {} proteins added to the cart".format(
+            profile_length)
         messages.success(request, message_profile)
     else:
         message_profile = "Please add sequences to the cart"
@@ -336,7 +342,7 @@ def clear_session_user_data(request):
 def user_data_remove(request, id):
     """Remove the user uploaded proteins individually"""
 
-    #delte older temp files
+    # delte older temp files
     # _delete_temp_files(path=TEMP_DIR, days=TEMP_LIFE)
 
     instance = \
@@ -390,12 +396,12 @@ def download_sequences(request):
     data = \
         PesticidalProteinDatabase.objects.filter(name__in=selected_values)
     for item in data:
-        fasta = textwrap.fill(item.fastasequence, 80)
+        fasta = textwrap.fill(item.sequence, 80)
         str_to_write = f">{item.name}\n{fasta}\n"
         file.write(str_to_write)
 
     for record in userdata:
-        fasta = textwrap.fill(record.fastasequence, 80)
+        fasta = textwrap.fill(record.sequence, 80)
         str_to_write = f">{record.name}\n{fasta}\n"
         file.write(str_to_write)
 
@@ -427,18 +433,19 @@ def download_data(request):
     }
     return render(request, 'database/download_category.html', context)
 
+
 def download_single_sequence(request, proteinname=None):
     """Download the fasta sequence by name."""
 
     protein = PesticidalProteinDatabase.objects.get(name=proteinname)
     file = StringIO()
-    fasta = textwrap.fill(protein.fastasequence, 80)
+    fasta = textwrap.fill(protein.sequence, 80)
     str_to_write = f">{protein.name}\n{fasta}\n"
     file.write(str_to_write)
 
     response = HttpResponse(file.getvalue(), content_type="text/plain")
     download_file = f"{proteinname}_fasta_sequences.txt"
-    response['Content-Disposition'] = 'attachment;filename='+download_file
+    response['Content-Disposition'] = 'attachment;filename=' + download_file
     response['Content-Length'] = file.tell()
     return response
 
@@ -455,7 +462,7 @@ def download_category(request, category=None):
 
     for item in data:
         if category in item.name:
-            fasta = textwrap.fill(item.fastasequence, 80)
+            fasta = textwrap.fill(item.sequence, 80)
             str_to_write = f">{item.name}\n{fasta}\n"
             file.write(str_to_write)
         else:
@@ -463,17 +470,15 @@ def download_category(request, category=None):
 
     if 'All' in category:
         for item in data:
-            fasta = textwrap.fill(item.fastasequence, 80)
+            fasta = textwrap.fill(item.sequence, 80)
             str_to_write = f">{item.name}\n{fasta}\n"
             file.write(str_to_write)
 
     response = HttpResponse(file.getvalue(), content_type="text/plain")
     download_file = f"{category}_fasta_sequences.txt"
-    response['Content-Disposition'] = 'attachment;filename='+download_file
+    response['Content-Disposition'] = 'attachment;filename=' + download_file
     response['Content-Length'] = file.tell()
     return response
-
-
 
 
 def protein_detail(request, name):
@@ -488,22 +493,22 @@ def protein_detail(request, name):
     p = figure(x_range=language, plot_height=1000, plot_width=1000,
                toolbar_location="below", tools="pan, wheel_zoom, box_zoom, reset, hover, tap, crosshair")
 
-    source = ColumnDataSource(data=dict(language=language, counts=counts, color=Category20[20]))
+    source = ColumnDataSource(
+        data=dict(language=language, counts=counts, color=Category20[20]))
     p.add_tools(LassoSelectTool())
     p.add_tools(WheelZoomTool())
 
-    p.vbar(x='language', top='counts', width=0.8, color='color', legend_group="language", source=source)
+    p.vbar(x='language', top='counts', width=0.8, color='color',
+           legend_group="language", source=source)
     p.legend.orientation = "horizontal"
     p.legend.location = "top_center"
     p.y_range.start = 0
 
     script, div = components(p)
 
-
     context = {'proteins': PesticidalProteinDatabase.objects.filter(name=name),
-               'script': script, 'div':div
-         }
-
+               'script': script, 'div': div
+               }
 
     return render(request, 'database/protein_detail.html', context)
 
@@ -524,6 +529,7 @@ def emailView(request):
             return redirect('success')
     return render(request, "database/feedback.html", {'form': form})
 
+
 def successView(request):
     return HttpResponse('Success! Thank you for your message.')
 
@@ -538,6 +544,7 @@ def server_error(request):
     """ Return server error."""
 
     return render(request, 'database/500.html', status=500)
+
 
 def faq(request):
     return render(request, 'database/faq.html')
@@ -556,10 +563,11 @@ def faq(request):
 #         if os.stat(file).st_mtime < current_time - days * 86400:
 #             os.remove(file)
 
+
 def _get_current_date():
 
     import datetime
 
     now = datetime.datetime.now()
 
-    return str(str(now.year)+str(now.month).zfill(2)+str(now.day).zfill(2))
+    return str(str(now.year) + str(now.month).zfill(2) + str(now.day).zfill(2))

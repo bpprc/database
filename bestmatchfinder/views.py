@@ -13,11 +13,15 @@ from django.http import HttpResponseRedirect
 from database.models import PesticidalProteinDatabase
 from bestmatchfinder.forms import SearchDatabaseForm, SequenceForm
 from bestmatchfinder import submit_single_sequence, submit_two_sequences
-
+from BPPRC.settings import TEMP_DIR, TEMP_LIFE
 
 
 def bestmatchfinder_home(request):
     """This loads the bestmatchfinder homepage."""
+
+    # delete older temp files
+    # _delete_temp_files(path=TEMP_DIR, days=TEMP_LIFE)
+
     form = SequenceForm()
     return render(request, 'bestmatchfinder/best_match_finder.html', {'form': form})
 
@@ -43,6 +47,7 @@ def bestmatchfinder_database(request):
     form = SearchDatabaseForm()
     return render(request, 'bestmatchfinder/best_match_finder_database.html', {'form': form})
 
+
 def bestmatchfinder_database_sequence_run(request):
     """ This runs bestmatchfinder from the database."""
     if request.method == 'POST':
@@ -53,16 +58,19 @@ def bestmatchfinder_database_sequence_run(request):
             tool = form.cleaned_data['tool']
 
             if protein1:
-                protein1 = os.path.join(settings.MEDIA_ROOT, protein1.fastasequence_file.path)
+                protein1 = os.path.join(
+                    settings.MEDIA_ROOT, protein1.fastasequence_file.path)
             else:
                 protein1 = form.cleaned_data['sequence1_in_form']
 
             if protein2:
-                protein2 = os.path.join(settings.MEDIA_ROOT, protein2.fastasequence_file.path)
+                protein2 = os.path.join(
+                    settings.MEDIA_ROOT, protein2.fastasequence_file.path)
             else:
                 protein2 = form.cleaned_data['sequence2_in_form']
 
-            align = submit_two_sequences.needle.needle_alignment(protein1, protein2)
+            align = submit_two_sequences.needle.needle_alignment(
+                protein1, protein2)
 
             context = {
                 'align': align
@@ -71,3 +79,30 @@ def bestmatchfinder_database_sequence_run(request):
             return render(request, 'bestmatchfinder/needle1.html', context)
         return render(request, 'bestmatchfinder/best_match_finder_database.html', {'form': form})
     return HttpResponseRedirect('/bestmatchfinder_database/')
+
+
+# def _delete_temp_files(path=TEMP_DIR, days=TEMP_LIFE):
+#     '''
+#     Delete older temp files based on TEMP_DIR and TEMP_LIFE.
+#     Please change the number of days in the jaspar.settings files
+#
+#     @input
+#     path{string}, days{integer}
+#     '''
+#     import time
+#
+#     current_time = time.time()
+#
+#     for f in os.listdir(path):
+#         f = os.path.join(path, f)
+#         if os.stat(f).st_mtime < current_time - days * 86400:
+#             os.remove(f)
+#
+#
+# def _get_current_date():
+#
+#     import datetime
+#
+#     now = datetime.datetime.now()
+#
+#     return str(str(now.year) + str(now.month).zfill(2) + str(now.day).zfill(2))

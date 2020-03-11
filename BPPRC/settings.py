@@ -149,7 +149,7 @@ MEDIA_URL = "/media/"
 # print("STATIC_ROOT", os.path.join(BASE_DIR, "static"))
 # print("STATIC_URL", '/static/')
 # path for temp folder
-TEMP_DIR = os.path.join(BASE_DIR, "temp")
+TEMP_DIR = os.path.join(BASE_DIR, "tmp")
 
 # Number of days to keep temp files
 TEMP_LIFE = 5
