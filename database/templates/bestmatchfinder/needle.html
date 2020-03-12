@@ -14,13 +14,14 @@
         <br></br>
         <br></br>
         <br></br>
-        <h2>The bestmatch results are shown in the table. </h2>
+        <h2>Best match results</h2>
+        <br>
         <body>
         <table class="table">
           <thead>
             <tr>
               <th>Name</th>
-              <th>Identity Percentage</th>
+              <th>Percentage Identity</th>
               <th>Alignment</th>
             </tr>
 
@@ -28,7 +29,7 @@
               <tr>
                 <td>{{row.3}}</td>
                 <td>{{row.2}}</td>
-                <td><a href="#" class="view-sequence-link" data-index="{{forloop.counter}}">View alignment</a></td>
+                <td><a href="#" class="view-sequence-link" data-index="{{forloop.counter}}">View alignment below</a></td>
               </tr>
             {% endfor %}
           </thead>
