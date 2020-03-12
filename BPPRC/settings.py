@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+import os
+
 """
 Django settings for BPPRC project.
 
@@ -10,8 +13,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os
-from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -219,3 +220,12 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 CSRF_COOKIE_SECURE = True
 CORS_ORIGIN_ALLOW_ALL = True
 # CSRF_TRUSTED_ORIGINS = ['www.bpprc.org', 'bpprc.org']
+
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_SES_REGION_NAME = os.environ.get('AWS_SES_REGION_NAME')
+AWS_SES_REGION_ENDPOINT = os.environ.get('AWS_SES_REGION_ENDPOINT')
+CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK ')
+RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
