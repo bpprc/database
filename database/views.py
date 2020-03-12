@@ -107,11 +107,9 @@ def statistics(request):
     for prefix in category_prefixes:
         prefix_count_dictionary[prefix] = category_count[prefix][0]
 
-    print(prefix_count_dictionary)
     # prefix_count_dictionary = dict(zip(category_prefixes, category_count))
     # print(prefix_count_dictionary)
     prefix_count_dictionary.pop('Holotype', None)
-    print(prefix_count_dictionary)
 
     data = pd.Series(prefix_count_dictionary).reset_index(
         name='value').rename(columns={'index': 'category'})
