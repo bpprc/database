@@ -206,8 +206,6 @@ LOGGING = {
     }
 }
 
-# crisy forms
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # SESSION
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
@@ -221,11 +219,15 @@ CSRF_COOKIE_SECURE = True
 CORS_ORIGIN_ALLOW_ALL = True
 # CSRF_TRUSTED_ORIGINS = ['www.bpprc.org', 'bpprc.org']
 
+CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK')
+
+# AWS
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_SES_REGION_NAME = os.environ.get('AWS_SES_REGION_NAME')
 AWS_SES_REGION_ENDPOINT = os.environ.get('AWS_SES_REGION_ENDPOINT')
-CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK ')
+
+# google reCAPTCHA
 RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
 RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
