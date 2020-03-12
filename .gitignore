@@ -124,5 +124,11 @@ dmypy.json
 .pyre/
 .env
 
-#Mac
+# Mac
 .DS_Store
+
+# Ignore media files
+/media/fastasequence_files/
+
+# Migration files
+**/**/migrations
