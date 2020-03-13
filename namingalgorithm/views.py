@@ -11,15 +11,16 @@ from namingalgorithm.models import UserSubmission
 from .forms import UserSubmissionForm
 
 
-
 def is_admin(user):
     """Check the user is admin staff."""
     return user.is_staff
+
 
 @user_passes_test(is_admin)
 def naming_algorithm(request):
     """If the user is admin staff, show the naming html page."""
     return render(request, 'namingalgorithm/naming_home.html')
+
 
 def submit(request):
     """Submit the sequence for the naming purpose through user form."""
@@ -45,7 +46,8 @@ def run_align(request):
         tmp_seq.close()
 
     align = run_data.predict_name.run_bug(tmp_seq.name)
-    user_submission = UserSubmission.objects.get(id=request.GET.get('submission_id'))
+    user_submission = UserSubmission.objects.get(
+        id=request.GET.get('submission_id'))
     user_submission.alignresults = align
     user_submission.save()
     return HttpResponseRedirect('/admin/namingalgorithm/usersubmission/')
@@ -73,13 +75,15 @@ def run_naming_algorithm(request):
 
     align, percentageidentity, category, predicted_name, name = run_data.predict_name.run_bug(
         tmp_seq.name)
-    user_submission = UserSubmission.objects.get(id=request.GET.get('submission_id'))
+    user_submission = UserSubmission.objects.get(
+        id=request.GET.get('submission_id'))
     user_submission.predict_name = predicted_name
     user_submission.save()
 
     context = {
         'category': category,
-        'predicted_name' : predicted_name,
-        'name' : name
+        'predicted_name': predicted_name,
+        'name': name,
+        'align': align
     }
     return render(request, 'namingalgorithm/needle.html', context)
