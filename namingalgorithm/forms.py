@@ -9,5 +9,5 @@ class UserSubmissionForm(forms.ModelForm):
 
     class Meta:
         model = UserSubmission
-        fields = ['name', 'year', 'fastasequence', 'comment', 'email']
-        fields_required = ['name', 'year', 'fastasequence', 'email']
+        fields = ['name', 'year', 'sequence', 'comment', 'email']
+        fields_required = ['name', 'year', 'sequence', 'email']
