@@ -104,32 +104,24 @@ def run_bug(query_data):
             categories = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
             predicted_name = naming.rank4_naming(list(categories), name)
-            print(category)
-            print(predicted_name)
 
         elif float(empty[2]) >= 76 and float(empty[2]) <= 94.9:
             category = "76 to 94%"
             categories = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
             predicted_name = naming.rank3_naming(list(categories), name)
-            print(category)
-            print(predicted_name)
 
         elif float(empty[2]) >= 45 and float(empty[2]) <= 75.9:
             category = "45 to 75%"
             categories = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
             predicted_name = naming.rank2_naming(list(categories), name)
-            print(category)
-            print(predicted_name)
 
         elif float(empty[2]) >= 0 and float(empty[2]) <= 44.9:
             category = "0 to 44%"
             categories = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
             predicted_name = naming.rank1_naming(list(categories), name)
-            print(category)
-            print(predicted_name)
 
         else:
             pass
