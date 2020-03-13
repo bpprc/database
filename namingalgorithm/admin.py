@@ -17,12 +17,12 @@ class UserSubmissionAdmin(admin.ModelAdmin):
         'align_results',
         'create_data',
         'refresh',
-        )
+    )
 
     def run_align_link(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/run_naming_algorithm/?fulltextarea={0}&submission_id={1}" target="_blank">Run Align</a>'.format(obj.fastasequence,
-                           obj.id))
+        return format_html('<a href="/run_naming_algorithm/?fulltextarea={0}&submission_id={1}" target="_blank">Run Align</a>'.format(obj.sequence,
+                                                                                                                                      obj.id))
 
     def align_results(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
@@ -32,8 +32,8 @@ class UserSubmissionAdmin(admin.ModelAdmin):
 
     def create_data(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&fastasequence={1}" target="_blank">Create Data</a>'.format(obj.predict_name,
-                           obj.fastasequence))
+        return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&sequence={1}" target="_blank">Create Data</a>'.format(obj.predict_name,
+                                                                                                                                                   obj.sequence))
 
     def refresh(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
