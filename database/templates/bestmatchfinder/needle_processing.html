@@ -3,19 +3,17 @@
 {% load static %}
 {% block content %}
 <div class="in-progress-container">
-<h1> Your job is currently running... please be patient </h1>
+<h2> Your job is currently running... please be patient </h2>
 <br></br>
 <br></br>
-<h1> The result of your job will appear in this browser window</h1>
-<p> Job ID</p>
+<h2> The result of your job will appear in this browser window</h2>
 
 
       <div>
         {% if task_id %}
-        <p>task_status: {{task_status}} </p>
-        <p>task_id: <a href="{% url 'taskstatus_needle_celery' task_id=task_id %}">{{task_id}} </a></p>
-        <h1 class="subtitle has-text-centered" id="progress-title"></h1>
-        <p>task: {{task}} </p>
+
+        <p>Job ID: <a href="{% url 'taskstatus_needle_celery' task_id=task_id %}">{{task_id}} </a></p>
+        <h2 class="subtitle has-text-centered" id="progress-title"></h2>
         {% endif %}
       </div>
   </div>
@@ -63,7 +61,7 @@ function updateProgressTitle() {
   if (dots > 10) {
     dots = 1;
   }
-  progressTitle.innerHTML = 'processing images ';
+  progressTitle.innerHTML = 'processing alignment results';
   for (var i = 0; i < dots; i++) {
     progressTitle.innerHTML += '.';
   }
