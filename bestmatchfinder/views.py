@@ -9,11 +9,14 @@ import tempfile
 import textwrap
 from django.conf import settings
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from database.models import PesticidalProteinDatabase
 from bestmatchfinder.forms import SearchDatabaseForm, SequenceForm
 from bestmatchfinder import submit_single_sequence, submit_two_sequences
 from BPPRC.settings import TEMP_DIR, TEMP_LIFE
+
+from celery import current_app
+from .tasks import run_needle
 
 
 def bestmatchfinder_home(request):
@@ -40,6 +43,58 @@ def run_needle_server(request):
             return render(request, 'bestmatchfinder/needle.html', context)
         return render(request, 'bestmatchfinder/best_match_finder.html', {'form': form})
     return HttpResponseRedirect('/bestmatchfinder_home/')
+
+
+def run_needle_server_celery(request):
+    """This loads the bestmatchfinder homepage."""
+    if request.method == 'POST':
+        form = SequenceForm(request.POST)
+        if form.is_valid():
+            context = {}
+            protein = form.cleaned_data['sequence_in_form']
+            # align = submit_single_sequence.align.run_bug(protein)
+            print('protein file name', protein)
+
+            task = run_needle.delay(protein)
+            print('view task result', task)
+
+            context['task_id'] = task.id
+            context['task_status'] = task.status
+            context['task'] = task.info
+
+            return render(request, 'bestmatchfinder/needle_processing.html', context)
+
+        return render(request, 'bestmatchfinder/best_match_finder.html', {'form': form})
+    return HttpResponseRedirect('/bestmatchfinder_home/')
+
+
+def taskstatus_needle_celery(request, task_id):
+
+    if request.method == 'GET':
+        print("entering the function taskstatus")
+        task = current_app.AsyncResult(task_id)
+        print("taskStatus", task)
+        context = {'task_status': task.status,
+                   'task_id': task.id, 'task': task}
+
+        if task.status == 'SUCCESS':
+            context['align'] = task.get()
+            print(context)
+            return render(request, 'bestmatchfinder/needle.html', context)
+
+        elif task.status == 'PENDING':
+            context['results'] = task
+            return render(request, 'bestmatchfinder/needle_processing.html', context)
+
+
+def celery_task_status(request, task_id):
+
+    print("entering the function taskstatus")
+    task = current_app.AsyncResult(task_id)
+    print("taskStatus", task)
+    context = {'task_status': task.status,
+               'task_id': task.id}
+    return JsonResponse(context)
 
 
 def bestmatchfinder_database(request):
