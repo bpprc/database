@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="in-progress-container">
+<h2> Your job is currently running... please be patient </h2>
+<br></br>
+<br></br>
+<h2> The result of your job will appear in this browser window</h2>
+
+
+      <div>
+        {% if task_id %}
+
+        <p>Job ID: <a href="{% url 'taskstatus_clustal_celery' task_id=task_id %}">{{task_id}} </a></p>
+        <h2 class="subtitle has-text-centered" id="progress-title"></h2>
+        {% endif %}
+      </div>
+  </div>
+  <div class="task-completed-container">
+    <div class="align-text">
+    </div>
+  </div>
+
+
+{% endblock content %}
+
+{% block extrajs %}
+<script
+
+src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+
+<script>
+
+// JQuery
+
+var progressUrl =  "{% url 'celery_task_status_clustal' task_id=task_id %}" ;
+var refreshUrl = "{% url 'taskstatus_clustal_celery' task_id=task_id %}";
+var dots = 1;
+var progressTitle = document.getElementById('progress-title');
+updateProgressTitle();
+var timer = setInterval(function() {
+  updateProgressTitle();
+  axios.get(progressUrl)
+    .then(function(response){
+      var taskStatus = response.data.task_status
+      if (taskStatus === 'SUCCESS') {
+        window.location.href = refreshUrl;
+      } else if (taskStatus === 'FAILURE') {
+        clearTimer('An error occurred');
+      }
+    })
+    .catch(function(err){
+      console.log('err', err);
+      clearTimer('An error occurred');
+    });
+}, 800);
+
+function updateProgressTitle() {
+  dots++;
+  if (dots > 10) {
+    dots = 1;
+  }
+  progressTitle.innerHTML = 'processing alignment results';
+  for (var i = 0; i < dots; i++) {
+    progressTitle.innerHTML += '.';
+  }
+}
+function clearTimer(message) {
+  clearInterval(timer);
+  progressTitle.innerHTML = message;
+}
+</script>
+{% endblock extrajs %}

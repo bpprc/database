@@ -1,3 +1,9 @@
 from django.contrib import admin
+from clustalanalysis.models import StoreResultFiles
 
-# Register your models here.
+
+class StoreResultFilesAdmin(admin.ModelAdmin):
+    fields = ['taskid', 'tempfile', 'resultfile']
+
+
+admin.site.register(StoreResultFiles, StoreResultFilesAdmin)

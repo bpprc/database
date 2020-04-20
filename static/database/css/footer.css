@@ -1,0 +1,10 @@
+#footer {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    position: fixed;
+    height: $height-footer;
+    background-color: #5f788a transparent;
+    .footer-block {
+      margin: 40px 0;
+    }

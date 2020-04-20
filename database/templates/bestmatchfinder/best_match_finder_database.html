@@ -1,12 +1,13 @@
-{% extends "database/base.html" %}
+{% extends "base.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block extrahead %}
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
+<link rel="stylesheet" type="text/css" href="{% static 'database/css/bootstrap.min.css' %}">
 {% endblock extrahead %}
 
 {% block content %}
-{% load static %}
+
 
   <body>
 
@@ -31,7 +32,9 @@
 {% endblock content %}
 
 {% block extrajs %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+
+<script type="text/javascript" src="{% static 'database/js/chosen.jquery.min.js' %}"> </script>
+
 <script>
   $(document).ready(function() {
     $('#id_protein_id1').chosen();

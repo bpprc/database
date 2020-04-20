@@ -140,3 +140,7 @@ a.article-title:hover {
 .card-text {
     color:#1a0000;
 }
+
+.table-hover tr:hover {
+  background-color: #D2D2D2;
+}

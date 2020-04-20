@@ -128,7 +128,14 @@ dmypy.json
 .DS_Store
 
 # Ignore media files
-# /media/fastasequence_files/
+/media/fastasequence_files/
+/media/store_result_files/*
 
 # Migration files
-# **/**/migrations
+**/**/migrations
+
+#static files
+database/static/*
+
+#celery config file
+BPPRC/celery.conf

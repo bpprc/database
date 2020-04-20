@@ -1,0 +1,111 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'database/css/chosen.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'database/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'database/css/main.css' %}">
+
+    <title>Bacterial Pesticidal Protein Database </title>
+
+
+    {% block extrahead %}{% endblock %}
+
+   </head>
+<body>
+
+{% include "navbar.html" %}
+<br></br>
+<br></br>
+
+<title>Bacterial Pesticidal Protein Database </title>
+<br>
+<div class="app-container">
+{% block content %}
+
+{% endblock content %}
+</div>
+
+{% include "footer.html" %}
+
+    <!-- Optional JavaScript  jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery -->
+    <script type="text/javascript" src="{% static 'database/js/jquery-3.4.1.min.js' %}"> </script>
+
+    <!-- popper -->
+    <script type="text/javascript" src="{% static 'database/js/popper.min.js' %}"> </script>
+
+    <!-- bootstrap -->
+    <script type="text/javascript" src="{% static 'database/js/bootstrap.min.js' %}"> </script>
+
+  <!-- cart value -->
+  <script type="text/javascript">
+		function getCartValue() {
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			} else {  // code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange=function() {
+				if (this.readyState==4 && this.status==200) {
+					res = JSON.parse(this.responseText)
+					document.getElementById("cart-value").innerHTML = res['number_of_proteins'];
+				}
+			}
+			xmlhttp.open("GET","/cart_value/",true);
+			xmlhttp.send();
+			}
+		getCartValue()
+</script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-149878576-1"></script>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-149878576-1');
+</script>
+
+  <!-- cookie consent -->
+  <script type="text/javascript" src="{% static 'database/js/cookieconsent.min.js' %}" data-cfasync="false"> </script>
+
+  <script>
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#efefef",
+          "text": "#404040"
+        },
+        "button": {
+          "background": "#8ec760",
+          "text": "#ffffff"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "We use cookies to make sure you have a better experience on the site.",
+        "dismiss": "Got it!",
+        "href": "https://bpprc.org"
+      }
+    });
+  </script>
+
+  <script src="https://use.fontawesome.com/c1d9752ab9.js"></script>
+
+   {% block extrajs %}
+
+   {% endblock extrajs %}
+
+  </body>
+</html>

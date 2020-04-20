@@ -1,5 +1,6 @@
 """ """
 
+import re
 import textwrap
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
 from django.db import models
@@ -18,6 +19,8 @@ class PesticidalProteinPrivateDatabase(models.Model):
     year = models.CharField(max_length=5, blank=True, null=False)
     sequence = models.TextField(blank=True, null=False)
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
+    fastasequence_file = models.FileField(
+        upload_to='fastasequence_files/', null=True, blank=True)
 
 
 class PesticidalProteinDatabase(models.Model):
@@ -32,6 +35,7 @@ class PesticidalProteinDatabase(models.Model):
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
+    name_category = models.CharField(max_length=15, blank=True)
     # protein_metadata = PesticidalProteinDatabaseManager()
 
     class Meta:
@@ -45,6 +49,8 @@ class PesticidalProteinDatabase(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
+        self.name_category = re.search(
+            r"[A-Z][a-z]{2}\d{1,3}", self.name).group()
         # TODO clear out old file before saving new one?
         filename = 'fasta{}'.format(self.name)
         file_contents = '>{}\n{}\n'.format(self.name, self.sequence)
@@ -162,9 +168,9 @@ class Description(models.Model):
 class UserUploadData(models.Model):
     """
     """
-    session_key = models.CharField(max_length=40, default=None)
-    name = models.CharField(max_length=15, blank=True, null=False)
-    sequence = models.TextField(blank=True, null=False)
+    session_key = models.CharField(max_length=250, default=None)
+    name = models.CharField(max_length=250, null=True)
+    sequence = models.TextField(null=True)
 
 
 class FeedbackData(models.Model):

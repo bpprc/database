@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+{% block content %}
+					<div class="container">
+						<br>
+							<a href="{% url 'clear_session_database' %}" > Clear Session </a>
+							<br>
+								<form action="" id="analysis_form" name="database_id" method="POST">
+  							{% csrf_token %}
+
+									<table border="3" class="parent" width="60%">
+										<thead>
+											<tr>
+												<th>
+													<a href="{% url 'clear_session_database' %}"  class="fa fa-trash"></a>
+												</th>
+												<th>Name </th>
+												<th>Oldname </th>
+											</tr>
+        {% for protein in proteins %}
+        {% if protein.name in selected_groups %}
+
+											<tr>
+												<td>
+													<a href="/remove_cart/{{ protein.id }}"
+
+														<span class="fa fa-trash"></span>
+													</td>
+													<td>{{ protein.name }}</td>
+													<td>{{ protein.oldname }}</td>
+												</tr>
+        {% endif %}
+        {% endfor %}
+
+
+											</thead>
+										</table>
+									</form>
+									<br>
+										<br>
+											<br>
+												<b>Your sequences below </b>
+												<br>
+													<br>
+														<a href="{% url 'clear_session_user_data' %}" > Clear Session </a>
+														<br>
+															<table border="3" class="parent" width="65%">
+																<thead>
+																	<tr>
+																		<th>
+																			<a href="{% url 'clear_session_user_data' %}"  class="fa fa-trash"></a>
+																		</th>
+																		<th>Name </th>
+																	</tr>
+          {% for record in userdata %}
+
+																	<tr>
+																		<td>
+																			<a href="{% url 'user_data_remove' record.id %}"
+
+																				<span class="fa fa-trash"></span>
+																			</td>
+																			<td>{{ record.name }}</td>
+																		</tr>
+          {% endfor %}
+
+
+																	</thead>
+																</table>
+																<a href="{% url 'download_sequences' %}"> Download sequences </a>
+																<br>
+																	<br>
+									<b>Append your sequences to the analysis</b>
+									<form action="{% url 'user_data' %}" method="post">
+									{% csrf_token %}
+
+										<textarea name="fulltextarea" placeholder="Paste fasta sequence" rows="20" cols="85"></textarea>
+										<br/>
+										<br/>
+											<button type="submit" class="btn btn-secondary"> Add to Cart </button>
+										</form>
+
+											<br/>
+											<br/>
+											<form action="{% url 'domain_analysis' %}" method="post">
+												{% csrf_token %}
+											<br>
+											<br>
+											<input type="submit" class="btn btn-secondary" value="Submit to dendogram"/>
+											<br>
+											<br>
+											</form>
+
+{% endblock content %}
+
+
+{% block extrajs %}
+
+<!-- <script>
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  })();
+</script> -->
+
+<script>
+  $("#analysis_form").change(function() {
+    $(".xxx1:checkbox").attr('checked', this.checked);
+  });
+</script>
+
+{% endblock %}

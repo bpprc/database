@@ -20,47 +20,14 @@ from bokeh.models import HoverTool, LassoSelectTool, WheelZoomTool, PointDrawToo
 from bokeh.transform import cumsum
 from bokeh.embed import components
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
+from clustalanalysis.forms import AnalysisForm
 import pandas as pd
 from numpy import pi
 
 
 def home(request):
     """Loads the homepage."""
-    category_count = {}
-    category_holotype_count = {}
-    category_prefixes = []
-    total_holotype = 0
-
-    categories = \
-        PesticidalProteinDatabase.objects.order_by(
-            'name').values_list('name', flat=True).distinct()  # why you need flat=True
-
-    for category in categories:
-        cat = category[:3]
-        if category[-1] == '1' and not category[-2].isdigit():
-            total_holotype += 1
-            count = category_holotype_count.get(cat, 0)
-            count += 1
-            category_holotype_count[cat] = count
-
-    category_count['Holotype'] = total_holotype
-
-    for category in categories:
-        prefix = category[0:3]
-        if prefix not in category_prefixes:
-            category_prefixes.append(prefix)
-
-    for category in category_prefixes:
-        count = PesticidalProteinDatabase.objects.filter(
-            name__istartswith=category).count()
-        category_count[category] = [
-            count, category_holotype_count.get(category, 0)]
-
-    context = \
-        {'category_prefixes': category_prefixes,
-         'category_count': category_count, }
-
-    return render(request, 'database/home.html', context)
+    return render(request, 'database/home.html')
 
 
 def about_page(request):
@@ -99,10 +66,6 @@ def statistics(request):
         category_count[category] = [
             count, category_holotype_count.get(category, 0)]
 
-    # print(category_prefixes)
-    # print(category_count)
-    # print(type(category_prefixes))
-    # print(type(category_count))
     prefix_count_dictionary = {}
     for prefix in category_prefixes:
         prefix_count_dictionary[prefix] = category_count[prefix][0]
@@ -134,11 +97,12 @@ def statistics(request):
          'category_count': category_count,
          'script': script, 'div': div}
 
-    return render(request, 'database/statistics.html', context)
+    return render(request, 'clustalanalysis/statistics.html', context)
 
 
 def privacy_policy(request):
-    return render(request, 'database/privacy-policy.html', context)
+    """Loads the homepage."""
+    return render(request, 'extra/privacy-policy.html', context)
 
 
 def _sorted_nicely(l, sort_key=None):
@@ -216,12 +180,18 @@ def search_database(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
-
             query = form.cleaned_data['search_term']
             field_type = form.cleaned_data['search_fields']
 
             searches = re.split(r':|, ?|\s |\- |_ |. |; |\*|\n',
                                 query)
+            # categories = PesticidalProteinDatabase.objects.order_by(
+            #     'name').values_list('name').distinct()
+            show_extra_data = False
+            for search in searches:
+                if search[0:3].upper() == 'CRY':
+                    show_extra_data = True
+            print(show_extra_data)
 
             if field_type == 'name':
                 q_objects = Q()
@@ -229,12 +199,25 @@ def search_database(request):
                     q_objects.add(Q(name__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
+
+            elif field_type == 'name_category':
+                q_objects = Q()
+                for search in searches:
+                    if not search[-1].isdigit():
+                        q_objects.add(
+                            Q(name_category__istartswith=search), Q.OR)
+                    q_objects.add(Q(name_category__iexact=search), Q.OR)
+
+                proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
             elif field_type == 'oldname':
                 q_objects = Q()
                 for search in searches:
                     q_objects.add(Q(oldname__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
 
             elif field_type == 'accession':
                 q_objects = Q()
@@ -242,6 +225,7 @@ def search_database(request):
                     q_objects.add(Q(accession__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
 
             elif field_type == 'year':
                 q_objects = Q()
@@ -249,8 +233,16 @@ def search_database(request):
                     q_objects.add(Q(year__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
 
-            return render(request, 'database/search_results.html', {'proteins': proteins})
+            # for protein in categories:
+            #     print("pattern", type(protein))
+            #
+            #     if protein[0:3] == 'Cry':
+            #         return render(request, 'database/search_results1.html', {'proteins': proteins})
+            #     else:
+            #         return render(request, 'database/search_results.html', {'proteins': proteins})
+        return render(request, 'database/search_results.html', {'proteins': proteins, 'show_extra_data': show_extra_data})
     return HttpResponseRedirect('/search_database_home/')
 
 
@@ -259,6 +251,8 @@ def add_cart(request):
 
     if request.method == 'POST':
         selected_values = request.POST.getlist('name', [])
+        columns = request.POST.getlist('column-class', [])
+        print(columns)
         previously_selected_values = request.session.get('list_names', [])
         previously_selected_values.extend(selected_values)
 
@@ -308,24 +302,25 @@ def cart_value(request):
 
 def view_cart(request):
     """View the selected proteins in the session and user uploaded sequences."""
-
+    form = AnalysisForm()
     selected_values = request.session.get('list_names')
 
     userdata = \
         UserUploadData.objects.filter(session_key=request.session.session_key)
 
     context = {'proteins': PesticidalProteinDatabase.objects.all(),
-               'selected_groups': selected_values, 'userdata': userdata}
+               'selected_groups': selected_values, 'userdata': userdata,
+               'form': form}
     if selected_values:
         profile_length = len(selected_values)
         message_profile = "Selected {} proteins added to the cart".format(
             profile_length)
-        messages.success(request, message_profile)
+        # messages.success(request, message_profile)
     else:
         message_profile = "Please add sequences to the cart"
         messages.success(request, message_profile)
 
-    return render(request, 'database/search_user_data.html', context)
+    return render(request, 'database/search_user_data_update.html', context)
 
 
 def clear_session_user_data(request):
@@ -370,7 +365,7 @@ def user_data(request):
             sequence = str(rec.seq)
             UserUploadData.objects.create(
                 session_key=request.session.session_key,
-                name=name, fastasequence=sequence)
+                name=name, sequence=sequence)
         message_profile = "Added the user sequences"
         messages.info(request, message_profile)
 
@@ -525,7 +520,7 @@ def emailView(request):
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('success')
-    return render(request, "database/feedback.html", {'form': form})
+    return render(request, "extra/feedback.html", {'form': form})
 
 
 def successView(request):
@@ -535,17 +530,17 @@ def successView(request):
 def page_not_found(request, exception):
     """ Return 404 error page."""
 
-    return render(request, 'database/404.html', status=404)
+    return render(request, 'extra/404.html', status=404)
 
 
 def server_error(request):
     """ Return server error."""
 
-    return render(request, 'database/500.html', status=500)
+    return render(request, 'extra/500.html', status=500)
 
 
 def faq(request):
-    return render(request, 'database/faq.html')
+    return render(request, 'extra/faq.html')
 
 # def _delete_temp_files(path=TEMP_DIR, days=TEMP_LIFE):
 #     """

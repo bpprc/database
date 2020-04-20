@@ -26,11 +26,20 @@ def submit(request):
     """Submit the sequence for the naming purpose through user form."""
     if request.method == "POST":
         form = UserSubmissionForm(request.POST)
+        # print(form)
         if form.is_valid():
+            post = form.save()
+            post.save()
+
             # user_item = form.save()
-            form.save()
+            # form.save()
+            # print(form.errors)
             return render(request, 'namingalgorithm/view.html', {'form': form})
+        else:
+            print("Error in form")
+            print(form.errors)
     else:
+        print('hi')
         form = UserSubmissionForm()
 
     return render(request, 'namingalgorithm/submit.html', {'form': form})

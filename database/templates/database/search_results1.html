@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+	<form action="add_cart/" id="analysis_form" method="POST">
+  {% csrf_token %}
+
+
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>
+						<input type="checkbox" id="selectall" class="regular-checkbox"/>
+						<label for="selectall">
+						</th>
+						<th>Name </th>
+						<th>Oldname </th>
+						<th>Accession Number </th>
+						<th>Year </th>
+						<th>N terminal </th>
+						<th>Middle domain </th>
+						<th>C terminal</th>
+							{% for protein in proteins %}
+					</tr>
+					<tr>
+						<td>
+							<input type="checkbox" name="name" class="regular-checkbox name" value="{{ protein.name }}" />
+						</td>
+						<td>{{ protein.name }}</td>
+						<td>{{ protein.oldname }}</td>
+						<td>
+							<a href=" https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a>
+						</td>
+						<td>{{ protein.year }}</td>
+						<td>{{ protein.year }}</td>
+						<td>{{ protein.year }}</td>
+						<td>{{ protein.year }}</td>
+					</tr>
+      {% endfor %}
+
+
+				</thead>
+			</table>
+			<br>
+				<button type="submit" class="btn btn-secondary" > Add to Cart </button>
+				<br>
+					<br>
+						<br>
+							<br>
+							<input type="button" class="btn btn-secondary" value="Back" onclick="window.history.back()" />
+								<script type="text/javascript">
+
+  $(function () {
+      // add multiple select / deselect functionality
+      $("#selectall").click(function () {
+          $('.name').attr('checked', this.checked);
+      });
+
+      // if all checkbox are selected, then check the select all checkbox
+      // and viceversa
+      $(".name").click(function () {
+
+          if ($(".name").length == $(".name:checked").length) {
+              $("#selectall").attr("checked", "checked");
+          } else {
+              $("#selectall").removeAttr("checked");
+          }
+
+      });
+  });
+
+</script>
+							</form>
+
+{% endblock content %}

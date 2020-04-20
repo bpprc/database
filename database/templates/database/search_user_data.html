@@ -1,74 +1,65 @@
-{% extends "database/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
 
 {% block content %}
 
-
-<head>
-	<title>Home</title>
-	<meta Charset="utf-8" />
-	<link rel="stylesheet" type="text/css" href="{% static 'database/cc.css' %}">
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
-	</head>
-	<br> </br>
-	<br> </br>
-	<br> </br>
-				<body>
-					<div class="container">
-						<br>
-							<a href="{% url 'clear_session_database' %}" > Clear Session </a>
-							<br>
-								<form action="" id="analysis_form" name="database_id" method="POST">
-  {% csrf_token %}
-
-									<table border="3" class="parent" cellspacing="0" width="80%">
-										<thead>
-											<tr>
-												<th>
-													<a href="{% url 'clear_session_database' %}"  class="glyphicon glyphicon-trash"></a>
-												</th>
-												<th>Name </th>
-												<th>Oldname </th>
-												<th>Accession Number </th>
-											</tr>
-        {% for protein in proteins %}
-        {% if protein.name in selected_groups %}
-
-											<tr>
-												<td>
-													<a href="/remove_cart/{{ protein.id }}"
-
-														<span class="glyphicon glyphicon-trash"></span>
-													</td>
-													<td>{{ protein.name }}</td>
-													<td>{{ protein.oldname }}</td>
-													<td>
-														<a href=" https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a>
-													</td>
-												</tr>
-        {% endif %}
-        {% endfor %}
+<form action="search_database/add_cart/" id="analysis_form" method="POST">
+{% csrf_token %}
 
 
-											</thead>
-										</table>
-									</form>
-									<br>
-										<br>
-											<br>
-												<b>You uploaded the below sequences </b>
+	<table class="table table-nonfluid table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>
+					<a href="{% url 'clear_session_database' %}">
+						<span class="fa fa-trash"></span>
+					</a>
+				</th>
+				<th scope="col">No </th>
+				<th scope="col">Name </th>
+				<th scope="col">Oldname </th>
+				<th scope="col">Accession </th>
+			</tr>
+		</thead>
+	<tbody>
+		{% for protein in proteins %}
+		{% if protein.name in selected_groups %}
+
+				<tr>
+					<td>
+			        <a href="{% url 'remove_cart' protein.id %}">
+			          <span class="fa fa-trash"></span>
+			        </a>
+					</td>
+					<td> {{ forloop.counter }} </td>
+					<td> {{ protein.name }} </td>
+					<td>{{ protein.oldname }}</td>
+					<td>{{ protein.accession }}</td>
+				</tr>
+	{% endif %}
+	{% endfor %}
+
+		</tbody>
+		</table>
+		<br>
+		<br>
+		<br>
+		<br>
+	</form>
+
+	<b>Your sequences below </b>
 												<br>
 													<br>
 														<a href="{% url 'clear_session_user_data' %}" > Clear Session </a>
 														<br>
-															<table border="3" class="parent" cellspacing="0" width="65%">
+															<table border="3" class="parent" cellspacing="0" width="55%">
 																<thead>
 																	<tr>
 																		<th>
-																			<a href="{% url 'clear_session_user_data' %}"  class="glyphicon glyphicon-trash"></a>
+																			<a href="{% url 'clear_session_user_data' %}"  class="fa fa-trash"></a>
 																		</th>
 																		<th>Name </th>
-																		<th>Oldname </th>
 																	</tr>
           {% for record in userdata %}
 
@@ -76,10 +67,9 @@
 																		<td>
 																			<a href="{% url 'user_data_remove' record.id %}"
 
-																				<span class="glyphicon glyphicon-trash"></span>
+																				<span class="fa fa-trash"></span>
 																			</td>
 																			<td>{{ record.name }}</td>
-																			<td>-</td>
 																		</tr>
           {% endfor %}
 
@@ -93,7 +83,7 @@
 																		<form action="{% url 'user_data' %}" method="post">
       {% csrf_token %}
 
-																			<textarea name="fulltextarea" placeholder="Paste fasta sequence" rows="20" cols="85"></textarea>
+																			<textarea name="fulltextarea" placeholder="Paste fasta sequence" rows="10" cols="90"></textarea>
 																			<br/>
 																			<br/>
 																				<button type="submit" class="btn btn-secondary"> Add to Cart </button>
@@ -108,16 +98,12 @@
 											<br>
 											<br>
 											</form>
-
 {% endblock content %}
-																		</body>
-																	</html>
+
 
 {% block extrajs %}
 
-
-
-																	<script>
+<script>
   $("#analysis_form").change(function() {
     $(".xxx1:checkbox").attr('checked', this.checked);
   });

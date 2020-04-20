@@ -1,13 +1,9 @@
-{% extends "database/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block content %}
-
-<br> </br>
-<br> </br>
-<br> </br>
-
+<!doctype html>
 <div id="wrapper">
-  <p> <b> Download the fasta sequences by classification group </b> </p>
+  <p> <b> Download the fasta sequences by categories </b> </p>
       {% for description in descriptions %}
         <li>
             <a href="/download_category_{{ description.name|lower }}" >

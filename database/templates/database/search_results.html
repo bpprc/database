@@ -1,20 +1,13 @@
-{% extends "database/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block content %}
 
 
-
-<head>
-	<title>Home</title>
-	<meta Charset="utf-8" />
-	<link rel="stylesheet" type="text/css" href="{% static 'database/cc.css' %}">
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
-	</head>
 	<form action="add_cart/" id="analysis_form" method="POST">
   {% csrf_token %}
 
 
-		<table border="3" class="parent" cellspacing="0" width="100%">
+		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
 					<th>
@@ -25,10 +18,22 @@
 						<th>Oldname </th>
 						<th>Accession Number </th>
 						<th>Year </th>
+							{% if show_extra_data %}
+							<th>
+								<input type="checkbox" id="nterminal" class="regular-checkbox column-class"/>
+								<label for="selectall">N terminal
+								</th>
+							<th>
+								<input type="checkbox" id="middle-domain" class="regular-checkbox column-class"/>
+								<label for="selectall">Middle domain
+							</th>
+							<th>
+								<input type="checkbox" id="cterminal" class="regular-checkbox column-class"/>
+								<label for="selectall">C terminal
+							</th>
+							{% endif %}
 					</tr>
-        {% for protein in proteins %}
-
-
+					{% for protein in proteins %}
 					<tr>
 						<td>
 							<input type="checkbox" name="name" class="regular-checkbox name" value="{{ protein.name }}" />
@@ -39,6 +44,11 @@
 							<a href=" https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a>
 						</td>
 						<td>{{ protein.year }}</td>
+						{% if show_extra_data %}
+						<td> <input type="checkbox" name="nterminal" />N terminal </td>
+						<td>Middle domain</td>
+						<td>C terminal</td>
+						{% endif %}
 					</tr>
       {% endfor %}
 
@@ -52,12 +62,18 @@
 						<br>
 							<br>
 							<input type="button" class="btn btn-secondary" value="Back" onclick="window.history.back()" />
-								<script type="text/javascript">
+
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
+
+<script type="text/javascript">
 
   $(function () {
       // add multiple select / deselect functionality
       $("#selectall").click(function () {
           $('.name').attr('checked', this.checked);
+					$('.column-class').attr('checked', this.checked);
       });
 
       // if all checkbox are selected, then check the select all checkbox

@@ -1,18 +1,10 @@
-{% extends "database/base.html" %}
+{% extends "base.html" %}
 {% block content %}
 {% load static %}
 
 <br> </br>
-<br> </br>
-<br> </br>
-
-<head>
-	<title>Home</title>
-	<meta Charset="utf-8" />
-	<link rel="stylesheet" type="text/css" href="{% static 'database/cc.css' %}">
-	</head>
 	<div>
-	<span class="font-weight-bold">Pesticidal proteins are newly categorized into the following classes.</span>
+	<span class=" text-center font-weight-bold">Pesticidal proteins are newly categorized into the following classes.</span>
 	<br> </br>
 	</div>
 	<div id="wrapper">
@@ -31,13 +23,13 @@
 		<br> </br>
 		</ul>
 	</div>
+
+
 	<div class="clear-float"></div>
 	<div class="mt-2"></div>
 {% for description in descriptions %}
 	<div>
-		<span class="font-weight-bold">{{description.name}}:</span> <span class="font-weight-light"> {{description.description}} </span>
-		<br> </br>
-
+		<p <a class="text-left font-weight-bold">{{description.name}}:</a> <span class="font-weight-light"> {{description.description}} </span> </p>
 	</div>
 {% endfor %}
 

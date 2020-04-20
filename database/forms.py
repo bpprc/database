@@ -82,7 +82,7 @@ class SearchForm(forms.Form):
     #
     # choices=SEARCH_CHOICES)
     SEARCH_CHOICES = (
-        ('name', 'NAME'),
+        ('name_category', 'NAME_CATEGORY'),
         ('oldname', 'OLDNAME'),
         ('accession', 'ACCESSION'),
         ('year', 'YEAR'),
@@ -91,7 +91,10 @@ class SearchForm(forms.Form):
     search_term = forms.CharField(required=True)
     search_fields = forms.ChoiceField(choices=SEARCH_CHOICES, required=False, )
 
-    # search_form.widget.attrs.update(size='150')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['search_term'].error_messages = {
+            'required': 'Please type a protein name'}
 
     def clean_search_term(self):
         data = self.cleaned_data['search_term']

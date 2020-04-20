@@ -1,0 +1,80 @@
+
+<!--navbar -->
+<header class="site-header">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-steel fixed-top">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarToggle">
+					<div class="navbar-nav mr-auto">
+						<a class="nav-item nav-link" href="{% url 'home' %}">
+							<strong> 
+								</strong>
+							</a>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								BPPRC
+							</button>
+							<div class="dropdown-menu" aria-labelledby="Database">
+								<a class="dropdown-item" href="{% url 'about_page' %}">About</a>
+							</div>
+						</div>
+						<div class="dropdown">
+						  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    Database
+						  </button>
+						  <div class="dropdown-menu" aria-labelledby="Database">
+						    <a class="dropdown-item" href="{% url 'database' %}">Database</a>
+						    <a class="dropdown-item" href="{% url 'search_database' %}">Search</a>
+								<a class="dropdown-item" href="{% url 'download_data' %}">Download data</a>
+						  </div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								BestMatchFinder
+							</button>
+							<div class="dropdown-menu" aria-labelledby="BestMatchFinder">
+								<a class="dropdown-item" href="{% url 'bestmatchfinder_home' %}">Search by sequence</a>
+								<a class="dropdown-item" href="{% url 'bestmatchfinder_database' %}">Search using name</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Analysis
+							</button>
+							<div class="dropdown-menu" aria-labelledby="Analysis">
+								<a class="dropdown-item" href="{% url 'statistics' %}">Statistics</a>
+								<a class="dropdown-item" href="{% url 'dendogram_homepage2' %}">Dendogram</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Download & Install
+							</button>
+							<div class="dropdown-menu" aria-labelledby="Download & Install">
+								<a class="dropdown-item" target="_blank" href="https://github.com/Amrithasuresh/BPPRC">Github</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Older version
+							</button>
+							<div class="dropdown-menu" aria-labelledby="database">
+								<a class="dropdown-item" target="_blank" href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/">database</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Submit your sequence
+							</button>
+							<div class="dropdown-menu" aria-labelledby="database">
+								<a class="dropdown-item" target="_blank" href="{% url 'submit' %}">Submit your sequence to the database</a>
+							</div>
+						</div>
+						<div class="navbar-nav ml-auto mr-5">
+							<a class="nav-item nav-link" id="x" href="{% url 'view_cart' %}">Cart (<span id="cart-value" style="border-radius: 10px;"></span>)</a>
+						</div>
+				</div>
+		</nav>
+</header>

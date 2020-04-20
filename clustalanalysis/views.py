@@ -5,11 +5,12 @@ from django import forms
 from subprocess import Popen, PIPE
 from ete3 import Tree, TreeStyle, faces
 from Bio.Align.Applications import ClustalOmegaCommandline
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from Bio.Seq import Seq
 from Bio.Alphabet import IUPAC
 from django.contrib import messages
 from clustalanalysis.forms import AnalysisForm
+from clustalanalysis.models import StoreResultFiles
 from Bio import AlignIO
 import tempfile
 import textwrap
@@ -24,39 +25,62 @@ from Bio.SeqUtils.ProtParam import ProteinAnalysis
 import pandas as pd
 from numpy import pi
 
+from celery import current_app
+from clustalanalysis.tasks import create_tree
 
 
 def domain_analysis_homepage(request):
     """This loads the bestmatchfinder homepage."""
     form = AnalysisForm()
-    return render(request, 'clustalanalysis/domain_cry.html', {'form': form})
+    return render(request, 'clustalanalysis/dendogram_homepage.html', {'form': form})
 
-def domain_anlaysis(request):
+
+def domain_analysis(request):
     form = AnalysisForm()
     if request.method == 'POST':
         post_values = request.POST.copy()
-        post_values['session_list_names'] = request.session.get('list_names', [])
+        post_values['session_list_names'] = request.session.get(
+            'list_names', [])
+
+        proteins = UserUploadData.objects.filter(
+            session_key=request.session.session_key).values_list('id', flat=True)
+        post_values['proteins'] = ','.join(str(id) for id in proteins)
+        print(post_values)
+        #
+        # post_values['userdata'] = proteins
+
         form = AnalysisForm(post_values)
+
         if form.is_valid():
-            domain_type = form.cleaned_data.get('domain_type')
-            rooted_tree = form.save()
-            # rooted_tree = "tree"
+            # domain_type = form.cleaned_data.get('domain_type')
+            context = {}
+            inputfile, outputfile = form.save()
+            # print("inputfile", input_file)
+            # print("outputfile", output_file)
 
-            context = {
-                'tree' : rooted_tree
-            }
-            return render(request, 'clustalanalysis/domain_cry_tree.html', context)
-        print(form.errors)
-        context = {'form': form}
-        return render(request, 'clustalanalysis/domain_cry.html', context)
+            task = create_tree.delay(inputfile, outputfile)
+            #
+            context['task_id'] = task.id
+            context['task_status'] = task.status
 
-    return HttpResponseRedirect('/domain_analysis_homepage/')
+            return render(request, 'clustalanalysis/clustal_processing.html', context)
+        else:
+            print(form.errors)
+            return render(request, 'database/search_user_data_update.html', {'form': form.errors})
+
+    return render(request, 'database/search_user_data_update.html', form)
+
+
+def dendogram_homepage2(request):
+    """This loads the bestmatchfinder homepage."""
+    form = DendogramForm()
+    return render(request, 'clustalanalysis/dendogram_homepage.html', {'form': form})
 
 
 def dendogram_homepage(request):
     """This loads the bestmatchfinder homepage."""
     form = DendogramForm()
-    return render(request, 'clustalanalysis/dendogram_homepage.html', {'form': form})
+    return render(request, 'clustalanalysis/domain_cry_tree_d3js.html', {'form': form})
 
 
 def dendogram(request):
@@ -64,13 +88,11 @@ def dendogram(request):
     if request.method == 'POST':
         form = DendogramForm(request.POST)
         if form.is_valid():
-            # category_type = form.cleaned_data.get('category_type')
-            # print(category_type)
+
             rooted_tree = form.save()
-            # rooted_tree = "tree"
 
             context = {
-                'tree' : rooted_tree,
+                'tree': rooted_tree,
             }
             return render(request, 'clustalanalysis/dendogram.html', context)
 
@@ -80,12 +102,67 @@ def dendogram(request):
     return HttpResponseRedirect('/dendogram_homepage/')
 
 
+def dendogram_celery(request):
+    form = DendogramForm()
+    print('dendogram celery is running')
+    if request.method == 'POST':
+        form = DendogramForm(request.POST)
+        if form.is_valid():
+            context = {}
+            input_file, output_file, newlines = form.save()
+            # print("inputfile", input_file)
+            # print("outputfile", output_file)
+
+            task = create_tree.delay(input_file, output_file)
+
+            context['task_id'] = task.id
+            context['task_status'] = task.status
+            # context['newlines'] = newlines
+
+            return render(request, 'clustalanalysis/clustal_processing.html', context)
+
+        return render(request, 'clustalanalysis/dendogram_homepage.html', {'form': form})
+
+    return HttpResponseRedirect('/dendogram_homepage2/')
+
+
+def taskstatus_clustal_celery(request, task_id):
+
+    if request.method == 'GET':
+        # print("entering the function taskstatus")
+        task = current_app.AsyncResult(task_id)
+        # print("taskStatus", task)
+        context = {'task_status': task.status,
+                   'task_id': task.id, 'task': task}
+
+        if task.status == 'SUCCESS':
+            context['file'], created = StoreResultFiles.objects.get_or_create(
+                taskid=task.id, tempfile=task.get())
+            # context['file'] = StoreResultFiles.objects.filter(taskid=task.id)
+            # context['align'] = task.get()
+            # print(context)
+            return render(request, 'clustalanalysis/dendogram.html', context)
+
+        elif task.status == 'PENDING':
+            # context['results'] = task
+            return render(request, 'clustalanalysis/dendogram.html', context)
+
+
+def celery_task_status_clustal(request, task_id):
+
+    # print("entering the function taskstatus")
+    task = current_app.AsyncResult(task_id)
+    # print("taskStatus", task)
+    context = {'task_status': task.status,
+               'task_id': task.id}
+    return JsonResponse(context)
+
 
 def protein_analysis(request):
 
     categories = \
         PesticidalProteinDatabase.objects.order_by(
-            'name').values_list('name', flat=True).distinct() #why you need flat=True
+            'name').values_list('name', flat=True).distinct()  # why you need flat=True
 
     category_prefixes = []
     for category in categories:
@@ -97,13 +174,13 @@ def protein_analysis(request):
     dict_histo_category = {}
     for category in category_prefixes:
         fasta = ''
-        k = PesticidalProteinDatabase.objects.filter(name__istartswith=category)
+        k = PesticidalProteinDatabase.objects.filter(
+            name__istartswith=category)
         for s in k:
             fasta += s.fastasequence
         dict_fasta_category[category] = fasta
 
-
-    for key,value in dict_fasta_category.items():
+    for key, value in dict_fasta_category.items():
         x = ProteinAnalysis(value)
         k = x.get_amino_acids_percent()
         dict_m = {}
@@ -116,18 +193,19 @@ def protein_analysis(request):
     language = list(keys)
     counts = list(values)
 
-    for f,b in zip(language, counts):
+    for f, b in zip(language, counts):
         print(type(f))
-
 
     p = figure(x_range=language, plot_height=1000, plot_width=1000,
                toolbar_location="below", tools="pan, wheel_zoom, box_zoom, reset, hover, tap, crosshair")
 
-    source = ColumnDataSource(data=dict(language=language, counts=counts, color=Category20[20]))
+    source = ColumnDataSource(
+        data=dict(language=language, counts=counts, color=Category20[20]))
     p.add_tools(LassoSelectTool())
     p.add_tools(WheelZoomTool())
 
-    p.vbar(x='language', top='counts', width=0.8, color='color', legend_group="language", source=source)
+    p.vbar(x='language', top='counts', width=0.8, color='color',
+           legend_group="language", source=source)
     p.legend.orientation = "horizontal"
     p.legend.location = "top_center"
     p.y_range.start = 0
@@ -135,6 +213,6 @@ def protein_analysis(request):
     script, div = components(p)
 
     context = {
-               'script': script, 'div':div }
+        'script': script, 'div': div}
 
     return render(request, 'clustalanalysis/protein_analysis.html', context)
