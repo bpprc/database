@@ -10,27 +10,34 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
+					{% if show_extra_data %}
+					<th>
+						<input type="checkbox" id="selectall" class="regular-checkbox"/>
+						<label for="selectall">Full length
+					</th>
+					{% else %}
 					<th>
 						<input type="checkbox" id="selectall" class="regular-checkbox"/>
 						<label for="selectall">
-						</th>
+					</th>
+					{% endif %}
 						<th>Name </th>
 						<th>Oldname </th>
 						<th>Accession Number </th>
 						<th>Year </th>
 							{% if show_extra_data %}
 							<th>
-								<input type="checkbox" id="nterminal" class="regular-checkbox column-class"/>
-								<label for="selectall">N terminal
+								<input type="checkbox" id="domain1" class="regular-checkbox column-class1"/>
+								<label for="domain1">N terminal
 								</th>
-							<th>
-								<input type="checkbox" id="middle-domain" class="regular-checkbox column-class"/>
-								<label for="selectall">Middle domain
-							</th>
-							<th>
-								<input type="checkbox" id="cterminal" class="regular-checkbox column-class"/>
-								<label for="selectall">C terminal
-							</th>
+								<th>
+									<input type="checkbox" id="domain2" class="regular-checkbox column-class1"/>
+									<label for="domain2">Middle domain
+								</th>
+								<th>
+									<input type="checkbox" id="domain3" class="regular-checkbox column-class1"/>
+									<label for="domain3">C terminal
+								</th>
 							{% endif %}
 					</tr>
 					{% for protein in proteins %}
@@ -45,9 +52,11 @@
 						</td>
 						<td>{{ protein.year }}</td>
 						{% if show_extra_data %}
-						<td> <input type="checkbox" name="nterminal" />N terminal </td>
-						<td>Middle domain</td>
-						<td>C terminal</td>
+						<td> <input type="checkbox" name="nterminal" class="regular-checkbox nterminal" value="{{protein.name}}" />N terminal </td>
+
+						<td> <input type="checkbox" name="middle" class="regular-checkbox middle" value="{{protein.name}}" />middle domain </td>
+
+						<td> <input type="checkbox" name="cterminal" class="regular-checkbox cterminal" value="{{protein.name}}"  />C terminal </td>
 						{% endif %}
 					</tr>
       {% endfor %}
@@ -73,11 +82,8 @@
       // add multiple select / deselect functionality
       $("#selectall").click(function () {
           $('.name').attr('checked', this.checked);
-					$('.column-class').attr('checked', this.checked);
       });
 
-      // if all checkbox are selected, then check the select all checkbox
-      // and viceversa
       $(".name").click(function () {
 
           if ($(".name").length == $(".name:checked").length) {
@@ -90,6 +96,68 @@
   });
 
 </script>
-							</form>
+<script>
+
+  $(function () {
+      // add multiple select / deselect functionality
+      $("#domain1").click(function () {
+					$('.nterminal').attr('checked', this.checked);
+      });
+
+      $(".nterminal").click(function () {
+
+          if ($(".nterminal").length == $(".nterminal:checked").length) {
+              $("#domain1").attr("checked", "checked");
+          } else {
+              $("#domain1").removeAttr("checked");
+          }
+
+      });
+  });
+
+</script>
+
+<script>
+
+  $(function () {
+      // add multiple select / deselect functionality
+      $("#domain2").click(function () {
+					$('.middle').attr('checked', this.checked);
+      });
+
+      $(".middle").click(function () {
+
+          if ($(".middle").length == $(".middle:checked").length) {
+              $("#domain2").attr("checked", "checked");
+          } else {
+              $("#domain2").removeAttr("checked");
+          }
+
+      });
+  });
+
+</script>
+
+<script>
+
+  $(function () {
+      // add multiple select / deselect functionality
+      $("#domain3").click(function () {
+					$('.cterminal').attr('checked', this.checked);
+      });
+
+      $(".cterminal").click(function () {
+
+          if ($(".cterminal").length == $(".cterminal:checked").length) {
+              $("#domain3").attr("checked", "checked");
+          } else {
+              $("#domain3").removeAttr("checked");
+          }
+
+      });
+  });
+
+</script>
+</form>
 
 {% endblock content %}

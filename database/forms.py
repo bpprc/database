@@ -98,6 +98,7 @@ class SearchForm(forms.Form):
 
     def clean_search_term(self):
         data = self.cleaned_data['search_term']
+        print(data)
 
         if data is None:
             raise ValidationError(

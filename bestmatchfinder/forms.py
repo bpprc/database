@@ -7,6 +7,7 @@ from Bio import Seq
 from Bio.Alphabet.IUPAC import IUPACProtein, IUPACAmbiguousDNA
 from Bio.Alphabet import IUPAC, ProteinAlphabet
 from database.models import PesticidalProteinDatabase
+from crispy_forms.helper import FormHelper
 
 
 ALLOWED_AMINOACIDS = set(IUPACProtein.letters)
@@ -96,8 +97,8 @@ class SearchDatabaseForm(forms.Form):
         queryset=PesticidalProteinDatabase.objects.all(), required=False)
     sequence2_in_form = forms.CharField(
         widget=forms.Textarea, required=False, label="protein sequence")
-    tool = forms.ChoiceField(
-        choices=[('needle', 'Needle'), ('blast', 'BLAST')])
+    tool = forms.ChoiceField(required=False,
+                             choices=[('needle', 'Needle'), ('blast', 'BLAST')])
 
     def clean_sequence1_in_form(self):
 

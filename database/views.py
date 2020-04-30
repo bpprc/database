@@ -250,17 +250,34 @@ def add_cart(request):
     """Add the profiles to the cart."""
 
     if request.method == 'POST':
+
         selected_values = request.POST.getlist('name', [])
-        columns = request.POST.getlist('column-class', [])
-        print(columns)
         previously_selected_values = request.session.get('list_names', [])
         previously_selected_values.extend(selected_values)
-
         request.session['list_names'] = previously_selected_values
-        profile_length = len(selected_values)
-        message_profile = \
-            "Selected {} proteins added to the cart".format(profile_length)
-        messages.success(request, message_profile)
+
+        selected_nterminal = request.POST.getlist('nterminal', [])
+        previously_selected_nterminal = request.session.get(
+            'list_nterminal', [])
+        previously_selected_nterminal.extend(selected_nterminal)
+        request.session['list_nterminal'] = previously_selected_nterminal
+
+        selected_middle = request.POST.getlist('middle', [])
+        previously_selected_middle = request.session.get('list_middle', [])
+        previously_selected_middle.extend(selected_middle)
+        request.session['list_middle'] = previously_selected_middle
+
+        selected_cterminal = request.POST.getlist('cterminal', [])
+        previously_selected_cterminal = request.session.get(
+            'list_cterminal', [])
+        previously_selected_cterminal.extend(selected_cterminal)
+        request.session['list_cterminal'] = previously_selected_cterminal
+        # print("list_cterminal", request.session['list_cterminal'])
+
+        # profile_length = len(selected_values)
+        # message_profile = \
+        #     "Selected {} proteins added to the cart".format(profile_length)
+        # messages.success(request, message_profile)
 
     return redirect("search_database")
 
@@ -293,6 +310,7 @@ def remove_cart(request, database_id):
 
 def cart_value(request):
     selected_values = request.session.get('list_names')
+
     if selected_values:
         number_of_proteins = len(selected_values)
         return HttpResponse(json.dumps({'number_of_proteins': number_of_proteins}), content_type='application/json')
@@ -304,6 +322,9 @@ def view_cart(request):
     """View the selected proteins in the session and user uploaded sequences."""
     form = AnalysisForm()
     selected_values = request.session.get('list_names')
+    # selected_nterminal = request.session.get('list_nterminal')
+    # selected_middle = request.session.get('list_middle')
+    # selected_cterminal = request.session.get('list_cterminal')
 
     userdata = \
         UserUploadData.objects.filter(session_key=request.session.session_key)
@@ -311,14 +332,14 @@ def view_cart(request):
     context = {'proteins': PesticidalProteinDatabase.objects.all(),
                'selected_groups': selected_values, 'userdata': userdata,
                'form': form}
-    if selected_values:
-        profile_length = len(selected_values)
-        message_profile = "Selected {} proteins added to the cart".format(
-            profile_length)
-        # messages.success(request, message_profile)
-    else:
-        message_profile = "Please add sequences to the cart"
-        messages.success(request, message_profile)
+    # if selected_values:
+    #     profile_length = len(selected_values)
+    #     message_profile = "Selected {} proteins added to the cart".format(
+    #         profile_length)
+    #     # messages.success(request, message_profile)
+    # else:
+    #     message_profile = "Please add sequences to the cart"
+    #     messages.success(request, message_profile)
 
     return render(request, 'database/search_user_data_update.html', context)
 

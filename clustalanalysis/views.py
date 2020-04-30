@@ -41,18 +41,27 @@ def domain_analysis(request):
         post_values = request.POST.copy()
         post_values['session_list_names'] = request.session.get(
             'list_names', [])
+        post_values['session_list_nterminal'] = request.session.get(
+            'list_nterminal', [])
+        post_values['session_list_middle'] = request.session.get(
+            'list_middle', [])
+        post_values['session_list_cterminal'] = request.session.get(
+            'list_cterminal', [])
 
-        proteins = UserUploadData.objects.filter(
+        userdataids = UserUploadData.objects.filter(
             session_key=request.session.session_key).values_list('id', flat=True)
-        post_values['proteins'] = ','.join(str(id) for id in proteins)
-        print(post_values)
+
+        post_values['userdataids'] = ','.join(
+            str(id) for id in userdataids)
+
         #
         # post_values['userdata'] = proteins
 
         form = AnalysisForm(post_values)
 
         if form.is_valid():
-            # domain_type = form.cleaned_data.get('domain_type')
+            userdataids = form.cleaned_data['userdataids']
+
             context = {}
             inputfile, outputfile = form.save()
             # print("inputfile", input_file)

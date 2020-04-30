@@ -10,11 +10,20 @@
   <br>
   <h3> Proteins will only get a name if they are derived from a bacterium and satisfies one of the criteria </h3>
   <br>
-  <h5> <li> Have >95% identity to an existing named protein</li> </h5>
+  <h5> <li> Have >95% identity to an existing named protein (or)</li> </h5>
   <h5> <li> Have demonstrated activity against a target pest organism</li></ul> </h5>
   <br>
   <br>
+
+  <form action="{% url 'submit' %}" method="POST">
+  {% csrf_token %}
   {% crispy form %}
+
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <div class="g-recaptcha" data-sitekey="6LcYKegUAAAAAIw_AyIzUkwe8BMFeAJCzBaUdpOW"></div>
+
+  <button type="submit" class="btn btn-primary">Post</button>
+  </form>
 
 
 {% endblock content %}
@@ -34,14 +43,11 @@ $(function() {
     console.log($(this).val());
     if ($(this).val() === 'True') {
         $('#id_sourcebacterium_textbox').parent().parent().show();
-        $('#id_taxonid label').parent().parent().show();
     } else {
       $('#id_sourcebacterium_textbox').parent().parent().hide();
-      $('#id_taxonid label').parent().parent().hide();
     }
   });
   $('#id_sourcebacterium_textbox').parent().parent().hide();
-  $('#id_taxonid label').parent().parent().hide();
 });
 </script>
 
@@ -51,11 +57,14 @@ $(function() {
     console.log($(this).val());
     if ($(this).val() === 'True') {
         $('#id_bacterium_textbox').parent().parent().show();
+        $('#id_taxonid').parent().parent().show();
     } else {
-      $('#id_bacterium_textbox').parent().parent().hide();
+      $('#id_bacterium_textbox').parent().parent().show();
+      $('#id_taxonid').parent().parent().hide();
     }
   });
-  $('#id_bacterium_textbox').parent().parent().hide();
+  $('#id_bacterium_textbox').parent().parent().show();
+  $('#id_taxonid').parent().parent().hide();
 });
 </script>
 

@@ -3,7 +3,7 @@
 from django import forms
 from .models import UserSubmission
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Row, Column
+from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
 
 RECAPTCHA_PUBLIC_KEY = "6Leqs7UUAAAAAKB3sQiwP-s09lzzu6OGXNyAB4nJ"
 
@@ -82,7 +82,7 @@ class UserSubmissionForm(forms.ModelForm):
     partnerprotein_textbox = forms.CharField(
         label='Partner Protein Name',
         widget=forms.TextInput(
-            attrs={'placeholder': 'Cadherins'}),
+            attrs={'placeholder': ''}),
         required=False
     )
 
@@ -131,15 +131,13 @@ class UserSubmissionForm(forms.ModelForm):
 
         # self.fields['toxic'].label = 'Toxic to'
         self.helper = FormHelper()
-        self.helper.form_id = 'id-UserSubmissionForm'
-        self.helper.form_class = 'UserSubmissionForm'
-        self.helper.form_method = 'post'
-        self.helper.form_action = 'submit'
-        self.helper.add_input(Submit('submit', 'Submit'))
+        # self.helper.form_id = 'id-UserSubmissionForm'
+        # self.helper.form_class = 'UserSubmissionForm'
+        # self.helper.form_method = 'post'
+        # self.helper.form_action = 'submit'
+        # self.helper.add_input(Submit('submit', 'Submit'))
 
         self.helper.layout = Layout(
-            # HTML('<div class="form-group"><idv class="g-recaptcha" data-sitekey="%s"></div></div>' %
-            #      RECAPTCHA_PUBLIC_KEY),
             Row(
                 Column('submittersname',
                        css_class='form-group col-md-6 mb-0'),
@@ -169,6 +167,7 @@ class UserSubmissionForm(forms.ModelForm):
                 css_class='form-row'
             ),
             'dnasequence',
+            'proteinsequence',
             Row(
                 Column('partnerprotein',
                        css_class='form-group col-md-3 mb-0'),
@@ -180,7 +179,12 @@ class UserSubmissionForm(forms.ModelForm):
             'nontoxic',
             'pdbcode',
             'publication',
-            'comment'
+            'comment',
+            # HTML('<div class="form-group col-md-6"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %
+            #      RECAPTCHA_PUBLIC_KEY),
+            # ButtonHolder(
+            #     Submit('submit', 'Submit')
+            # )
 
         )
 
