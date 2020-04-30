@@ -151,8 +151,8 @@ class ProteinDetail(models.Model):
         sequence = self.sequence
         return sequence[int(self.start_C):int(self.end_C)]
 
-    def fulllength(self):
-        return self.sequence
+    # def fulllength(self):
+    #     return self.sequence
 
 
 class Description(models.Model):
