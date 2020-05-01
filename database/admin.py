@@ -82,7 +82,8 @@ class DescriptionAdmin(ImportExportModelAdmin):
 
 
 class ProteinDetailAdmin(admin.ModelAdmin):
-    search_fields = ['accession']
+    search_fields = ['accession', 'start_N', 'end_N',
+                     'start_M', 'end_M', 'start_C', 'end_C']
 
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '20'})},
