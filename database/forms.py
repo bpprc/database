@@ -1,7 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from Bio.Alphabet.IUPAC import IUPACProtein
-from .models import PesticidalProteinDatabase, FeedbackData
+from .models import PesticidalProteinDatabase, Description
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 ALLOWED_AMINOACIDS = set(IUPACProtein.letters)
 # ALLOWED_NUCLEOTIDE = set(IUPACAmbiguousDNA.letters)
@@ -98,7 +100,6 @@ class SearchForm(forms.Form):
 
     def clean_search_term(self):
         data = self.cleaned_data['search_term']
-        print(data)
 
         if data is None:
             raise ValidationError(
@@ -123,22 +124,76 @@ class UserSubmittedSequenceAnalysis(forms.ModelForm):
         fields = ['name', 'sequence']
 
 
-class FeedbackDataForm(forms.ModelForm):
+class DownloadForm(forms.Form):
 
-    class Meta:
-        model = FeedbackData
-        fields = ['from_email', 'subject', 'message']
+    category_type = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        choices='',
+        label='',
+        required=True
+    )
 
+    def __init__(self, *args, **kwargs):
+        super(DownloadForm, self).__init__(*args, **kwargs)
 
-# class TaxoForm(forms.Form):
-#     OPTIONS = (
-#         ('n-terminal domain', 'N-TERMINAL DOMAIN'),
-#         ('c-terminal domain', 'C-TERMINAL DOMAIN'),
-#         ('m-terminal domain', 'M-TERMINAL DOMAIN'),
-#         ('full length', 'FULL LENGTH'),
-#     )
-    # domain_type = forms.CharField(widget=forms.Select(choices=OPTIONS))
-    # domain_type = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=OPTIONS)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-download'
+        self.helper.form_class = 'downloadforms'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'category_download'
+
+        self.helper.add_input(Submit('submit', 'Download'))
+
+        categories = \
+            PesticidalProteinDatabase.objects.order_by(
+                'name').values_list('name', flat=True)
+        description = Description.objects.order_by(
+            'name')
+
+        self.category_prefixes = {}
+        self.category_description = {}
+        self.category_options = [('all', 'ALL')]
+        for category in categories:
+            prefix = category[0:3]
+            self.category_prefixes[prefix.lower()] = prefix.upper()
+
+        # for detail in description:
+        #     for option in self.category_options:
+        #         if detail.name.lower() == max(option):
+        #             print(option)
+        for key, value in self.category_prefixes.items():
+            for detail in description:
+                if detail.name.lower() == key.lower():
+                    self.category_description[key.lower(
+                    )] = value + "      :  " + detail.description
+
+        self.category_options.extend(
+            sorted(self.category_description.items(), key=lambda x: x[0][:3]))
+        self.fields['category_type'].choices = self.category_options
+        self.fields['category_type'].label = ''
+
+    def clean_category_type(self):
+        category_type = self.cleaned_data['category_type']
+
+    # def save(self):
+    #     context = {
+    #         'proteins': PesticidalProteinDatabase.objects.all()
+    #     }
     #
-    # Bacillus cereus - 1396
-    # Bacillus subtilis - 1423
+    #     file = StringIO()
+    #     data = list(context.get('proteins'))
+    #
+    #     for item in data:
+    #         if item.name[:3].lower() in str(category_type):
+    #             fasta = textwrap.fill(item.sequence, 80)
+    #             str_to_write = f">{item.name}\n{fasta}\n"
+    #             file.write(str_to_write)
+    #
+    #     if 'all' in category_type:
+    #         for item in data:
+    #             fasta = textwrap.fill(item.sequence, 80)
+    #             str_to_write = f">{item.name}\n{fasta}\n"
+    #             file.write(str_to_write)
+    #
+    #     download_file = f"{'_'.join(category_type)}_fasta_sequences.txt"
+    #     return download_file

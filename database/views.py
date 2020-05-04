@@ -13,7 +13,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail
-from database.forms import FeedbackDataForm, SearchForm
+from database.forms import SearchForm, DownloadForm
 from bokeh.plotting import figure, output_file, show
 from bokeh.palettes import Category20c, Spectral6, Category20
 from bokeh.models import HoverTool, LassoSelectTool, WheelZoomTool, PointDrawTool, ColumnDataSource
@@ -43,8 +43,7 @@ def statistics(request):
 
     categories = \
         PesticidalProteinDatabase.objects.order_by(
-            'name').values_list('name', flat=True).distinct()  # why you need flat=True
-
+            'name').values_list('name', flat=True).distinct()
     for category in categories:
         cat = category[:3]
         if category[-1] == '1' and not category[-2].isdigit():
@@ -70,8 +69,6 @@ def statistics(request):
     for prefix in category_prefixes:
         prefix_count_dictionary[prefix] = category_count[prefix][0]
 
-    # prefix_count_dictionary = dict(zip(category_prefixes, category_count))
-    # print(prefix_count_dictionary)
     prefix_count_dictionary.pop('Holotype', None)
 
     data = pd.Series(prefix_count_dictionary).reset_index(
@@ -81,10 +78,6 @@ def statistics(request):
 
     p = figure(plot_height=600, plot_width=800, title="Pie Chart", toolbar_location=None,
                tools="hover", tooltips="@category: @value")
-
-    # p.wedge(x=0, y=1, radius=0.4,
-    #         start_angle=cumsum('angle', include_zero=True), end_angle=cumsum('angle'),
-    #         line_color="royalblue", fill_color='color', legend_group='category', source=data)
 
     p.wedge(x=0, y=1, radius=0.4,
             start_angle=cumsum('angle', include_zero=True), end_angle=cumsum('angle'),
@@ -148,27 +141,6 @@ def database(request):
          'descriptions': Description.objects.all()}
     return render(request, 'database/database.html', context)
 
-    # if request.method == 'POST':
-    #     form = SearchForm(search_term=request.POST)
-    #
-    #     if search_form.is_valid():
-    #         search_term = form.cleaned_data['search_term']
-
-# def search_database_home(request):
-#     form = SearchForm()
-#     return render(request, 'database/search_page_update.html', {'form': form})
-#
-# def search_database(request):
-#     if request.method == 'POST':
-#         form = SearchForm(request.POST)
-#         if form.is_valid():
-#             keyword = form.cleaned_data['search_term']
-#             print(keyword)
-#
-#             return render(request, 'database/search_page_update.html', form)
-#
-#     return HttpResponseRedirect('/search_database_home/')
-
 
 def search_database_home(request):
     form = SearchForm()
@@ -185,8 +157,7 @@ def search_database(request):
 
             searches = re.split(r':|, ?|\s |\- |_ |. |; |\*|\n',
                                 query)
-            # categories = PesticidalProteinDatabase.objects.order_by(
-            #     'name').values_list('name').distinct()
+
             show_extra_data = False
             for search in searches:
                 if search[0:3].upper() == 'CRY':
@@ -235,13 +206,6 @@ def search_database(request):
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
-            # for protein in categories:
-            #     print("pattern", type(protein))
-            #
-            #     if protein[0:3] == 'Cry':
-            #         return render(request, 'database/search_results1.html', {'proteins': proteins})
-            #     else:
-            #         return render(request, 'database/search_results.html', {'proteins': proteins})
         return render(request, 'database/search_results.html', {'proteins': proteins, 'show_extra_data': show_extra_data})
     return HttpResponseRedirect('/search_database_home/')
 
@@ -272,12 +236,6 @@ def add_cart(request):
             'list_cterminal', [])
         previously_selected_cterminal.extend(selected_cterminal)
         request.session['list_cterminal'] = previously_selected_cterminal
-        # print("list_cterminal", request.session['list_cterminal'])
-
-        # profile_length = len(selected_values)
-        # message_profile = \
-        #     "Selected {} proteins added to the cart".format(profile_length)
-        # messages.success(request, message_profile)
 
     return redirect("search_database")
 
@@ -355,9 +313,6 @@ def clear_session_user_data(request):
 
 def user_data_remove(request, id):
     """Remove the user uploaded proteins individually"""
-
-    # delte older temp files
-    # _delete_temp_files(path=TEMP_DIR, days=TEMP_LIFE)
 
     instance = \
         UserUploadData.objects.get(session_key=request.session.session_key,
@@ -495,6 +450,45 @@ def download_category(request, category=None):
     return response
 
 
+def category_form(request):
+    form = DownloadForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'database/download_form.html', context)
+
+
+def category_download(request):
+    if request.method == 'POST':
+        categories = request.POST.getlist('category_type')
+
+        context = {
+            'proteins': PesticidalProteinDatabase.objects.all()
+        }
+
+        file = StringIO()
+        data = list(context.get('proteins'))
+
+        for item in data:
+            if item.name[:3].lower() in str(categories):
+                fasta = textwrap.fill(item.sequence, 80)
+                str_to_write = f">{item.name}\n{fasta}\n"
+                file.write(str_to_write)
+
+        if 'All' in categories:
+            for item in data:
+                fasta = textwrap.fill(item.sequence, 80)
+                str_to_write = f">{item.name}\n{fasta}\n"
+                file.write(str_to_write)
+
+        response = HttpResponse(file.getvalue(), content_type="text/plain")
+        download_file = f"{'_'.join(categories)}_fasta_sequences.txt"
+        response['Content-Disposition'] = 'attachment;filename=' + download_file
+        response['Content-Length'] = file.tell()
+        return response
+
+
 def protein_detail(request, name):
 
     data = PesticidalProteinDatabase.objects.filter(name=name).first()
@@ -527,27 +521,6 @@ def protein_detail(request, name):
     return render(request, 'database/protein_detail.html', context)
 
 
-def emailView(request):
-    if request.method == 'GET':
-        form = FeedbackDataForm()
-    else:
-        form = FeedbackDataForm(request.POST)
-        if form.is_valid():
-            subject = form.cleaned_data['subject']
-            from_email = form.cleaned_data['from_email']
-            message = form.cleaned_data['message']
-            try:
-                send_mail(subject, message, from_email, ['admin@example.com'])
-            except BadHeaderError:
-                return HttpResponse('Invalid header found.')
-            return redirect('success')
-    return render(request, "extra/feedback.html", {'form': form})
-
-
-def successView(request):
-    return HttpResponse('Success! Thank you for your message.')
-
-
 def page_not_found(request, exception):
     """ Return 404 error page."""
 
@@ -562,26 +535,3 @@ def server_error(request):
 
 def faq(request):
     return render(request, 'extra/faq.html')
-
-# def _delete_temp_files(path=TEMP_DIR, days=TEMP_LIFE):
-#     """
-#     Delete older temp files based on TEMP_DIR and TEMP_LIFE.
-#     Please change the number of days in the BPPRC.settings files
-#     """
-#     import time
-#
-#     current_time = time.time()
-#
-#     for file in os.listdir(path):
-#         file = os.path.join(path, file)
-#         if os.stat(file).st_mtime < current_time - days * 86400:
-#             os.remove(file)
-
-
-def _get_current_date():
-
-    import datetime
-
-    now = datetime.datetime.now()
-
-    return str(str(now.year) + str(now.month).zfill(2) + str(now.day).zfill(2))
