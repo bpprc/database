@@ -7,7 +7,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
 # from crispy_forms.bootstrap import AppendedText
 
-RECAPTCHA_PUBLIC_KEY = "6LcYKegUAAAAAIw_AyIzUkwe8BMFeAJCzBaUdpOW"
+RECAPTCHA_PUBLIC_KEY = "6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT"
 
 
 # class CustomToxinBox(Field):
