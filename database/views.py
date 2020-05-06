@@ -471,16 +471,16 @@ def category_download(request):
         data = list(context.get('proteins'))
 
         for item in data:
-            if item.name[:3].lower() in str(categories):
+            if 'All' in categories or item.name[:3].lower() in str(categories):
                 fasta = textwrap.fill(item.sequence, 80)
                 str_to_write = f">{item.name}\n{fasta}\n"
                 file.write(str_to_write)
 
-        if 'All' in categories:
-            for item in data:
-                fasta = textwrap.fill(item.sequence, 80)
-                str_to_write = f">{item.name}\n{fasta}\n"
-                file.write(str_to_write)
+        # if :
+        #     for item in data:
+        #         fasta = textwrap.fill(item.sequence, 80)
+        #         str_to_write = f">{item.name}\n{fasta}\n"
+        #         file.write(str_to_write)
 
         response = HttpResponse(file.getvalue(), content_type="text/plain")
         download_file = f"{'_'.join(categories)}_fasta_sequences.txt"

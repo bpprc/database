@@ -23,7 +23,20 @@
 
 {% endblock extrahead %}
 
-{% block extrajs %}
 
+{% block extrajs %}
+<script>
+$('#id_category_type_1').click(function() {
+   if(this.checked) {
+       $(':checkbox').each(function() {
+           this.checked = true;
+       });
+   } else {
+      $(':checkbox').each(function() {
+           this.checked = false;
+       });
+   }
+});
+</script>
 
 {% endblock extrajs %}
