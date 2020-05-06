@@ -48,7 +48,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'proteindatabase_test',
+            'NAME': 'proteindatabase',
             'USER': 'suresh',
             'PASSWORD': 'pannerselvam123',
             'HOST': 'localhost',
