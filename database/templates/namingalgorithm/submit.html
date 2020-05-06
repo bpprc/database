@@ -4,7 +4,7 @@
 {% block content %}
 
 
-  <h1 class="text-center list-unstyled"> <ul> Submit your sequence to the database</h1>
+  <h1 class="text-center list-unstyled"> <ul> Naming</h1>
   <br>
   <br>
   <br>
@@ -15,15 +15,12 @@
   <br>
   <br>
 
-  <form action="{% url 'submit' %}" method="POST">
-  {% csrf_token %}
+  <!-- <form action="{% url 'submit' %}" method="POST"> -->
+  <!-- {% csrf_token %} -->
   {% crispy form %}
 
-  <script src='https://www.google.com/recaptcha/api.js'></script>
-  <div class="g-recaptcha" data-sitekey="6LcYKegUAAAAAIw_AyIzUkwe8BMFeAJCzBaUdpOW"></div>
-
-  <button type="submit" class="btn btn-primary">Post</button>
-  </form>
+  <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+  <!-- </form> -->
 
 
 {% endblock content %}
@@ -31,12 +28,20 @@
 
 
 {% block extrajs %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
 <script>
 $(function() {
   $('#div_id_taxonid').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' target='_blank'> Where can I find taxonid?</a>")
 });
-
 </script>
+
+<script>
+$(function() {
+  $('').append("<a href='#'> class='glyphicon glyphicon-plus'</a>")
+});
+</script>
+
 <script>
 $(function() {
     $('input[name="sourcebacterium"]').change(function(obj) {
@@ -66,6 +71,10 @@ $(function() {
   $('#id_bacterium_textbox').parent().parent().show();
   $('#id_taxonid').parent().parent().hide();
 });
+</script>
+
+<script>
+  document.getElementById('#id_bacterium_textbox').innerHTML = 'Your tip has been submitted!';
 </script>
 
 <script>

@@ -1,11 +1,17 @@
 """Sequence submission form."""
 
 from django import forms
+from django.forms import modelformset_factory
 from .models import UserSubmission
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
+# from crispy_forms.bootstrap import AppendedText
 
-RECAPTCHA_PUBLIC_KEY = "6Leqs7UUAAAAAKB3sQiwP-s09lzzu6OGXNyAB4nJ"
+RECAPTCHA_PUBLIC_KEY = "6LcYKegUAAAAAIw_AyIzUkwe8BMFeAJCzBaUdpOW"
+
+
+# class CustomToxinBox(Field):
+#     template = 'namingalgorithm/toxinbox.html'
 
 
 class UserSubmissionForm(forms.ModelForm):
@@ -39,7 +45,7 @@ class UserSubmissionForm(forms.ModelForm):
         label='Protein Sequence',
         widget=forms.Textarea(
             attrs={'placeholder': 'MEKYMLLAQFPAEKTLNETDIPSATLQLLTGKQAGVARPGGIFTKEDLINIKLYVKKGLSLPFNLEEVKNYLGYQRVDIPGLEPEDIHILFEEIRTHSLSWSGVENDIMQQSMDLEIVGKQITETGGNIISIINEMPIIERIKKKLGELSDRQLASITYTNEDKEVSYALEEILDNMKNDIQKQQRKTEKVKTEVSDFKLKLIGGRLSNGGIAFGLQPQVENKRKLMKDNKMSVNIKDLDDKITEKKTEIIQLKQDYDKFVGLAFSGIVGGLIGLAITGGIFGAKAEEVRKRKNTLIEEVRGLEESIKGKRALQESMASLSIDFSDIDTRLLDAEVALNHLDYMWQSMLTQINASRDKFAEINDALKLTSFITKFQQVISPWKDVEGSAKQLVKVFDEALKEYKQRYN'}),
-        required=True
+        required=False
     )
 
     bacterium = forms.ChoiceField(
@@ -49,13 +55,13 @@ class UserSubmissionForm(forms.ModelForm):
             attrs={'placeholder': 'Nancy Sanders'}
         ),
         initial=False,
-        required=True,
+        required=False,
     )
 
     bacterium_textbox = forms.CharField(
         label='Bacterium Name',
         widget=forms.TextInput(
-            attrs={'placeholder': 'Bacillus Thuringiensis'})
+            attrs={'placeholder': ''})
     )
 
     accessionnumber = forms.CharField(
@@ -125,17 +131,17 @@ class UserSubmissionForm(forms.ModelForm):
 
         self.fields['proteinsequence'].widget.attrs['cols'] = 50
         self.fields['proteinsequence'].widget.attrs['cols'] = 20
-        # self.fields['bacterium_textbox'].widget.attrs['cols'] = 10
+        self.fields['bacterium_textbox'].widget.attrs['cols'] = 10
         self.fields['comment'].widget.attrs['cols'] = 50
         self.fields['comment'].widget.attrs['cols'] = 20
 
-        # self.fields['toxic'].label = 'Toxic to'
+        self.fields['toxicto'].label = 'Toxic to'
         self.helper = FormHelper()
-        # self.helper.form_id = 'id-UserSubmissionForm'
-        # self.helper.form_class = 'UserSubmissionForm'
-        # self.helper.form_method = 'post'
-        # self.helper.form_action = 'submit'
-        # self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.form_id = 'id-UserSubmissionForm'
+        self.helper.form_class = 'UserSubmissionForm'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'submit'
+        self.helper.add_input(Submit('submit', 'Submit'))
 
         self.helper.layout = Layout(
             Row(
@@ -180,8 +186,8 @@ class UserSubmissionForm(forms.ModelForm):
             'pdbcode',
             'publication',
             'comment',
-            # HTML('<div class="form-group col-md-6"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %
-            #      RECAPTCHA_PUBLIC_KEY),
+            HTML('<div class="form-group col-md-6"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %
+                 RECAPTCHA_PUBLIC_KEY),
             # ButtonHolder(
             #     Submit('submit', 'Submit')
             # )
@@ -192,7 +198,7 @@ class UserSubmissionForm(forms.ModelForm):
         model = UserSubmission
         fields = ['submittersname',
                   'submittersemail',
-                  'proteinsname',
+                  'proteinname',
                   'year',
                   'proteinsequence',
                   'bacterium',
@@ -207,8 +213,26 @@ class UserSubmissionForm(forms.ModelForm):
                   'pdbcode',
                   'publication',
                   'comment']
-        # fields_required = ['submittersname',
-        #                    'year',
-        #                    'proteinsequence',
-        #                    'submittersemail',
-        #                    'accessionnumber']
+
+
+# ToxicToFormSet = modelformset_factory(
+#     UserSubmission,
+#     fields=('toxicto',),
+#     extra=1,
+#     widgets={'name': forms.TextInput(attrs={
+#         'placeholder': 'Toxic to'
+#     })
+#     }
+#
+#
+# )
+#
+#
+# class ToxicFormSetHelper(FormHelper):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.form_method = 'post'
+#         self.layout = Layout(
+#             'toxicto'
+#         )
+#         self.render_required_fields = False

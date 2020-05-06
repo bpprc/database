@@ -25,22 +25,27 @@ def naming_algorithm(request):
 def submit(request):
     """Submit the sequence for the naming purpose through user form."""
     if request.method == "POST":
+        print("hi")
         form = UserSubmissionForm(request.POST)
+        # formset = ToxicToFormSet(request.POST)
         # print(form)
         if form.is_valid():
-            post = form.save()
-            post.save()
+            # post = form.save()
 
-            # user_item = form.save()
-            # form.save()
-            # print(form.errors)
+            # print("formset", formset)
+            form.save()
+
             return render(request, 'namingalgorithm/view.html', {'form': form})
         else:
-            print("Error in form")
+            # print("form", form)
             print(form.errors)
+            print("Error in form")
+            # print("formset", formset)
+
     else:
-        print('hi')
         form = UserSubmissionForm()
+    #     formset = ToxicToFormSet()
+    # helper = ToxicFormSetHelper()
 
     return render(request, 'namingalgorithm/submit.html', {'form': form})
 

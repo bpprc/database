@@ -17,15 +17,11 @@ class UserSubmission(models.Model):
 
     submittersname = models.CharField(max_length=25, null=True, blank=True)
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
-    proteinsname = models.CharField(max_length=25, null=True, blank=True)
+    proteinname = models.CharField(max_length=25, null=True, blank=True)
     proteinsequence = models.TextField(null=True, blank=False)
     bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     bacterium_textbox = models.CharField(
         max_length=250, null=True, blank=True)
-    # sourcebacterium = models.BooleanField(
-    #     default=True, choices=TRUE_FALSE_CHOICES)
-    # sourcebacterium_textbox = models.CharField(
-    #     max_length=250, null=True, blank=True)
     taxonid = models.CharField(max_length=25, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
     accessionnumber = models.CharField(max_length=25, blank=True, null=False)
