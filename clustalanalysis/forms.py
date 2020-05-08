@@ -53,13 +53,13 @@ class AnalysisForm(forms.Form):
             self.selected_values_1 = []
         # self.selected_values_1 = self.cleaned_data['session_list_names']
 
-        if not self.selected_values_1:
+        # if not self.selected_values_1:
             # HiddenInput does not produce any validation error how to fix this
-            raise forms.ValidationError('Select some sequences')
-        elif len(self.selected_values_1) <= 3:
-            raise forms.ValidationError(
-                "Select atleast more than two sequences")
-        return self.selected_values_1
+        #     raise forms.ValidationError('Select some sequences')
+        # elif len(self.selected_values_1) <= 3:
+        #     raise forms.ValidationError(
+        #         "Select atleast more than two sequences")
+        # return self.selected_values_1
 
     # def clean_session_list_nterminal(self):
     #     self.list_nterminal = ast.literal_eval(
