@@ -90,15 +90,15 @@ class SequenceForm(forms.Form):
 class SearchDatabaseForm(forms.Form):
 
     protein_id1 = forms.ModelChoiceField(
-        queryset=PesticidalProteinDatabase.objects.all(), required=False)
+        queryset=PesticidalProteinDatabase.objects.all(), required=False, label="Protein ID")
     sequence1_in_form = forms.CharField(
-        widget=forms.Textarea, required=False, label="protein sequence")
+        widget=forms.Textarea, required=False, label="Protein Sequence")
     protein_id2 = forms.ModelChoiceField(
-        queryset=PesticidalProteinDatabase.objects.all(), required=False)
+        queryset=PesticidalProteinDatabase.objects.all(), required=False, label="Protein ID")
     sequence2_in_form = forms.CharField(
-        widget=forms.Textarea, required=False, label="protein sequence")
+        widget=forms.Textarea, required=False, label="Protein Sequence")
     tool = forms.ChoiceField(required=False,
-                             choices=[('needle', 'Needle'), ('blast', 'BLAST')])
+                             choices=[('needle', 'Needle')])
 
     def clean_sequence1_in_form(self):
 
