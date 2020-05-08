@@ -162,7 +162,7 @@ def search_database(request):
                 if search[0:3].upper() == 'CRY':
                     show_extra_data = True
 
-            if field_type == 'full name':
+            if field_type == 'name':
                 q_objects = Q()
                 for search in searches:
                     q_objects.add(Q(name__iexact=search), Q.OR)
@@ -176,18 +176,10 @@ def search_database(request):
                     if not search[-1].isdigit():
                         q_objects.add(
                             Q(name_category__istartswith=search), Q.OR)
-                    q_objects.add(Q(name_category__iexact=search), Q.OR)
+                    q_objects.add(Q(name_category__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
-
-            # elif field_type == 'wild card':
-            #     q_objects = Q()
-            #     for search in searches:
-            #         q_objects.add(Q(name_category__iexact=search), Q.OR)
-            #
-            #     proteins = PesticidalProteinDatabase.objects.filter(q_objects)
-            #     proteins = _sorted_nicely(proteins, sort_key='name')
 
             elif field_type == 'oldname':
                 q_objects = Q()
@@ -205,13 +197,13 @@ def search_database(request):
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
-            elif field_type == 'year':
-                q_objects = Q()
-                for search in searches:
-                    q_objects.add(Q(year__icontains=search), Q.OR)
-
-                proteins = PesticidalProteinDatabase.objects.filter(q_objects)
-                proteins = _sorted_nicely(proteins, sort_key='name')
+            # elif field_type == 'year':
+            #     q_objects = Q()
+            #     for search in searches:
+            #         q_objects.add(Q(year__icontains=search), Q.OR)
+            #
+            #     proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+            #     proteins = _sorted_nicely(proteins, sort_key='name')
 
         return render(request, 'database/search_results.html', {'proteins': proteins, 'show_extra_data': show_extra_data})
     return HttpResponseRedirect('/search_database_home/')
@@ -281,8 +273,16 @@ def cart_value(request):
     nterminal = request.session.get('list_nterminal')
     middle = request.session.get('list_middle')
     cterminal = request.session.get('list_cterminal')
+    values = []
 
-    values = selected_values + nterminal + middle + cterminal
+    if nterminal:
+        values += selected_nterminal
+    elif middle:
+        values += values + selected_middle
+    elif cterminal:
+        values += values + selected_cterminal
+    elif selected_values:
+        values += values + selected_values
 
     if values:
         number_of_proteins = len(values)
@@ -302,13 +302,13 @@ def view_cart(request):
     # print(selected_nterminal)
     # print(type(selected_nterminal))
     if selected_nterminal:
-        values = values + selected_nterminal
+        values += selected_nterminal
     elif selected_middle:
-        values = values + selected_middle
+        values += values + selected_middle
     elif selected_cterminal:
-        values = values + selected_cterminal
+        values += values + selected_cterminal
     elif selected_values:
-        values = values + selected_values
+        values += values + selected_values
     # values = selected_values + selected_nterminal + \
     #     selected_middle + selected_cterminal
 

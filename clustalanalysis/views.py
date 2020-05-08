@@ -32,7 +32,11 @@ from clustalanalysis.tasks import create_tree
 def domain_analysis_homepage(request):
     """This loads the bestmatchfinder homepage."""
     form = AnalysisForm()
-    return render(request, 'clustalanalysis/dendogram_homepage.html', {'form': form})
+    context = {
+        'form': form,
+        'descriptions': Description.objects.order_by('name')
+    }
+    return render(request, 'clustalanalysis/dendogram_homepage.html', context)
 
 
 def domain_analysis(request):
@@ -63,9 +67,9 @@ def domain_analysis(request):
             userdataids = form.cleaned_data['userdataids']
 
             context = {}
-            inputfile, outputfile = form.save()
-            # print("inputfile", input_file)
-            # print("outputfile", output_file)
+            inputfile, outputfile, num_lines = form.save()
+            # print("inputfile", inputfile)
+            # print("outputfile", outputfile)
 
             task = create_tree.delay(inputfile, outputfile)
             #
@@ -119,14 +123,28 @@ def dendogram_celery(request):
         if form.is_valid():
             context = {}
             input_file, output_file, newlines = form.save()
-            # print("inputfile", input_file)
-            # print("outputfile", output_file)
 
             task = create_tree.delay(input_file, output_file)
+            t = [(1, 400, 400), (401, 800, 600),
+                 (801, 1200, 700), (1201, 1400, 800), (1401, 1600, 900), (1401, 1600, 1000), (1601, 1800, 1100), (1801, 2000, 1200), (2001, 2200, 1300), (2201, 2400, 1400), (2401, 2600, 1500)]
+            radius = 0
+            print(radius)
+            for i in t:
+                if i[0] <= newlines <= i[1]:
+                    radius = i[2]
+                    break
+            # for i in t:
+            #     if i[0] <= newlines
+            #         radius = i[1]
+            #         break
 
             context['task_id'] = task.id
             context['task_status'] = task.status
-            # context['newlines'] = newlines
+            context['newlines'] = newlines
+            context['radius'] = radius
+
+            print("outputfile", newlines)
+            print("radius", radius)
 
             return render(request, 'clustalanalysis/clustal_processing.html', context)
 
@@ -149,12 +167,15 @@ def taskstatus_clustal_celery(request, task_id):
                 taskid=task.id, tempfile=task.get())
             # context['file'] = StoreResultFiles.objects.filter(taskid=task.id)
             # context['align'] = task.get()
-            # print(context)
             return render(request, 'clustalanalysis/dendogram.html', context)
 
         elif task.status == 'PENDING':
             # context['results'] = task
             return render(request, 'clustalanalysis/dendogram.html', context)
+        else:
+            return render(request, 'clustalanalysis/dendogram.html', context)
+    else:
+        return render(request, 'clustalanalysis/dendogram.html', context)
 
 
 def celery_task_status_clustal(request, task_id):
@@ -169,9 +190,8 @@ def celery_task_status_clustal(request, task_id):
 
 def protein_analysis(request):
 
-    categories = \
-        PesticidalProteinDatabase.objects.order_by(
-            'name').values_list('name', flat=True).distinct()  # why you need flat=True
+    categories = PesticidalProteinDatabase.objects.order_by(
+        'name').values_list('name', flat=True).distinct()  # why you need flat=True
 
     category_prefixes = []
     for category in categories:

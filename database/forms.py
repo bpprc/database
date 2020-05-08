@@ -85,11 +85,10 @@ class SearchForm(forms.Form):
     #
     # choices=SEARCH_CHOICES)
     SEARCH_CHOICES = (
-        ('full name', 'FULL NAME'),
+        ('name', 'NAME'),
         ('category', 'CATEGORY'),
         ('oldname', 'OLDNAME'),
         ('accession', 'ACCESSION'),
-        ('year', 'YEAR'),
     )
 
     search_term = forms.CharField(required=True, widget=forms.TextInput(
