@@ -252,8 +252,11 @@ def clear_session_database(request):
 
     session_key = list(request.session.keys())
 
-    for key in session_key:
-        del request.session[key]
+    try:
+        for key in session_key:
+            del request.session[key]
+    except:
+        pass
     return redirect("view_cart")
 
 
@@ -281,7 +284,7 @@ def cart_value(request):
 
     values = selected_values + nterminal + middle + cterminal
 
-    if selected_values:
+    if values:
         number_of_proteins = len(values)
         return HttpResponse(json.dumps({'number_of_proteins': number_of_proteins}), content_type='application/json')
     else:
@@ -295,11 +298,19 @@ def view_cart(request):
     selected_nterminal = request.session.get('list_nterminal')
     selected_middle = request.session.get('list_middle')
     selected_cterminal = request.session.get('list_cterminal')
-    print(selected_nterminal)
-    print(type(selected_nterminal))
-
-    values = selected_values + selected_nterminal + \
-        selected_middle + selected_cterminal
+    values = []
+    # print(selected_nterminal)
+    # print(type(selected_nterminal))
+    if selected_nterminal:
+        values = values + selected_nterminal
+    elif selected_middle:
+        values = values + selected_middle
+    elif selected_cterminal:
+        values = values + selected_cterminal
+    elif selected_values:
+        values = values + selected_values
+    # values = selected_values + selected_nterminal + \
+    #     selected_middle + selected_cterminal
 
     userdata = \
         UserUploadData.objects.filter(session_key=request.session.session_key)
