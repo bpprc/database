@@ -3,7 +3,8 @@ from django.core.exceptions import ValidationError
 from Bio.Alphabet.IUPAC import IUPACProtein
 from .models import PesticidalProteinDatabase, Description
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
+from crispy_forms.bootstrap import AppendedText
 
 ALLOWED_AMINOACIDS = set(IUPACProtein.letters)
 # ALLOWED_NUCLEOTIDE = set(IUPACAmbiguousDNA.letters)
@@ -84,19 +85,33 @@ class SearchForm(forms.Form):
     #
     # choices=SEARCH_CHOICES)
     SEARCH_CHOICES = (
-        ('name_category', 'NAME_CATEGORY'),
+        ('full name', 'FULL NAME'),
+        ('category', 'CATEGORY'),
         ('oldname', 'OLDNAME'),
         ('accession', 'ACCESSION'),
         ('year', 'YEAR'),
     )
 
-    search_term = forms.CharField(required=True)
-    search_fields = forms.ChoiceField(choices=SEARCH_CHOICES, required=False, )
+    search_term = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': 'Search'}))
+    search_fields = forms.ChoiceField(choices=SEARCH_CHOICES, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['search_term'].error_messages = {
             'required': 'Please type a protein name'}
+        self.fields['search_term'].label = ''
+        self.fields['search_fields'].label = ''
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('search_term',
+                       css_class='form-group col-md-10'),
+            ),
+            Row(
+                Column('search_fields',
+                       css_class='form-group col-md-10'),
+            ))
 
     def clean_search_term(self):
         data = self.cleaned_data['search_term']
@@ -144,9 +159,8 @@ class DownloadForm(forms.Form):
 
         self.helper.add_input(Submit('submit', 'Download'))
 
-        categories = \
-            PesticidalProteinDatabase.objects.order_by(
-                'name').values_list('name', flat=True)
+        categories = PesticidalProteinDatabase.objects.order_by(
+            'name').values_list('name', flat=True)
         description = Description.objects.order_by(
             'name')
 

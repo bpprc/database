@@ -155,24 +155,22 @@ def search_database(request):
             query = form.cleaned_data['search_term']
             field_type = form.cleaned_data['search_fields']
 
-            searches = re.split(r':|, ?|\s |\- |_ |. |; |\*|\n',
-                                query)
+            searches = re.split(r':|, ?|\s |\- |_ |. |; |\*|\n', query)
 
             show_extra_data = False
             for search in searches:
                 if search[0:3].upper() == 'CRY':
                     show_extra_data = True
-            print(show_extra_data)
 
-            if field_type == 'name':
+            if field_type == 'full name':
                 q_objects = Q()
                 for search in searches:
-                    q_objects.add(Q(name__icontains=search), Q.OR)
+                    q_objects.add(Q(name__iexact=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
-            elif field_type == 'name_category':
+            elif field_type == 'category':
                 q_objects = Q()
                 for search in searches:
                     if not search[-1].isdigit():
@@ -182,6 +180,15 @@ def search_database(request):
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
+
+            # elif field_type == 'wild card':
+            #     q_objects = Q()
+            #     for search in searches:
+            #         q_objects.add(Q(name_category__iexact=search), Q.OR)
+            #
+            #     proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+            #     proteins = _sorted_nicely(proteins, sort_key='name')
+
             elif field_type == 'oldname':
                 q_objects = Q()
                 for search in searches:
@@ -268,9 +275,14 @@ def remove_cart(request, database_id):
 
 def cart_value(request):
     selected_values = request.session.get('list_names')
+    nterminal = request.session.get('list_nterminal')
+    middle = request.session.get('list_middle')
+    cterminal = request.session.get('list_cterminal')
+
+    values = selected_values + nterminal + middle + cterminal
 
     if selected_values:
-        number_of_proteins = len(selected_values)
+        number_of_proteins = len(values)
         return HttpResponse(json.dumps({'number_of_proteins': number_of_proteins}), content_type='application/json')
     else:
         return HttpResponse(json.dumps({'number_of_proteins': None}), content_type='application/json')
@@ -280,15 +292,20 @@ def view_cart(request):
     """View the selected proteins in the session and user uploaded sequences."""
     form = AnalysisForm()
     selected_values = request.session.get('list_names')
-    # selected_nterminal = request.session.get('list_nterminal')
-    # selected_middle = request.session.get('list_middle')
-    # selected_cterminal = request.session.get('list_cterminal')
+    selected_nterminal = request.session.get('list_nterminal')
+    selected_middle = request.session.get('list_middle')
+    selected_cterminal = request.session.get('list_cterminal')
+    print(selected_nterminal)
+    print(type(selected_nterminal))
+
+    values = selected_values + selected_nterminal + \
+        selected_middle + selected_cterminal
 
     userdata = \
         UserUploadData.objects.filter(session_key=request.session.session_key)
 
     context = {'proteins': PesticidalProteinDatabase.objects.all(),
-               'selected_groups': selected_values, 'userdata': userdata,
+               'selected_groups': values, 'userdata': userdata,
                'form': form}
     # if selected_values:
     #     profile_length = len(selected_values)
@@ -454,7 +471,7 @@ def category_form(request):
     form = DownloadForm()
 
     context = {
-        'form': form,
+        'form': form
     }
     return render(request, 'database/download_form.html', context)
 
