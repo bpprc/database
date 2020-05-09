@@ -82,7 +82,7 @@ class SequenceForm(forms.Form):
 
         if sequence_is_protein:
             raise forms.ValidationError(
-                "Currently, it supports only protien sequences")
+                "Currently, it supports only protein sequences")
 
         return self.cleaned_data
 
