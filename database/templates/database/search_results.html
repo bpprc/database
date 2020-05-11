@@ -99,6 +99,12 @@
       // add multiple select / deselect functionality
       $("#selectall").click(function () {
           $('.name').attr('checked', this.checked);
+					$('.nterminal').attr('checked', false);
+					$('#domain1').attr('checked', false);
+					$('#domain2').attr('checked', false);
+					$('#domain3').attr('checked', false);
+					$('.cterminal').attr('checked', false);
+					$('.middle').attr('checked', false);
       });
 
       $(".name").click(function () {
