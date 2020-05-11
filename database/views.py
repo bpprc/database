@@ -7,6 +7,7 @@ import textwrap
 from io import StringIO
 from Bio import SeqIO
 from django.shortcuts import render, redirect, render_to_response
+from django.core.files.storage import FileSystemStorage
 from django.core.files.base import ContentFile
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
@@ -20,7 +21,7 @@ from bokeh.models import HoverTool, LassoSelectTool, WheelZoomTool, PointDrawToo
 from bokeh.transform import cumsum
 from bokeh.embed import components
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
-from clustalanalysis.forms import AnalysisForm
+from clustalanalysis.forms import AnalysisForm, UserDataForm
 import pandas as pd
 from numpy import pi
 
@@ -142,6 +143,31 @@ def database(request):
     return render(request, 'database/database.html', context)
 
 
+def _name(search_string):
+    try:
+        name = re.match(
+            r"^[A-Z][a-z]{2}\d{1,3}[A-Z][a-z]\d{1,3}^", search_string).group()
+        return True
+    except:
+        return False
+
+
+def _category(search_string):
+    try:
+        name = re.match(r"^[A-Z][a-z]{2}\d{1,3}$", search_string).group()
+        return True
+    except:
+        return False
+
+
+def _partial_pattern(search_string):
+    try:
+        name = re.match(r"^[A-Z][a-z]{2}\d{1,3}[A-Z]$", search_string).group()
+        return True
+    except:
+        return False
+
+
 def search_database_home(request):
     form = SearchForm()
     return render(request, 'database/search_page.html', {'form': form})
@@ -165,26 +191,28 @@ def search_database(request):
             if field_type == 'name':
                 q_objects = Q()
                 for search in searches:
-                    q_objects.add(Q(name__iexact=search), Q.OR)
-
-                proteins = PesticidalProteinDatabase.objects.filter(q_objects)
-                proteins = _sorted_nicely(proteins, sort_key='name')
-
-            elif field_type == 'category':
-                q_objects = Q()
-                for search in searches:
-                    if not search[-1].isdigit():
-                        q_objects.add(
-                            Q(name_category__istartswith=search), Q.OR)
-                    q_objects.add(Q(name_category__icontains=search), Q.OR)
-
+                    if _name(search):
+                        q_objects.add(Q(name__iexact=search), Q.OR)
+                    elif _category(search):
+                        q_objects.add(Q(name_category__iexact=search), Q.OR)
+                    else:
+                        q_objects.add(Q(name__icontains=search), Q.OR)
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
             elif field_type == 'oldname':
                 q_objects = Q()
                 for search in searches:
-                    q_objects.add(Q(oldname__icontains=search), Q.OR)
+                    if _name(search):
+                        q_objects.add(Q(oldname__iexact=search), Q.OR)
+                    if _category(search):
+                        q_objects.add(Q(oldname_category__iexact=search), Q.OR)
+                    if _partial_pattern(search):
+                        q_objects.add(
+                            Q(oldname_category__icontains=search), Q.OR)
+                    else:
+                        q_objects.add(
+                            Q(oldname__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
@@ -196,14 +224,6 @@ def search_database(request):
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
-
-            # elif field_type == 'year':
-            #     q_objects = Q()
-            #     for search in searches:
-            #         q_objects.add(Q(year__icontains=search), Q.OR)
-            #
-            #     proteins = PesticidalProteinDatabase.objects.filter(q_objects)
-            #     proteins = _sorted_nicely(proteins, sort_key='name')
 
         return render(request, 'database/search_results.html', {'proteins': proteins, 'show_extra_data': show_extra_data})
     return HttpResponseRedirect('/search_database_home/')
@@ -261,11 +281,11 @@ def remove_cart(request, database_id):
     selected_values.remove(protein.name)
     request.session.modified = True
 
-    if selected_values:
-        return redirect("view_cart")
-    message_profile = "Please add sequences to the cart"
-    messages.success(request, message_profile)
-    return redirect("search_database")
+    # if selected_values:
+    #     return redirect("view_cart")
+    # message_profile = "Please add sequences to the cart"
+    # messages.success(request, message_profile)
+    return redirect("view_cart")
 
 
 def cart_value(request):
@@ -276,14 +296,14 @@ def cart_value(request):
     values = []
 
     if nterminal:
-        values += selected_nterminal
-    elif middle:
-        values += values + selected_middle
-    elif cterminal:
-        values += values + selected_cterminal
-    elif selected_values:
-        values += values + selected_values
-
+        values += nterminal
+    if middle:
+        values += middle
+    if cterminal:
+        values += cterminal
+    if selected_values:
+        values += selected_values
+    values = list(set(values))
     if values:
         number_of_proteins = len(values)
         return HttpResponse(json.dumps({'number_of_proteins': number_of_proteins}), content_type='application/json')
@@ -293,39 +313,46 @@ def cart_value(request):
 
 def view_cart(request):
     """View the selected proteins in the session and user uploaded sequences."""
-    form = AnalysisForm()
+
     selected_values = request.session.get('list_names')
     selected_nterminal = request.session.get('list_nterminal')
     selected_middle = request.session.get('list_middle')
     selected_cterminal = request.session.get('list_cterminal')
+    form_data = {
+        'list_names': str(selected_values),
+        'list_nterminal': str(selected_nterminal),
+        'list_middle': str(selected_middle),
+        'list_cterminal': str(selected_cterminal)
+    }
+    analysisform = AnalysisForm(form_data)
+    userform = UserDataForm()
+    analysisform.is_valid()
     values = []
-    # print(selected_nterminal)
-    # print(type(selected_nterminal))
+
     if selected_nterminal:
         values += selected_nterminal
-    elif selected_middle:
-        values += values + selected_middle
-    elif selected_cterminal:
-        values += values + selected_cterminal
-    elif selected_values:
-        values += values + selected_values
-    # values = selected_values + selected_nterminal + \
-    #     selected_middle + selected_cterminal
+    if selected_middle:
+        values += selected_middle
+    if selected_cterminal:
+        values += selected_cterminal
+    if selected_values:
+        values += selected_values
+    values = list(set(values))
 
     userdata = \
         UserUploadData.objects.filter(session_key=request.session.session_key)
 
+    if request.method == 'POST':
+        userform = UserDataForm(request.POST, request.FILES,
+                                session=request.session)
+
+        if userform.is_valid():
+            # print("form")
+            messages.success(request, "file upload successful")
+
     context = {'proteins': PesticidalProteinDatabase.objects.all(),
                'selected_groups': values, 'userdata': userdata,
-               'form': form}
-    # if selected_values:
-    #     profile_length = len(selected_values)
-    #     message_profile = "Selected {} proteins added to the cart".format(
-    #         profile_length)
-    #     # messages.success(request, message_profile)
-    # else:
-    #     message_profile = "Please add sequences to the cart"
-    #     messages.success(request, message_profile)
+               'analysisform': analysisform, 'userform': userform}
 
     return render(request, 'database/search_user_data_update.html', context)
 
@@ -350,30 +377,46 @@ def user_data_remove(request, id):
     return redirect("view_cart")
 
 
+# def user_data(request):
+#     """A user will upload the protein sequences in fasta format
+#     and stored temporarily using the session."""
+#
+#     if request.method == 'POST':
+#         file = request.POST['fulltextarea']
+#         if not file:
+#             message_profile = "Please add some sequences"
+#             messages.success(request, message_profile)
+#             return redirect("view_cart")
+#
+#         content = ContentFile(file)
+#         content = filter(None, content)
+#
+#         for rec in SeqIO.parse(content, "fasta"):
+#             name = rec.id
+#             sequence = str(rec.seq)
+#             UserUploadData.objects.create(
+#                 session_key=request.session.session_key,
+#                 name=name, sequence=sequence)
+#         message_profile = "Added the user sequences"
+#         messages.info(request, message_profile)
+#
+#     return redirect("view_cart")
+
 def user_data(request):
     """A user will upload the protein sequences in fasta format
     and stored temporarily using the session."""
 
     if request.method == 'POST':
-        file = request.POST['fulltextarea']
-        if not file:
-            message_profile = "Please add some sequences"
-            messages.success(request, message_profile)
-            return redirect("view_cart")
+        form = UserDataForm(request.POST, request.FILES,
+                            session=request.session)
 
-        content = ContentFile(file)
-        content = filter(None, content)
+        if form.is_valid():
+            print("form")
+            messages.success(request, "file upload successful")
+        print(form.errors)
 
-        for rec in SeqIO.parse(content, "fasta"):
-            name = rec.id
-            sequence = str(rec.seq)
-            UserUploadData.objects.create(
-                session_key=request.session.session_key,
-                name=name, sequence=sequence)
-        message_profile = "Added the user sequences"
-        messages.info(request, message_profile)
-
-    return redirect("view_cart")
+    # return redirect("view_cart")
+    return render(request, 'database/search_user_data_update.html', form)
 
 
 @csrf_exempt
