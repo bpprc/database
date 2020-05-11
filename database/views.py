@@ -278,7 +278,30 @@ def remove_cart(request, database_id):
     protein = PesticidalProteinDatabase.objects.get(id=database_id)
 
     selected_values = request.session.get('list_names')
-    selected_values.remove(protein.name)
+    nterminal = request.session.get('list_nterminal')
+    middle = request.session.get('list_middle')
+    cterminal = request.session.get('list_cterminal')
+
+    try:
+        selected_values.remove(protein.name)
+    except:
+        pass
+
+    try:
+        nterminal.remove(protein.name)
+    except:
+        pass
+
+    try:
+        middle.remove(protein.name)
+    except:
+        pass
+
+    try:
+        cterminal.remove(protein.name)
+    except:
+        pass
+
     request.session.modified = True
 
     # if selected_values:
@@ -370,8 +393,8 @@ def user_data_remove(request, id):
     """Remove the user uploaded proteins individually"""
 
     instance = \
-        UserUploadData.objects.get(session_key=request.session.session_key,
-                                   id=id)
+        UserUploadData.objects.get(
+            session_key=request.session.session_key, id=id)
     instance.delete()
 
     return redirect("view_cart")
