@@ -6,6 +6,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
 from crispy_forms.bootstrap import AppendedText
 
+RECAPTCHA_PUBLIC_KEY = "6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT"
+
 ALLOWED_AMINOACIDS = set(IUPACProtein.letters)
 # ALLOWED_NUCLEOTIDE = set(IUPACAmbiguousDNA.letters)
 
@@ -86,7 +88,6 @@ class SearchForm(forms.Form):
     # choices=SEARCH_CHOICES)
     SEARCH_CHOICES = (
         ('name', 'NAME'),
-        ('category', 'CATEGORY'),
         ('oldname', 'OLDNAME'),
         ('accession', 'ACCESSION'),
     )
@@ -170,10 +171,6 @@ class DownloadForm(forms.Form):
             prefix = category[0:3]
             self.category_prefixes[prefix.lower()] = prefix.upper()
 
-        # for detail in description:
-        #     for option in self.category_options:
-        #         if detail.name.lower() == max(option):
-        #             print(option)
         for key, value in self.category_prefixes.items():
             for detail in description:
                 if detail.name.lower() == key.lower():
@@ -184,6 +181,11 @@ class DownloadForm(forms.Form):
             sorted(self.category_description.items(), key=lambda x: x[0][:3]))
         self.fields['category_type'].choices = self.category_options
         self.fields['category_type'].label = ''
+        # self.helper.layout = Layout(
+        #     'category_type',
+        #     HTML('<div class="form-group"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %
+        #          RECAPTCHA_PUBLIC_KEY),
+        # )
 
     def clean_category_type(self):
         category_type = self.cleaned_data['category_type']

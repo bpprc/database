@@ -12,8 +12,9 @@
       <div>
         {% if task_id %}
 
-        <p>Job ID: <a href="{% url 'taskstatus_clustal_celery' task_id=task_id %}">{{task_id}} </a></p>
+        <p>Job ID: <a href="{% url 'taskstatus_clustal_celery' task_id=task_id %}">{{task_id}}</a></p>
         <h2 class="subtitle has-text-centered" id="progress-title"></h2>
+        <h2> The number of sequences in the file: {{ numlines }} </h2>
         {% endif %}
       </div>
   </div>

@@ -175,6 +175,11 @@ class UserUploadData(models.Model):
     name = models.CharField(max_length=250, null=True)
     sequence = models.TextField(null=True)
 
+    def save(self, *args, **kwargs):
+        if not self.name.endswith('_user'):
+            self.name = self.name + '_user'
+        super(UserUploadData, self).save(*args, **kwargs)
+
 
 class FeedbackData(models.Model):
     """ """
