@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from database.models import PesticidalProteinDatabase, UserUploadData, ProteinDetail
-from clustalanalysis.forms import AnalysisForm, DendogramForm
+from clustalanalysis.forms import AnalysisForm, DendogramForm, UserDataForm
 from django import forms
 from subprocess import Popen, PIPE
 from ete3 import Tree, TreeStyle, faces
@@ -32,7 +32,12 @@ from clustalanalysis.tasks import create_tree
 def domain_analysis_homepage(request):
     """This loads the bestmatchfinder homepage."""
     form = AnalysisForm()
-    return render(request, 'clustalanalysis/dendogram_homepage.html', {'form': form})
+    context = {
+        'form': form,
+        'userform': UserDataForm(),
+        'descriptions': Description.objects.order_by('name')
+    }
+    return render(request, 'clustalanalysis/dendogram_homepage.html', context)
 
 
 def domain_analysis(request):
@@ -58,32 +63,40 @@ def domain_analysis(request):
         # post_values['userdata'] = proteins
 
         form = AnalysisForm(post_values)
+        userform = UserDataForm()
 
         if form.is_valid():
             userdataids = form.cleaned_data['userdataids']
 
             context = {}
-            inputfile, outputfile = form.save()
-            # print("inputfile", input_file)
-            # print("outputfile", output_file)
+            inputfile, outputfile, numlines = form.save()
+            # print("inputfile", inputfile)
+            # print("outputfile", outputfile)
 
             task = create_tree.delay(inputfile, outputfile)
             #
             context['task_id'] = task.id
             context['task_status'] = task.status
+            context['userform'] = userform
+            context['analysisform'] = form
+            # context['numlines'] = numlines
 
             return render(request, 'clustalanalysis/clustal_processing.html', context)
         else:
             print(form.errors)
-            return render(request, 'database/search_user_data_update.html', {'form': form.errors})
+            return render(request, 'database/search_user_data_update.html', {'form': form.errors, 'userform': userform, 'analysisform': form})
 
-    return render(request, 'database/search_user_data_update.html', form)
+    return render(request, 'database/search_user_data_update.html', {'form': form, 'userform': userform, 'analysisform': userform})
 
 
 def dendogram_homepage2(request):
     """This loads the bestmatchfinder homepage."""
     form = DendogramForm()
-    return render(request, 'clustalanalysis/dendogram_homepage.html', {'form': form})
+    context = {
+        'form': form,
+        'descriptions': Description.objects.order_by('name')
+    }
+    return render(request, 'clustalanalysis/dendogram_homepage.html', context)
 
 
 def dendogram_homepage(request):
@@ -118,15 +131,34 @@ def dendogram_celery(request):
         form = DendogramForm(request.POST)
         if form.is_valid():
             context = {}
-            input_file, output_file, newlines = form.save()
-            # print("inputfile", input_file)
-            # print("outputfile", output_file)
+            input_file, output_file = form.save()
+
+            # if newlines <= 3:
+            #     message_profile = "Atleast three or more sequences aare needed.This category has less than 3"
+            #     messages.success(request, messages)
+            #     return HttpResponseRedirect('/dendogram_homepage2/')
 
             task = create_tree.delay(input_file, output_file)
+            # t = [(1, 400, 400), (401, 800, 600),
+            #      (801, 1200, 700), (1201, 1400, 800), (1401, 1600, 900), (1401, 1600, 1000), (1601, 1800, 1100), (1801, 2000, 1200), (2001, 2200, 1300), (2201, 2400, 1400), (2401, 2600, 1500)]
+            # radius = 0
+            # print(radius)
+            # for i in t:
+            #     if i[0] <= newlines <= i[1]:
+            #         radius = i[2]
+            #         break
+            # for i in t:
+            #     if i[0] <= newlines
+            #         radius = i[1]
+            #         break
 
             context['task_id'] = task.id
             context['task_status'] = task.status
-            # context['newlines'] = newlines
+            context['numlines'] = form.numlines
+            # context['radius'] = radius
+
+            # print("outputfile", newlines)
+            # print("radius", radius)
 
             return render(request, 'clustalanalysis/clustal_processing.html', context)
 
@@ -140,21 +172,33 @@ def taskstatus_clustal_celery(request, task_id):
     if request.method == 'GET':
         # print("entering the function taskstatus")
         task = current_app.AsyncResult(task_id)
-        # print("taskStatus", task)
+        # print("taskStatus", newlines)
         context = {'task_status': task.status,
                    'task_id': task.id, 'task': task}
+
+        # t = [(1, 400, 400), (401, 800, 600),
+        #      (801, 1200, 700), (1201, 1400, 800), (1401, 1600, 900), (1401, 1600, 1000), (1601, 1800, 1100), (1801, 2000, 1200), (2001, 2200, 1300), (2201, 2400, 1400), (2401, 2600, 1500)]
+        # radius = 0
+        # print(radius)
+        # for i in t:
+        #     if i[0] <= newlines <= i[1]:
+        #         radius = i[2]
+        #         break
 
         if task.status == 'SUCCESS':
             context['file'], created = StoreResultFiles.objects.get_or_create(
                 taskid=task.id, tempfile=task.get())
             # context['file'] = StoreResultFiles.objects.filter(taskid=task.id)
             # context['align'] = task.get()
-            # print(context)
             return render(request, 'clustalanalysis/dendogram.html', context)
 
         elif task.status == 'PENDING':
             # context['results'] = task
             return render(request, 'clustalanalysis/dendogram.html', context)
+        else:
+            return render(request, 'clustalanalysis/dendogram.html', context)
+    else:
+        return render(request, 'clustalanalysis/dendogram.html', context)
 
 
 def celery_task_status_clustal(request, task_id):
@@ -169,9 +213,8 @@ def celery_task_status_clustal(request, task_id):
 
 def protein_analysis(request):
 
-    categories = \
-        PesticidalProteinDatabase.objects.order_by(
-            'name').values_list('name', flat=True).distinct()  # why you need flat=True
+    categories = PesticidalProteinDatabase.objects.order_by(
+        'name').values_list('name', flat=True).distinct()  # why you need flat=True
 
     category_prefixes = []
     for category in categories:

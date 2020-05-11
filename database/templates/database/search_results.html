@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 
-
 	<form action="add_cart/" id="analysis_form" method="POST">
   {% csrf_token %}
 
@@ -12,12 +11,12 @@
 				<tr>
 					{% if show_extra_data %}
 					<th>
-						<input type="checkbox" id="selectall" class="regular-checkbox"/>
+						<input type="checkbox" id="selectall" class="regular-checkbox column-class1 column-class2" onchange="cbChange(this)"/>
 						<label for="selectall">Full length
 					</th>
 					{% else %}
 					<th>
-						<input type="checkbox" id="selectall" class="regular-checkbox"/>
+						<input type="checkbox" id="selectall" class="regular-checkbox column-class2"/>
 						<label for="selectall">
 					</th>
 					{% endif %}
@@ -27,15 +26,15 @@
 						<th>Year </th>
 							{% if show_extra_data %}
 							<th>
-								<input type="checkbox" id="domain1" class="regular-checkbox column-class1"/>
+								<input type="checkbox" id="domain1" class="regular-checkbox" />
 								<label for="domain1">N terminal
 								</th>
 								<th>
-									<input type="checkbox" id="domain2" class="regular-checkbox column-class1"/>
+									<input type="checkbox" id="domain2" class="regular-checkbox" />
 									<label for="domain2">Middle domain
 								</th>
 								<th>
-									<input type="checkbox" id="domain3" class="regular-checkbox column-class1"/>
+									<input type="checkbox" id="domain3" class="regular-checkbox" />
 									<label for="domain3">C terminal
 								</th>
 							{% endif %}
@@ -52,11 +51,11 @@
 						</td>
 						<td>{{ protein.year }}</td>
 						{% if show_extra_data %}
-						<td> <input type="checkbox" name="nterminal" class="regular-checkbox nterminal" value="{{protein.name}}" />N terminal </td>
+						<td> <input type="checkbox" name="nterminal" class="regular-checkbox nterminal" value="{{protein.name}}"/>N terminal </td>
 
-						<td> <input type="checkbox" name="middle" class="regular-checkbox middle" value="{{protein.name}}" />middle domain </td>
+						<td> <input type="checkbox" name="middle" class="regular-checkbox middle" value="{{protein.name}}"/>middle domain </td>
 
-						<td> <input type="checkbox" name="cterminal" class="regular-checkbox cterminal" value="{{protein.name}}"  />C terminal </td>
+						<td> <input type="checkbox" name="cterminal" class="regular-checkbox cterminal" value="{{protein.name}}"/>C terminal </td>
 						{% endif %}
 					</tr>
       {% endfor %}
@@ -65,14 +64,32 @@
 				</thead>
 			</table>
 			<br>
-				<button type="submit" class="btn btn-secondary" > Add to Cart </button>
+				<button type="submit" class="btn btn-primary" > Add to Cart </button>
 				<br>
 					<br>
 						<br>
 							<br>
-							<input type="button" class="btn btn-secondary" value="Back" onclick="window.history.back()" />
+							<input type="button" class="btn btn-primary" value="Back" onclick="window.history.back()" />
+
+</form>
+
+{% endblock content %}
 
 
+{% block extrahead %}
+<style>
+
+.regular-checkbox input {
+  vertical-align: middle;
+  position: relative;
+  bottom: 2px;
+}
+
+</style>
+
+{% endblock extrahead %}
+
+{% block extrajs %}
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
 
@@ -82,6 +99,12 @@
       // add multiple select / deselect functionality
       $("#selectall").click(function () {
           $('.name').attr('checked', this.checked);
+					$('.nterminal').attr('checked', false);
+					$('#domain1').attr('checked', false);
+					$('#domain2').attr('checked', false);
+					$('#domain3').attr('checked', false);
+					$('.cterminal').attr('checked', false);
+					$('.middle').attr('checked', false);
       });
 
       $(".name").click(function () {
@@ -102,6 +125,8 @@
       // add multiple select / deselect functionality
       $("#domain1").click(function () {
 					$('.nterminal').attr('checked', this.checked);
+					$('.name').attr('checked', false);
+					$('#selectall').attr('checked', false);
       });
 
       $(".nterminal").click(function () {
@@ -111,6 +136,7 @@
           } else {
               $("#domain1").removeAttr("checked");
           }
+
 
       });
   });
@@ -123,6 +149,8 @@
       // add multiple select / deselect functionality
       $("#domain2").click(function () {
 					$('.middle').attr('checked', this.checked);
+					$('.name').attr('checked', false);
+					$('#selectall').attr('checked', false);
       });
 
       $(".middle").click(function () {
@@ -144,6 +172,8 @@
       // add multiple select / deselect functionality
       $("#domain3").click(function () {
 					$('.cterminal').attr('checked', this.checked);
+					$('.name').attr('checked', false);
+					$('#selectall').attr('checked', false);
       });
 
       $(".cterminal").click(function () {
@@ -158,6 +188,15 @@
   });
 
 </script>
-</form>
 
-{% endblock content %}
+<script>
+function cbChange(obj) {
+    /* var cbs = document.getElementsByClassName("column-class2");
+    for (var i = 0; i < cbs.length; i++) {
+        cbs[i].checked = false;
+    }
+    obj.checked = true; */
+}
+</script>
+
+{% endblock extrajs %}

@@ -2,15 +2,48 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-
+{% block messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                <a class="close" data-dismiss="alert">×</a>
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+</br>
+</br>
+</br>
+</br></br>
+</br>
 {% block content %}
 
-  <b>Choose the proteins for the analysis</b>
-  <br>
+<h2>Choose the proteins for the analysis</h2>
+</br>
+</br>
+<div>
   {% crispy form %}
 
- <br>
- <br>
+  {% if form.errors %}
+     {% for field in form %}
+        {% for error in field.errors %}
+            {{ error|escape }}
+        {% endfor %}
+     {% endfor %}
+  {% endif %}
+
+</div>
+
+</br>
+</br>
+
+{% for description in descriptions %}
+<div>
+		<p <a class="text-left font-weight-bold">{{description.name}}:</a> <span class="font-weight-light"> {{description.description}} </span> </p>
+</div>
+{% endfor %}
+
 
 {% endblock content %}
 
@@ -22,4 +55,4 @@
   })();
 </script>
 
-{% endblock %}
+{% endblock extrajs %}

@@ -3,12 +3,7 @@
 {% load static %}
 
 
-<link rel="stylesheet" type="text/css" href="{% static 'database/cc.css' %}">
-
 {% block content %}
-
-<html>
-<body>
 
 <h2>Type in protein name(s) to search the database </h2>
 <br>
@@ -17,7 +12,9 @@ Examples:
 <h8> Cry1Aa1 <h8> <br>
 <h8> Cry32B <h8> <br>
 <h8> Xpp22 <h8> <br>
-<h8> Cry41, Cry42, Cry43 <h8> <br>
+<h8> Cry41, Cry42, Cry43 <h8>
+</br>
+</br>
 
 
 <form method="post" action="/search_database/">
@@ -30,20 +27,20 @@ Examples:
 </form>
 
 
-<div style="color: blue">
-					{% for id in match %}
-					<table border="5px" width="300px">
-					<th>Name</th>
-					<tr class='parent'>
-							<td>{{ id.name }}</td>
-							<td>{{ id.oldname }}</td>
-							<td> <a href=" https://www.ncbi.nlm.nih.gov/protein/{{ id.accession }}" target="_blank"> {{ nomenclature.accession }} </a> </td>
-					</tr>
-					</table>
-					{% endfor %}
-	</div>
-
 {% endblock content %}
 
-</body>
-</html>
+{% block extrahead %}
+<style>
+
+.textinput {
+  width: 140%;
+  height: 40px;
+  width: 1260px;
+}
+
+</style>
+{% endblock extrahead %}
+
+{% block extrajs %}
+
+{% endblock extrajs %}

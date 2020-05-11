@@ -82,7 +82,7 @@ class SequenceForm(forms.Form):
 
         if sequence_is_protein:
             raise forms.ValidationError(
-                "Currently, it supports only protien sequences")
+                "Currently, it supports only protein sequences")
 
         return self.cleaned_data
 
@@ -90,15 +90,15 @@ class SequenceForm(forms.Form):
 class SearchDatabaseForm(forms.Form):
 
     protein_id1 = forms.ModelChoiceField(
-        queryset=PesticidalProteinDatabase.objects.all(), required=False)
+        queryset=PesticidalProteinDatabase.objects.all(), required=False, label="Protein ID")
     sequence1_in_form = forms.CharField(
-        widget=forms.Textarea, required=False, label="protein sequence")
+        widget=forms.Textarea, required=False, label="Protein Sequence")
     protein_id2 = forms.ModelChoiceField(
-        queryset=PesticidalProteinDatabase.objects.all(), required=False)
+        queryset=PesticidalProteinDatabase.objects.all(), required=False, label="Protein ID")
     sequence2_in_form = forms.CharField(
-        widget=forms.Textarea, required=False, label="protein sequence")
+        widget=forms.Textarea, required=False, label="Protein Sequence")
     tool = forms.ChoiceField(required=False,
-                             choices=[('needle', 'Needle'), ('blast', 'BLAST')])
+                             choices=[('needle', 'Needle')])
 
     def clean_sequence1_in_form(self):
 
@@ -128,13 +128,13 @@ class SearchDatabaseForm(forms.Form):
             sequence_is_protein = guess_if_protein(sequence1_in_form)
             if sequence_is_protein:
                 raise forms.ValidationError(
-                    "Currently, it supports only protien sequences")
+                    "Currently, it supports only protein sequences")
 
         if sequence2_in_form:
             sequence_is_protein = guess_if_protein(sequence2_in_form)
             if sequence_is_protein:
                 raise forms.ValidationError(
-                    "Currently, it supports only protien sequences")
+                    "Currently, it supports only protein sequences")
 
         if protein1 and sequence1_in_form:
             raise forms.ValidationError(
