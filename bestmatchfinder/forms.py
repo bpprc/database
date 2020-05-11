@@ -128,13 +128,13 @@ class SearchDatabaseForm(forms.Form):
             sequence_is_protein = guess_if_protein(sequence1_in_form)
             if sequence_is_protein:
                 raise forms.ValidationError(
-                    "Currently, it supports only protien sequences")
+                    "Currently, it supports only protein sequences")
 
         if sequence2_in_form:
             sequence_is_protein = guess_if_protein(sequence2_in_form)
             if sequence_is_protein:
                 raise forms.ValidationError(
-                    "Currently, it supports only protien sequences")
+                    "Currently, it supports only protein sequences")
 
         if protein1 and sequence1_in_form:
             raise forms.ValidationError(
