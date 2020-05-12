@@ -467,17 +467,31 @@ def download_sequences(request):
     """Download the selected and/or user uploaded protein sequences."""
 
     selected_values = request.session.get('list_names', [])
+    nterminal = request.session.get('list_nterminal', [])
+    middle = request.session.get('list_middle', [])
+    cterminal = request.session.get('list_cterminal', [])
+    values = []
+
+    if nterminal:
+        values += nterminal
+    if middle:
+        values += middle
+    if cterminal:
+        values += cterminal
+    if selected_values:
+        values += selected_values
+    values = list(set(values))
     userdata = \
         UserUploadData.objects.filter(session_key=request.session.session_key)
 
     if not selected_values and not userdata.exists():
-        message_profile = "Please add sequences to the cart"
+        message_profile = "Cart is empty"
         messages.success(request, message_profile)
         return redirect("view_cart")
 
     file = StringIO()
     data = \
-        PesticidalProteinDatabase.objects.filter(name__in=selected_values)
+        PesticidalProteinDatabase.objects.filter(name__in=values)
     for item in data:
         fasta = textwrap.fill(item.sequence, 80)
         str_to_write = f">{item.name}\n{fasta}\n"
