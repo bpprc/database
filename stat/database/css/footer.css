@@ -1,8 +1,9 @@
 #footer {
     bottom: 0;
     right: 0;
+    text-align: right
     width: 100%;
-    position: fixed;
+    
     height: $height-footer;
     background-color: #5f788a transparent;
     .footer-block {

@@ -3,13 +3,19 @@
 {% load static %}
 {% block content %}
 
+
+<button id="download">Download</button>
 <br/>
 <br/>
 <label id="show-length">
   <input type="checkbox"> Show branch length
+  <input type="hidden" id="radius" name="radius" value="{{radius}}">
 </label>
-<div id="dendogram-container">
+<div id="dendogram-container" style="width: 1265px; height: 1800px;">
 </div>
+
+
+
 
 {% endblock content %}
 
@@ -56,6 +62,45 @@
 
 {% block extrajs %}
 
+<script type="text/javascript" src="{% static 'database/js/html2canvas.js' %}">
+</script>
+
+<script language="javascript">
+document.getElementById("download").addEventListener("click", function() {
+
+    html2canvas(document.querySelector('#dendogram-container')).then(function(canvas) {
+
+        console.log(canvas);
+        saveAs(canvas.toDataURL(), 'file-name.png');
+    });
+});
+
+
+function saveAs(uri, filename) {
+
+    var link = document.createElement('a');
+
+    if (typeof link.download === 'string') {
+
+        link.href = uri;
+        link.download = filename;
+
+        //Firefox requires the link to be in the body
+        document.body.appendChild(link);
+
+        //simulate click
+        link.click();
+
+        //remove the link when done
+        document.body.removeChild(link);
+
+    } else {
+
+        window.open(uri);
+
+    }
+}
+</script>
 
 <script>function parseNewick(a){for(var e=[],r={},s=a.split(/\s*(;|\(|\)|,|:)\s*/),t=0;t<s.length;t++){var n=s[t];switch(n){case"(":var c={};r.branchset=[c],e.push(r),r=c;break;case",":var c={};e[e.length-1].branchset.push(c),r=c;break;case")":r=e.pop();break;case":":break;default:var h=s[t-1];")"==h||"("==h||","==h?r.name=n:":"==h&&(r.length=parseFloat(n))}}return r}
 </script>
@@ -64,21 +109,13 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
-window.addEventListener('resize', function() {
-  console.log("The window was resized!");
-});
 
-</script>
-<script>
+var radius = 900 ;
 
-var radius = 400
-// {% if newlines < 300 %}
-//   var radius = 400;
-// {% elif newlines > 1000 %}
-//   var radius = 1000;
-// {% endif %}
+// document.getElementById("radius").value;
+
 var outerRadius = radius / 1,
-    innerRadius = outerRadius - 170;
+    innerRadius = outerRadius - 70;
 
 var color = d3.scaleOrdinal()
     .domain(["App","Cry","Cyt","Gpp","Mpf","Spp","Tpp","Vip","Vpa","Vpb","Xpp","Mcf","Mpp","Mtx","Pra","Prb"])
@@ -91,7 +128,6 @@ var cluster = d3.cluster()
 var svg = d3.select("#dendogram-container").append("svg")
     .attr("width", outerRadius * 2)
     .attr("height", outerRadius * 2);
-    // .attr("viewBox", `0 0 300 600`)
 
 var legend = svg.append("g")
     .attr("class", "legend")
@@ -194,7 +230,6 @@ function setRadius(d, y0, k) {
 // Set the color of each node by recursively inheriting.
 function setColor(d) {
   var name = d.data.name.slice(0,3);
-  console.log(name)
   d.color = color.domain().indexOf(name) >= 0 ? color(name) : d.parent ?
   d.parent.color : null;
   if (d.children) d.children.forEach(setColor);

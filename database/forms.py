@@ -83,16 +83,14 @@ def check_protein_nucleotide(seq):
 
 
 class SearchForm(forms.Form):
-    # search_term = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, required=False,
-    #
-    # choices=SEARCH_CHOICES)
+
     SEARCH_CHOICES = (
-        ('name', 'NAME'),
-        ('oldname', 'OLDNAME'),
-        ('accession', 'ACCESSION'),
+        ('name', 'Name'),
+        ('oldname', 'Old name'),
+        ('accession', 'Accession'),
     )
 
-    search_term = forms.CharField(required=True, widget=forms.TextInput(
+    search_term = forms.CharField(label="", required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Search'}))
     search_fields = forms.ChoiceField(choices=SEARCH_CHOICES, required=False)
 
@@ -100,18 +98,18 @@ class SearchForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['search_term'].error_messages = {
             'required': 'Please type a protein name'}
-        self.fields['search_term'].label = ''
+        self.fields['search_term'].label = 'Search term'
         self.fields['search_fields'].label = ''
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Row(
-                Column('search_term',
-                       css_class='form-group col-md-10'),
-            ),
-            Row(
-                Column('search_fields',
-                       css_class='form-group col-md-10'),
-            ))
+        # self.helper = FormHelper()
+        # self.helper.layout = Layout(
+        #     Row(
+        #         Column('search_term',
+        #                css_class='form-group col-md-10'),
+        #     ),
+        #     Row(
+        #         Column('search_fields',
+        #                css_class='form-group col-md-10'),
+        #     ))
 
     def clean_search_term(self):
         data = self.cleaned_data['search_term']

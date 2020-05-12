@@ -19,7 +19,7 @@
 </br>
 {% block content %}
 
-<h2>Choose the proteins for the analysis</h2>
+<h2>Create a dendrogram from selected protein classes</h2>
 </br>
 </br>
 <div>
@@ -34,7 +34,8 @@
   {% endif %}
 
 </div>
-
+</br>
+</br>
 </br>
 </br>
 
@@ -47,6 +48,21 @@
 
 {% endblock content %}
 
+{% block extrahead %}
+<style>
+
+label {
+    width:80px;
+    clear:left;
+    text-align:left;
+    padding-right:2px;
+}
+
+input, label {
+    float:left;
+}
+</style>
+{% endblock extrahead %}
 
 {% block extrajs %}
 <script>

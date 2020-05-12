@@ -3,7 +3,7 @@
 {% block content %}
 <!doctype html>
 <div id="wrapper">
-  <p> <b> Download the fasta sequences by categories </b> </p>
+  <p> <b> Download the sequences by class </b> </p>
       {% for description in descriptions %}
         <li>
             <a href="/download_category_{{ description.name|lower }}" >

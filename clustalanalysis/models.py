@@ -8,6 +8,8 @@ class StoreResultFiles(models.Model):
     tempfile = models.CharField(max_length=1000, null=True)
     resultfile = models.FileField(
         upload_to='store_result_files/', null=True, blank=True)
+    # newlines = models.CharField(max_length=100, blank=True)
+    # radius = models.CharField(max_length=100, blank=True)
 
     def save(self, *args, **kwargs):
         is_create = not bool(self.id)

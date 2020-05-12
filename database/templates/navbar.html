@@ -13,14 +13,6 @@
 						</a>
 						</div>
 						<div class="dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								BPPRC
-							</button>
-							<div class="dropdown-menu" aria-labelledby="Database">
-								<a class="dropdown-item" href="{% url 'about_page' %}">About</a>
-							</div>
-						</div>
-						<div class="dropdown">
 						  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    Database
 						  </button>
@@ -28,6 +20,7 @@
 						    <a class="dropdown-item" href="{% url 'database' %}">Database</a>
 						    <a class="dropdown-item" href="{% url 'search_database' %}">Search</a>
 								<a class="dropdown-item" href="{% url 'category_form' %}">Download data</a>
+								<a class="dropdown-item" href="{% url 'statistics' %}">Statistics</a>
 						  </div>
 						</div>
 						<div class="dropdown">
@@ -36,7 +29,7 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="BestMatchFinder">
 								<a class="dropdown-item" href="{% url 'bestmatchfinder_home' %}">Search by sequence</a>
-								<a class="dropdown-item" href="{% url 'bestmatchfinder_database' %}">Search using name</a>
+								<a class="dropdown-item" href="{% url 'bestmatchfinder_database' %}">Pairwise comparision</a>
 							</div>
 						</div>
 						<div class="dropdown">
@@ -44,32 +37,24 @@
 								Analysis
 							</button>
 							<div class="dropdown-menu" aria-labelledby="Analysis">
-								<a class="dropdown-item" href="{% url 'statistics' %}">Statistics</a>
 								<a class="dropdown-item" href="{% url 'dendogram_homepage2' %}">Dendogram</a>
 							</div>
 						</div>
 						<div class="dropdown">
 							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Download
+								Submit your sequence for naming
 							</button>
-							<div class="dropdown-menu" aria-labelledby="Download & Install">
+							<div class="dropdown-menu" aria-labelledby="database">
+								<a class="dropdown-item" target="_blank" href="{% url 'submit' %}">Submit</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Links
+							</button>
+							<div class="dropdown-menu" aria-labelledby="Links">
+								<a class="dropdown-item" target="_blank" href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/">Old Bt nomenclature site</a>
 								<a class="dropdown-item" target="_blank" href="https://github.com/Amrithasuresh/BPPRC">Github</a>
-							</div>
-						</div>
-						<div class="dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Older version
-							</button>
-							<div class="dropdown-menu" aria-labelledby="database">
-								<a class="dropdown-item" target="_blank" href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/">database</a>
-							</div>
-						</div>
-						<div class="dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Submit your sequence
-							</button>
-							<div class="dropdown-menu" aria-labelledby="database">
-								<a class="dropdown-item" target="_blank" href="{% url 'submit' %}">Submit your sequence to the database</a>
 							</div>
 						</div>
 						<div class="navbar-nav ml-auto mr-5">

@@ -12,6 +12,7 @@ def cmd(command):
         shell=True
     )
     out, error = process.communicate()
+    print(out, error)
     return out, error
 
 
