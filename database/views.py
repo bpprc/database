@@ -196,7 +196,7 @@ def search_database(request):
             if field_type == 'name':
                 q_objects = Q()
                 for search in searches:
-                    print(search)
+                    # print(search)
                     if _name(search):
                         q_objects.add(Q(name__iexact=search), Q.OR)
                     if _category(search):
@@ -205,7 +205,7 @@ def search_database(request):
                         search = search[:-1]
                         q_objects.add(Q(name_category__iexact=search), Q.OR)
                     if _partial_pattern(search):
-                        q_objects.add(Q(name_category__iexact=search), Q.OR)
+                        q_objects.add(Q(name__icontains=search), Q.OR)
                     else:
                         q_objects.add(Q(name__icontains=search), Q.OR)
 
@@ -219,9 +219,12 @@ def search_database(request):
                         q_objects.add(Q(oldname__iexact=search), Q.OR)
                     if _category(search):
                         q_objects.add(Q(oldname_category__iexact=search), Q.OR)
+                    if _wildcard_search(search):
+                        search = search[:-1]
+                        q_objects.add(Q(name_category__iexact=search), Q.OR)
                     if _partial_pattern(search):
                         q_objects.add(
-                            Q(oldname_category__icontains=search), Q.OR)
+                            Q(oldname__icontains=search), Q.OR)
                     else:
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
