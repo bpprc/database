@@ -487,27 +487,30 @@ def download_sequences(request):
     userdata = \
         UserUploadData.objects.filter(session_key=request.session.session_key)
 
-    if not selected_values and not userdata.exists():
-        message_profile = "Cart is empty"
-        messages.success(request, message_profile)
-        return redirect("view_cart")
+    # if not selected_values and not userdata.exists():
+    #     message_profile = "Cart is empty"
+    #     messages.success(request, message_profile)
+    #     return redirect("view_cart")
 
     file = StringIO()
     data = \
         PesticidalProteinDatabase.objects.filter(name__in=values)
-    for item in data:
-        fasta = textwrap.fill(item.sequence, 80)
-        str_to_write = f">{item.name}\n{fasta}\n"
-        file.write(str_to_write)
 
-    for record in userdata:
-        fasta = textwrap.fill(record.sequence, 80)
-        str_to_write = f">{record.name}\n{fasta}\n"
-        file.write(str_to_write)
+    if data:
+        for item in data:
+            fasta = textwrap.fill(item.sequence, 80)
+            str_to_write = f">{item.name}\n{fasta}\n"
+            file.write(str_to_write)
+
+    if userdata:
+        for record in userdata:
+            fasta = textwrap.fill(record.sequence, 80)
+            str_to_write = f">{record.name}\n{fasta}\n"
+            file.write(str_to_write)
 
     response = HttpResponse(file.getvalue(), content_type="text/plain")
-    response['Content-Disposition'] = \
-        'attachment;filename=data_fasta.txt'
+    download_file = "cart_fasta_sequences.txt"
+    response['Content-Disposition'] = 'attachment;filename=' + download_file
     response['Content-Length'] = file.tell()
     return response
 
