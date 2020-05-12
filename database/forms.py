@@ -164,10 +164,10 @@ class DownloadForm(forms.Form):
 
         self.category_prefixes = {}
         self.category_description = {}
-        self.category_options = [('all', 'ALL')]
+        self.category_options = [('all', 'All')]
         for category in categories:
             prefix = category[0:3]
-            self.category_prefixes[prefix.lower()] = prefix.upper()
+            self.category_prefixes[prefix.lower()] = prefix.title()
 
         for key, value in self.category_prefixes.items():
             for detail in description:
