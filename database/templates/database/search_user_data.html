@@ -1,59 +1,54 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
 {% block content %}
+					<div class="container">
+						<br>
+							<a href="{% url 'clear_session_database' %}" > Clear Session </a>
+							<br>
+								<form action="" id="analysis_form" name="database_id" method="POST">
+  							{% csrf_token %}
+								{{ form.session_list_names.errors }}
 
-<form action="search_database/add_cart/" id="analysis_form" method="POST">
-{% csrf_token %}
+									<table border="3" class="parent" width="60%">
+										<thead>
+											<tr>
+												<th>
+													<a href="{% url 'clear_session_database' %}"  class="fa fa-trash"></a>
+												</th>
+												<th>Name </th>
+												<th>Oldname </th>
+											</tr>
+        {% for protein in proteins %}
+        {% if protein.name in selected_groups %}
+
+											<tr>
+												<td>
+													<a href="/remove_cart/{{ protein.id }}" class="fa fa-trash"></a>
+													</td>
+													<td>{{ protein.name }}</td>
+													<td>{{ protein.oldname }}</td>
+												</tr>
+        {% endif %}
+        {% endfor %}
 
 
-	<table class="table table-nonfluid table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>
-					<a href="{% url 'clear_session_database' %}">
-						<span class="fa fa-trash"></span>
-					</a>
-				</th>
-				<th scope="col">No </th>
-				<th scope="col">Name </th>
-				<th scope="col">Oldname </th>
-				<th scope="col">Accession </th>
-			</tr>
-		</thead>
-	<tbody>
-		{% for protein in proteins %}
-		{% if protein.name in selected_groups %}
-
-				<tr>
-					<td>
-			        <a href="{% url 'remove_cart' protein.id %}">
-			          <span class="fa fa-trash"></span>
-			        </a>
-					</td>
-					<td> {{ forloop.counter }} </td>
-					<td> {{ protein.name }} </td>
-					<td>{{ protein.oldname }}</td>
-					<td>{{ protein.accession }}</td>
-				</tr>
-	{% endif %}
-	{% endfor %}
-
-		</tbody>
-		</table>
-		<br>
-		<br>
-		<br>
-		<br>
-	</form>
-
-	<b>Your sequences below </b>
+											</thead>
+										</table>
+									</form>
+									<br>
+										<br>
+											<br>
+												<b>Your sequences below </b>
 												<br>
 													<br>
 														<a href="{% url 'clear_session_user_data' %}" > Clear Session </a>
 														<br>
-															<table border="3" class="parent" cellspacing="0" width="55%">
+															<table border="3" class="parent" width="65%">
 																<thead>
 																	<tr>
 																		<th>
@@ -79,29 +74,37 @@
 																<a href="{% url 'download_sequences' %}"> Download sequences </a>
 																<br>
 																	<br>
-																		<b>Append your sequences to the analysis</b>
-																		<form action="{% url 'user_data' %}" method="post">
-      {% csrf_token %}
+									<b>Append your sequences to the analysis</b>
+									<form action="{% url 'user_data' %}" method="post">
+									{% csrf_token %}
 
-																			<textarea name="fulltextarea" placeholder="Paste fasta sequence" rows="10" cols="90"></textarea>
-																			<br/>
-																			<br/>
-																				<button type="submit" class="btn btn-secondary"> Add to Cart </button>
-																			</form>
+										<textarea name="fulltextarea" placeholder="Paste fasta sequence" rows="20" cols="85"></textarea>
+										<br/>
+										<br/>
+											<button type="submit" class="btn btn-secondary"> Add to Cart </button>
+										</form>
 
 											<br/>
-											<form action="" method="post">
-											{% csrf_token %}
+											<br/>
+											<form action="{% url 'domain_analysis' %}" method="post">
+												{% csrf_token %}
 											<br>
 											<br>
-											<input type="submit" class="btn btn-secondary" value="Submit to Cluster analysis"/>
+											<input type="submit" class="btn btn-secondary" value="Submit to dendogram"/>
 											<br>
 											<br>
 											</form>
+
 {% endblock content %}
 
 
 {% block extrajs %}
+
+<!-- <script>
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  })();
+</script> -->
 
 <script>
   $("#analysis_form").change(function() {

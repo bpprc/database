@@ -50,7 +50,7 @@
 							<a href=" https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a>
 						</td>
 						<td>{{ protein.year }}</td>
-						{% if show_extra_data %}
+						{% if protein.show_extra_data %}
 						<td> <input type="checkbox" name="nterminal" class="regular-checkbox nterminal" value="{{protein.name}}"/>N terminal </td>
 
 						<td> <input type="checkbox" name="middle" class="regular-checkbox middle" value="{{protein.name}}"/>middle domain </td>
@@ -114,6 +114,10 @@
           } else {
               $("#selectall").removeAttr("checked");
           }
+					var parent = $(this).parent().parent();
+					parent.find('.nterminal').attr('checked', false);
+					parent.find('.cterminal').attr('checked', false);
+					parent.find('.middle').attr('checked', false);
 
       });
   });
@@ -136,6 +140,8 @@
           } else {
               $("#domain1").removeAttr("checked");
           }
+					var parent = $(this).parent().parent();
+					parent.find('.name').attr('checked', false);
 
 
       });
@@ -160,6 +166,8 @@
           } else {
               $("#domain2").removeAttr("checked");
           }
+					var parent = $(this).parent().parent();
+					parent.find('.name').attr('checked', false);
 
       });
   });
@@ -183,6 +191,8 @@
           } else {
               $("#domain3").removeAttr("checked");
           }
+					var parent = $(this).parent().parent();
+					parent.find('.name').attr('checked', false);
 
       });
   });

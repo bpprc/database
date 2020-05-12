@@ -316,12 +316,12 @@ class DendogramForm(forms.Form):
         self.category_options = [('all', 'ALL')]
         for category in categories:
             prefix = category[0:3]
-            self.category_prefixes[prefix.lower()] = prefix.upper()
+            self.category_prefixes[prefix.lower()] = prefix.title()
         self.category_options.extend(
             sorted(self.category_prefixes.items(), key=lambda x: x[0][:3]))
 
         self.fields['category_type'].choices = self.category_options
-        self.fields['category_type'].label = 'Category Types'
+        self.fields['category_type'].label = ''
 
     def clean(self):
         self.open_files_for_clustal()

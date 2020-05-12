@@ -131,8 +131,6 @@ dmypy.json
 /media/fastasequence_files/
 /media/store_result_files/*
 
-# Migration files
-**/**/migrations
 
 #static files
 database/static/*

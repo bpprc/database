@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site-header .navbar-nav .nav-link {
-  color: #cbd5db;
+  color: #ffffff;
 }
 
 .site-header .navbar-nav .nav-link:active {
@@ -155,9 +155,12 @@ a.article-title:hover {
   }
 
   #footer {
-    position: fixed;
+    position: relative;
     bottom: 0;
-    right: 0;
+    margin-right: 0;
+    margin-right: auto;
+    text-align: right;
+    width: 100%;
   }
 
   .table-hover tr:hover {

@@ -22,9 +22,6 @@ from .tasks import run_needle
 def bestmatchfinder_home(request):
     """This loads the bestmatchfinder homepage."""
 
-    # delete older temp files
-    # _delete_temp_files(path=TEMP_DIR, days=TEMP_LIFE)
-
     form = SequenceForm()
     return render(request, 'bestmatchfinder/best_match_finder.html', {'form': form})
 
@@ -134,30 +131,3 @@ def bestmatchfinder_database_sequence_run(request):
             return render(request, 'bestmatchfinder/needle1.html', context)
         return render(request, 'bestmatchfinder/best_match_finder_database.html', {'form': form})
     return HttpResponseRedirect('/bestmatchfinder_database/')
-
-
-# def _delete_temp_files(path=TEMP_DIR, days=TEMP_LIFE):
-#     '''
-#     Delete older temp files based on TEMP_DIR and TEMP_LIFE.
-#     Please change the number of days in the jaspar.settings files
-#
-#     @input
-#     path{string}, days{integer}
-#     '''
-#     import time
-#
-#     current_time = time.time()
-#
-#     for f in os.listdir(path):
-#         f = os.path.join(path, f)
-#         if os.stat(f).st_mtime < current_time - days * 86400:
-#             os.remove(f)
-#
-#
-# def _get_current_date():
-#
-#     import datetime
-#
-#     now = datetime.datetime.now()
-#
-#     return str(str(now.year) + str(now.month).zfill(2) + str(now.day).zfill(2))

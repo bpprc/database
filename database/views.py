@@ -28,7 +28,7 @@ from numpy import pi
 
 def home(request):
     """Loads the homepage."""
-    return render(request, 'database/home.html')
+    return render(request, 'database/about_page.html')
 
 
 def about_page(request):
@@ -168,6 +168,11 @@ def _partial_pattern(search_string):
         return False
 
 
+def _wildcard_search(search_term):
+    if '*' in search_term:
+        return True
+
+
 def search_database_home(request):
     form = SearchForm()
     return render(request, 'database/search_page.html', {'form': form})
@@ -181,7 +186,7 @@ def search_database(request):
             query = form.cleaned_data['search_term']
             field_type = form.cleaned_data['search_fields']
 
-            searches = re.split(r':|, ?|\s |\- |_ |. |; |\*|\n', query)
+            searches = re.split(r':|, ?|\s |\- |_ |. |; |\n', query)
 
             show_extra_data = False
             for search in searches:
@@ -191,12 +196,19 @@ def search_database(request):
             if field_type == 'name':
                 q_objects = Q()
                 for search in searches:
+                    print(search)
                     if _name(search):
                         q_objects.add(Q(name__iexact=search), Q.OR)
-                    elif _category(search):
+                    if _category(search):
+                        q_objects.add(Q(name_category__iexact=search), Q.OR)
+                    if _wildcard_search(search):
+                        search = search[:-1]
+                        q_objects.add(Q(name_category__iexact=search), Q.OR)
+                    if _partial_pattern(search):
                         q_objects.add(Q(name_category__iexact=search), Q.OR)
                     else:
                         q_objects.add(Q(name__icontains=search), Q.OR)
+
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
@@ -224,6 +236,14 @@ def search_database(request):
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
+        show_extra_data = False
+        cry_count = 0
+        for protein in proteins:
+            if protein.name.startswith('Cry'):
+                cry_count += 1
+                protein.show_extra_data = True
+        if cry_count == len(proteins):
+            show_extra_data = True
 
         return render(request, 'database/search_results.html', {'proteins': proteins, 'show_extra_data': show_extra_data})
     return HttpResponseRedirect('/search_database_home/')
