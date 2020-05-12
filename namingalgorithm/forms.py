@@ -17,13 +17,13 @@ RECAPTCHA_PUBLIC_KEY = "6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT"
 class UserSubmissionForm(forms.ModelForm):
     """Sequence submission form."""
     submittersname = forms.CharField(
-        label='Submitters Name',
+        label="Submitter's Name",
         widget=forms.TextInput(
             attrs={'placeholder': 'Nancy Sanders'})
     )
 
     submittersemail = forms.CharField(
-        label='Submitters Email',
+        label="Submitter's Email",
         widget=forms.TextInput(
             attrs={'placeholder': 'contact@bpprc.org'})
     )
@@ -54,20 +54,20 @@ class UserSubmissionForm(forms.ModelForm):
         widget=forms.RadioSelect(
             attrs={'placeholder': 'Nancy Sanders'}
         ),
-        initial=False,
+        initial=True,
         required=False,
     )
 
     bacterium_textbox = forms.CharField(
-        label='Bacterium Name',
+        label='Name of source bacterium (ideally taxonid)',
         widget=forms.TextInput(
             attrs={'placeholder': ''})
     )
 
     accessionnumber = forms.CharField(
-        label='Accession Number',
+        label='Genbank accession Number',
         widget=forms.TextInput(
-            attrs={'placeholder': '046395991'}),
+            attrs={'placeholder': 'ABC12345'}),
         required=True
     )
 
@@ -81,7 +81,7 @@ class UserSubmissionForm(forms.ModelForm):
         label='Partner Protein required for toxicity?',
         choices=((True, "Yes"), (False, "No")),
         widget=forms.RadioSelect(),
-        initial=True,
+        initial=False,
         required=False,
     )
 
@@ -115,7 +115,7 @@ class UserSubmissionForm(forms.ModelForm):
     publication = forms.CharField(
         label='Publication',
         widget=forms.Textarea(
-            attrs={'placeholder': 'Crickmore N et. al.' + '\n' + 'Revision of the nomenclature for the Bacillus thuringiensis pesticidal crystal proteins.' + '\n' + 'Microbiol Mol Biol Rev. 1998 Sep 62(3): 807 - 13.'}),
+            attrs={'placeholder': ''}),
         required=False
     )
 
@@ -160,11 +160,11 @@ class UserSubmissionForm(forms.ModelForm):
             ),
             Row(
                 Column('bacterium',
-                       css_class='form-group col-md-1 mb-0'),
+                       css_class='form-group col-md-2 mb-0'),
                 Column('bacterium_textbox',
                        css_class='form-group col-md-6 mb-0'),
-                Column('taxonid',
-                       css_class='form-group col-md-5 mb-0'),
+                # Column('taxonid',
+                #        css_class='form-group col-md-5 mb-0'),
                 css_class='form-row'
             ),
             Row(
@@ -203,7 +203,7 @@ class UserSubmissionForm(forms.ModelForm):
                   'proteinsequence',
                   'bacterium',
                   'bacterium_textbox',
-                  'taxonid',
+                  # 'taxonid',
                   'accessionnumber',
                   'dnasequence',
                   'partnerprotein',

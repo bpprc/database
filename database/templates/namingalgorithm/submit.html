@@ -8,12 +8,16 @@
   <br>
   <br>
   <br>
-  <h3> Proteins will only get a name if they are derived from a bacterium and satisfies one of the criteria </h3>
+  <h3> Proteins will only get a name if they are derived from a bacterium and satisfy one of the following criteria </h3>
   <br>
   <h5> <li> Have >95% identity to an existing named protein (or)</li> </h5>
   <h5> <li> Have demonstrated activity against a target pest organism</li></ul> </h5>
-  <br>
-  <br>
+</br>
+<h5>* required field</h5>
+</br>
+</br>
+
+
 
   <!-- <form action="{% url 'submit' %}" method="POST"> -->
   <!-- {% csrf_token %} -->
@@ -32,7 +36,7 @@
 
 <script>
 $(function() {
-  $('#div_id_taxonid').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' target='_blank'> Where can I find taxonid?</a>")
+  $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' target='_blank'> Where can I find taxonid?</a>")
 });
 </script>
 
@@ -62,14 +66,13 @@ $(function() {
     console.log($(this).val());
     if ($(this).val() === 'True') {
         $('#id_bacterium_textbox').parent().parent().show();
-        $('#id_taxonid').parent().parent().show();
+        // $('#id_taxonid').parent().parent().show();
     } else {
-      $('#id_bacterium_textbox').parent().parent().show();
-      $('#id_taxonid').parent().parent().hide();
+      $('#id_bacterium_textbox').parent().parent().hide();
+      // $('#id_taxonid').parent().parent().hide();
     }
   });
   $('#id_bacterium_textbox').parent().parent().show();
-  // $('#id_taxonid').parent().parent().hide();
 });
 </script>
 
