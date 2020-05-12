@@ -188,10 +188,10 @@ def search_database(request):
 
             searches = re.split(r':|, ?|\s |\- |_ |. |; |\n', query)
 
-            show_extra_data = False
-            for search in searches:
-                if search[0:3].upper() == 'CRY':
-                    show_extra_data = True
+            # show_extra_data = False
+            # for search in searches:
+            #     if search[0:3].upper() == 'CRY':
+            #         show_extra_data = True
 
             if field_type == 'name':
                 q_objects = Q()
@@ -541,7 +541,7 @@ def download_single_sequence(request, proteinname=None):
     file.write(str_to_write)
 
     response = HttpResponse(file.getvalue(), content_type="text/plain")
-    download_file = f"{proteinname}_fasta_sequences.txt"
+    download_file = f"{proteinname}_fasta_sequence.txt"
     response['Content-Disposition'] = 'attachment;filename=' + download_file
     response['Content-Length'] = file.tell()
     return response
