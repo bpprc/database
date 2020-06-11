@@ -26,17 +26,21 @@ NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG = "Too many sequences, maximum is {}".
 
 def write_sequence_file(sequence: str):
     """ Validate protein sequence"""
+
+    # open a temperorary file
     tmp_seq = tempfile.NamedTemporaryFile(mode="wb+", delete=False)
 
+    # if sequence is none raise the ValidationError
     if len(str(sequence.strip())) == 0:
         raise forms.ValidationError(NEEDLE_CORRECT_SEQ_ERROR_MSG)
 
+    # Write fasta sequence
     if str(sequence).strip()[0] != ">":
         tmp_seq.write(">seq1\n".encode())
 
     tmp_seq.write(sequence.encode())
     tmp_seq.close()
-
+    # Return name of the temporary file
     return tmp_seq.name
 
 
@@ -44,14 +48,14 @@ def guess_if_protein(seq, thresh=0.99):
     """Guess if the given sequence is Protein."""
     # protein_letters = ['C', 'D', 'S', 'Q', 'K','I','P','T','F','N','G',
     #                'H','L','R','W','A','V','E','Y','M']
-    protein_letters = ['A', 'C', 'G', 'T']
+    dna_letters = ['A', 'C', 'G', 'T']
 
     for record in SeqIO.parse(seq, "fasta"):
         seq = record.seq
 
     seq = seq.upper()
     protein_alpha_count = 0
-    for letter in protein_letters:
+    for letter in dna_letters:
         protein_alpha_count += seq.count(letter)
 
     return (len(seq) == 0 or float(protein_alpha_count) / float(len(seq)) >= thresh)
@@ -98,7 +102,7 @@ class SearchDatabaseForm(forms.Form):
     sequence2_in_form = forms.CharField(
         widget=forms.Textarea, required=False, label="user-supplied sequence 2")
     tool = forms.ChoiceField(required=False,
-                             choices=[('needle', 'Needle')])
+                             choices=[('needle', 'Needle'), ('blastp', 'BLASTP')])
 
     def clean_sequence1_in_form(self):
 

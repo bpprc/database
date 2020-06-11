@@ -10,6 +10,7 @@ from Bio.Emboss.Applications import NeedleCommandline
 from database.models import PesticidalProteinDatabase
 
 NEEDLE_PATH = os.environ.get("NEEDLE_PATH")
+BLAST_PATH = os.environ.get("BLAST_PATH")
 
 
 def cmdline(command):
@@ -21,6 +22,8 @@ def cmdline(command):
         shell=True
     )
     out, error = process.communicate()
+    # print("out", out)
+    # print("error", error)
     return out
 
 
@@ -39,10 +42,33 @@ def run_needle(file1, file2):
     return results
 
 
+def run_blast(file1, file2):
+    """This loads the bestmatchfinder homepage."""
+
+    cmd = BLAST_PATH + 'blastp -query ' + file1 + ' -subject ' + file2
+    # print("cmd", cmd)
+    results = cmdline(cmd).decode("utf-8")
+    # print("type", type(results))
+    # identity = re.search(r"\d{1,3}\.\d*\%", results)
+    # if identity:
+    #     identity = identity.group()
+    #     identity = identity.replace('%', '')
+    return results
+
+
 def needle_alignment(file1, file2):
     """This loads the bestmatchfinder homepage."""
 
     results = run_needle(file1, file2)
+    # print(results)
+
+    return results
+
+
+def blast_alignment(file1, file2):
+    """This loads the bestmatchfinder homepage."""
+
+    results = run_blast(file1, file2)
     # print(results)
 
     return results

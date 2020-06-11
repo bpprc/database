@@ -100,16 +100,23 @@ class SearchForm(forms.Form):
             'required': 'Please type a protein name'}
         self.fields['search_term'].label = 'Search term'
         self.fields['search_fields'].label = ''
-        # self.helper = FormHelper()
-        # self.helper.layout = Layout(
-        #     Row(
-        #         Column('search_term',
-        #                css_class='form-group col-md-10'),
-        #     ),
-        #     Row(
-        #         Column('search_fields',
-        #                css_class='form-group col-md-10'),
-        #     ))
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-SearchForm'
+        self.helper.form_class = 'SearchForm'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'search_database'
+        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.layout = Layout(
+            Row(
+                Column('search_term',
+                       css_class='form-group input-group-append col-md-6'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('search_fields',
+                       css_class='form-group col-md-6'),
+                css_class='form-row'
+            ),)
 
     def clean_search_term(self):
         data = self.cleaned_data['search_term']

@@ -50,10 +50,10 @@ def run_needle_server_celery(request):
             context = {}
             protein = form.cleaned_data['sequence_in_form']
             # align = submit_single_sequence.align.run_bug(protein)
-            print('protein file name', protein)
+            # print('protein file name', protein)
 
             task = run_needle.delay(protein)
-            print('view task result', task)
+            # print('view task result', task)
 
             context['task_id'] = task.id
             context['task_status'] = task.status
@@ -104,9 +104,16 @@ def bestmatchfinder_database_sequence_run(request):
     """ This runs bestmatchfinder from the database."""
     if request.method == 'POST':
         form = SearchDatabaseForm(request.POST)
+
         if form.is_valid():
             protein1 = form.cleaned_data['protein_id1']
             protein2 = form.cleaned_data['protein_id2']
+            data = form.cleaned_data
+            name1 = data['protein_id1']
+            name2 = data['protein_id2']
+
+            query = "Query: " + name1.name + ' '
+            subject = "Subject: " + name2.name + ' '
             tool = form.cleaned_data['tool']
 
             if protein1:
@@ -121,8 +128,16 @@ def bestmatchfinder_database_sequence_run(request):
             else:
                 protein2 = form.cleaned_data['sequence2_in_form']
 
-            align = submit_two_sequences.needle.needle_alignment(
-                protein1, protein2)
+            if tool == 'needle':
+                align = submit_two_sequences.needle.needle_alignment(
+                    protein1, protein2)
+            else:
+                align = submit_two_sequences.needle.blast_alignment(
+                    protein1, protein2)
+                removed_blast_title = align.split('>')[1]
+                removed_blast_title = removed_blast_title.lstrip()
+                filtered_result = removed_blast_title.split('Lambda')
+                align = query + subject + '\n\n' + filtered_result[0]
 
             context = {
                 'align': align

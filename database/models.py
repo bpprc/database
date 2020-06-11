@@ -4,9 +4,35 @@ import re
 import textwrap
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
 from django.db import models
-from django.contrib import admin
 from django.utils import timezone
 from django.core.files.base import ContentFile
+
+
+class PesticidalProteinStructureDatabase(models.Model):
+    name = models.CharField(max_length=25, blank=True, null=False)
+    accession = models.CharField(max_length=25, blank=True, null=False)
+    uniprot = models.CharField(max_length=25, blank=True, null=False)
+    pdbid = models.CharField(max_length=25, blank=True, null=False)
+    ligand = models.CharField(max_length=250, blank=True, null=False)
+    gene_names = models.CharField(max_length=250, blank=True, null=False)
+    experiment_method = models.CharField(
+        max_length=250, blank=True, null=False)
+    resolution = models.CharField(max_length=250, blank=True, null=False)
+    deposited = models.DateTimeField('deposition date', default=timezone.now)
+    release_date = models.DateTimeField('release date', default=timezone.now)
+    chimeric = models.BooleanField(default=False)
+    publication = models.TextField(blank=True, null=False)
+    pubmedid = models.CharField(max_length=15, blank=True, null=False)
+    year = models.CharField(max_length=5, blank=True, null=False)
+    organism = models.CharField(
+        max_length=250, blank=True)
+    expression_system = models.CharField(
+        max_length=250, blank=True)
+    length = models.CharField(max_length=25, blank=True, null=False)
+    structure_file = models.FileField(
+        upload_to='pdb_files/', null=True, blank=True)
+    structure_doi = models.CharField(max_length=250, blank=True, null=False)
+    bt = models.BooleanField(default=True)
 
 
 class PesticidalProteinPrivateDatabase(models.Model):
@@ -21,6 +47,7 @@ class PesticidalProteinPrivateDatabase(models.Model):
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
+    public = models.BooleanField(default=False)
 
 
 class PesticidalProteinDatabase(models.Model):
@@ -36,6 +63,8 @@ class PesticidalProteinDatabase(models.Model):
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
     name_category = models.CharField(max_length=15, blank=True)
+    public = models.BooleanField(default=True)
+    # oldname_category = models.CharField(max_length=15, blank=True)
     # protein_metadata = PesticidalProteinDatabaseManager()
 
     class Meta:
@@ -50,6 +79,8 @@ class PesticidalProteinDatabase(models.Model):
 
     def save(self, *args, **kwargs):
         self.name_category = re.search(
+            r"[A-Z][a-z]{2}\d{1,3}", self.name).group()
+        self.oldname_category = re.search(
             r"[A-Z][a-z]{2}\d{1,3}", self.name).group()
         # TODO clear out old file before saving new one?
         filename = 'fasta{}'.format(self.name)
@@ -179,10 +210,3 @@ class UserUploadData(models.Model):
         if not self.name.endswith('_user'):
             self.name = self.name + '_user'
         super(UserUploadData, self).save(*args, **kwargs)
-
-
-class FeedbackData(models.Model):
-    """ """
-    from_email = models.EmailField(max_length=75)
-    subject = models.CharField(max_length=75)
-    message = models.TextField(blank=True, null=False)

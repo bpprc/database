@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
 from naming_package import run_data
 from namingalgorithm.models import UserSubmission
-from .forms import UserSubmissionForm
+from .forms import UserSubmissionForm, ToxicToFormSet
 
 
 def is_admin(user):
@@ -20,6 +20,13 @@ def is_admin(user):
 def naming_algorithm(request):
     """If the user is admin staff, show the naming html page."""
     return render(request, 'namingalgorithm/naming_home.html')
+
+
+def submit_home(request):
+    context = {
+        'form': UserSubmissionForm,
+    }
+    return render(request, 'namingalgorithm/submit_update.html', context)
 
 
 def submit(request):

@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail
+from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase
 from database.forms import SearchForm, DownloadForm
 from bokeh.plotting import figure, output_file, show
 from bokeh.palettes import Category20c, Spectral6, Category20
@@ -24,6 +24,7 @@ from Bio.SeqUtils.ProtParam import ProteinAnalysis
 from clustalanalysis.forms import AnalysisForm, UserDataForm
 import pandas as pd
 from numpy import pi
+from database.filter_results import Search
 
 
 def home(request):
@@ -36,7 +37,11 @@ def about_page(request):
 
 
 def statistics(request):
-    """Loads the homepage."""
+    """Return the number of categories in the database
+       and its corresponding count.
+        Holotype is a protein name ends in 1. Example: Cry1Aa1
+        A holotype is a single protein name used to name the lower rank based on identity. Cry1Aa2 is named based on the identity to Cry1Aa1
+    """
     category_count = {}
     category_holotype_count = {}
     category_prefixes = []
@@ -72,26 +77,25 @@ def statistics(request):
 
     prefix_count_dictionary.pop('Holotype', None)
 
-    data = pd.Series(prefix_count_dictionary).reset_index(
-        name='value').rename(columns={'index': 'category'})
-    data['angle'] = data['value'] / data['value'].sum() * 2 * pi
-    data['color'] = Category20c[len(prefix_count_dictionary)]
-
-    p = figure(plot_height=600, plot_width=800, title="Pie Chart", toolbar_location=None,
-               tools="hover", tooltips="@category: @value")
-
-    p.wedge(x=0, y=1, radius=0.4,
-            start_angle=cumsum('angle', include_zero=True), end_angle=cumsum('angle'),
-            line_color="royalblue", fill_color='color', legend_group='category', source=data)
-
-    script, div = components(p)
+    # data = pd.Series(prefix_count_dictionary).reset_index(
+    #     name='value').rename(columns={'index': 'category'})
+    # data['angle'] = data['value'] / data['value'].sum() * 2 * pi
+    # data['color'] = Category20c[len(prefix_count_dictionary)]
+    #
+    # p = figure(plot_height=600, plot_width=800, title="Pie Chart", toolbar_location=None,
+    #            tools="hover", tooltips="@category: @value")
+    #
+    # p.wedge(x=0, y=1, radius=0.4,
+    #         start_angle=cumsum('angle', include_zero=True), end_angle=cumsum('angle'),
+    #         line_color="royalblue", fill_color='color', legend_group='category', source=data)
+    #
+    # script, div = components(p)
 
     context = \
         {'category_prefixes': category_prefixes,
-         'category_count': category_count,
-         'script': script, 'div': div}
+         'category_count': category_count}
 
-    return render(request, 'clustalanalysis/statistics.html', context)
+    return render(request, 'database/statistics.html', context)
 
 
 def privacy_policy(request):
@@ -114,9 +118,16 @@ def _sorted_nicely(l, sort_key=None):
 def categorize_database(request, category=None):
     """Categorize the protein database with unqiue, first three letter pattern."""
 
-    proteins = PesticidalProteinDatabase.objects.filter(
+    protein = PesticidalProteinDatabase.objects.filter(
         name__istartswith=category)
-    proteins = _sorted_nicely(proteins, sort_key='name')
+    private = PesticidalProteinPrivateDatabase.objects.filter(
+        name__istartswith=category)
+
+    protein_list = list(protein) + list(private)
+
+    proteins = _sorted_nicely(protein_list, sort_key='name')
+    # private = _sorted_nicely(private, sort_key='name')
+
     context = \
         {'proteins': proteins,
          'descriptions': Description.objects.filter(
@@ -196,18 +207,40 @@ def search_database(request):
             if field_type == 'name':
                 q_objects = Q()
                 for search in searches:
-                    # print(search)
-                    if _name(search):
-                        q_objects.add(Q(name__iexact=search), Q.OR)
-                    if _category(search):
-                        q_objects.add(Q(name_category__iexact=search), Q.OR)
-                    if _wildcard_search(search):
+                    if Search(search).is_wildcard():
                         search = search[:-1]
-                        q_objects.add(Q(name_category__iexact=search), Q.OR)
-                    if _partial_pattern(search):
-                        q_objects.add(Q(name__icontains=search), Q.OR)
                     else:
+                        search = search
+                    k = Search(search)
+                    if k.is_fullname():
+                        print('fullname')
+                        q_objects.add(Q(name__iexact=search), Q.OR)
+                    if k.is_uppercase():
+                        print('uppercase')
                         q_objects.add(Q(name__icontains=search), Q.OR)
+                    if k.is_lowercase():
+                        print('lowercase')
+                        q_objects.add(Q(name__icontains=search), Q.OR)
+                    if k.is_single_digit():
+                        print('single digit')
+                        q_objects.add(
+                            Q(name_category__iexact=search), Q.OR)
+                    if k.is_double_digit():
+                        print('double digit')
+                        q_objects.add(
+                            Q(name_category__iexact=search), Q.OR)
+                    if k.is_triple_digit():
+                        print('triple digit')
+                        q_objects.add(
+                            Q(name_category__iexact=search), Q.OR)
+                    if k.is_three_letter():
+                        print("three letters")
+                        q_objects.add(
+                            Q(name_category__icontains=search), Q.OR)
+                    if k.is_three_letter_case():
+                        print("three letters case")
+                        q_objects.add(
+                            Q(name_category__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
@@ -215,21 +248,20 @@ def search_database(request):
             elif field_type == 'oldname':
                 q_objects = Q()
                 for search in searches:
-                    if _name(search):
-                        q_objects.add(Q(oldname__iexact=search), Q.OR)
-                    if _category(search):
-                        q_objects.add(Q(oldname_category__iexact=search), Q.OR)
-                    if _wildcard_search(search):
+                    if Search(search).is_wildcard():
                         search = search[:-1]
-                        q_objects.add(Q(name_category__iexact=search), Q.OR)
-                    if _partial_pattern(search):
-                        q_objects.add(
-                            Q(oldname__icontains=search), Q.OR)
+                    else:
+                        search = search
+                    k = Search(search)
+                    if k.is_fullname():
+                        print('fullname')
+                        q_objects.add(Q(oldname__iexact=search), Q.OR)
                     else:
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
             elif field_type == 'accession':
@@ -385,8 +417,8 @@ def view_cart(request):
         values += selected_values
     values = list(set(values))
 
-    userdata = \
-        UserUploadData.objects.filter(session_key=request.session.session_key)
+    userdata = UserUploadData.objects.filter(
+        session_key=request.session.session_key)
 
     if request.method == 'POST':
         userform = UserDataForm(request.POST, request.FILES,
@@ -415,9 +447,8 @@ def clear_session_user_data(request):
 def user_data_remove(request, id):
     """Remove the user uploaded proteins individually"""
 
-    instance = \
-        UserUploadData.objects.get(
-            session_key=request.session.session_key, id=id)
+    instance = UserUploadData.objects.get(
+        session_key=request.session.session_key, id=id)
     instance.delete()
 
     return redirect("view_cart")
@@ -484,8 +515,8 @@ def download_sequences(request):
     if selected_values:
         values += selected_values
     values = list(set(values))
-    userdata = \
-        UserUploadData.objects.filter(session_key=request.session.session_key)
+    userdata = UserUploadData.objects.filter(
+        session_key=request.session.session_key)
 
     # if not selected_values and not userdata.exists():
     #     message_profile = "Cart is empty"
@@ -493,8 +524,7 @@ def download_sequences(request):
     #     return redirect("view_cart")
 
     file = StringIO()
-    data = \
-        PesticidalProteinDatabase.objects.filter(name__in=values)
+    data = PesticidalProteinDatabase.objects.filter(name__in=values)
 
     if data:
         for item in data:
@@ -518,9 +548,8 @@ def download_sequences(request):
 def download_data(request):
     """List the categories for download."""
 
-    categories = \
-        PesticidalProteinDatabase.objects.order_by(
-            'name').values_list('name').distinct()
+    categories = PesticidalProteinDatabase.objects.order_by(
+        'name').values_list('name').distinct()
 
     category_prefixes = []
     for category in categories:

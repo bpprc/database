@@ -1,15 +1,20 @@
+"""
+This encapsulates the logic for displaying the models in the Django admin.
+
+
+
+
+"""
+
+
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from django.contrib.auth.models import Group
 from .models import PesticidalProteinDatabase, \
-    Description, ProteinDetail, PesticidalProteinPrivateDatabase
+    Description, ProteinDetail, PesticidalProteinPrivateDatabase, PesticidalProteinStructureDatabase
 from import_export import resources
 from django.db import models
 from django.forms import TextInput, Textarea
-
-# allmat = [c.name for c in PesticidalProteinDatabase.objects.all()]  # fetch the names from the model
-# mat = [c[0:3] for c in allmat] # fetch the first three letter pattern from the list of names
-# myset = set(mat) #Keep unique names in the list
 
 
 class FilterByCategories(admin.SimpleListFilter):
@@ -49,23 +54,44 @@ class PesticidalProteinPrivateDatabaseResource(resources.ModelResource):
         model = PesticidalProteinPrivateDatabase
 
 
+class PesticidalProteinStructureDatabaseResource(resources.ModelResource):
+    class Meta:
+        model = PesticidalProteinStructureDatabase
+
+
+class PesticidalProteinStructureDatabaseAdmin(ImportExportModelAdmin):
+    resource_class = PesticidalProteinStructureDatabaseResource
+
+    search_fields = ('name', 'accession', 'uniprot', 'gene_names', 'pdbid', 'pubmedid', 'year', 'chimeric', 'organism', 'expression_system',
+                     'length', 'resolution', 'experiment_method', 'release_date', 'deposited', 'publication', 'structure_file', 'structure_doi')
+    fields = ('name', 'uniprot', 'gene_names', 'pdbid',
+              'pubmedid', 'year', 'chimeric', 'organism', 'length', 'resolution', 'expression_system', 'experiment_method', 'release_date', 'deposited', 'publication', 'structure_file', 'structure_doi')
+    list_display = ('name', 'accession', 'uniprot', 'gene_names', 'pdbid',
+                    'pubmedid', 'year', 'chimeric', 'organism', 'expression_system', 'length', 'resolution', 'experiment_method', 'structure_file', 'structure_doi')
+    ordering = ('name',)
+
+
 class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinPrivateDatabaseResource
 
-    search_fields = ('name', 'oldname', 'othernames', 'accession', 'year')
+    search_fields = ('name', 'oldname', 'othernames',
+                     'accession', 'year', 'public')
     fields = ('name', 'oldname', 'othernames', 'accession', 'year',
-              'sequence', 'uploaded')
-    list_display = ('name', 'oldname',  'othernames', 'accession', 'year',)
+              'sequence', 'uploaded', 'fastasequence_file', 'public')
+    list_display = ('name', 'oldname',  'othernames',
+                    'accession', 'year', 'fastasequence_file', 'public')
     ordering = ('name',)
 
 
 class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
     # categories = PesticidalProteinDatabase.objects.order_by('name').values_list('name').distinct()
-    search_fields = ('name', 'oldname',  'othernames', 'accession', 'year')
+    search_fields = ('name', 'oldname',  'othernames',
+                     'accession', 'year', 'public')
     fields = ('name', 'oldname',  'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file')
-    list_display = ('name', 'oldname',  'othernames', 'accession', 'year',)
+              'sequence', 'uploaded', 'fastasequence_file', 'public')
+    list_display = ('name', 'oldname',  'othernames',
+                    'accession', 'year', 'public')
     list_filter = ['uploaded', FilterByCategories]
     ordering = ('name',)
 
@@ -104,4 +130,6 @@ admin.site.register(Description, DescriptionAdmin)
 admin.site.register(ProteinDetail, ProteinDetailAdmin)
 admin.site.register(PesticidalProteinPrivateDatabase,
                     PesticidalProteinPrivateDatabaseAdmin)
+admin.site.register(PesticidalProteinStructureDatabase,
+                    PesticidalProteinStructureDatabaseAdmin)
 admin.site.unregister(Group)

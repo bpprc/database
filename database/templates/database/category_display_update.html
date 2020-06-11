@@ -25,12 +25,14 @@
             </th>
             <th scope="col">Name</th>
             <th scope="col">Oldname</th>
+            <th scope="col">Othername</th>
             <th scope="col">Accession Number</th>
             <th scope="col">Year</th>
             <th scope="col">Fasta Sequence</th>
           </tr>
         </thead>
 				{% for protein in proteins %}
+        {% if protein.public %}
         <tbody>
           <tr>
             <td>
@@ -38,11 +40,25 @@
             </td>
             <td> <a href=protein_detail/{{ protein.name }}> {{ protein.name}}</td>
             <td>{{ protein.oldname }}</td>
+            <td>{{ protein.othernames }}</td>
             <td><a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a></td>
 						<td>{{ protein.year }}</td>
             <td><a href=download_single_sequence/{{ protein.name }}>Download</a></td>
           </tr>
       </tbody>
+      {% else %}
+      <tbody>
+        <tr>
+          <td>*</td>
+          <td>{{ protein.name}}</td>
+          <td>{{ protein.oldname }}</td>
+          <td>{{ protein.othernames }}</td>
+          <td><a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a></td>
+          <td>{{ protein.year }}</td>
+          <td></td>
+        </tr>
+    </tbody>
+      {% endif %}
 			{% endfor %}
       </table>
 		<button type="submit" class="btn btn-primary" > Add to Cart </button>
@@ -51,6 +67,13 @@
 		<input type="button" class="btn btn-primary" value="Back" onclick="window.history.back()"> </input>
 
   </form>
+</div>
+</div>
+</div>
+
+</br>
+</br>
+
 
 {% endblock content %}
 

@@ -90,6 +90,7 @@ WSGI_APPLICATION = 'BPPRC.wsgi.application'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -103,8 +104,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_tables2',
     'import_export',
+    'extra',
 ]
 
+
+SITE_ID = 1
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 

@@ -1,0 +1,54 @@
+.circle {
+    display:table;
+    width: 6em;
+    height:6em;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgb(106,148,182);
+    box-shadow: 0 0 3px gray;
+}
+
+/* # rgb(95,120,138); */
+
+.circle div {
+    display:table-cell;
+    width:55%;
+    height:55%;
+    line-height:1em;
+    text-align:center;
+    vertical-align:middle;
+    font-size: 3em;
+    font-family:'Raleway', sans-serif;
+    color:white;
+}
+
+#column {
+    width: 8em;
+}
+#circles {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#circles li {
+    float: left;
+    margin:1.25%;
+}
+#wrapper {
+    max-width: 60em;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+#content {
+  { padding-left: 4em; }
+}
+
+.boxhead a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.clear-float {
+  clear: both;
+}

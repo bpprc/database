@@ -3,13 +3,72 @@
 {% block content %}
 
 
-<h1>Feedback</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <div class="form-actions">
-      <button type="submit">Send</button>
-    </div>
-</form>
+<h1>Feedback form</h1>
+</br>
+</br>
+
+  {% crispy form %}
 
 {% endblock content %}
+
+
+{% block extrahead %}
+<style>
+i {
+  color: darkblue;
+}
+
+.infomessage {
+  color: blue;
+}
+</style>
+{% endblock extrahead %}
+
+
+{% block extrajs %}
+
+<script>
+$(function() {
+  $('#div_id_message .col-form-label').append('<i> <i class="fas fa-question-circle"></i> </i>')
+
+
+});
+</script>
+
+<script>
+$(function() {
+  $('#div_id_email .col-form-label').append('<i onclick="myFunction()" class="fas fa-question-circle"> </i>')
+});
+</script>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<script type="text/javascript">
+
+  $('.js-captcha-refresh').click(function (evt) {
+      evt.preventDefault();
+      $.getJSON("/captcha/refresh/", function (result) {
+          $('.captcha').attr('src', result['image_url']);
+          $('#id_captcha_0').val(result['key'])
+      });
+  });
+
+
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  });
+
+</script>
+
+<script>
+function myFunction() {
+  if($("#div_id_email .col-form-label").find('.infomessage').length) {
+    $("#div_id_email .col-form-label").find('.infomessage').remove();
+  } else {
+
+  $("#div_id_email .col-form-label").append("<div class='infomessage'> messages distributed by electronic means from one computer user to one or more recipients via a network </div>").val();
+}
+}
+</script>
+
+{% endblock %}

@@ -31,7 +31,7 @@ class UserSubmissionAdmin(admin.ModelAdmin):
 
     def create_data(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&proteinsequence={1}" target="_blank">Create Data</a>'.format(obj.predict_name, obj.proteinsequence))
+        return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&proteinsequence={1}" target="_blank">Create Data</a>'.format(obj.predict_name or '', obj.proteinsequence))
 
     def refresh(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""

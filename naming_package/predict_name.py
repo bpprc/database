@@ -1,9 +1,15 @@
-from database.models import PesticidalProteinDatabase
+from database.models import PesticidalProteinDatabase, PesticidalProteinPrivateDatabase
 from django.conf import settings
+from django.core.files import File
+from pathlib import Path
 import os
 import subprocess
 import re
 from naming_package import naming
+import textwrap
+import itertools
+import tempfile
+import shutil
 
 NEEDLE_PATH = os.environ.get("NEEDLE_PATH")
 
@@ -51,9 +57,63 @@ def filter_files_ending_with_one(SUBJECT_FASTAFILES):
     return [name for name in SUBJECT_FASTAFILES if name[-1].isdigit() and not name[-2].isdigit() == 1 and int(name[-1]) == 1]
 
 
+# def create_directory():
+#     temp_dir = tempfile.mkdtemp(dir=settings.MEDIA_ROOT)
+#     directory = os.path.basename(temp_dir)
+#     return directory
+#
+#
+# def remove_directory(directory):
+#     path = os.path.join(settings.MEDIA_ROOT, directory)
+#     shutil.rmtree(path)
+
+
+def empty_path_private():
+    proteins = PesticidalProteinPrivateDatabase.objects.all()
+    for protein in proteins:
+        t = PesticidalProteinPrivateDatabase.objects.get(id=protein.id)
+        t.fastasequence_file = None
+        t.save()
+
+
+def write_files_private(objectname):
+    path = Path(settings.MEDIA_ROOT, "fastasequence_files/")
+    # print("path", path)
+    for protein in objectname:
+        tmp_seq = tempfile.NamedTemporaryFile(
+            dir=path, mode="wb+", delete=False)
+        fasta = textwrap.fill(protein.sequence, 80)
+        str_to_write = f">{protein.name}\n{fasta}\n"
+        tmp_seq.write(str_to_write.encode())
+        tmp_seq.close()
+
+        filename = os.path.basename(tmp_seq.name)
+        # djangofile = File(filename)
+        # filename = "fastasequence_files/" + filename
+        # filename = "fastasequence_files/" + filename
+        t = PesticidalProteinPrivateDatabase.objects.get(id=protein.id)
+        path_filename = "fastasequence_files/" + filename
+        t.fastasequence_file.name = path_filename
+        # print("t", t.fastasequence_file)
+        t.save()
+        # print("inside the writing file", t.fastasequence_file.path)
+
+
+def update_private():
+    private_proteins = PesticidalProteinPrivateDatabase.objects.values_list(
+        'name', flat=True)
+    private_endwith1 = filter_files_ending_with_one(list(private_proteins))
+
+    private_proteins = PesticidalProteinPrivateDatabase.objects.values_list(
+        'name', flat=True)
+    private_proteins_filtered = PesticidalProteinPrivateDatabase.objects.filter(
+        name__in=private_endwith1)
+    write_files_private(private_proteins_filtered)
+
+
 def run_bug(query_data):
-    PPD_proteins = PesticidalProteinDatabase.objects.exclude(
-        fastasequence_file__isnull=True).exclude(fastasequence_file='').values_list('name', flat=True)
+
+    update_private()
     alignResults = ''
     empty = []
     initial = 0
@@ -62,20 +122,46 @@ def run_bug(query_data):
     name = ''
     percentageidentity = ''
 
+    PPD_proteins = PesticidalProteinDatabase.objects.exclude(
+        fastasequence_file__isnull=True).exclude(fastasequence_file='').values_list('name', flat=True)
+
+    private_proteins = PesticidalProteinPrivateDatabase.objects.values_list(
+        'name', flat=True)
+
     endwith1 = filter_files_ending_with_one(list(PPD_proteins))
+    private_endwith1 = filter_files_ending_with_one(list(private_proteins))
 
     PPD_proteins_filtered = PesticidalProteinDatabase.objects.filter(
         name__in=endwith1)
 
-    for protein in PPD_proteins_filtered:
+    private_proteins_filtered = PesticidalProteinPrivateDatabase.objects.filter(
+        name__in=private_endwith1)
+
+    # directory = create_directory()
+
+    for protein in itertools.chain(PPD_proteins_filtered, private_proteins_filtered):
 
         if not hasattr(protein, 'fastasequence_file'):
             continue
 
-        #print('fastasequence_file', protein.fastasequence_file)
-        s = os.path.join(settings.MEDIA_ROOT, protein.fastasequence_file.path)
-
+        print("I am running now", protein.name)
+        print(protein.fastasequence_file.path)
+        s = os.path.join(settings.MEDIA_ROOT,
+                         protein.fastasequence_file.path)
+        # print("combined_file", s)
         my_blast = blast_two_sequences(query_data, s)
+
+        # print("fasta sequence file path", protein.fastasequence_file)
+        # if hasattr(protein, 'fastasequence_file'):
+        #     print("I am media files Apple")
+
+        # else:
+        #     print("i am temp files")
+        #     print("fasta sequence file path", protein.fastasequence_file.path)
+        #     my_blast = blast_two_sequences(
+        #         query_data, protein.fastasequence_file.path)
+        #     s = protein.fastasequence_file.path
+
         identity_percentage, results = my_blast
 
         try:
@@ -101,29 +187,48 @@ def run_bug(query_data):
         # my_condition = None
         if float(empty[2]) >= 95 and float(empty[2]) <= 100:
             category = "95 to 100%"
-            categories = PesticidalProteinDatabase.objects.filter(
+            public = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
-            predicted_name = naming.rank4_naming(list(categories), name)
+            private = PesticidalProteinPrivateDatabase.objects.filter(
+                name__startswith=name[0:3]).values_list('name', flat=True)
+            categories = list(public)
+            categories.extend(list(private))
+            predicted_name = naming.rank4_naming(categories, name)
 
         elif float(empty[2]) >= 76 and float(empty[2]) <= 94.9:
             category = "76 to 94%"
-            categories = PesticidalProteinDatabase.objects.filter(
+            public = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
-            predicted_name = naming.rank3_naming(list(categories), name)
+            private = PesticidalProteinPrivateDatabase.objects.filter(
+                name__startswith=name[0:3]).values_list('name', flat=True)
+            categories = list(public)
+            categories.extend(list(private))
+            predicted_name = naming.rank3_naming(categories, name)
 
         elif float(empty[2]) >= 45 and float(empty[2]) <= 75.9:
             category = "45 to 75%"
-            categories = PesticidalProteinDatabase.objects.filter(
+            public = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
-            predicted_name = naming.rank2_naming(list(categories), name)
+            private = PesticidalProteinPrivateDatabase.objects.filter(
+                name__startswith=name[0:3]).values_list('name', flat=True)
+            categories = list(public)
+            categories.extend(list(private))
+            predicted_name = naming.rank2_naming(categories, name)
 
         elif float(empty[2]) >= 0 and float(empty[2]) <= 44.9:
             category = "0 to 44%"
-            categories = PesticidalProteinDatabase.objects.filter(
+            public = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
-            predicted_name = naming.rank1_naming(list(categories), name)
+            private = PesticidalProteinPrivateDatabase.objects.filter(
+                name__startswith=name[0:3]).values_list('name', flat=True)
+            categories = list(public)
+            categories.extend(list(private))
+            # predicted_name = naming.rank1_naming(categories, name)
+            predicted_name = None
 
         else:
             pass
 
+    # remove_directory(directory)
+    empty_path_private()
     return align, percentageidentity, category, predicted_name, name
