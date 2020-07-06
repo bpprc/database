@@ -2,9 +2,10 @@
 {% load static %}
 {% block content %}
 
+<p><h4>Click the boxes to select full length proteins or individual domains for further analysis (via cart)</h4></p>
+</br>
 	<form action="add_cart/" id="analysis_form" method="POST">
   {% csrf_token %}
-
 
 		<table class="table table-bordered table-hover">
 			<thead>
