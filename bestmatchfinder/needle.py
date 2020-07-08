@@ -34,7 +34,7 @@ def run_needle(file1, file2):
         file1 + ' -bsequence ' + file2 + ' -sprotein1 Y -sprotein2 Y ' + ' -auto -stdout'
     # print(cmd)
     results = cmdline(cmd).decode("utf-8")
-    # print(results)
+    print(results)
     identity = re.search(r"\d{1,3}\.\d*\%", results)
     if identity:
         identity = identity.group()
