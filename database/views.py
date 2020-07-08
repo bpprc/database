@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase
+from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
 from database.forms import SearchForm, DownloadForm
 from bokeh.plotting import figure, output_file, show
 from bokeh.palettes import Category20c, Spectral6, Category20
@@ -682,6 +682,17 @@ def protein_detail(request, name):
                }
 
     return render(request, 'database/protein_detail.html', context)
+
+
+def old_name_new_name(request):
+    table1 = OldnameNewnameTableLeft.objects.all()
+    table2 = OldnameNewnameTableRight.objects.all()
+
+    context = \
+        {'table1': table1,
+         'table2': table2,
+         }
+    return render(request, 'database/old_name_new_name.html', context)
 
 
 def page_not_found(request, exception):

@@ -39,5 +39,5 @@ urlpatterns = [
     path('protein_detail/<slug:name>/',
          views.protein_detail, name='protein_detail'),
     path('faq/', views.faq, name='faq'),
-    path('privacy_policy/', views.privacy_policy, name='privacy_policy'),
+    path('old_name_new_name/', views.old_name_new_name, name='old_name_new_name'),
 ]

@@ -8,6 +8,18 @@ from django.utils import timezone
 from django.core.files.base import ContentFile
 
 
+class OldnameNewnameTableLeft(models.Model):
+    name_2020 = models.CharField(max_length=250, blank=True, null=False)
+    name_1998 = models.CharField(max_length=250, blank=True, null=False)
+    alternative_name = models.CharField(max_length=250, blank=True, null=False)
+
+
+class OldnameNewnameTableRight(models.Model):
+    name_2020 = models.CharField(max_length=250, blank=True, null=False)
+    name_1998 = models.CharField(max_length=250, blank=True, null=False)
+    alternative_name = models.CharField(max_length=250, blank=True, null=False)
+
+
 class PesticidalProteinStructureDatabase(models.Model):
     name = models.CharField(max_length=25, blank=True, null=False)
     accession = models.CharField(max_length=25, blank=True, null=False)
