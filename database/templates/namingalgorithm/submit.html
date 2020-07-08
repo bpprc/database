@@ -35,9 +35,9 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
 <script>
-$(function() {
-  $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' target='_blank'> Where can I find taxonid?</a>")
-});
+// $(function() {
+//   $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' target='_blank'> Where can I find taxonid?</a>")
+// });
 </script>
 
 <script>
@@ -68,10 +68,19 @@ $(function() {
     console.log($(this).val());
     if ($(this).val() === 'True') {
         $('#id_bacterium_textbox').parent().parent().show();
-        $("#id_bacterium_textbox").text("Name of source bacterium (ideally taxonid)");
+        $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxonid)");
+        if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length == 0) {
+          $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxonid?</a>")
+        } else {
+          $('#div_id_bacterium_textbox').find('.taxonid-hint').show();
+        }
+
     } else {
       $('#id_bacterium_textbox').parent().parent().show();
-      $("#id_bacterium_textbox").text("Enter details of source organism in comments box below");
+      $("#div_id_bacterium_textbox").find('label').text("Enter details of source organism in comments box below");
+      if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length > 0) {
+      $('#div_id_bacterium_textbox').find('.taxonid-hint').hide();
+    }
     }
   });
   $('#id_bacterium_textbox').parent().parent().show();
