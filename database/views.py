@@ -241,6 +241,8 @@ def search_database(request):
                         print("three letters case")
                         q_objects.add(
                             Q(name_category__icontains=search), Q.OR)
+                    # else:
+                    #     q_objects = None
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
@@ -582,35 +584,51 @@ def download_single_sequence(request, proteinname=None):
     return response
 
 
+def download_category_form(request):
+
+    form = DownloadForm()
+    return render(request, 'database/download_form.html', form)
+
+
 def download_category(request, category=None):
     """Download the fasta sequences for the category."""
 
-    context = {
-        'proteins': PesticidalProteinDatabase.objects.all()
-    }
-    category = category.title()
-    file = StringIO()
-    data = list(context.get('proteins'))
+    if request.method == 'POST':
+        form = DownloadForm(request.POST)
+        if form.is_valid():
+            category = category.title()
 
-    for item in data:
-        if category in item.name:
-            fasta = textwrap.fill(item.sequence, 80)
-            str_to_write = f">{item.name}\n{fasta}\n"
-            file.write(str_to_write)
-        else:
-            pass
+            context = {
+                'proteins': PesticidalProteinDatabase.objects.all(),
+                'descriptions': Description.objects.order_by('name')
 
-    if 'All' in category:
-        for item in data:
-            fasta = textwrap.fill(item.sequence, 80)
-            str_to_write = f">{item.name}\n{fasta}\n"
-            file.write(str_to_write)
+            }
 
-    response = HttpResponse(file.getvalue(), content_type="text/plain")
-    download_file = f"{category}_fasta_sequences.txt"
-    response['Content-Disposition'] = 'attachment;filename=' + download_file
-    response['Content-Length'] = file.tell()
-    return response
+            file = StringIO()
+            data = list(context.get('proteins'))
+
+            for item in data:
+                if category in item.name:
+                    fasta = textwrap.fill(item.sequence, 80)
+                    str_to_write = f">{item.name}\n{fasta}\n"
+                    file.write(str_to_write)
+                else:
+                    pass
+
+            if 'All' in category:
+                for item in data:
+                    fasta = textwrap.fill(item.sequence, 80)
+                    str_to_write = f">{item.name}\n{fasta}\n"
+                    file.write(str_to_write)
+
+            response = HttpResponse(file.getvalue(), content_type="text/plain")
+            download_file = f"{category}_fasta_sequences.txt"
+            response['Content-Disposition'] = 'attachment;filename=' + \
+                download_file
+            response['Content-Length'] = file.tell()
+            return response
+    form = DownloadForm()
+    return render(request, 'database/download_form.html', form)
 
 
 def category_form(request):

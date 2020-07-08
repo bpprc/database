@@ -52,8 +52,10 @@ $(function() {
     console.log($(this).val());
     if ($(this).val() === 'True') {
         $('#id_sourcebacterium_textbox').parent().parent().show();
+        $("#id_bacterium_textbox").text("Name of source bacterium (ideally taxonid)");
     } else {
       $('#id_sourcebacterium_textbox').parent().parent().hide();
+      $("#id_bacterium_textbox").text("Enter details of source organism in comments box below");
     }
   });
   $('#id_sourcebacterium_textbox').parent().parent().hide();
@@ -66,10 +68,10 @@ $(function() {
     console.log($(this).val());
     if ($(this).val() === 'True') {
         $('#id_bacterium_textbox').parent().parent().show();
-        // $('#id_taxonid').parent().parent().show();
+        $("#id_bacterium_textbox").text("Name of source bacterium (ideally taxonid)");
     } else {
-      $('#id_bacterium_textbox').parent().parent().hide();
-      // $('#id_taxonid').parent().parent().hide();
+      $('#id_bacterium_textbox').parent().parent().show();
+      $("#id_bacterium_textbox").text("Enter details of source organism in comments box below");
     }
   });
   $('#id_bacterium_textbox').parent().parent().show();

@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
 from naming_package import run_data
 from namingalgorithm.models import UserSubmission
-from .forms import UserSubmissionForm, ToxicToFormSet
+from .forms import UserSubmissionForm
 
 
 def is_admin(user):
