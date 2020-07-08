@@ -96,11 +96,11 @@ class SearchDatabaseForm(forms.Form):
     protein_id1 = forms.ModelChoiceField(
         queryset=PesticidalProteinDatabase.objects.all(), required=False, label="Database protein 1")
     sequence1_in_form = forms.CharField(
-        widget=forms.Textarea, required=False, label="user-supplied sequence 1")
+        widget=forms.Textarea, required=False, label="user-supplied sequence 1 (plain or fasta format)")
     protein_id2 = forms.ModelChoiceField(
         queryset=PesticidalProteinDatabase.objects.all(), required=False, label="Database protein 2")
     sequence2_in_form = forms.CharField(
-        widget=forms.Textarea, required=False, label="user-supplied sequence 2")
+        widget=forms.Textarea, required=False, label="user-supplied sequence 2 (plain or fasta format)")
     tool = forms.ChoiceField(required=False,
                              choices=[('needle', 'Needle'), ('blastp', 'BLASTP')])
 
