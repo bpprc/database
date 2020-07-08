@@ -59,11 +59,12 @@
   </div>
 </div>
 
-<div style="position:absolute;bottom: 55px; left: 0; width: 100% ; height: 40px; margin-top: 20px ;white-space:nowrap; justify-content: space-between;">
+<!-- position:absolute -->
+<div style="position:fixed;bottom: 100px; left: 0; width: 100% ; height: 40px; margin-top: 20px ;white-space:nowrap; justify-content: space-between;">
 
 <footer class="footer page-footer small pt-4 mt-4 border-top" role="contentinfo">
   <div class="container">
-      <div class="d-flex justify-content-between pt-3">
+      <div class="d-flex justify-content-between pt-3 US CU UF camtech">
           <div>
 						  <a href="http://www.sussex.ac.uk/lifesci/" target="_blank">
               <img class="US" src="/media/US.png" alt="US" width="120" height="120">
@@ -89,3 +90,31 @@
 </footer>
 </div>
 {% endblock content %}
+
+{% block extrahead %}
+<style>
+
+@media screen and (max-width: 600px) {
+  .camtech {
+    width: 95px;
+    height: 55px;
+  }
+
+	.UF {
+		width: 100px;
+		height: 50px;
+	}
+
+	.CU {
+		width: 30px;
+		height: 30px;
+	}
+
+	.US {
+		width: 60px;
+		height: 60px;
+	}
+}
+
+</style>
+{% endblock extrahead %}
