@@ -49,11 +49,11 @@ def run_blast(file1, file2):
     # print("cmd", cmd)
     results = cmdline(cmd).decode("utf-8")
 
-    f = open(settings.BASE_DIR + "/" + "demofile3.csv", "w")
-    print(settings.BASE_DIR + "/" + "demofile3.csv")
-    f.write(cmd + "\n")
-    f.write(results + "\n")
-    f.close()
+    # f = open(settings.BASE_DIR + "/" + "demofile3.csv", "w")
+    # print(settings.BASE_DIR + "/" + "demofile3.csv")
+    # f.write(cmd + "\n")
+    # f.write(results + "\n")
+    # f.close()
     # print("type", type(results))
     # identity = re.search(r"\d{1,3}\.\d*\%", results)
     # if identity:
