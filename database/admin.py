@@ -11,7 +11,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from django.contrib.auth.models import Group
 from .models import PesticidalProteinDatabase, \
-    Description, ProteinDetail, PesticidalProteinPrivateDatabase, PesticidalProteinStructureDatabase
+    Description, ProteinDetail, PesticidalProteinPrivateDatabase, PesticidalProteinStructureDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
 from import_export import resources
 from django.db import models
 from django.forms import TextInput, Textarea
@@ -107,6 +107,28 @@ class DescriptionAdmin(ImportExportModelAdmin):
     list_display = ('name', 'description')
 
 
+class OldnameNewnameTableLeftResource(resources.ModelResource):
+    class Meta:
+        model = OldnameNewnameTableLeft
+
+
+class OldnameNewnameTableLeftAdmin(ImportExportModelAdmin):
+    resource_class = OldnameNewnameTableLeftResource
+    fields = ('name_2020', 'name_1998', 'alternative_name')
+    list_display = ('name_2020', 'name_1998', 'alternative_name')
+
+
+class OldnameNewnameTableRightResource(resources.ModelResource):
+    class Meta:
+        model = OldnameNewnameTableRight
+
+
+class OldnameNewnameTableRightAdmin(ImportExportModelAdmin):
+    resource_class = OldnameNewnameTableRightResource
+    fields = ('name_2020', 'name_1998', 'alternative_name')
+    list_display = ('name_2020', 'name_1998', 'alternative_name')
+
+
 class ProteinDetailAdmin(admin.ModelAdmin):
     search_fields = ['accession', 'start_N', 'end_N',
                      'start_M', 'end_M', 'start_C', 'end_C']
@@ -132,4 +154,8 @@ admin.site.register(PesticidalProteinPrivateDatabase,
                     PesticidalProteinPrivateDatabaseAdmin)
 admin.site.register(PesticidalProteinStructureDatabase,
                     PesticidalProteinStructureDatabaseAdmin)
+admin.site.register(OldnameNewnameTableLeft,
+                    OldnameNewnameTableLeftAdmin)
+admin.site.register(OldnameNewnameTableRight,
+                    OldnameNewnameTableRightAdmin)
 admin.site.unregister(Group)
