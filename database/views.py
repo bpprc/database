@@ -193,6 +193,7 @@ def search_database(request):
     """Returns the results based on the search query."""
     if request.method == 'POST':
         form = SearchForm(request.POST)
+        proteins = []
         if form.is_valid():
             query = form.cleaned_data['search_term']
             field_type = form.cleaned_data['search_fields']
