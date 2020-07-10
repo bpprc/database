@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 
+{% if proteins %}
 <p><h4>Click the boxes to select full length proteins or individual domains for further analysis (via cart)</h4></p>
 </br>
 	<form action="add_cart/" id="analysis_form" method="POST">
@@ -73,6 +74,10 @@
 							<input type="button" class="btn btn-primary" value="Back" onclick="window.history.back()" />
 
 </form>
+
+{% else %}
+			<p> No results found </p>
+{% endif %}
 
 {% endblock content %}
 
