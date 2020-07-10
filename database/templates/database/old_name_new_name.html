@@ -31,16 +31,16 @@
   <table class="table table-bordered table-hover table-fit">
     <thead>
       <tr>
-        <th scope="col">2020 Name</th>
         <th scope="col">1998 Name</th>
+        <th scope="col">2020 Name</th>
         <th scope="col">Alternative Name</th>
       </tr>
     </thead>
   {% for protein in table2 %}
   <tbody>
     <tr>
-      <td>{{ protein.name_2020 }}</td>
       <td>{{ protein.name_1998 }}</td>
+      <td>{{ protein.name_2020 }}</td>
       <td>{{ protein.alternative_name}}</td>
     </tr>
 </tbody>
