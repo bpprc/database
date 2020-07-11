@@ -93,7 +93,7 @@ class UserDataForm(forms.Form):
         elif userdata:
             content = userdata
         else:
-            raise forms.ValidationError('Please provide atleast one field')
+            raise forms.ValidationError('Please provide at least one field')
 
         if userfile and userdata:
             raise forms.ValidationError('Please use only one field')
@@ -337,9 +337,9 @@ class DendogramForm(forms.Form):
         self.write_input_file_clustal()
         self.count_number_lines()
 
-        if self.numlines <= 3:
+        if self.numlines < 3:
             raise forms.ValidationError(
-                "Atleast three or more sequences are needed")
+                "At least three or more sequences are needed")
 
     def save(self):
         # self.run_clustal()
