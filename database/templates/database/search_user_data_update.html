@@ -76,3 +76,13 @@
 {% crispy analysisform %}
 </div>
 {% endblock content %}
+
+{% block extrajs %}
+
+<script>
+$(function() {
+  $('#div_id_userdata').append("<a>User upload fasta headers are truncated to 10 characters</a>")
+});
+</script>
+
+{% endblock extrajs %}
