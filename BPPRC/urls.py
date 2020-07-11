@@ -11,5 +11,6 @@ urlpatterns = [
     path('', include('bestmatchfinder.urls')),
     path('', include('namingalgorithm.urls')),
     path('', include('clustalanalysis.urls')),
+    path('', include('extra.urls')),
     path('', include('graphs.urls')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

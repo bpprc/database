@@ -3,6 +3,10 @@
 {% load static %}
 
 
+<div>
+	<img src="/media/bpprc.png" alt="UF" width="290" height="120">
+</div>
+
 <div class="row">
 	<div class="col-md-6">
 <b>Welcome to the Pesticidal Protein Database</b>
@@ -45,40 +49,51 @@
 				</font>
 			</p>
 			<sup> 1 </sup>
-			<i> Department of Entomology and Nematology, University of Florida, USA </i>
-			<br></br>
+			<i> <a href="http://entnemdept.ufl.edu/" target="_blank"> Department of Entomology and Nematology, University of Florida, USA </a> </i>
 				<sup> 2 </sup>
-				<i> School of Life Sciences, University of Sussex, UK  </i>
-			<br></br>
+				<i> <a href="http://www.sussex.ac.uk/lifesci/" target="_blank"> School of Life Sciences, University of Sussex, UK </a>  </i>
 					<sup> 3 </sup>
-					<i> School of Biosciences, Cardiff University, UK </i>
+					<i> <a href="https://www.cardiff.ac.uk/biosciences" target="_blank"> School of Biosciences, Cardiff University, UK </a> </i>
 				</div>
+		</br>
+				<p><h5>Funding:</h5> This project is supported by the National Science Foundation I/UCRC, the Center for Arthropod Management Technologies, under Grant Nos. IIP-1338775 and 1821914, and by industry partners.
+				</p>
 		</div>
 	<div class="col-md-6">
     <img src="/media/protein.png" alt="UF" width="600" height="600">
   </div>
 </div>
+</br>
+</br>
 
-<div style="position:absolute;bottom: 55px; left: 0; width: 100% ; height: 40px; margin-top: 20px ;white-space:nowrap; justify-content: space-between;">
+<p><h5>Citing this website:</h5> to cite this website in a publication please use the following format (replacing Day Month Year with the date that you accessed the site)
+
+Crickmore, N., Berry, C., Panneerselvam, S., Mishra, R., Connor, T.R. and Bonning, B.C. (2020). Bacterial Pesticidal Protein Resource Center, viewed Day Month Year, https://www.bpprc.org.</p>
+
+<!-- position:absolute -->
+<!-- <div style="position:fixed;bottom: 100px; left: 0; width: 100% ; height: 40px; margin-top: 20px ;white-space:nowrap; justify-content: space-between;"> -->
 
 <footer class="footer page-footer small pt-4 mt-4 border-top" role="contentinfo">
   <div class="container">
-      <div class="d-flex justify-content-between pt-3">
-          <div >
-              <img src="/media/US.png" alt="US" width="120" height="120">
-          </div>
-
-          <div >
-              <img src="/media/CU.png" alt="CU" width="90" height="90">
+      <div class="d-flex justify-content-between pt-3 US CU UF camtech">
+          <div>
+						  <a href="http://www.sussex.ac.uk/lifesci/" target="_blank">
+              <img class="US" src="/media/US.png" alt="US" width="100" height="100">
           </div>
 
           <div>
-              <img src="/media/UF.png" alt="UF" width="200" height="50">
+						<a href="https://www.cardiff.ac.uk/biosciences" target="_blank">
+              <img class="CU" src="/media/CU.png" alt="CU" width="90" height="90">
+          </div>
+
+          <div>
+							<a href="http://entnemdept.ufl.edu/" target="_blank">
+              <img class="UF" src="/media/UF.png" alt="UF" width="160" height="30">
           </div>
 
           <div>
 						<a href="https://www.iucrc-camtech.org/" target="_blank">
-            <img src="/media/camtech.png" alt="camtech" width="190" height="110">
+            <img class="camtech" src="/media/camtech.png" alt="camtech" width="170" height="90">
           </div>
 
       </div>
@@ -86,3 +101,31 @@
 </footer>
 </div>
 {% endblock content %}
+
+{% block extrahead %}
+<style>
+
+@media screen and (max-width: 600px) {
+  .camtech {
+    width: 95px;
+    height: 55px;
+  }
+
+	.UF {
+		width: 100px;
+		height: 50px;
+	}
+
+	.CU {
+		width: 30px;
+		height: 30px;
+	}
+
+	.US {
+		width: 60px;
+		height: 60px;
+	}
+}
+
+</style>
+{% endblock extrahead %}

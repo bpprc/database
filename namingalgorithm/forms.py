@@ -45,14 +45,14 @@ class UserSubmissionForm(forms.ModelForm):
         label='Protein Sequence',
         widget=forms.Textarea(
             attrs={'placeholder': ">ABI14444.1 Cry51Aa1 [Bacillus thuringiensis F14-1] MIFLAILDLKSLVLNAINYWGPKNNNGIQGGDFGYPISEKQIDTSIITSTHPRLIPHDLTIPQNLETIFTTTQVLTNNTDLQQSQTVSFAKKTTTTTSTSTTNGWTEGGKISDTLEEKVSVSIPFIGEGGGKNSTTIEANFAHNSSTTTFQQASTDIEWNISQPVLVPPRKQVVATLVIMGGNFTIPMDLMTTIDSTEHYSGYPILTWISSPDNSYNGPFMSWYFANWPNLPSGFGPLNSDNTVTYTGSVVSQVSAGVYATVRFDQYDIHNLRTIEKTWYARHATLHNGKKISINNVTEMAPTSPIKTN "}),
-        required=False
+        required=True
     )
 
     bacterium = forms.ChoiceField(
         choices=((True, "Yes"), (False, "No")),
         label='Bacterium',
         widget=forms.RadioSelect(
-            attrs={'placeholder': 'Nancy Sanders'}
+            attrs={'placeholder': ''}
         ),
         initial=True,
         required=False,
@@ -60,6 +60,7 @@ class UserSubmissionForm(forms.ModelForm):
 
     bacterium_textbox = forms.CharField(
         label='Name of source bacterium (ideally taxonid)',
+        # label='',
         widget=forms.TextInput(
             attrs={'placeholder': ''})
     )

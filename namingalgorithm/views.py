@@ -22,6 +22,13 @@ def naming_algorithm(request):
     return render(request, 'namingalgorithm/naming_home.html')
 
 
+def submit_home(request):
+    context = {
+        'form': UserSubmissionForm,
+    }
+    return render(request, 'namingalgorithm/submit_update.html', context)
+
+
 def submit(request):
     """Submit the sequence for the naming purpose through user form."""
     if request.method == "POST":

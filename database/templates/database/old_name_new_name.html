@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="table-responsive col-lg-6">
+      <table class="table table-bordered table-hover table-fit">
+        <p style="text-align:left;"> Organized by new name </p>
+        <thead>
+          <tr>
+            <th scope="col">2020 Name</th>
+            <th scope="col">1998 Name</th>
+            <th scope="col">Alternative Name</th>
+          </tr>
+        </thead>
+      {% for protein in table1 %}
+      <tbody>
+        <tr>
+          <td>{{ protein.name_2020 }}</td>
+          <td>{{ protein.name_1998 }}</td>
+          <td>{{ protein.alternative_name}}</td>
+        </tr>
+    </tbody>
+     {% endfor %}
+    </table>
+</div>
+<div class="table-responsive col-lg-6">
+  <table class="table table-bordered table-hover table-fit">
+    <p>Organized by old name </p>
+    <thead>
+      <tr>
+        <th scope="col">1998 Name</th>
+        <th scope="col">2020 Name</th>
+        <th scope="col">Alternative Name</th>
+      </tr>
+    </thead>
+  {% for protein in table2 %}
+  <tbody>
+    <tr>
+      <td>{{ protein.name_1998 }}</td>
+      <td>{{ protein.name_2020 }}</td>
+      <td>{{ protein.alternative_name}}</td>
+    </tr>
+</tbody>
+ {% endfor %}
+</table>
+</div>
+</div>
+</div>
+
+
+{% endblock content %}
+
+
+
+{% block extrahead %}
+<style>
+
+.table-fit {
+    width: 1px;
+    white-space: nowrap;
+}
+
+</style>
+{% endblock extrahead %}
+
+
+
+{% block extrajs %}
+
+{% endblock extrajs %}

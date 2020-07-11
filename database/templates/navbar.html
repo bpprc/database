@@ -54,8 +54,12 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="Links">
 								<a class="dropdown-item" target="_blank" href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/">Old Bt nomenclature site</a>
-								<a class="dropdown-item" target="_blank" href="https://github.com/Amrithasuresh/BPPRC">Github</a>
+								<a class="dropdown-item" href="{% url 'old_name_new_name'%} ">Old name/new name table</a>
+								<a class="dropdown-item" href="{% url 'github_home'%} ">Github</a>
 							</div>
+						</div>
+						<div class="navbar-nav">
+							<a class="nav-item nav-link" id="x" href="{% url 'feedback_home' %}">Feedback</a>
 						</div>
 						<div class="navbar-nav ml-auto mr-5">
 							<a class="nav-item nav-link" id="x" href="{% url 'view_cart' %}">Cart (<span id="cart-value" style="border-radius: 10px;"></span>)</a>

@@ -93,7 +93,7 @@ class UserDataForm(forms.Form):
         elif userdata:
             content = userdata
         else:
-            raise forms.ValidationError('Please provide atleast one field')
+            raise forms.ValidationError('Please provide at least one field')
 
         if userfile and userdata:
             raise forms.ValidationError('Please use only one field')
@@ -261,16 +261,22 @@ class AnalysisForm(forms.Form):
         with open(self.clustalomega_in_tmp.name, 'wb') as temp:
             for item in self.data:
                 output = ''
+                item_name = item.name
                 if item.name in self.list_nterminal:
                     nterminal = [
                         protein for protein in self.protein_detail if protein.accession == item.accession]
+                    item_name += '_1'
                     for item1 in nterminal:
                         output += item1.get_endotoxin_n()
+                        # for line in output:
+                        #     if line.startswith('>'):
+                        #         line = line + '_1'
                 if item.name in self.list_cterminal:
                     cterminal = [
                         protein for protein in self.protein_detail if protein.accession == item.accession]
                     for item1 in cterminal:
                         output += item1.get_endotoxin_c()
+                    item_name += '_2'
                 if item.name in self.list_middle:
                     middle = [
                         protein for protein in self.protein_detail if protein.accession == item.accession]
@@ -278,7 +284,7 @@ class AnalysisForm(forms.Form):
                         output += item1.get_endotoxin_m()
                 else:
                     fasta = textwrap.fill(item.sequence, 80)
-                    str_to_write = f">{item.name}\n{fasta}\n"
+                    str_to_write = f">{item_name}\n{fasta}\n"
                     temp.write(str_to_write.encode())
 
                 if output:
@@ -287,6 +293,8 @@ class AnalysisForm(forms.Form):
 
             for item in userdata:
                 fasta = textwrap.fill(item.sequence, 80)
+                if len(item.name) > 10:
+                    item.name = item.name[:10]
                 str_to_write = f">{item.name}\n{fasta}\n"
                 temp.write(str_to_write.encode())
 
@@ -329,9 +337,9 @@ class DendogramForm(forms.Form):
         self.write_input_file_clustal()
         self.count_number_lines()
 
-        if self.numlines <= 3:
+        if self.numlines < 3:
             raise forms.ValidationError(
-                "Atleast three or more sequences are needed")
+                "At least three or more sequences are needed")
 
     def save(self):
         # self.run_clustal()

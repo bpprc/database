@@ -24,6 +24,7 @@ def cmdline(command):
         shell=True
     )
     out, error = process.communicate()
+    print(error)
     return out
 
 
