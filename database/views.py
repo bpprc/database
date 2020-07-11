@@ -24,6 +24,7 @@ from Bio.SeqUtils.ProtParam import ProteinAnalysis
 from clustalanalysis.forms import AnalysisForm, UserDataForm
 import pandas as pd
 from numpy import pi
+import xlwt
 from database.filter_results import Search
 
 
@@ -712,6 +713,35 @@ def old_name_new_name(request):
          'table2': table2,
          }
     return render(request, 'database/old_name_new_name.html', context)
+
+
+def export_old_name_table(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="old_name_new_name.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Old Name')
+
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['name_2020', 'name_1998', 'alternative_name']
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns(col_num), font_style)
+
+    font_style = xlwt.XFStyle()
+
+    rows = OldnameNewnameTableLeft.objects.all().values_list(
+        'name_2020', 'name_1998', 'alternative_name')
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+    wb.save(response)
+    return response
 
 
 def page_not_found(request, exception):
