@@ -15,8 +15,8 @@ class OldnameNewnameTableLeft(models.Model):
 
 
 class OldnameNewnameTableRight(models.Model):
-    name_2020 = models.CharField(max_length=250, blank=True, null=False)
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
+    name_2020 = models.CharField(max_length=250, blank=True, null=False)
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
 
 
