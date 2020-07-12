@@ -8,8 +8,9 @@
 <div class="container">
   <div class="row">
     <div class="table-responsive col-lg-6">
+	  	<a>Organized by new name </a>
+      <a href="{% url 'export_new_name_table' %}"> (Download)</a>
       <table class="table table-bordered table-hover table-fit">
-        <p style="text-align:left;"> Organized by new name </p>
         <thead>
           <tr>
             <th scope="col">2020 Name</th>
@@ -29,8 +30,9 @@
     </table>
 </div>
 <div class="table-responsive col-lg-6">
+  <a>Organized by old name </a>
+  <a href="{% url 'export_old_name_table' %}"> (Download)</a>
   <table class="table table-bordered table-hover table-fit">
-    <p>Organized by old name </p>
     <thead>
       <tr>
         <th scope="col">1998 Name</th>

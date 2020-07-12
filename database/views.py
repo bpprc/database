@@ -12,6 +12,7 @@ from django.core.files.base import ContentFile
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib import messages
+from database.admin import OldnameNewnameTableLeftResource, OldnameNewnameTableRightResource
 from django.http import HttpResponse, HttpResponseRedirect
 from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
 from database.forms import SearchForm, DownloadForm
@@ -715,32 +716,19 @@ def old_name_new_name(request):
     return render(request, 'database/old_name_new_name.html', context)
 
 
+def export_new_name_table(request):
+    left_resource = OldnameNewnameTableLeftResource()
+    dataset_left = left_resource.export()
+    response = HttpResponse(dataset_left.xlsx, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="organized_newname.xlsx"'
+    return response
+
+
 def export_old_name_table(request):
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="old_name_new_name.xls"'
-
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('Old Name')
-
-    row_num = 0
-
-    font_style = xlwt.XFStyle()
-    font_style.font.bold = True
-
-    columns = ['name_2020', 'name_1998', 'alternative_name']
-
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns(col_num), font_style)
-
-    font_style = xlwt.XFStyle()
-
-    rows = OldnameNewnameTableLeft.objects.all().values_list(
-        'name_2020', 'name_1998', 'alternative_name')
-    for row in rows:
-        row_num += 1
-        for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], font_style)
-    wb.save(response)
+    right_resource = OldnameNewnameTableRightResource()
+    dataset_right = right_resource.export()
+    response = HttpResponse(dataset_right.xlsx, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="organized_oldname.xlsx"'
     return response
 
 

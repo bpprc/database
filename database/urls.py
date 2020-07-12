@@ -42,4 +42,6 @@ urlpatterns = [
     path('old_name_new_name/', views.old_name_new_name, name='old_name_new_name'),
     path('export_old_name_table/', views.export_old_name_table,
          name='export_old_name_table'),
+    path('export_new_name_table/', views.export_new_name_table,
+         name='export_new_name_table'),
 ]
