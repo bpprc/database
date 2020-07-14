@@ -12,6 +12,7 @@ from django.core.files.base import ContentFile
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib import messages
+from database.admin import OldnameNewnameTableLeftResource, OldnameNewnameTableRightResource
 from django.http import HttpResponse, HttpResponseRedirect
 from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
 from database.forms import SearchForm, DownloadForm
@@ -24,6 +25,7 @@ from Bio.SeqUtils.ProtParam import ProteinAnalysis
 from clustalanalysis.forms import AnalysisForm, UserDataForm
 import pandas as pd
 from numpy import pi
+import xlwt
 from database.filter_results import Search
 
 
@@ -712,6 +714,22 @@ def old_name_new_name(request):
          'table2': table2,
          }
     return render(request, 'database/old_name_new_name.html', context)
+
+
+def export_new_name_table(request):
+    left_resource = OldnameNewnameTableLeftResource()
+    dataset_left = left_resource.export()
+    response = HttpResponse(dataset_left.xlsx, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="organized_newname.xlsx"'
+    return response
+
+
+def export_old_name_table(request):
+    right_resource = OldnameNewnameTableRightResource()
+    dataset_right = right_resource.export()
+    response = HttpResponse(dataset_right.xlsx, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="organized_oldname.xlsx"'
+    return response
 
 
 def page_not_found(request, exception):

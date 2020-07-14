@@ -125,8 +125,8 @@ class OldnameNewnameTableRightResource(resources.ModelResource):
 
 class OldnameNewnameTableRightAdmin(ImportExportModelAdmin):
     resource_class = OldnameNewnameTableRightResource
-    fields = ('name_2020', 'name_1998', 'alternative_name')
-    list_display = ('name_2020', 'name_1998', 'alternative_name')
+    fields = ('name_1998', 'name_2020', 'alternative_name')
+    list_display = ('name_1998', 'name_2020', 'alternative_name')
 
 
 class ProteinDetailAdmin(admin.ModelAdmin):
