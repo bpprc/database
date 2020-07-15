@@ -110,6 +110,7 @@ class DescriptionAdmin(ImportExportModelAdmin):
 class OldnameNewnameTableLeftResource(resources.ModelResource):
     class Meta:
         model = OldnameNewnameTableLeft
+        exclude = ('id')
 
 
 class OldnameNewnameTableLeftAdmin(ImportExportModelAdmin):
@@ -121,6 +122,7 @@ class OldnameNewnameTableLeftAdmin(ImportExportModelAdmin):
 class OldnameNewnameTableRightResource(resources.ModelResource):
     class Meta:
         model = OldnameNewnameTableRight
+        exclude = ('id')
 
 
 class OldnameNewnameTableRightAdmin(ImportExportModelAdmin):
