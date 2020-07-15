@@ -4,6 +4,10 @@
 
 {% block content %}
 
+<h3>Select particular proteins/domains using the <a href="{% url 'search_database_home' %}">Database/Search facility</a> </h3>
+</br>
+</br>
+
 <div class="container">
   <div class="row">
     <div class="col-12">
@@ -78,6 +82,10 @@
 {% endblock content %}
 
 {% block extrajs %}
+
+<style>
+h3 {text-align: center;}
+</style>
 
 <script>
 $(function() {
