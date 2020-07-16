@@ -265,21 +265,19 @@ class AnalysisForm(forms.Form):
                 if item.name in self.list_nterminal:
                     nterminal = [
                         protein for protein in self.protein_detail if protein.accession == item.accession]
-                    item_name += '_1'
+                    item_name += '_d1'
                     for item1 in nterminal:
                         output += item1.get_endotoxin_n()
-                        # for line in output:
-                        #     if line.startswith('>'):
-                        #         line = line + '_1'
                 if item.name in self.list_cterminal:
                     cterminal = [
                         protein for protein in self.protein_detail if protein.accession == item.accession]
+                    item_name += '_d2'
                     for item1 in cterminal:
                         output += item1.get_endotoxin_c()
-                    item_name += '_2'
                 if item.name in self.list_middle:
                     middle = [
                         protein for protein in self.protein_detail if protein.accession == item.accession]
+                    item_name += '_d3'
                     for item1 in middle:
                         output += item1.get_endotoxin_m()
                 else:
