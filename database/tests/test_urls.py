@@ -1,10 +1,16 @@
 from django.urls import reverse, resolve
-from django.test import SimpleTestCase, TestCase
-from database.views import statistics, categorize_database, database, search_database, add_cart, clear_session_database, remove_cart, cart_value, view_cart, clear_session_user_data, user_data_remove, user_data, download_sequences, download_data, download_single_sequence, download_category, category_form, category_download, protein_detail
+from database import views
 
 
-class TestUrls(SimpleTestCase):
+# statistics, categorize_database, database, search_database, add_cart, clear_session_database, remove_cart, cart_value, view_cart, clear_session_user_data, user_data_remove, user_data, download_sequences, download_data, download_single_sequence, download_category, category_form, category_download, protein_detail
 
-    def test_statistics_url_is_resolved(self):
-        url = reverse('statistics')
-        self.assertEquals(resolve(url).func, statistics)
+
+class TestUrls:
+
+    def test_statistics_url(self):
+        path = reverse('statistics')
+        assert resolve(path).view_name == 'statistics'
+
+    def test_about_page_url(self):
+        path = reverse('about_page')
+        assert resolve(path).view_name == 'about_page'
