@@ -201,6 +201,7 @@ def search_database(request):
             field_type = form.cleaned_data['search_fields']
 
             searches = re.split(r':|, ?|\s |\- |_ |. |; |\n', query)
+            print("searches split here", searches)
 
             # show_extra_data = False
             # for search in searches:
@@ -211,46 +212,54 @@ def search_database(request):
                 q_objects = Q()
                 for search in searches:
                     if Search(search).is_wildcard():
+                        # print("wildcard is working now")
                         search = search[:-1]
                     else:
                         search = search
                     k = Search(search)
                     if k.is_fullname():
-                        print('fullname')
+                        # print('fullname')
                         q_objects.add(Q(name__iexact=search), Q.OR)
+                        q_objects.add(Q(oldname__iexact=search), Q.OR)
                     if k.is_uppercase():
-                        print('uppercase')
+                        # print('uppercase')
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_lowercase():
-                        print('lowercase')
+                        # print('lowercase')
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_single_digit():
-                        print('single digit')
+                        # print('single digit')
                         q_objects.add(
-                            Q(name_category__iexact=search), Q.OR)
+                            Q(name__icontains=search), Q.OR)
                     if k.is_double_digit():
-                        print('double digit')
+                        # print('double digit')
                         q_objects.add(
-                            Q(name_category__iexact=search), Q.OR)
+                            Q(name__icontains=search), Q.OR)
                     if k.is_triple_digit():
-                        print('triple digit')
+                        # print('triple digit')
                         q_objects.add(
-                            Q(name_category__iexact=search), Q.OR)
+                            Q(name__icontains=search), Q.OR)
                     if k.is_three_letter():
-                        print("three letters")
+                        # print("three letters")
                         q_objects.add(
-                            Q(name_category__icontains=search), Q.OR)
+                            Q(name__icontains=search), Q.OR)
                     if k.is_three_letter_case():
-                        print("three letters case")
+                        # print("three letters case")
                         q_objects.add(
-                            Q(name_category__icontains=search), Q.OR)
+                            Q(name__icontains=search), Q.OR)
+                    if k.fulltext():
+                        q_objects.add(
+                            Q(othernames__icontains=search), Q.OR)
+                    if k.bthur0001_55730():
+                        q_objects.add(
+                            Q(othernames__iexact=search), Q.OR)
                     # else:
                     #     q_objects = None
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
-            elif field_type == 'oldname':
+            elif field_type == 'oldname/othernames':
                 q_objects = Q()
                 for search in searches:
                     if Search(search).is_wildcard():
@@ -259,11 +268,45 @@ def search_database(request):
                         search = search
                     k = Search(search)
                     if k.is_fullname():
-                        print('fullname')
+                        # print('fullname')
                         q_objects.add(Q(oldname__iexact=search), Q.OR)
-                    else:
+                        q_objects.add(Q(name__iexact=search), Q.OR)
+                    if k.fulltext():
+                        # print('fulltext')
                         q_objects.add(
-                            Q(oldname__icontains=search), Q.OR)
+                            Q(othernames__icontains=search), Q.OR)
+                    if k.is_uppercase():
+                        # print('uppercase')
+                        q_objects.add(Q(name__icontains=search), Q.OR)
+                    if k.is_lowercase():
+                        # print('lowercase')
+                        q_objects.add(Q(name__icontains=search), Q.OR)
+                    if k.is_single_digit():
+                        # print('single digit')
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_double_digit():
+                        # print('double digit')
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_triple_digit():
+                        # print('triple digit')
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_three_letter():
+                        # print("three letters")
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_three_letter_case():
+                        # print("three letters case")
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.bthur0001_55730():
+                        q_objects.add(
+                            Q(othernames__iexact=search), Q.OR)
+                    # else:
+                    #     print("I am inside the loop")
+                    #     q_objects.add(Q(othernames__icontains=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
 

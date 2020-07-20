@@ -24,6 +24,7 @@
 					{% endif %}
 						<th>Name </th>
 						<th>Oldname </th>
+						<th>Othernames </th>
 						<th>Accession Number </th>
 						<th>Year </th>
 							{% if show_extra_data %}
@@ -48,6 +49,7 @@
 						</td>
 						<td>{{ protein.name }}</td>
 						<td>{{ protein.oldname }}</td>
+						<td>{{ protein.othernames }}</td>
 						<td>
 							<a href=" https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a>
 						</td>
