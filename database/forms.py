@@ -105,7 +105,7 @@ class SearchForm(forms.Form):
             v, MinLengthValidator)]
         min_length = 3
         validators.append(MinLengthValidator(min_length))
-        print(validators)
+        # print(validators)
         self.fields['search_term'].validators = validators
 
         # self.fields['search_term'].min_length = 3

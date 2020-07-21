@@ -96,6 +96,23 @@ class Search:
         else:
             return False
 
+# def convert(text):
+#     if text.isdigit():
+#         return int(text)
+#     else:
+#         return None
+
+
+def filter_one(proteins):
+    filtered_protein = []
+    for protein in proteins:
+        k = re.split('([0-9]+)', protein.name)
+        if k[1] == '1':
+            filtered_protein.append(protein)
+        else:
+            pass
+    return filtered_protein
+
 
 class SearchOldname():
 
