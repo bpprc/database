@@ -26,7 +26,8 @@ from clustalanalysis.forms import AnalysisForm, UserDataForm
 import pandas as pd
 from numpy import pi
 import xlwt
-from database.filter_results import Search
+from database.filter_results import Search, filter_one
+from io import BytesIO
 
 
 def home(request):
@@ -156,34 +157,34 @@ def database(request):
     return render(request, 'database/database.html', context)
 
 
-def _name(search_string):
-    try:
-        name = re.match(
-            r"^[A-Z][a-z]{2}\d{1,3}[A-Z][a-z]\d{1,3}^", search_string).group()
-        return True
-    except:
-        return False
+# def _name(search_string):
+#     try:
+#         name = re.match(
+#             r"^[A-Z][a-z]{2}\d{1,3}[A-Z][a-z]\d{1,3}^", search_string).group()
+#         return True
+#     except:
+#         return False
 
 
-def _category(search_string):
-    try:
-        name = re.match(r"^[A-Z][a-z]{2}\d{1,3}$", search_string).group()
-        return True
-    except:
-        return False
+# def _category(search_string):
+#     try:
+#         name = re.match(r"^[A-Z][a-z]{2}\d{1,3}$", search_string).group()
+#         return True
+#     except:
+#         return False
 
 
-def _partial_pattern(search_string):
-    try:
-        name = re.match(r"^[A-Z][a-z]{2}\d{1,3}[A-Z]$", search_string).group()
-        return True
-    except:
-        return False
+# def _partial_pattern(search_string):
+#     try:
+#         name = re.match(r"^[A-Z][a-z]{2}\d{1,3}[A-Z]$", search_string).group()
+#         return True
+#     except:
+#         return False
 
 
-def _wildcard_search(search_term):
-    if '*' in search_term:
-        return True
+# def _wildcard_search(search_term):
+#     if '*' in search_term:
+#         return True
 
 
 def search_database_home(request):
@@ -196,12 +197,13 @@ def search_database(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         proteins = []
+        single_digit = False
         if form.is_valid():
             query = form.cleaned_data['search_term']
             field_type = form.cleaned_data['search_fields']
 
-            searches = re.split(r':|, ?|\s |\- |_ |. |; |\n', query)
-            print("searches split here", searches)
+            searches = re.split(r':|, ?|\s |_ |. |; |\n', query)
+            # print("searches split here", searches)
 
             # show_extra_data = False
             # for search in searches:
@@ -211,52 +213,53 @@ def search_database(request):
             if field_type == 'name':
                 q_objects = Q()
                 for search in searches:
+
                     if Search(search).is_wildcard():
-                        # print("wildcard is working now")
+                        print("wildcard is working now")
                         search = search[:-1]
                     else:
                         search = search
                     k = Search(search)
                     if k.is_fullname():
-                        # print('fullname')
+                        print('fullname')
                         q_objects.add(Q(name__iexact=search), Q.OR)
-                        q_objects.add(Q(oldname__iexact=search), Q.OR)
                     if k.is_uppercase():
-                        # print('uppercase')
+                        print('uppercase')
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_lowercase():
-                        # print('lowercase')
+                        print('lowercase')
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_single_digit():
-                        # print('single digit')
+                        print("single digit")
+                        single_digit = True
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_double_digit():
-                        # print('double digit')
+                        print('double digit')
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_triple_digit():
-                        # print('triple digit')
+                        print('triple digit')
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_three_letter():
-                        # print("three letters")
+                        print("three letters")
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_three_letter_case():
-                        # print("three letters case")
+                        print("three letters case")
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
-                    if k.fulltext():
+                    else:
                         q_objects.add(
-                            Q(othernames__icontains=search), Q.OR)
-                    if k.bthur0001_55730():
-                        q_objects.add(
-                            Q(othernames__iexact=search), Q.OR)
-                    # else:
-                    #     q_objects = None
+                            Q(name__iexact=search), Q.OR)
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+
+                if single_digit:
+                    filtered_protein = filter_one(proteins)
+                    proteins = filtered_protein
+
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
             elif field_type == 'oldname/othernames':
@@ -267,48 +270,62 @@ def search_database(request):
                     else:
                         search = search
                     k = Search(search)
+
                     if k.is_fullname():
-                        # print('fullname')
+                        print('fullname')
                         q_objects.add(Q(oldname__iexact=search), Q.OR)
-                        q_objects.add(Q(name__iexact=search), Q.OR)
+                        # q_objects.add(Q(name__iexact=search), Q.OR)
+                        q_objects.add(Q(othernames__iexact=search), Q.OR)
                     if k.fulltext():
-                        # print('fulltext')
+                        print('fulltext')
+                        # q_objects.add(
+                        #     Q(othernames__icontains=search), Q.OR)
                         q_objects.add(
                             Q(othernames__icontains=search), Q.OR)
                     if k.is_uppercase():
                         # print('uppercase')
-                        q_objects.add(Q(name__icontains=search), Q.OR)
+                        q_objects.add(Q(oldname__icontains=search), Q.OR)
                     if k.is_lowercase():
                         # print('lowercase')
-                        q_objects.add(Q(name__icontains=search), Q.OR)
+                        q_objects.add(Q(oldname__icontains=search), Q.OR)
+                    #     q_objects.add(
+                    #         Q(othernames__iexact=search), Q.OR)
                     if k.is_single_digit():
-                        # print('single digit')
+                        single_digit = True
                         q_objects.add(
-                            Q(name__icontains=search), Q.OR)
+                            Q(oldname__icontains=search), Q.OR)
                     if k.is_double_digit():
                         # print('double digit')
                         q_objects.add(
-                            Q(name__icontains=search), Q.OR)
+                            Q(oldname__icontains=search), Q.OR)
                     if k.is_triple_digit():
                         # print('triple digit')
                         q_objects.add(
-                            Q(name__icontains=search), Q.OR)
+                            Q(oldname__icontains=search), Q.OR)
                     if k.is_three_letter():
                         # print("three letters")
                         q_objects.add(
-                            Q(name__icontains=search), Q.OR)
+                            Q(oldname__icontains=search), Q.OR)
                     if k.is_three_letter_case():
                         # print("three letters case")
                         q_objects.add(
-                            Q(name__icontains=search), Q.OR)
+                            Q(oldname__icontains=search), Q.OR)
                     if k.bthur0001_55730():
                         q_objects.add(
                             Q(othernames__iexact=search), Q.OR)
+                    else:
+                        q_objects.add(
+                            Q(othernames__iexact=search), Q.OR)
+                        q_objects.add(
+                            Q(oldname__iexact=search), Q.OR)
                     # else:
                     #     print("I am inside the loop")
                     #     q_objects.add(Q(othernames__icontains=search), Q.OR)
-
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
+
+                if single_digit:
+                    filtered_protein = filter_one(proteins)
+                    proteins = filtered_protein
 
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
@@ -549,42 +566,94 @@ def download_sequences(request):
     """Download the selected and/or user uploaded protein sequences."""
 
     selected_values = request.session.get('list_names', [])
-    nterminal = request.session.get('list_nterminal', [])
-    middle = request.session.get('list_middle', [])
-    cterminal = request.session.get('list_cterminal', [])
+    list_nterminal = request.session.get('list_nterminal', [])
+    list_middle = request.session.get('list_middle', [])
+    list_cterminal = request.session.get('list_cterminal', [])
+    print("seleced_values", selected_values)
+    print("list_nterminal", list_nterminal)
+    print("list_cterminal", list_cterminal)
+    print("list_middle", list_middle)
+
     values = []
 
-    if nterminal:
-        values += nterminal
-    if middle:
-        values += middle
-    if cterminal:
-        values += cterminal
+    if list_nterminal:
+        values += list_nterminal
+    if list_middle:
+        values += list_middle
+    if list_cterminal:
+        values += list_cterminal
     if selected_values:
         values += selected_values
     values = list(set(values))
+    data = PesticidalProteinDatabase.objects.filter(name__in=values)
+
     userdata = UserUploadData.objects.filter(
         session_key=request.session.session_key)
 
-    # if not selected_values and not userdata.exists():
-    #     message_profile = "Cart is empty"
-    #     messages.success(request, message_profile)
-    #     return redirect("view_cart")
+    combined_selection = []
 
-    file = StringIO()
-    data = PesticidalProteinDatabase.objects.filter(name__in=values)
+    if list_nterminal:
+        combined_selection += list_nterminal
+    if list_middle:
+        combined_selection += list_middle
+    if list_cterminal:
+        combined_selection += list_cterminal
+    if selected_values:
+        combined_selection += selected_values
 
+    accession = {}
+
+    data = \
+        PesticidalProteinDatabase.objects.filter(
+            name__in=combined_selection)
     if data:
         for item in data:
+            accession[item.accession] = item
+
+    protein_detail = ProteinDetail.objects.filter(
+        accession__in=list(accession.keys()))
+
+    file = StringIO()
+    # buffer = BytesIO()
+    for item in data:
+        output = ''
+        item_name = item.name
+        print("item_name", item_name)
+        if item.name in list_nterminal:
+            nterminal = [
+                protein for protein in protein_detail if protein.accession == item.accession]
+            item_name += '_d1'
+            for item1 in nterminal:
+                output += item1.get_endotoxin_n()
+        if item.name in list_cterminal:
+            cterminal = [
+                protein for protein in protein_detail if protein.accession == item.accession]
+            # print(cterminal)
+            item_name += '_d3'
+            for item1 in cterminal:
+                output += item1.get_endotoxin_c()
+        if item.name in list_middle:
+            middle = [
+                protein for protein in protein_detail if protein.accession == item.accession]
+            item_name += '_d2'
+            for item1 in middle:
+                output += item1.get_endotoxin_m()
+        if item.name in selected_values:
             fasta = textwrap.fill(item.sequence, 80)
-            str_to_write = f">{item.name}\n{fasta}\n"
+            output += f">{item_name}\n{fasta}\n"
+            # print(str_to_write)
+            # file.write(str_to_write)
+
+        if output:
+            str_to_write = f">{item_name}\n{output}\n"
             file.write(str_to_write)
 
-    if userdata:
-        for record in userdata:
-            fasta = textwrap.fill(record.sequence, 80)
-            str_to_write = f">{record.name}\n{fasta}\n"
-            file.write(str_to_write)
+    for item in userdata:
+        fasta = textwrap.fill(item.sequence, 80)
+        if len(item.name) > 10:
+            item.name = item.name[:10]
+        str_to_write = f">{item.name}\n{fasta}\n"
+        file.write(str_to_write)
 
     response = HttpResponse(file.getvalue(), content_type="text/plain")
     download_file = "cart_fasta_sequences.txt"
