@@ -87,7 +87,7 @@ class SearchForm(forms.Form):
 
     SEARCH_CHOICES = (
         ('name', 'Name'),
-        ('oldname/othernames', 'Old name/Othernames'),
+        ('old name/othernames', 'Old Name/Othername'),
         ('accession', 'Accession'),
     )
 
