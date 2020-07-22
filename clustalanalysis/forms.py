@@ -226,6 +226,10 @@ class AnalysisForm(forms.Form):
         self.write_input_file_clustal()
         self.count_number_lines()
 
+        print("tree output file", self.guidetree_out_tmp.name)
+        print("input file clustal", self.clustalomega_in_tmp.name)
+        print("output file clustal", self.clustalomega_out_tmp.name)
+
         return self.clustalomega_in_tmp.name, self.guidetree_out_tmp.name, self.num_lines
 
     def count_number_lines(self):
@@ -268,22 +272,23 @@ class AnalysisForm(forms.Form):
                     item_name += '_d1'
                     for item1 in nterminal:
                         output += item1.get_endotoxin_n()
-                if item.name in self.list_cterminal:
-                    cterminal = [
-                        protein for protein in self.protein_detail if protein.accession == item.accession]
-                    item_name += '_d3'
-                    for item1 in cterminal:
-                        output += item1.get_endotoxin_c()
                 if item.name in self.list_middle:
                     middle = [
                         protein for protein in self.protein_detail if protein.accession == item.accession]
                     item_name += '_d2'
                     for item1 in middle:
                         output += item1.get_endotoxin_m()
+                        # print("form", output)
+                if item.name in self.list_cterminal:
+                    cterminal = [
+                        protein for protein in self.protein_detail if protein.accession == item.accession]
+                    item_name += '_d3'
+                    for item1 in cterminal:
+                        output += item1.get_endotoxin_c()
+
                 if item.name in self.selected_values:
                     fasta = textwrap.fill(item.sequence, 80)
-                    # str_to_write = f">{item_name}\n{fasta}\n"
-                    output += f">{item_name}\n{fasta}\n"
+                    output += fasta
                     # temp.write(str_to_write.encode())
 
                 if output:
