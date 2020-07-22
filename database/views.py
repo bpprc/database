@@ -569,10 +569,10 @@ def download_sequences(request):
     list_nterminal = request.session.get('list_nterminal', [])
     list_middle = request.session.get('list_middle', [])
     list_cterminal = request.session.get('list_cterminal', [])
-    print("seleced_values", selected_values)
-    print("list_nterminal", list_nterminal)
-    print("list_cterminal", list_cterminal)
-    print("list_middle", list_middle)
+    # print("seleced_values", selected_values)
+    # print("list_nterminal", list_nterminal)
+    # print("list_cterminal", list_cterminal)
+    # print("list_middle", list_middle)
 
     values = []
 
@@ -618,13 +618,19 @@ def download_sequences(request):
     for item in data:
         output = ''
         item_name = item.name
-        print("item_name", item_name)
+        # print("item_name", item_name)
         if item.name in list_nterminal:
             nterminal = [
                 protein for protein in protein_detail if protein.accession == item.accession]
             item_name += '_d1'
             for item1 in nterminal:
                 output += item1.get_endotoxin_n()
+        if item.name in list_middle:
+            middle = [
+                protein for protein in protein_detail if protein.accession == item.accession]
+            item_name += '_d2'
+            for item1 in middle:
+                output += item1.get_endotoxin_m()
         if item.name in list_cterminal:
             cterminal = [
                 protein for protein in protein_detail if protein.accession == item.accession]
@@ -632,15 +638,10 @@ def download_sequences(request):
             item_name += '_d3'
             for item1 in cterminal:
                 output += item1.get_endotoxin_c()
-        if item.name in list_middle:
-            middle = [
-                protein for protein in protein_detail if protein.accession == item.accession]
-            item_name += '_d2'
-            for item1 in middle:
-                output += item1.get_endotoxin_m()
+                # print("download output", output)
         if item.name in selected_values:
             fasta = textwrap.fill(item.sequence, 80)
-            output += f">{item_name}\n{fasta}\n"
+            output += fasta
             # print(str_to_write)
             # file.write(str_to_write)
 
