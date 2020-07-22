@@ -271,22 +271,23 @@ class AnalysisForm(forms.Form):
                 if item.name in self.list_cterminal:
                     cterminal = [
                         protein for protein in self.protein_detail if protein.accession == item.accession]
-                    item_name += '_d2'
+                    item_name += '_d3'
                     for item1 in cterminal:
                         output += item1.get_endotoxin_c()
                 if item.name in self.list_middle:
                     middle = [
                         protein for protein in self.protein_detail if protein.accession == item.accession]
-                    item_name += '_d3'
+                    item_name += '_d2'
                     for item1 in middle:
                         output += item1.get_endotoxin_m()
-                else:
+                if item.name in self.selected_values:
                     fasta = textwrap.fill(item.sequence, 80)
-                    str_to_write = f">{item_name}\n{fasta}\n"
-                    temp.write(str_to_write.encode())
+                    # str_to_write = f">{item_name}\n{fasta}\n"
+                    output += f">{item_name}\n{fasta}\n"
+                    # temp.write(str_to_write.encode())
 
                 if output:
-                    str_to_write = f">{item.name}\n{output}\n"
+                    str_to_write = f">{item_name}\n{output}\n"
                     temp.write(str_to_write.encode())
 
             for item in userdata:
