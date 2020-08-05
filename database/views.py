@@ -262,7 +262,8 @@ def search_database(request):
 
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
-            elif field_type == 'oldname/othernames':
+            elif field_type == 'old name/other name':
+                # print("oldname")
                 q_objects = Q()
                 for search in searches:
                     if Search(search).is_wildcard():
@@ -272,12 +273,12 @@ def search_database(request):
                     k = Search(search)
 
                     if k.is_fullname():
-                        print('fullname')
+                        # print('fullname')
                         q_objects.add(Q(oldname__iexact=search), Q.OR)
                         # q_objects.add(Q(name__iexact=search), Q.OR)
                         q_objects.add(Q(othernames__iexact=search), Q.OR)
                     if k.fulltext():
-                        print('fulltext')
+                        # print('fulltext')
                         # q_objects.add(
                         #     Q(othernames__icontains=search), Q.OR)
                         q_objects.add(
@@ -291,6 +292,7 @@ def search_database(request):
                     #     q_objects.add(
                     #         Q(othernames__iexact=search), Q.OR)
                     if k.is_single_digit():
+                        # print("is single digit")
                         single_digit = True
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
@@ -314,6 +316,7 @@ def search_database(request):
                         q_objects.add(
                             Q(othernames__iexact=search), Q.OR)
                     else:
+                        # print("else loop")
                         q_objects.add(
                             Q(othernames__iexact=search), Q.OR)
                         q_objects.add(
@@ -603,9 +606,8 @@ def download_sequences(request):
 
     accession = {}
 
-    data = \
-        PesticidalProteinDatabase.objects.filter(
-            name__in=combined_selection)
+    data = PesticidalProteinDatabase.objects.filter(
+        name__in=combined_selection)
     if data:
         for item in data:
             accession[item.accession] = item
@@ -822,10 +824,9 @@ def old_name_new_name(request):
     table1 = OldnameNewnameTableLeft.objects.all()
     table2 = OldnameNewnameTableRight.objects.all()
 
-    context = \
-        {'table1': table1,
-         'table2': table2,
-         }
+    context = {'table1': table1,
+               'table2': table2,
+               }
     return render(request, 'database/old_name_new_name.html', context)
 
 
