@@ -20,6 +20,10 @@ class UserSubmissionAdmin(admin.ModelAdmin):
     )
 
     def run_align_link(self, obj):
+        if ">" in str(obj.proteinsequence).split('\n')[0]:
+            obj.proteinsequence = '\n'.join(
+                str(obj.proteinsequence).split('\n')[1:])
+
         """Submit the sequence by user and name of the protein is predicted."""
         return format_html('<a href="/run_naming_algorithm/?fulltextarea={0}&submission_id={1}" target="_blank">Run Align</a>'.format(obj.proteinsequence, obj.id))
 
