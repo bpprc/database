@@ -1,18 +1,32 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
+
 {% block content %}
 
 
+{% if context %}
+
+      <h3> Feedback successfully submitted</h3>
+      <br>
+      <!-- <h5> Name: name </h5>
+      <h5> Subject: subject </h5>
+      <h5> Email: email </h5>
+      <h5> Message: message </h5> -->
+
+{% else %}
 <h1>Feedback form</h1>
 </br>
 </br>
 
   {% crispy form %}
 
+{% endif %}
+
 {% endblock content %}
 
-
 {% block extrahead %}
+
 <style>
 i {
   color: darkblue;
