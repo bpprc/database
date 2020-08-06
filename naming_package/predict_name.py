@@ -57,23 +57,16 @@ def filter_files_ending_with_one(SUBJECT_FASTAFILES):
     return [name for name in SUBJECT_FASTAFILES if name[-1].isdigit() and not name[-2].isdigit() == 1 and int(name[-1]) == 1]
 
 
-# def create_directory():
-#     temp_dir = tempfile.mkdtemp(dir=settings.MEDIA_ROOT)
-#     directory = os.path.basename(temp_dir)
-#     return directory
-#
-#
-# def remove_directory(directory):
-#     path = os.path.join(settings.MEDIA_ROOT, directory)
-#     shutil.rmtree(path)
-
-
 def empty_path_private():
     proteins = PesticidalProteinPrivateDatabase.objects.all()
     for protein in proteins:
         t = PesticidalProteinPrivateDatabase.objects.get(id=protein.id)
-        t.fastasequence_file = None
-        t.save()
+
+        if t.fastasequence_file:
+            os.unlink(os.path.join(settings.MEDIA_ROOT,
+                                   t.fastasequence_file.name))
+            t.fastasequence_file = None
+            t.save()
 
 
 def write_files_private(objectname):
@@ -88,15 +81,10 @@ def write_files_private(objectname):
         tmp_seq.close()
 
         filename = os.path.basename(tmp_seq.name)
-        # djangofile = File(filename)
-        # filename = "fastasequence_files/" + filename
-        # filename = "fastasequence_files/" + filename
         t = PesticidalProteinPrivateDatabase.objects.get(id=protein.id)
         path_filename = "fastasequence_files/" + filename
         t.fastasequence_file.name = path_filename
-        # print("t", t.fastasequence_file)
         t.save()
-        # print("inside the writing file", t.fastasequence_file.path)
 
 
 def update_private():
@@ -104,8 +92,8 @@ def update_private():
         'name', flat=True)
     private_endwith1 = filter_files_ending_with_one(list(private_proteins))
 
-    private_proteins = PesticidalProteinPrivateDatabase.objects.values_list(
-        'name', flat=True)
+    # private_proteins = PesticidalProteinPrivateDatabase.objects.values_list(
+    #     'name', flat=True)
     private_proteins_filtered = PesticidalProteinPrivateDatabase.objects.filter(
         name__in=private_endwith1)
     write_files_private(private_proteins_filtered)
@@ -149,20 +137,9 @@ def run_bug(query_data):
         s = os.path.join(settings.MEDIA_ROOT,
                          protein.fastasequence_file.path)
         # print("combined_file", s)
-        my_blast = blast_two_sequences(query_data, s)
+        identity_percentage, results = blast_two_sequences(query_data, s)
 
-        # print("fasta sequence file path", protein.fastasequence_file)
-        # if hasattr(protein, 'fastasequence_file'):
-        #     print("I am media files Apple")
-
-        # else:
-        #     print("i am temp files")
-        #     print("fasta sequence file path", protein.fastasequence_file.path)
-        #     my_blast = blast_two_sequences(
-        #         query_data, protein.fastasequence_file.path)
-        #     s = protein.fastasequence_file.path
-
-        identity_percentage, results = my_blast
+        # identity_percentage, results = my_blast
 
         try:
             identity_percentage = float(identity_percentage)

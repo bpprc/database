@@ -19,32 +19,32 @@ class UserSubmissionForm(forms.ModelForm):
     submittersname = forms.CharField(
         label="Submitter's Name",
         widget=forms.TextInput(
-            attrs={'placeholder': 'Nancy Sanders'})
+            attrs={'placeholder': ''})
     )
 
     submittersemail = forms.CharField(
         label="Submitter's Email",
         widget=forms.TextInput(
-            attrs={'placeholder': 'contact@bpprc.org'})
+            attrs={'placeholder': ''})
     )
 
     proteinsname = forms.CharField(
         label='Current Protein Name',
         widget=forms.TextInput(
-            attrs={'placeholder': 'CryE1'}),
+            attrs={'placeholder': ''}),
         required=False
     )
 
     year = forms.CharField(
         label='Year',
         widget=forms.TextInput(
-            attrs={'placeholder': '2020'}),
+            attrs={'placeholder': ''}),
         required=False
     )
     proteinsequence = forms.CharField(
         label='Protein Sequence',
         widget=forms.Textarea(
-            attrs={'placeholder': ">ABI14444.1 Cry51Aa1 [Bacillus thuringiensis F14-1] MIFLAILDLKSLVLNAINYWGPKNNNGIQGGDFGYPISEKQIDTSIITSTHPRLIPHDLTIPQNLETIFTTTQVLTNNTDLQQSQTVSFAKKTTTTTSTSTTNGWTEGGKISDTLEEKVSVSIPFIGEGGGKNSTTIEANFAHNSSTTTFQQASTDIEWNISQPVLVPPRKQVVATLVIMGGNFTIPMDLMTTIDSTEHYSGYPILTWISSPDNSYNGPFMSWYFANWPNLPSGFGPLNSDNTVTYTGSVVSQVSAGVYATVRFDQYDIHNLRTIEKTWYARHATLHNGKKISINNVTEMAPTSPIKTN "}),
+            attrs={'placeholder': ""}),
         required=True
     )
 
@@ -68,15 +68,14 @@ class UserSubmissionForm(forms.ModelForm):
     accessionnumber = forms.CharField(
         label='Genbank accession Number',
         widget=forms.TextInput(
-            attrs={'placeholder': 'ABC12345'}),
+            attrs={'placeholder': ''}),
         required=True
     )
 
     dnasequence = forms.CharField(
         label='DNA Sequence',
         widget=forms.Textarea(
-            attrs={'placeholder': ">DQ836184.1 Bacillus thuringiensis strain F14-1 Cry51Aa1 (cry51Aa1) gene, complete cds \
-            ATGATTTTTTTGGCAATTTTAGATTTAAAATCTTTAGTACTCAATGCAATAAATTATTGGGGTCCTAAAAATAATAATGGCATACAGGGTGGTGATTTTGGTTACCCTATATCAGAAAAACAAATAGATACGTCTATTATAACTTCTACTCATCCTCGTTTAATTCCACATGATTTAACAATTCCTCAAAATTTAGAAACTATTTTTACTACAACTCAAGTATTAACAAATAATACAGATTTACAACAAAGTCAAACTGTTTCTTTTGCTAAAAAAACAACGACAACAACTTCAACTTCAACTACAAATGGTTGGACAGAAGGTGGGAAAATTTCAGATACATTAGAAGAAAAAGTAAGTGTATCTATTCCTTTTATTGGAGAGGGAGGAGGAAAAAACAGTACAACTATAGAAGCTAATTTTGCACATAACTCTAGTACTACTACTTTTCAACAGGCTTCAACTGATATAGAGTGGAATATTTCACAACCAGTATTGGTTCCCCCACGTAAACAAGTTGTAGCAACATTAGTTATTATGGGAGGTAATTTTACTATTCCTATGGATTTGATGACTACTATAGATTCTACAGAACATTATAGTGGTTATCCAATATTAACATGGATATCGAGCCCCGATAATAGTTATAATGGTCCATTTATGAGTTGGTATTTTGCAAATTGGCCCAATTTACCATCGGGGTTTGGTCCTTTAAATTCAGATAATACGGTCACTTATACAGGTTCTGTTGTAAGTCAAGTATCAGCTGGTGTATATGCCACTGTACGATTTGATCAATATGATATACACAATTTAAGGACAATTGAAAAAACTTGGTATGCACGACATGCAACTCTTCATAATGGAAAGAAAATATCTATAAATAATGTTACTGAAATGGCACCAACAAGTCCAATAAAAACAAATTAA "})
+            attrs={'placeholder': ""})
     )
 
     partnerprotein = forms.ChoiceField(
@@ -110,7 +109,7 @@ class UserSubmissionForm(forms.ModelForm):
     pdbcode = forms.CharField(
         label='PDB code',
         widget=forms.TextInput(
-            attrs={'placeholder': '5KUC'}),
+            attrs={'placeholder': ''}),
         required=False
     )
 

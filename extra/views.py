@@ -16,14 +16,21 @@ def feedback_home(request):
             message = request.POST.get("message")
             feedback = Feedback.objects.create(
                 name=name, subject=subject, email=email, message=message)
-            return HttpResponse("Feedback successfully created")
+
+            context = {
+                'name': name,
+                'subject': subject,
+                'message': message,
+                'email': email,
+            }
+            return render(request, 'extra/feedback.html', {'context': context})
         else:
-            print(form.errors)
-            print("Error in form")
+            # print(form.errors)
+            # print("Error in form")
             return render(request, 'extra/feedback.html', {'form': form})
 
     else:
-        print(form)
+        # print(form)
         form = FeedbackForm()
 
     return render(request, 'extra/feedback.html', {'form': form})

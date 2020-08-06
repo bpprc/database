@@ -26,7 +26,7 @@ from clustalanalysis.forms import AnalysisForm, UserDataForm
 import pandas as pd
 from numpy import pi
 import xlwt
-from database.filter_results import Search, filter_one
+from database.filter_results import Search, filter_one_name, filter_one_oldname
 from io import BytesIO
 
 
@@ -257,13 +257,13 @@ def search_database(request):
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
 
                 if single_digit:
-                    filtered_protein = filter_one(proteins)
+                    filtered_protein = filter_one_name(proteins)
                     proteins = filtered_protein
 
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
             elif field_type == 'old name/other name':
-                # print("oldname")
+                print(" entering oldname")
                 q_objects = Q()
                 for search in searches:
                     if Search(search).is_wildcard():
@@ -273,50 +273,51 @@ def search_database(request):
                     k = Search(search)
 
                     if k.is_fullname():
-                        # print('fullname')
+                        print('fullname')
                         q_objects.add(Q(oldname__iexact=search), Q.OR)
                         # q_objects.add(Q(name__iexact=search), Q.OR)
                         q_objects.add(Q(othernames__iexact=search), Q.OR)
                     if k.fulltext():
-                        # print('fulltext')
+                        print('fulltext')
                         # q_objects.add(
                         #     Q(othernames__icontains=search), Q.OR)
                         q_objects.add(
                             Q(othernames__icontains=search), Q.OR)
                     if k.is_uppercase():
-                        # print('uppercase')
+                        print('uppercase')
                         q_objects.add(Q(oldname__icontains=search), Q.OR)
                     if k.is_lowercase():
-                        # print('lowercase')
+                        print('lowercase')
                         q_objects.add(Q(oldname__icontains=search), Q.OR)
                     #     q_objects.add(
                     #         Q(othernames__iexact=search), Q.OR)
                     if k.is_single_digit():
-                        # print("is single digit")
+                        print("is single digit")
                         single_digit = True
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
+                        # print(q_objects)
                     if k.is_double_digit():
-                        # print('double digit')
+                        print('double digit')
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.is_triple_digit():
-                        # print('triple digit')
+                        print('triple digit')
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.is_three_letter():
-                        # print("three letters")
+                        print("three letters")
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.is_three_letter_case():
-                        # print("three letters case")
+                        print("three letters case")
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.bthur0001_55730():
                         q_objects.add(
                             Q(othernames__iexact=search), Q.OR)
                     else:
-                        # print("else loop")
+                        print("else loop")
                         q_objects.add(
                             Q(othernames__iexact=search), Q.OR)
                         q_objects.add(
@@ -327,10 +328,11 @@ def search_database(request):
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
 
                 if single_digit:
-                    filtered_protein = filter_one(proteins)
+                    filtered_protein = filter_one_oldname(proteins)
                     proteins = filtered_protein
 
                 proteins = _sorted_nicely(proteins, sort_key='name')
+                # print(proteins)
 
             elif field_type == 'accession':
                 q_objects = Q()
