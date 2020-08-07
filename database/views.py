@@ -215,39 +215,39 @@ def search_database(request):
                 for search in searches:
 
                     if Search(search).is_wildcard():
-                        print("wildcard is working now")
+                        # print("wildcard is working now")
                         search = search[:-1]
                     else:
                         search = search
                     k = Search(search)
                     if k.is_fullname():
-                        print('fullname')
+                        # print('fullname')
                         q_objects.add(Q(name__iexact=search), Q.OR)
                     if k.is_uppercase():
-                        print('uppercase')
+                        # print('uppercase')
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_lowercase():
-                        print('lowercase')
+                        # print('lowercase')
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_single_digit():
-                        print("single digit")
+                        # print("single digit")
                         single_digit = True
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_double_digit():
-                        print('double digit')
+                        # print('double digit')
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_triple_digit():
-                        print('triple digit')
+                        # print('triple digit')
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_three_letter():
-                        print("three letters")
+                        # print("three letters")
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_three_letter_case():
-                        print("three letters case")
+                        # print("three letters case")
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     else:
@@ -273,53 +273,53 @@ def search_database(request):
                     k = Search(search)
 
                     if k.is_fullname():
-                        print('fullname')
+                        # print('fullname')
                         q_objects.add(Q(oldname__iexact=search), Q.OR)
                         # q_objects.add(Q(name__iexact=search), Q.OR)
                         q_objects.add(Q(othernames__iexact=search), Q.OR)
                     if k.fulltext():
-                        print('fulltext')
-                        # q_objects.add(
-                        #     Q(othernames__icontains=search), Q.OR)
+                        # print('fulltext')
                         q_objects.add(
                             Q(othernames__icontains=search), Q.OR)
                     if k.is_uppercase():
-                        print('uppercase')
+                        # print('uppercase')
                         q_objects.add(Q(oldname__icontains=search), Q.OR)
                     if k.is_lowercase():
-                        print('lowercase')
+                        # print('lowercase')
                         q_objects.add(Q(oldname__icontains=search), Q.OR)
-                    #     q_objects.add(
-                    #         Q(othernames__iexact=search), Q.OR)
                     if k.is_single_digit():
-                        print("is single digit")
+                        # print("is single digit")
                         single_digit = True
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                         # print(q_objects)
                     if k.is_double_digit():
-                        print('double digit')
+                        # print('double digit')
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.is_triple_digit():
-                        print('triple digit')
+                        # print('triple digit')
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.is_three_letter():
-                        print("three letters")
+                        # print("three letters")
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.is_three_letter_case():
-                        print("three letters case")
+                        # print("three letters case")
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.bthur0001_55730():
                         q_objects.add(
                             Q(othernames__iexact=search), Q.OR)
+                    # if k.random_pattern():
+                    #     print('roman')
+                    #     q_objects.add(
+                    #         Q(othernames__icontains=search), Q.OR)
                     else:
-                        print("else loop")
+                        # print("else loop")
                         q_objects.add(
-                            Q(othernames__iexact=search), Q.OR)
+                            Q(othernames__icontains=search), Q.OR)
                         q_objects.add(
                             Q(oldname__iexact=search), Q.OR)
                     # else:
