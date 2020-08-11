@@ -201,7 +201,7 @@ def run_bug(query_data):
             categories = list(public)
             categories.extend(list(private))
             # predicted_name = naming.rank1_naming(categories, name)
-            predicted_name = None
+            predicted_name = "Name manually"
 
         else:
             pass
