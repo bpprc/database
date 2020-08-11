@@ -8,11 +8,6 @@ TRUE_FALSE_CHOICES = (
 )
 
 
-class BacteriaTaxonID(models.Model):
-    taxonid = models.CharField(max_length=250, null=True, blank=True)
-    bacterianame = models.TextField(null=True, blank=False)
-
-
 class UserSubmission(models.Model):
 
     submittersname = models.CharField(max_length=25, null=True, blank=True)

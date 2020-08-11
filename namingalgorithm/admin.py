@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import UserSubmission, BacteriaTaxonID
+from .models import UserSubmission
 
 
 class UserSubmissionAdmin(admin.ModelAdmin):
@@ -52,9 +52,4 @@ class UserSubmissionAdmin(admin.ModelAdmin):
     align_results.description = 'Create new data in the database'
 
 
-class BacteriaTaxonIDAdmin(admin.ModelAdmin):
-    search_fields = ['taxonid']
-
-
 admin.site.register(UserSubmission, UserSubmissionAdmin)
-admin.site.register(BacteriaTaxonID, BacteriaTaxonIDAdmin)
