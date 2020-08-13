@@ -70,6 +70,9 @@ class PesticidalProteinPrivateDatabase(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE, default="1", null=False, blank=True)
 
+    def __unicode__(self):
+        return 'Policy: ' + self.name
+
 
 class PesticidalProteinDatabase(models.Model):
     """
