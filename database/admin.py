@@ -89,6 +89,7 @@ class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
     def make_public(self, request, queryset):
         queryset.update(public=True)
 
+    save_on_top = True
 class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
     # categories = PesticidalProteinDatabase.objects.order_by('name').values_list('name').distinct()
