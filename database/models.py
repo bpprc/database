@@ -6,6 +6,7 @@ from Bio.SeqUtils.ProtParam import ProteinAnalysis
 from django.db import models
 from django.utils import timezone
 from django.core.files.base import ContentFile
+from django.conf import settings
 
 
 class OldnameNewnameTableLeft(models.Model):
@@ -47,6 +48,12 @@ class PesticidalProteinStructureDatabase(models.Model):
     bt = models.BooleanField(default=True)
 
 
+TRUE_FALSE_CHOICES = (
+    (True, 'Yes'),
+    (False, 'No')
+)
+
+
 class PesticidalProteinPrivateDatabase(models.Model):
     """
     """
@@ -60,6 +67,8 @@ class PesticidalProteinPrivateDatabase(models.Model):
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
     public = models.BooleanField(default=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE, default="1", null=False, blank=True)
 
 
 class PesticidalProteinDatabase(models.Model):
