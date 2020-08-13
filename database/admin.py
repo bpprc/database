@@ -73,6 +73,10 @@ class PesticidalProteinStructureDatabaseAdmin(ImportExportModelAdmin):
 
 class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinPrivateDatabaseResource
+class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
+    # resource_class = PesticidalProteinPrivateDatabaseResource
+    # actions = None
+    actions = ['make_public']
 
     search_fields = ('name', 'oldname', 'othernames',
                      'accession', 'year', 'public')
@@ -82,6 +86,8 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
                     'accession', 'year', 'fastasequence_file', 'public')
     ordering = ('name',)
 
+    def make_public(self, request, queryset):
+        queryset.update(public=True)
 
 class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
