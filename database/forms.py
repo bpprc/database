@@ -134,6 +134,9 @@ class SearchForm(forms.Form):
         if data is None:
             raise ValidationError(
                 "Please provide the keywords to search in the database")
+        elif data != 'R1' and len(data) < 3:
+            raise ValidationError(
+                "Please keep the search term under 3 characters")
 
         return data
 
