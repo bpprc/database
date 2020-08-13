@@ -71,8 +71,6 @@ class PesticidalProteinStructureDatabaseAdmin(ImportExportModelAdmin):
     ordering = ('name',)
 
 
-class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
-    resource_class = PesticidalProteinPrivateDatabaseResource
 class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
     # resource_class = PesticidalProteinPrivateDatabaseResource
     # actions = None
@@ -81,15 +79,26 @@ class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
     search_fields = ('name', 'oldname', 'othernames',
                      'accession', 'year', 'public')
     fields = ('name', 'oldname', 'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'public')
+              'sequence', 'uploaded', 'fastasequence_file', 'public', 'user')
     list_display = ('name', 'oldname',  'othernames',
                     'accession', 'year', 'fastasequence_file', 'public')
     ordering = ('name',)
 
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
+
+    def get_changeform_initial_data(self, request):
+        return {'user': request.user.id}
+
     def make_public(self, request, queryset):
         queryset.update(public=True)
 
+    # def has_change_permission(self, request, obj=None):
+    #     return False
+    # def move_to_public(self, request):
     save_on_top = True
+
+
 class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
     # categories = PesticidalProteinDatabase.objects.order_by('name').values_list('name').distinct()
