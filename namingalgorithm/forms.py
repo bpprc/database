@@ -48,6 +48,12 @@ class UserSubmissionForm(forms.ModelForm):
         required=True
     )
 
+    public_or_private = forms.TypedChoiceField(
+        coerce=lambda x: x == 'True',
+        choices=(('', '----------'), (False, 'Private'), (True, 'Public')),
+        required=True
+    )
+
     bacterium = forms.ChoiceField(
         choices=((True, "Yes"), (False, "No")),
         label='Bacterium',
@@ -175,6 +181,7 @@ class UserSubmissionForm(forms.ModelForm):
             ),
             'dnasequence',
             'proteinsequence',
+            'public_or_private',
             Row(
                 Column('partnerprotein',
                        css_class='form-group col-md-3 mb-0'),
@@ -202,9 +209,9 @@ class UserSubmissionForm(forms.ModelForm):
                   'proteinname',
                   'year',
                   'proteinsequence',
+                  'public_or_private',
                   'bacterium',
                   'bacterium_textbox',
-                  # 'taxonid',
                   'accessionnumber',
                   'dnasequence',
                   'partnerprotein',
