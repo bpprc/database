@@ -14,11 +14,17 @@ class OldnameNewnameTableLeft(models.Model):
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
 
+    class Meta:
+        verbose_name_plural = "OldnameNewnameTableLeft"
+
 
 class OldnameNewnameTableRight(models.Model):
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
     name_2020 = models.CharField(max_length=250, blank=True, null=False)
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
+
+    class Meta:
+        verbose_name_plural = "OldnameNewnameTableRight"
 
 
 class PesticidalProteinStructureDatabase(models.Model):
