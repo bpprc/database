@@ -79,7 +79,7 @@ class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
     search_fields = ('name', 'oldname', 'othernames',
                      'accession', 'year', 'public')
     fields = ('name', 'oldname', 'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'public', 'user')
+              'sequence', 'uploaded', 'fastasequence_file', 'public', 'admin_user')
     list_display = ('name', 'oldname',  'othernames',
                     'accession', 'year', 'fastasequence_file', 'public')
     ordering = ('name',)
@@ -88,7 +88,7 @@ class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
     #     return False
 
     def get_changeform_initial_data(self, request):
-        return {'user': request.user.id}
+        return {'admin_user': request.user.id}
 
     def make_public(self, request, queryset):
         queryset.update(public=True)
@@ -96,7 +96,7 @@ class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
     # def has_change_permission(self, request, obj=None):
     #     return False
     # def move_to_public(self, request):
-    save_on_top = True
+    # save_on_top = True
 
 
 class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
