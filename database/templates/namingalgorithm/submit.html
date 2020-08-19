@@ -34,10 +34,13 @@
 {% block extrajs %}
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
+<script type="text/javascript" src="{% static 'database/js/sweetalert.min.js' %}"> </script>
+
 <script>
 // $(function() {
 //   $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' target='_blank'> Where can I find taxonid?</a>")
 // });
+// $("id_public_or_private").update("New text");
 </script>
 
 <script>
@@ -80,6 +83,7 @@ $(function() {
       $("#div_id_bacterium_textbox").find('label').text("Enter details of source organism in comments box below");
       if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length > 0) {
       $('#div_id_bacterium_textbox').find('.taxonid-hint').hide();
+      swal("The BPPRC does not normally assign names to proteins that are not of bacterial origin.  If you wish to make a special case for your sequence, please explain in the Comments box below!");
     }
     }
   });
