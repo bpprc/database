@@ -7,12 +7,18 @@ from extra.models import Feedback
 
 
 class FeedbackResource(resources.ModelResource):
+
     class Meta:
         model = Feedback
 
 
 class FeedbackAdmin(ImportExportModelAdmin):
     resource_class = FeedbackResource
+
+    list_display = ('name', 'subject', 'email')
+
+    def __str__(self):
+        return self.name
 
 
 admin.site.register(Feedback, FeedbackAdmin)
