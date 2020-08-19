@@ -64,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'admin_reorder.middleware.ModelAdminReorder',
 ]
 
 ROOT_URLCONF = 'BPPRC.urls'
@@ -105,6 +106,8 @@ INSTALLED_APPS = [
     'django_tables2',
     'import_export',
     'extra',
+    'django_ses',
+    'admin_reorder',
 ]
 
 
@@ -212,6 +215,28 @@ LOGGING = {
     }
 }
 
+ADMIN_REORDER = [
+    {'app': 'database', 'models': (
+        {'model': 'database.Description', 'label': 'Category Description'},
+        {'model': 'database.PesticidalProteinDatabase', 'label': 'Database'},
+        {'model': 'database.PesticidalProteinPrivateDatabase',
+            'label': 'Private Sequence Database'},
+        {'model': 'database.PesticidalProteinStructureDatabase',
+            'label': 'Structure Database'},
+        {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
+        {'model': 'database.OldnameNewnameTableRight',
+            'label': 'Old Name Table Right Side'},
+        {'model': 'database.OldnameNewnameTableLeft',
+            'label': 'Old Name Table Left Side'})},
+    'namingalgorithm',
+    'extra',
+    {'app': 'auth', 'models': (
+        'auth.Group',
+        {'model': 'auth.User', 'label': 'Staffs'},
+    )},
+    'django_ses',
+    'clustalanalysis',
+]
 
 # SESSION
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
@@ -227,12 +252,28 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK')
 
+# All auth
+# ACCOUNT_EMAIL_REQUIRED = False
+# ACCOUNT_USERNAME_REQUIRED = True
+# ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+# ACCOUNT_SESSION_REMEMBER = True
+# ACCOUNT_AUTHENTICATION_METHOD = 'username'
+# ACCOUNT_UNIQUE_EMAIL = True
+
 # AWS
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_SES_REGION_NAME = os.environ.get('AWS_SES_REGION_NAME')
-AWS_SES_REGION_ENDPOINT = os.environ.get('AWS_SES_REGION_ENDPOINT')
+# EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+# AWS_SES_REGION_NAME = os.environ.get('AWS_SES_REGION_NAME')
+# AWS_SES_REGION_ENDPOINT = os.environ.get('AWS_SES_REGION_ENDPOINT')
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get('AWS_ACCESS_KEY_ID')
+EMAIL_HOST_PASSWORD = os.environ.get('AWS_SECRET_ACCESS_KEY')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = '<ruchirjd@gmail.com>'
+
 
 # google reCAPTCHA
 RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
