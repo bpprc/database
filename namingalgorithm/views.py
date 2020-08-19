@@ -3,12 +3,24 @@
 
 import tempfile
 import textwrap
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
 from naming_package import run_data
 from namingalgorithm.models import UserSubmission
 from .forms import UserSubmissionForm
+from django.core.mail import send_mail
+
+
+def send_mail(required):
+    email_text = send_mail(
+        subject="New Submission",
+        message="There is a new sequence submission.",
+        from_email=['ruchirjd@gmail.com'],
+        recipient_list=['sureshcbt@gmail.com'],
+        fail_silently=False,
+    )
+    return HttpResponse(f"Email sent to {email_text} members")
 
 
 def is_admin(user):
