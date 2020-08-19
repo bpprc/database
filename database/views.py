@@ -13,9 +13,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib import messages
 from database.admin import OldnameNewnameTableLeftResource, OldnameNewnameTableRightResource
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
-from database.forms import SearchForm, DownloadForm
+from database.forms import SearchForm, DownloadForm, ThreedomainDownloadForm
 from bokeh.plotting import figure, output_file, show
 from bokeh.palettes import Category20c, Spectral6, Category20
 from bokeh.models import HoverTool, LassoSelectTool, WheelZoomTool, PointDrawTool, ColumnDataSource
@@ -752,10 +752,12 @@ def download_category(request, category=None):
 
 
 def category_form(request):
-    form = DownloadForm()
+    form1 = DownloadForm()
+    form2 = ThreedomainDownloadForm()
 
     context = {
-        'form': form
+        'form1': form1,
+        'form2': form2,
     }
     return render(request, 'database/download_form.html', context)
 
@@ -788,6 +790,41 @@ def category_download(request):
         response['Content-Disposition'] = 'attachment;filename=' + download_file
         response['Content-Length'] = file.tell()
         return response
+
+
+def threedomain_download(request):
+    if request.method == 'POST':
+        types = request.POST.getlist('category_type')
+        file = StringIO()
+
+        proteins = PesticidalProteinDatabase.objects.filter(
+            name__istartswith="cry").order_by('name')
+
+        for protein in proteins:
+            if protein.name[-1] == '1' and not protein.name[-2].isdigit():
+                fasta = textwrap.fill(protein.sequence, 80)
+                str_to_write = f">{protein.name}\n{fasta}\n"
+                file.write(str_to_write)
+        response = HttpResponse(
+            file.getvalue(), content_type="text/plain")
+        download_file = f"{'_'.join(types)}holotype_fasta_sequences.txt"
+        response['Content-Disposition'] = 'attachment;filename=' + \
+            download_file
+        response['Content-Length'] = file.tell()
+        return response
+        # return JsonResponse({'foo': 'bar'})
+        # if item.name.startswith('cry'):
+        #     if item.name[-1] == '1' and not item.name[-2].isdigit():
+        #         fasta = textwrap.fill(item.sequence, 80)
+        #         str_to_write = f">{item.name}\n{fasta}\n"
+        #         file.write(str_to_write)
+        #         response = HttpResponse(
+        #             file.getvalue(), content_type="text/plain")
+        #         download_file = f"{'_'.join(types)}holotype_fasta_sequences.txt"
+        #         response['Content-Disposition'] = 'attachment;filename=' + \
+        #             download_file
+        #         response['Content-Length'] = file.tell()
+        # return response
 
 
 def protein_detail(request, name):

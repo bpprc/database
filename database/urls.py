@@ -36,6 +36,8 @@ urlpatterns = [
          name='category_form'),
     path('category_download', views.category_download,
          name='category_download'),
+    path('threedomain_download', views.threedomain_download,
+         name='threedomain_download'),
     path('protein_detail/<slug:name>/',
          views.protein_detail, name='protein_detail'),
     path('faq/', views.faq, name='faq'),
