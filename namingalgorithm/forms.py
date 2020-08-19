@@ -49,8 +49,9 @@ class UserSubmissionForm(forms.ModelForm):
     )
 
     public_or_private = forms.TypedChoiceField(
+        label='Do you require the sequence to be maintained privately?',
         coerce=lambda x: x == 'True',
-        choices=(('', '----------'), (False, 'Private'), (True, 'Public')),
+        choices=(('', '----------'), (False, 'Yes'), (True, 'No')),
         required=True
     )
 
