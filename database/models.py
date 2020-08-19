@@ -75,7 +75,22 @@ class PesticidalProteinPrivateDatabase(models.Model):
     public = models.BooleanField(default=False)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, default="1", null=False, blank=True)
-    # submittersname = models.CharField(max_length=25, null=True, blank=True)
+    submittersname = models.CharField(max_length=25, null=True, blank=True)
+    submittersemail = models.EmailField(max_length=70, null=True, blank=False)
+    bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+    bacterium_textbox = models.CharField(
+        max_length=250, null=True, blank=True)
+    taxonid = models.CharField(max_length=25, null=True, blank=True)
+    partnerprotein = models.BooleanField(
+        default=True, choices=TRUE_FALSE_CHOICES)
+    partnerprotein_textbox = models.CharField(
+        max_length=250, null=True, blank=True)
+    toxicto = models.CharField(max_length=250, blank=True, null=False)
+    nontoxic = models.CharField(max_length=250, blank=True, null=False)
+    dnasequence = models.TextField(null=True, blank=False)
+    pdbcode = models.CharField(max_length=10, blank=True, null=False)
+    publication = models.TextField(null=True, blank=True)
+    comment = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
