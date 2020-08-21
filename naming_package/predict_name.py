@@ -195,13 +195,14 @@ def run_bug(query_data):
         elif float(empty[2]) >= 0 and float(empty[2]) <= 44.9:
             category = "0 to 44%"
             public = PesticidalProteinDatabase.objects.filter(
-                name__startswith=name[0:3]).values_list('name', flat=True)
+                name__startswith='Xpp').values_list('name', flat=True)
             private = PesticidalProteinPrivateDatabase.objects.filter(
-                name__startswith=name[0:3]).values_list('name', flat=True)
+                name__startswith='Xpp').values_list('name', flat=True)
             categories = list(public)
             categories.extend(list(private))
             # predicted_name = naming.rank1_naming(categories, name)
-            predicted_name = "Name manually"
+            predicted_name = naming.xpp_naming(categories, 'Xpp')
+            # predicted_name = "Name manually"
 
         else:
             pass
