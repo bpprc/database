@@ -7,7 +7,7 @@ handler404 = 'database.views.page_not_found'
 handler500 = 'database.views.server_error'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('prc2020_admin/', admin.site.urls),
     path(
         'admin/password_reset/',
         auth_views.PasswordResetView.as_view(),
