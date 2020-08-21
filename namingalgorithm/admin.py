@@ -17,6 +17,7 @@ class UserSubmissionAdmin(admin.ModelAdmin):
         'align_results',
         'create_data',
         'refresh',
+        'uploaded',
     )
 
     def run_align_link(self, obj):
