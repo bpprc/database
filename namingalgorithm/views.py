@@ -16,7 +16,7 @@ def send_mail(required):
     email_text = send_mail(
         subject="New Submission",
         message="There is a new sequence submission.",
-        from_email=['ruchirjd@gmail.com'],
+        from_email=['bpprc.database@gmail.com'],
         recipient_list=['sureshcbt@gmail.com'],
         fail_silently=False,
     )

@@ -273,7 +273,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('AWS_ACCESS_KEY_ID')
 EMAIL_HOST_PASSWORD = os.environ.get('AWS_SECRET_ACCESS_KEY')
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = '<ruchirjd@gmail.com>'
+DEFAULT_FROM_EMAIL = '<bpprc.database@gmail.com>'
 
 
 # google reCAPTCHA
