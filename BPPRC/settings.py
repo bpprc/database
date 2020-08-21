@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from celery.schedules import crontab
 import os
 
 """
@@ -136,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
@@ -285,3 +286,12 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'US/Eastern'
+
+# other celery settings
+CELERY_BEAT_SCHEDULE = {
+    'check_new_submission': {
+        'task': 'namingalgorithm.tasks.check_new_submission',
+        'schedule': crontab(minute=1, hour=21),
+    }
+}
