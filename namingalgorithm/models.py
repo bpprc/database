@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib import admin
 from django.utils import timezone
+from django.db.models.signals import post_save, pre_save
+from django.core.mail import send_mail
+
 
 TRUE_FALSE_CHOICES = (
     (True, 'Yes'),
@@ -33,6 +36,7 @@ class UserSubmission(models.Model):
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)
+    # date = models.DateField(default=timezone.now, blank=True)
 
     class Meta:
         ordering = ('submittersemail',)
@@ -40,3 +44,31 @@ class UserSubmission(models.Model):
     def publish(self):
         self.published_date = timezone.now()
         self.save()
+
+
+def save_post(sender, instance, **kwargs):
+    sequence_message = "The bot is monitoring the sequence submission in the bpprc database for a day. If there is a new submission you will be notified through this email."
+
+    send_mail(
+        subject="New Submission for the database",
+        message=sequence_message,
+        from_email='bpprc.database@gmail.com',
+        recipient_list=['sureshcbt@gmail.com'],
+        fail_silently=False,
+    )
+
+
+def _trigger_email_everyday():
+
+    sequence_message = "The bot is monitoring the sequence submission in the bpprc database for a day. If there is a new submission you will be notified through this email."
+
+    send_mail(
+        subject="New Sequence submission in the database",
+        message=sequence_message,
+        from_email='bpprc.database@gmail.com',
+        recipient_list=['sureshcbt@gmail.com'],
+        fail_silently=False,
+    )
+
+
+post_save.connect(save_post, sender=UserSubmission)
