@@ -2,7 +2,7 @@ import os
 import sys
 import django
 sys.path.insert(0, os.path.abspath('..'))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'BPPR.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'BPPRC.settings'
 django.setup()
 # Configuration file for the Sphinx documentation builder.
 #
@@ -23,7 +23,7 @@ django.setup()
 
 # -- Project information -----------------------------------------------------
 
-project = 'BPPR'
+project = 'BPPRC'
 copyright = '2019, Suresh Pannerselvam'
 author = 'Suresh Pannerselvam'
 

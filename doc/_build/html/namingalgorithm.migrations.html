@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>namingalgorithm.migrations package &#8212; BPPR 1.0 documentation</title>
+    <title>namingalgorithm.migrations package &#8212; BPPRC 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="namingalgorithm.html" title="namingalgorithm package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">BPPRC 1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="namingalgorithm.html" accesskey="U">namingalgorithm package</a> &#187;</li> 
       </ul>
     </div>  
@@ -68,7 +68,7 @@
 
 <dl class="attribute">
 <dt id="namingalgorithm.migrations.0001_initial.Migration.operations">
-<code class="sig-name descname">operations</code><em class="property"> = [&lt;CreateModel  name='UserSubmission', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;), ('year', &lt;django.db.models.fields.CharField&gt;), ('fastasequence', &lt;django.db.models.fields.TextField&gt;), ('comment', &lt;django.db.models.fields.TextField&gt;), ('email', &lt;django.db.models.fields.EmailField&gt;), ('uploaded', &lt;django.db.models.fields.DateTimeField&gt;), ('alignresults', &lt;django.db.models.fields.TextField&gt;)], options={'ordering': ('email',)}&gt;]</em><a class="headerlink" href="#namingalgorithm.migrations.0001_initial.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">operations</code><em class="property"> = [&lt;CreateModel  name='BacteriaTaxonID', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('taxonid', &lt;django.db.models.fields.CharField&gt;), ('bacterianame', &lt;django.db.models.fields.TextField&gt;)]&gt;, &lt;CreateModel  name='UserSubmission', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('submittersname', &lt;django.db.models.fields.CharField&gt;), ('submittersemail', &lt;django.db.models.fields.EmailField&gt;), ('proteinname', &lt;django.db.models.fields.CharField&gt;), ('proteinsequence', &lt;django.db.models.fields.TextField&gt;), ('bacterium', &lt;django.db.models.fields.BooleanField&gt;), ('bacterium_textbox', &lt;django.db.models.fields.CharField&gt;), ('taxonid', &lt;django.db.models.fields.CharField&gt;), ('year', &lt;django.db.models.fields.CharField&gt;), ('accessionnumber', &lt;django.db.models.fields.CharField&gt;), ('partnerprotein', &lt;django.db.models.fields.BooleanField&gt;), ('partnerprotein_textbox', &lt;django.db.models.fields.CharField&gt;), ('toxicto', &lt;django.db.models.fields.CharField&gt;), ('nontoxic', &lt;django.db.models.fields.CharField&gt;), ('dnasequence', &lt;django.db.models.fields.TextField&gt;), ('pdbcode', &lt;django.db.models.fields.CharField&gt;), ('publication', &lt;django.db.models.fields.TextField&gt;), ('comment', &lt;django.db.models.fields.TextField&gt;), ('uploaded', &lt;django.db.models.fields.DateTimeField&gt;), ('alignresults', &lt;django.db.models.fields.TextField&gt;), ('predict_name', &lt;django.db.models.fields.TextField&gt;)], options={'ordering': ('submittersemail',)}&gt;]</em><a class="headerlink" href="#namingalgorithm.migrations.0001_initial.Migration.operations" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -141,7 +141,7 @@
         <li class="right" >
           <a href="namingalgorithm.html" title="namingalgorithm package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">BPPRC 1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="namingalgorithm.html" >namingalgorithm package</a> &#187;</li> 
       </ul>
     </div>

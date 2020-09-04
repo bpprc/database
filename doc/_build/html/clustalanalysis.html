@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>clustalanalysis package &#8212; BPPR 1.0 documentation</title>
+    <title>clustalanalysis package &#8212; BPPRC 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="bestmatchfinder.migrations.html" title="bestmatchfinder.migrations package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">BPPRC 1.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -51,6 +51,22 @@
 </div>
 <div class="section" id="module-clustalanalysis.admin">
 <span id="clustalanalysis-admin-module"></span><h2>clustalanalysis.admin module<a class="headerlink" href="#module-clustalanalysis.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="clustalanalysis.admin.StoreResultFilesAdmin">
+<em class="property">class </em><code class="sig-prename descclassname">clustalanalysis.admin.</code><code class="sig-name descname">StoreResultFilesAdmin</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.admin.StoreResultFilesAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="clustalanalysis.admin.StoreResultFilesAdmin.fields">
+<code class="sig-name descname">fields</code><em class="property"> = ['taskid', 'tempfile', 'resultfile']</em><a class="headerlink" href="#clustalanalysis.admin.StoreResultFilesAdmin.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="clustalanalysis.admin.StoreResultFilesAdmin.media">
+<em class="property">property </em><code class="sig-name descname">media</code><a class="headerlink" href="#clustalanalysis.admin.StoreResultFilesAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-clustalanalysis.apps">
 <span id="clustalanalysis-apps-module"></span><h2>clustalanalysis.apps module<a class="headerlink" href="#module-clustalanalysis.apps" title="Permalink to this headline">¶</a></h2>
@@ -68,6 +84,77 @@
 </div>
 <div class="section" id="module-clustalanalysis.models">
 <span id="clustalanalysis-models-module"></span><h2>clustalanalysis.models module<a class="headerlink" href="#module-clustalanalysis.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="clustalanalysis.models.StoreResultFiles">
+<em class="property">class </em><code class="sig-prename descclassname">clustalanalysis.models.</code><code class="sig-name descname">StoreResultFiles</code><span class="sig-paren">(</span><em class="sig-param">id</em>, <em class="sig-param">taskid</em>, <em class="sig-param">tempfile</em>, <em class="sig-param">resultfile</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="clustalanalysis.models.StoreResultFiles.DoesNotExist">
+<em class="property">exception </em><code class="sig-name descname">DoesNotExist</code><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="clustalanalysis.models.StoreResultFiles.MultipleObjectsReturned">
+<em class="property">exception </em><code class="sig-name descname">MultipleObjectsReturned</code><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="clustalanalysis.models.StoreResultFiles.id">
+<code class="sig-name descname">id</code><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="clustalanalysis.models.StoreResultFiles.objects">
+<code class="sig-name descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="clustalanalysis.models.StoreResultFiles.resultfile">
+<code class="sig-name descname">resultfile</code><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.resultfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>The descriptor for the file attribute on the model instance. Return a
+FieldFile when accessed so you can write code like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">MyModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<p>Assign a file object on assignment so you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="clustalanalysis.models.StoreResultFiles.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The ‘force_insert’ and ‘force_update’ parameters can be used to insist
+that the “save” must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="clustalanalysis.models.StoreResultFiles.taskid">
+<code class="sig-name descname">taskid</code><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.taskid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="clustalanalysis.models.StoreResultFiles.tempfile">
+<code class="sig-name descname">tempfile</code><a class="headerlink" href="#clustalanalysis.models.StoreResultFiles.tempfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-clustalanalysis.tests">
 <span id="clustalanalysis-tests-module"></span><h2>clustalanalysis.tests module<a class="headerlink" href="#module-clustalanalysis.tests" title="Permalink to this headline">¶</a></h2>
@@ -83,18 +170,51 @@
 <div class="section" id="module-clustalanalysis.views">
 <span id="clustalanalysis-views-module"></span><h2>clustalanalysis.views module<a class="headerlink" href="#module-clustalanalysis.views" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="clustalanalysis.views.domain_analysis_cry">
-<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">domain_analysis_cry</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.domain_analysis_cry" title="Permalink to this definition">¶</a></dt>
+<dt id="clustalanalysis.views.celery_task_status_clustal">
+<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">celery_task_status_clustal</code><span class="sig-paren">(</span><em class="sig-param">request</em>, <em class="sig-param">task_id</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.celery_task_status_clustal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="clustalanalysis.views.draw_phylo">
-<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">draw_phylo</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.draw_phylo" title="Permalink to this definition">¶</a></dt>
+<dt id="clustalanalysis.views.dendogram">
+<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">dendogram</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.dendogram" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="clustalanalysis.views.filter_cry_draw_phylo">
-<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">filter_cry_draw_phylo</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.filter_cry_draw_phylo" title="Permalink to this definition">¶</a></dt>
+<dt id="clustalanalysis.views.dendogram_celery">
+<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">dendogram_celery</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.dendogram_celery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="clustalanalysis.views.dendogram_homepage">
+<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">dendogram_homepage</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.dendogram_homepage" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="clustalanalysis.views.dendogram_homepage2">
+<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">dendogram_homepage2</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.dendogram_homepage2" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="clustalanalysis.views.domain_analysis">
+<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">domain_analysis</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.domain_analysis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="clustalanalysis.views.domain_analysis_homepage">
+<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">domain_analysis_homepage</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.domain_analysis_homepage" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="clustalanalysis.views.protein_analysis">
+<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">protein_analysis</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.protein_analysis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="clustalanalysis.views.taskstatus_clustal_celery">
+<code class="sig-prename descclassname">clustalanalysis.views.</code><code class="sig-name descname">taskstatus_clustal_celery</code><span class="sig-paren">(</span><em class="sig-param">request</em>, <em class="sig-param">task_id</em><span class="sig-paren">)</span><a class="headerlink" href="#clustalanalysis.views.taskstatus_clustal_celery" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -166,7 +286,7 @@
         <li class="right" >
           <a href="bestmatchfinder.migrations.html" title="bestmatchfinder.migrations package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">BPPRC 1.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

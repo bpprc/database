@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>bestmatchfinder package &#8212; BPPR 1.0 documentation</title>
+    <title>bestmatchfinder package &#8212; BPPRC 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="database.migrations.html" title="database.migrations package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">BPPRC 1.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -108,8 +108,39 @@
 <div class="section" id="module-bestmatchfinder.models">
 <span id="bestmatchfinder-models-module"></span><h2>bestmatchfinder.models module<a class="headerlink" href="#module-bestmatchfinder.models" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="bestmatchfinder-needle-module">
-<h2>bestmatchfinder.needle module<a class="headerlink" href="#bestmatchfinder-needle-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-bestmatchfinder.needle">
+<span id="bestmatchfinder-needle-module"></span><h2>bestmatchfinder.needle module<a class="headerlink" href="#module-bestmatchfinder.needle" title="Permalink to this headline">¶</a></h2>
+<p>This loads the bestmatchfinder homepage.</p>
+<dl class="function">
+<dt id="bestmatchfinder.needle.blast_alignment">
+<code class="sig-prename descclassname">bestmatchfinder.needle.</code><code class="sig-name descname">blast_alignment</code><span class="sig-paren">(</span><em class="sig-param">file1</em>, <em class="sig-param">file2</em><span class="sig-paren">)</span><a class="headerlink" href="#bestmatchfinder.needle.blast_alignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bestmatchfinder.needle.cmdline">
+<code class="sig-prename descclassname">bestmatchfinder.needle.</code><code class="sig-name descname">cmdline</code><span class="sig-paren">(</span><em class="sig-param">command</em><span class="sig-paren">)</span><a class="headerlink" href="#bestmatchfinder.needle.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bestmatchfinder.needle.needle_alignment">
+<code class="sig-prename descclassname">bestmatchfinder.needle.</code><code class="sig-name descname">needle_alignment</code><span class="sig-paren">(</span><em class="sig-param">file1</em>, <em class="sig-param">file2</em><span class="sig-paren">)</span><a class="headerlink" href="#bestmatchfinder.needle.needle_alignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bestmatchfinder.needle.run_blast">
+<code class="sig-prename descclassname">bestmatchfinder.needle.</code><code class="sig-name descname">run_blast</code><span class="sig-paren">(</span><em class="sig-param">file1</em>, <em class="sig-param">file2</em><span class="sig-paren">)</span><a class="headerlink" href="#bestmatchfinder.needle.run_blast" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bestmatchfinder.needle.run_needle">
+<code class="sig-prename descclassname">bestmatchfinder.needle.</code><code class="sig-name descname">run_needle</code><span class="sig-paren">(</span><em class="sig-param">file1</em>, <em class="sig-param">file2</em><span class="sig-paren">)</span><a class="headerlink" href="#bestmatchfinder.needle.run_needle" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-bestmatchfinder.submit_single_sequence">
 <span id="bestmatchfinder-submit-single-sequence-module"></span><h2>bestmatchfinder.submit_single_sequence module<a class="headerlink" href="#module-bestmatchfinder.submit_single_sequence" title="Permalink to this headline">¶</a></h2>
@@ -147,10 +178,26 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="bestmatchfinder.views.celery_task_status">
+<code class="sig-prename descclassname">bestmatchfinder.views.</code><code class="sig-name descname">celery_task_status</code><span class="sig-paren">(</span><em class="sig-param">request</em>, <em class="sig-param">task_id</em><span class="sig-paren">)</span><a class="headerlink" href="#bestmatchfinder.views.celery_task_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="bestmatchfinder.views.run_needle_server">
 <code class="sig-prename descclassname">bestmatchfinder.views.</code><code class="sig-name descname">run_needle_server</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#bestmatchfinder.views.run_needle_server" title="Permalink to this definition">¶</a></dt>
 <dd><p>This loads the bestmatchfinder homepage.</p>
 </dd></dl>
+
+<dl class="function">
+<dt id="bestmatchfinder.views.run_needle_server_celery">
+<code class="sig-prename descclassname">bestmatchfinder.views.</code><code class="sig-name descname">run_needle_server_celery</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#bestmatchfinder.views.run_needle_server_celery" title="Permalink to this definition">¶</a></dt>
+<dd><p>This loads the bestmatchfinder homepage.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bestmatchfinder.views.taskstatus_needle_celery">
+<code class="sig-prename descclassname">bestmatchfinder.views.</code><code class="sig-name descname">taskstatus_needle_celery</code><span class="sig-paren">(</span><em class="sig-param">request</em>, <em class="sig-param">task_id</em><span class="sig-paren">)</span><a class="headerlink" href="#bestmatchfinder.views.taskstatus_needle_celery" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="bestmatchfinder-views1-module">
@@ -178,7 +225,7 @@
 <li><a class="reference internal" href="#bestmatchfinder-cry-package-name-module">bestmatchfinder.cry_package_name module</a></li>
 <li><a class="reference internal" href="#bestmatchfinder-execute-needle-module">bestmatchfinder.execute_needle module</a></li>
 <li><a class="reference internal" href="#module-bestmatchfinder.models">bestmatchfinder.models module</a></li>
-<li><a class="reference internal" href="#bestmatchfinder-needle-module">bestmatchfinder.needle module</a></li>
+<li><a class="reference internal" href="#module-bestmatchfinder.needle">bestmatchfinder.needle module</a></li>
 <li><a class="reference internal" href="#module-bestmatchfinder.submit_single_sequence">bestmatchfinder.submit_single_sequence module</a></li>
 <li><a class="reference internal" href="#module-bestmatchfinder.tests">bestmatchfinder.tests module</a></li>
 <li><a class="reference internal" href="#module-bestmatchfinder.urls">bestmatchfinder.urls module</a></li>
@@ -231,7 +278,7 @@
         <li class="right" >
           <a href="database.migrations.html" title="database.migrations package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">BPPRC 1.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

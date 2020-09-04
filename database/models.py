@@ -73,6 +73,9 @@ class PesticidalProteinPrivateDatabase(models.Model):
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
     public = models.BooleanField(default=False)
+    private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+    # sequence_is_private = models.BooleanField(
+    #     default=True, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, default="1", null=False, blank=True)
     submittersname = models.CharField(max_length=25, null=True, blank=True)

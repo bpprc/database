@@ -794,37 +794,66 @@ def category_download(request):
 
 def threedomain_download(request):
     if request.method == 'POST':
-        types = request.POST.getlist('category_type')
+        type_option = request.POST.getlist('category_type')
         file = StringIO()
+        print(type_option)
+        print("type", type(type_option))
 
-        proteins = PesticidalProteinDatabase.objects.filter(
+        accession = {}
+        output = ''
+
+        data = PesticidalProteinDatabase.objects.filter(
             name__istartswith="cry").order_by('name')
+        if data:
+            for item in data:
+                if item.name[-1] == '1' and not item.name[-2].isdigit():
+                    accession[item.accession] = item
 
-        for protein in proteins:
-            if protein.name[-1] == '1' and not protein.name[-2].isdigit():
-                fasta = textwrap.fill(protein.sequence, 80)
-                str_to_write = f">{protein.name}\n{fasta}\n"
+        protein_detail = ProteinDetail.objects.filter(
+            accession__in=list(accession.keys()))
+
+        protein_data = PesticidalProteinDatabase.objects.filter(
+            accession__in=list(accession.keys()))
+
+        count = 0
+        for item in protein_data:
+            output = ''
+            if 'domain1' in type_option:
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
+                for item1 in nterminal:
+                    count += 1
+                    output += item1.get_endotoxin_n()
+            if 'domain2' in type_option:
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
+                for item1 in nterminal:
+                    count += 1
+                    output += item1.get_endotoxin_m()
+            if 'domain3' in type_option:
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
+                for item1 in nterminal:
+                    count += 1
+                    output += item1.get_endotoxin_c()
+            if 'full_length' in type_option:
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
+                for item1 in nterminal:
+                    count += 1
+                    output += item1.sequence
+            if output:
+                str_to_write = f">{item.name}\n{output}\n"
                 file.write(str_to_write)
+
+        print(count)
         response = HttpResponse(
             file.getvalue(), content_type="text/plain")
-        download_file = f"{'_'.join(types)}holotype_fasta_sequences.txt"
+        download_file = f"{'_'.join(type_option)}_holotype_fasta_sequences.txt"
         response['Content-Disposition'] = 'attachment;filename=' + \
             download_file
         response['Content-Length'] = file.tell()
         return response
-        # return JsonResponse({'foo': 'bar'})
-        # if item.name.startswith('cry'):
-        #     if item.name[-1] == '1' and not item.name[-2].isdigit():
-        #         fasta = textwrap.fill(item.sequence, 80)
-        #         str_to_write = f">{item.name}\n{fasta}\n"
-        #         file.write(str_to_write)
-        #         response = HttpResponse(
-        #             file.getvalue(), content_type="text/plain")
-        #         download_file = f"{'_'.join(types)}holotype_fasta_sequences.txt"
-        #         response['Content-Disposition'] = 'attachment;filename=' + \
-        #             download_file
-        #         response['Content-Length'] = file.tell()
-        # return response
 
 
 def protein_detail(request, name):

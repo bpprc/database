@@ -77,11 +77,11 @@ class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
     actions = ['make_public']
 
     search_fields = ('name', 'oldname', 'othernames',
-                     'accession', 'year', 'public')
+                     'accession', 'year', 'private')
     fields = ('name', 'oldname', 'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'public', 'admin_user')
+              'sequence', 'uploaded', 'fastasequence_file', 'private', 'admin_user')
     list_display = ('name', 'oldname',  'othernames',
-                    'accession', 'year', 'fastasequence_file', 'public')
+                    'accession', 'year', 'fastasequence_file', 'private')
     ordering = ('name',)
 
     # def has_delete_permission(self, request, obj=None):
@@ -147,7 +147,14 @@ class OldnameNewnameTableRightAdmin(ImportExportModelAdmin):
     list_display = ('name_1998', 'name_2020', 'alternative_name')
 
 
-class ProteinDetailAdmin(admin.ModelAdmin):
+class ProteinDetailResource(resources.ModelResource):
+
+    class Meta:
+        model = ProteinDetail
+        exclude = ('id', 'sequence')
+
+
+class ProteinDetailAdmin(ImportExportModelAdmin):
     search_fields = ['accession', 'start_N', 'end_N',
                      'start_M', 'end_M', 'start_C', 'end_C']
 
@@ -159,6 +166,13 @@ class ProteinDetailAdmin(admin.ModelAdmin):
               'start_N', 'end_N', 'domain_M', 'pfam_M', 'cdd_M', 'start_M', 'end_M', 'domain_C', 'pfam_C', 'cdd_C', 'start_C', 'end_C')
     list_display = ('accession', 'fulllength', 'species', 'taxon', 'domain_N', 'pfam_N', 'cdd_N',
                     'start_N', 'end_N', 'domain_M', 'pfam_M', 'cdd_M', 'start_M', 'end_M', 'domain_C', 'pfam_C', 'cdd_C', 'start_C', 'end_C')
+
+    class Meta:
+        skip_unchanged = True
+        report_skipped = True
+        exclude = ('id', 'sequence')
+        # import_id_fields = ('accession', 'fulllength', 'species', 'taxon', 'domain_N', 'pfam_N', 'cdd_N', 'start_N',
+        #                     'end_N', 'domain_M', 'pfam_M', 'cdd_M', 'start_M', 'end_M', 'domain_C', 'pfam_C', 'cdd_C', 'start_C', 'end_C')
 
 
 admin.site.site_header = 'BPPRC Admin Dashboard'

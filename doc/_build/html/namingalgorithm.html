@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>namingalgorithm package &#8212; BPPR 1.0 documentation</title>
+    <title>namingalgorithm package &#8212; BPPRC 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="cry_package.html" title="cry_package package"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">BPPRC 1.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -85,7 +85,7 @@
 
 <dl class="attribute">
 <dt id="namingalgorithm.admin.UserSubmissionAdmin.list_display">
-<code class="sig-name descname">list_display</code><em class="property"> = ('name', 'email', 'run_align_link', 'align_results', 'create_data', 'refresh')</em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_display</code><em class="property"> = ('submittersname', 'submittersemail', 'run_align_link', 'align_results', 'create_data', 'refresh', 'uploaded')</em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.list_display" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -102,12 +102,11 @@
 <dl class="method">
 <dt id="namingalgorithm.admin.UserSubmissionAdmin.run_align_link">
 <code class="sig-name descname">run_align_link</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.run_align_link" title="Permalink to this definition">¶</a></dt>
-<dd><p>Submit the sequence by user and name of the protein is predicted.</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="namingalgorithm.admin.UserSubmissionAdmin.search_fields">
-<code class="sig-name descname">search_fields</code><em class="property"> = ['email']</em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">search_fields</code><em class="property"> = ['submittersemail']</em><a class="headerlink" href="#namingalgorithm.admin.UserSubmissionAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -132,7 +131,7 @@
 <p>Sequence submission form.</p>
 <dl class="class">
 <dt id="namingalgorithm.forms.UserSubmissionForm">
-<em class="property">class </em><code class="sig-prename descclassname">namingalgorithm.forms.</code><code class="sig-name descname">UserSubmissionForm</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">files=None</em>, <em class="sig-param">auto_id='id_%s'</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">initial=None</em>, <em class="sig-param">error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em class="sig-param">label_suffix=None</em>, <em class="sig-param">empty_permitted=False</em>, <em class="sig-param">instance=None</em>, <em class="sig-param">use_required_attribute=None</em>, <em class="sig-param">renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">namingalgorithm.forms.</code><code class="sig-name descname">UserSubmissionForm</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <p>Sequence submission form.</p>
 <dl class="class">
@@ -141,12 +140,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="namingalgorithm.forms.UserSubmissionForm.Meta.fields">
-<code class="sig-name descname">fields</code><em class="property"> = ['name', 'year', 'fastasequence', 'comment', 'email']</em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="namingalgorithm.forms.UserSubmissionForm.Meta.fields_required">
-<code class="sig-name descname">fields_required</code><em class="property"> = ['name', 'year', 'fastasequence', 'email']</em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.Meta.fields_required" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fields</code><em class="property"> = ['submittersname', 'submittersemail', 'proteinname', 'year', 'proteinsequence', 'public_or_private', 'bacterium', 'bacterium_textbox', 'accessionnumber', 'dnasequence', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'pdbcode', 'publication', 'comment']</em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -159,12 +153,12 @@
 
 <dl class="attribute">
 <dt id="namingalgorithm.forms.UserSubmissionForm.base_fields">
-<code class="sig-name descname">base_fields</code><em class="property"> = {'comment': &lt;django.forms.fields.CharField object&gt;, 'email': &lt;django.forms.fields.EmailField object&gt;, 'fastasequence': &lt;django.forms.fields.CharField object&gt;, 'name': &lt;django.forms.fields.CharField object&gt;, 'year': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">base_fields</code><em class="property"> = {'accessionnumber': &lt;django.forms.fields.CharField object&gt;, 'bacterium': &lt;django.forms.fields.ChoiceField object&gt;, 'bacterium_textbox': &lt;django.forms.fields.CharField object&gt;, 'comment': &lt;django.forms.fields.CharField object&gt;, 'dnasequence': &lt;django.forms.fields.CharField object&gt;, 'nontoxic': &lt;django.forms.fields.CharField object&gt;, 'partnerprotein': &lt;django.forms.fields.ChoiceField object&gt;, 'partnerprotein_textbox': &lt;django.forms.fields.CharField object&gt;, 'pdbcode': &lt;django.forms.fields.CharField object&gt;, 'proteinname': &lt;django.forms.fields.CharField object&gt;, 'proteinsequence': &lt;django.forms.fields.CharField object&gt;, 'proteinsname': &lt;django.forms.fields.CharField object&gt;, 'public_or_private': &lt;django.forms.fields.TypedChoiceField object&gt;, 'publication': &lt;django.forms.fields.CharField object&gt;, 'submittersemail': &lt;django.forms.fields.CharField object&gt;, 'submittersname': &lt;django.forms.fields.CharField object&gt;, 'toxicto': &lt;django.forms.fields.CharField object&gt;, 'year': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="namingalgorithm.forms.UserSubmissionForm.declared_fields">
-<code class="sig-name descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">declared_fields</code><em class="property"> = {'accessionnumber': &lt;django.forms.fields.CharField object&gt;, 'bacterium': &lt;django.forms.fields.ChoiceField object&gt;, 'bacterium_textbox': &lt;django.forms.fields.CharField object&gt;, 'comment': &lt;django.forms.fields.CharField object&gt;, 'dnasequence': &lt;django.forms.fields.CharField object&gt;, 'nontoxic': &lt;django.forms.fields.CharField object&gt;, 'partnerprotein': &lt;django.forms.fields.ChoiceField object&gt;, 'partnerprotein_textbox': &lt;django.forms.fields.CharField object&gt;, 'pdbcode': &lt;django.forms.fields.CharField object&gt;, 'proteinsequence': &lt;django.forms.fields.CharField object&gt;, 'proteinsname': &lt;django.forms.fields.CharField object&gt;, 'public_or_private': &lt;django.forms.fields.TypedChoiceField object&gt;, 'publication': &lt;django.forms.fields.CharField object&gt;, 'submittersemail': &lt;django.forms.fields.CharField object&gt;, 'submittersname': &lt;django.forms.fields.CharField object&gt;, 'toxicto': &lt;django.forms.fields.CharField object&gt;, 'year': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#namingalgorithm.forms.UserSubmissionForm.declared_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -179,7 +173,7 @@
 <span id="namingalgorithm-models-module"></span><h2>namingalgorithm.models module<a class="headerlink" href="#module-namingalgorithm.models" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="namingalgorithm.models.UserSubmission">
-<em class="property">class </em><code class="sig-prename descclassname">namingalgorithm.models.</code><code class="sig-name descname">UserSubmission</code><span class="sig-paren">(</span><em class="sig-param">id</em>, <em class="sig-param">name</em>, <em class="sig-param">year</em>, <em class="sig-param">fastasequence</em>, <em class="sig-param">comment</em>, <em class="sig-param">email</em>, <em class="sig-param">uploaded</em>, <em class="sig-param">alignresults</em>, <em class="sig-param">predict_name</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">namingalgorithm.models.</code><code class="sig-name descname">UserSubmission</code><span class="sig-paren">(</span><em class="sig-param">id</em>, <em class="sig-param">submittersname</em>, <em class="sig-param">submittersemail</em>, <em class="sig-param">proteinname</em>, <em class="sig-param">proteinsequence</em>, <em class="sig-param">bacterium</em>, <em class="sig-param">bacterium_textbox</em>, <em class="sig-param">taxonid</em>, <em class="sig-param">year</em>, <em class="sig-param">accessionnumber</em>, <em class="sig-param">partnerprotein</em>, <em class="sig-param">partnerprotein_textbox</em>, <em class="sig-param">toxicto</em>, <em class="sig-param">nontoxic</em>, <em class="sig-param">dnasequence</em>, <em class="sig-param">pdbcode</em>, <em class="sig-param">publication</em>, <em class="sig-param">comment</em>, <em class="sig-param">uploaded</em>, <em class="sig-param">alignresults</em>, <em class="sig-param">predict_name</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <dl class="exception">
 <dt id="namingalgorithm.models.UserSubmission.DoesNotExist">
@@ -194,8 +188,29 @@
 </dd></dl>
 
 <dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.accessionnumber">
+<code class="sig-name descname">accessionnumber</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.accessionnumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="namingalgorithm.models.UserSubmission.alignresults">
 <code class="sig-name descname">alignresults</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.alignresults" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.bacterium">
+<code class="sig-name descname">bacterium</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.bacterium" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.bacterium_textbox">
+<code class="sig-name descname">bacterium_textbox</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.bacterium_textbox" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
@@ -208,22 +223,25 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="namingalgorithm.models.UserSubmission.email">
-<code class="sig-name descname">email</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.email" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="namingalgorithm.models.UserSubmission.fastasequence">
-<code class="sig-name descname">fastasequence</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.fastasequence" title="Permalink to this definition">¶</a></dt>
+<dt id="namingalgorithm.models.UserSubmission.dnasequence">
+<code class="sig-name descname">dnasequence</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.dnasequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="namingalgorithm.models.UserSubmission.get_bacterium_display">
+<code class="sig-name descname">get_bacterium_display</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">field=&lt;django.db.models.fields.BooleanField: bacterium&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_bacterium_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="namingalgorithm.models.UserSubmission.get_next_by_uploaded">
 <code class="sig-name descname">get_next_by_uploaded</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">field=&lt;django.db.models.fields.DateTimeField: uploaded&gt;</em>, <em class="sig-param">is_next=True</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_next_by_uploaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="namingalgorithm.models.UserSubmission.get_partnerprotein_display">
+<code class="sig-name descname">get_partnerprotein_display</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">field=&lt;django.db.models.fields.BooleanField: partnerprotein&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.get_partnerprotein_display" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -239,8 +257,8 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="namingalgorithm.models.UserSubmission.name">
-<code class="sig-name descname">name</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.name" title="Permalink to this definition">¶</a></dt>
+<dt id="namingalgorithm.models.UserSubmission.nontoxic">
+<code class="sig-name descname">nontoxic</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.nontoxic" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
@@ -251,8 +269,50 @@ object the first time, the query is executed.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.partnerprotein">
+<code class="sig-name descname">partnerprotein</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.partnerprotein" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.partnerprotein_textbox">
+<code class="sig-name descname">partnerprotein_textbox</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.partnerprotein_textbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.pdbcode">
+<code class="sig-name descname">pdbcode</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.pdbcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="namingalgorithm.models.UserSubmission.predict_name">
 <code class="sig-name descname">predict_name</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.predict_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.proteinname">
+<code class="sig-name descname">proteinname</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.proteinname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.proteinsequence">
+<code class="sig-name descname">proteinsequence</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.proteinsequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.publication">
+<code class="sig-name descname">publication</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.publication" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
@@ -261,6 +321,34 @@ object the first time, the query is executed.</p>
 <dt id="namingalgorithm.models.UserSubmission.publish">
 <code class="sig-name descname">publish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.UserSubmission.publish" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.submittersemail">
+<code class="sig-name descname">submittersemail</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.submittersemail" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.submittersname">
+<code class="sig-name descname">submittersname</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.submittersname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.taxonid">
+<code class="sig-name descname">taxonid</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.taxonid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="namingalgorithm.models.UserSubmission.toxicto">
+<code class="sig-name descname">toxicto</code><a class="headerlink" href="#namingalgorithm.models.UserSubmission.toxicto" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="namingalgorithm.models.UserSubmission.uploaded">
@@ -277,6 +365,11 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 </dd></dl>
+
+<dl class="function">
+<dt id="namingalgorithm.models.save_post">
+<code class="sig-prename descclassname">namingalgorithm.models.</code><code class="sig-name descname">save_post</code><span class="sig-paren">(</span><em class="sig-param">sender</em>, <em class="sig-param">instance</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.models.save_post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-namingalgorithm.tests">
@@ -324,10 +417,20 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="namingalgorithm.views.send_mail">
+<code class="sig-prename descclassname">namingalgorithm.views.</code><code class="sig-name descname">send_mail</code><span class="sig-paren">(</span><em class="sig-param">required</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.views.send_mail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="namingalgorithm.views.submit">
 <code class="sig-prename descclassname">namingalgorithm.views.</code><code class="sig-name descname">submit</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.views.submit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Submit the sequence for the naming purpose through user form.</p>
 </dd></dl>
+
+<dl class="function">
+<dt id="namingalgorithm.views.submit_home">
+<code class="sig-prename descclassname">namingalgorithm.views.</code><code class="sig-name descname">submit_home</code><span class="sig-paren">(</span><em class="sig-param">request</em><span class="sig-paren">)</span><a class="headerlink" href="#namingalgorithm.views.submit_home" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-namingalgorithm">
@@ -400,7 +503,7 @@ object the first time, the query is executed.</p>
         <li class="right" >
           <a href="cry_package.html" title="cry_package package"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">BPPR 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">BPPRC 1.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

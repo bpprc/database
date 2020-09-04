@@ -53,7 +53,7 @@ def save_post(sender, instance, **kwargs):
         subject="New Submission for the database",
         message=sequence_message,
         from_email='bpprc.database@gmail.com',
-        recipient_list=['sureshcbt@gmail.com'],
+        recipient_list=['sureshcbt@gmail.com', 'Berry@cardiff.ac.uk'],
         fail_silently=False,
     )
 
@@ -66,7 +66,7 @@ def _trigger_email_everyday():
         subject="New Sequence submission in the database",
         message=sequence_message,
         from_email='bpprc.database@gmail.com',
-        recipient_list=['sureshcbt@gmail.com'],
+        recipient_list=['sureshcbt@gmail.com', 'n.crickmore@sussex.ac.uk'],
         fail_silently=False,
     )
 

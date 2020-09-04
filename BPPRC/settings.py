@@ -109,6 +109,7 @@ INSTALLED_APPS = [
     'extra',
     'django_ses',
     'admin_reorder',
+    'django_celery_beat',
 ]
 
 
@@ -292,6 +293,6 @@ CELERY_TIMEZONE = 'US/Eastern'
 CELERY_BEAT_SCHEDULE = {
     'check_new_submission': {
         'task': 'namingalgorithm.tasks.check_new_submission',
-        'schedule': crontab(minute=1, hour=21),
+        'schedule': crontab(minute=28, hour=12),
     }
 }

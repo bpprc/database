@@ -49,7 +49,7 @@ $(function() {
 });
 </script>
 
-<script>
+<!-- <script>
 $(function() {
     $('input[name="sourcebacterium"]').change(function(obj) {
     console.log($(this).val());
@@ -63,31 +63,36 @@ $(function() {
   });
   $('#id_sourcebacterium_textbox').parent().parent().hide();
 });
-</script>
+</script> -->
 
 <script>
+function setBacteriumState(val) {
+  if (val === 'True') {
+      $('#id_bacterium_textbox').parent().parent().show();
+      $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxonid)");
+      if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length == 0) {
+        $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxonid?</a>")
+      } else {
+        $('#div_id_bacterium_textbox').find('.taxonid-hint').show();
+      }
+
+  } else {
+    $('#id_bacterium_textbox').parent().parent().show();
+    $("#div_id_bacterium_textbox").find('label').text("Enter details of source organism in comments box below");
+    if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length > 0) {
+    $('#div_id_bacterium_textbox').find('.taxonid-hint').hide();
+    swal("The BPPRC does not normally assign names to proteins that are not of bacterial origin.  If you wish to make a special case for your sequence, please explain in the Comments box below!");
+  }
+  }
+}
 $(function() {
     $('input[name="bacterium"]').change(function(obj) {
     console.log($(this).val());
-    if ($(this).val() === 'True') {
-        $('#id_bacterium_textbox').parent().parent().show();
-        $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxonid)");
-        if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length == 0) {
-          $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxonid?</a>")
-        } else {
-          $('#div_id_bacterium_textbox').find('.taxonid-hint').show();
-        }
+    setBacteriumState($(this).val());
 
-    } else {
-      $('#id_bacterium_textbox').parent().parent().show();
-      $("#div_id_bacterium_textbox").find('label').text("Enter details of source organism in comments box below");
-      if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length > 0) {
-      $('#div_id_bacterium_textbox').find('.taxonid-hint').hide();
-      swal("The BPPRC does not normally assign names to proteins that are not of bacterial origin.  If you wish to make a special case for your sequence, please explain in the Comments box below!");
-    }
-    }
   });
   $('#id_bacterium_textbox').parent().parent().show();
+  setBacteriumState('True');
 });
 </script>
 
