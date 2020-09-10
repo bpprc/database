@@ -134,6 +134,12 @@ class UserSubmissionForm(forms.ModelForm):
         required=False
     )
 
+    terms_conditions = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(attrs={'size': '10'}),
+        label='Our service is provided "as is". We expressly disclaim all warranties with respect to the services. We make no warranties or guarantees whatsoever, express or implied, including, any implied warranties of mechantability or fitness for a particular purpose. We are not liable for any use of the services, or for any loss, claim, damage, or liability of any kind or nature which may arise from or in connection with this service or our storage of your submission.'
+    )
+
     def __init__(self, *args, **kwargs):
         super(UserSubmissionForm, self).__init__(*args, **kwargs)
 
@@ -195,6 +201,7 @@ class UserSubmissionForm(forms.ModelForm):
             'pdbcode',
             'publication',
             'comment',
+            'terms_conditions',
             HTML('<div class="form-group col-md-6"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %
                  RECAPTCHA_PUBLIC_KEY),
             # ButtonHolder(
@@ -221,7 +228,8 @@ class UserSubmissionForm(forms.ModelForm):
                   'nontoxic',
                   'pdbcode',
                   'publication',
-                  'comment']
+                  'comment',
+                  'terms_conditions']
 
 
 # ToxicToFormSet = modelformset_factory(
