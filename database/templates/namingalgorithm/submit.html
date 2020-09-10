@@ -3,6 +3,13 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+{% block extrahead %}
+<style>
+.asteriskField {
+    display: none;
+}
+</style>
+{% endblock extrahead %}
 
   <h1 class="text-center list-unstyled"> <ul> Naming</h1>
   <br>
@@ -112,6 +119,7 @@ $(function() {
 });
 </script>
 
+
 <script type="text/javascript">
 
   $('.js-captcha-refresh').click(function (evt) {
@@ -129,5 +137,11 @@ $(function() {
 
 </script>
 
+<script>
+$(function() {
+  document.getElementById('id_terms_condition').label = 'Your tip has been submitted!';
+  $("#div_id_terms_condition").find('label').text("Enter details of source organism in comments box below");
+});
+</script>
 
 {% endblock %}
