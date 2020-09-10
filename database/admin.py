@@ -103,11 +103,11 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
     # categories = PesticidalProteinDatabase.objects.order_by('name').values_list('name').distinct()
     search_fields = ('name', 'oldname',  'othernames',
-                     'accession', 'year', 'public')
+                     'accession', 'year', 'public', 'pdbcode')
     fields = ('name', 'oldname',  'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'public')
+              'sequence', 'uploaded', 'fastasequence_file', 'public', 'pdbcode')
     list_display = ('name', 'oldname',  'othernames',
-                    'accession', 'year', 'public')
+                    'accession', 'year', 'public', 'pdbcode')
     list_filter = ['uploaded', FilterByCategories]
     ordering = ('name',)
 

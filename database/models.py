@@ -113,6 +113,7 @@ class PesticidalProteinDatabase(models.Model):
         upload_to='fastasequence_files/', null=True, blank=True)
     name_category = models.CharField(max_length=15, blank=True)
     public = models.BooleanField(default=True)
+    pdbcode = models.CharField(max_length=10, blank=True, null=False)
     # oldname_category = models.CharField(max_length=15, blank=True)
     # protein_metadata = PesticidalProteinDatabaseManager()
 

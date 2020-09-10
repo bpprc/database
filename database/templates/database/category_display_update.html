@@ -28,6 +28,7 @@
             <th scope="col">Othername</th>
             <th scope="col">Accession Number</th>
             <th scope="col">Year</th>
+            <th scope="col">Structure (PDB code)</th>
             <th scope="col">Fasta Sequence</th>
           </tr>
         </thead>
@@ -43,6 +44,7 @@
             <td>{{ protein.othernames }}</td>
             <td><a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a></td>
 						<td>{{ protein.year }}</td>
+            <td> <a href="https://www.rcsb.org/structure/{{ protein.pdbcode }}" target="_blank"> {{ protein.pdbcode }}</td>
             <td><a href=download_single_sequence/{{ protein.name }}>Download</a></td>
           </tr>
       </tbody>
