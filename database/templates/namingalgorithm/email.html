@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<h3> Email</h3>
+<br>
+</br>
+</br>
+
+  {% crispy form %}
+
+{% endblock content %}
+
+
+
+{% block extrajs %}
+<script>
+
+moveName=localStorage.getItem('name');
+moveOldname=localStorage.getItem('oldname');
+moveSeq=localStorage.getItem('sequence');
+moveAccession=localStorage.getItem('accession');
+if (moveName) {
+    document.getElementById("name").value = moveName;
+    document.getElementById("id_oldname").value = moveOldname;
+    document.getElementById("id_sequence").value = moveSeq;
+    document.getElementById("id_accession").value = moveAccession;
+    localStorage.clear()
+  }
+
+</script>
+
+{% endblock extrajs %}

@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
 from naming_package import run_data
 from namingalgorithm.models import UserSubmission
-from .forms import UserSubmissionForm
+from .forms import UserSubmissionForm, SendEmailForm
 from django.core.mail import send_mail
 
 
@@ -120,3 +120,25 @@ def run_naming_algorithm(request):
         'align': align
     }
     return render(request, 'namingalgorithm/needle.html', context)
+
+
+def contactView(request):
+    if request.method == 'GET':
+        form = SendEmailForm()
+    else:
+        form = SendEmailForm(request.POST)
+        if form.is_valid():
+            submittersname = form.cleaned_data['submittersname']
+            submittersemail = form.cleaned_data['submittersemail']
+            proteinname = form.cleaned_data['proteinname']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['admin@example.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('success')
+    return render(request, "namingalgorithm/email.html", {'form': form})
+
+
+def successView(request):
+    return HttpResponse('Success! Thank you for your message.')

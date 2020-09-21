@@ -2,7 +2,8 @@
 
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import UserSubmission
+from .models import UserSubmission, SendEmail
+from django.shortcuts import render
 
 
 class UserSubmissionAdmin(admin.ModelAdmin):
@@ -17,6 +18,7 @@ class UserSubmissionAdmin(admin.ModelAdmin):
         'align_results',
         'create_data',
         'refresh',
+        'send_email',
         'uploaded',
     )
 
@@ -40,8 +42,10 @@ class UserSubmissionAdmin(admin.ModelAdmin):
 
     def refresh(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/admin/namingalgorithm/usersubmission/">refresh</a>'
-                           )
+        return format_html('<a href="/admin/namingalgorithm/usersubmission/">refresh</a>')
+
+    def send_email(self, obj):
+        return format_html('<a href="/admin/contact/?submittersname={2}&email={1}&proteinname={0}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.proteinname or ''))
 
     run_align_link.allow_tags = True
     run_align_link.description = 'Run the align link for the submission'
@@ -53,4 +57,13 @@ class UserSubmissionAdmin(admin.ModelAdmin):
     align_results.description = 'Create new data in the database'
 
 
+class SendEmailAdmin(admin.ModelAdmin):
+    list_display = (
+        'submittersname',
+        'submittersemail',
+        'proteinname',
+    )
+
+
 admin.site.register(UserSubmission, UserSubmissionAdmin)
+admin.site.register(SendEmail, SendEmailAdmin)

@@ -2,7 +2,7 @@
 
 from django import forms
 from django.forms import modelformset_factory
-from .models import UserSubmission
+from .models import UserSubmission, SendEmail
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
 # from crispy_forms.bootstrap import AppendedText
@@ -12,6 +12,53 @@ RECAPTCHA_PUBLIC_KEY = "6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT"
 
 # class CustomToxinBox(Field):
 #     template = 'namingalgorithm/toxinbox.html'
+
+class SendEmailForm(forms.ModelForm):
+    """Sequence submission form."""
+    submittersname = forms.CharField(
+        label="Submitter's Name",
+        widget=forms.TextInput(
+            attrs={'placeholder': ''})
+    )
+
+    submittersemail = forms.CharField(
+        label="Submitter's Email",
+        widget=forms.TextInput(
+            attrs={'placeholder': ''})
+    )
+
+    proteinsname = forms.CharField(
+        label='Current Protein Name',
+        widget=forms.TextInput(
+            attrs={'placeholder': ''}),
+        required=False
+    )
+
+    message = forms.CharField(
+        label='message',
+        widget=forms.Textarea(
+            attrs={'placeholder': ''}),
+        required=False
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(SendEmailForm, self).__init__(*args, **kwargs)
+
+        self.fields['proteinsname'].widget.attrs['cols'] = 50
+        # self.fields['proteinsname'].widget.attrs['cols'] = 20
+        self.fields['message'].widget.attrs['cols'] = 50
+        # self.fields['message'].widget.attrs['cols'] = 20
+
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-SendEmailForm'
+        self.helper.form_class = 'SendEmailForm'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'submit'
+        self.helper.add_input(Submit('submit', 'Submit'))
+
+    class Meta:
+        model = SendEmail
+        fields = "__all__"
 
 
 class UserSubmissionForm(forms.ModelForm):
