@@ -109,8 +109,8 @@ def bestmatchfinder_database_sequence_run(request):
             protein1 = form.cleaned_data['protein_id1']
             protein2 = form.cleaned_data['protein_id2']
             data = form.cleaned_data
-            name1 = data['protein_id1']
-            name2 = data['protein_id2']
+            name1 = data['protein_id1'] or data['sequence1_in_form']
+            name2 = data['protein_id2'] or data['sequence2_in_form']
 
             query = "Query: " + name1.name + ' '
             subject = "Subject: " + name2.name + ' '
