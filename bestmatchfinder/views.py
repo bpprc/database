@@ -115,9 +115,14 @@ def bestmatchfinder_database_sequence_run(request):
             name1 = data['protein_id1'] or data['sequence1_in_form']
             name2 = data['protein_id2'] or data['sequence2_in_form']
 
-            query = "Query: " + name1.name + ' '
-            subject = "Subject: " + name2.name + ' '
-            tool = form.cleaned_data['tool']
+            try:
+                query = "Query: " + name1.name + ' '
+                subject = "Subject: " + name2.name + ' '
+                tool = form.cleaned_data['tool']
+            except:
+                query = "Query: " + name1 + ' '
+                subject = "Subject: " + name2 + ' '
+                tool = form.cleaned_data['tool']
 
             if protein1:
                 protein1 = os.path.join(
