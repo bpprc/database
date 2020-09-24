@@ -84,6 +84,7 @@ def taskstatus_needle_celery(request, task_id):
             return render(request, 'bestmatchfinder/needle_processing.html', context)
 
         context['error'] = task
+        # print(task)
         return render(request, 'bestmatchfinder/needle_processing.html', context)
 
 
