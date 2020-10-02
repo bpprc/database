@@ -34,7 +34,7 @@ else:
     DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'camtech-bpp.test.ifas.ufl.edu',
-                 'camtech-bpp.ifas.ufl.edu', 'bpprc.org']
+                 'camtech-bpp.ifas.ufl.edu']
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -224,7 +224,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 
 CSRF_COOKIE_SECURE = True
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = ['www.bpprc.org', 'bpprc.org']
+CSRF_TRUSTED_ORIGINS = ['camtech-bpp.ifas.ufl.edu']
 
 CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK')
 
