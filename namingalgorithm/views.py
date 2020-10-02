@@ -133,7 +133,8 @@ def contactView(request):
             proteinname = form.cleaned_data['proteinname']
             message = form.cleaned_data['message']
             try:
-                send_mail(subject, message, from_email, ['admin@example.com'])
+                send_mail(subject, message, from_email,
+                          ['sureshcbt@gmail.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('success')

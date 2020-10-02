@@ -18,15 +18,14 @@
 {% block extrajs %}
 <script>
 
-moveName=localStorage.getItem('name');
-moveOldname=localStorage.getItem('oldname');
-moveSeq=localStorage.getItem('sequence');
-moveAccession=localStorage.getItem('accession');
-if (moveName) {
-    document.getElementById("name").value = moveName;
-    document.getElementById("id_oldname").value = moveOldname;
-    document.getElementById("id_sequence").value = moveSeq;
-    document.getElementById("id_accession").value = moveAccession;
+subName=localStorage.getItem('submittersname');
+subEmail=localStorage.getItem('email');
+subProteinname=localStorage.getItem('proteinname');
+
+if (subName) {
+    document.getElementById("id_submittersname").value = subName;
+    document.getElementById("id_subemail").value = subEmail;
+    document.getElementById("id_proteinname").value = subProteinname;
     localStorage.clear()
   }
 

@@ -45,7 +45,7 @@ class UserSubmissionAdmin(admin.ModelAdmin):
         return format_html('<a href="/admin/namingalgorithm/usersubmission/">refresh</a>')
 
     def send_email(self, obj):
-        return format_html('<a href="/admin/contact/?submittersname={2}&email={1}&proteinname={0}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.proteinname or ''))
+        return format_html('<a href="/admin/contact/?submittersname={0}&email={1}&proteinname={2}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.proteinname or ''))
 
     run_align_link.allow_tags = True
     run_align_link.description = 'Run the align link for the submission'

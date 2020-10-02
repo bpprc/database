@@ -27,8 +27,8 @@ class SendEmailForm(forms.ModelForm):
             attrs={'placeholder': ''})
     )
 
-    proteinsname = forms.CharField(
-        label='Current Protein Name',
+    proteinname = forms.CharField(
+        label='Protein Name',
         widget=forms.TextInput(
             attrs={'placeholder': ''}),
         required=False
@@ -44,7 +44,7 @@ class SendEmailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SendEmailForm, self).__init__(*args, **kwargs)
 
-        self.fields['proteinsname'].widget.attrs['cols'] = 50
+        self.fields['proteinname'].widget.attrs['cols'] = 50
         # self.fields['proteinsname'].widget.attrs['cols'] = 20
         self.fields['message'].widget.attrs['cols'] = 50
         # self.fields['message'].widget.attrs['cols'] = 20
