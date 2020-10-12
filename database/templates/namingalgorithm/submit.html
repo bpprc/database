@@ -11,7 +11,7 @@
   <h3> Proteins will only get a name if they are derived from a bacterium and satisfy one of the following criteria </h3>
   <br>
   <h5> <li> Have >95% identity to an existing named protein (or)</li> </h5>
-  <h5> <li> Have demonstrated activity against a target pest organism</li></ul> </h5>
+  <h5> <li> Have demonstrated activity against an invertebrate organism</li></ul> </h5>
 </br>
 <h5>* required field</h5>
 </br>
@@ -52,7 +52,7 @@ $(function() {
     console.log($(this).val());
     if ($(this).val() === 'True') {
         $('#id_sourcebacterium_textbox').parent().parent().show();
-        $("#id_bacterium_textbox").text("Name of source bacterium (ideally taxonid)");
+        $("#id_bacterium_textbox").text("Name of source bacterium (ideally taxon id)");
     } else {
       $('#id_sourcebacterium_textbox').parent().parent().hide();
       $("#id_bacterium_textbox").text("Enter details of source organism in comments box below");
@@ -68,9 +68,9 @@ $(function() {
     console.log($(this).val());
     if ($(this).val() === 'True') {
         $('#id_bacterium_textbox').parent().parent().show();
-        $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxonid)");
+        $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxon id)");
         if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length == 0) {
-          $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxonid?</a>")
+          $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxon id?</a>")
         } else {
           $('#div_id_bacterium_textbox').find('.taxonid-hint').show();
         }
