@@ -36,7 +36,8 @@ class UserSubmission(models.Model):
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)
-    terms_conditions = models.BooleanField(null=False, blank=False)
+    terms_conditions = models.BooleanField(
+        null=False, blank=False, default=False)
     # date = models.DateField(default=timezone.now, blank=True)
 
     class Meta:

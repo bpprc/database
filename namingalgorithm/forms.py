@@ -53,7 +53,7 @@ class SendEmailForm(forms.ModelForm):
         self.helper.form_id = 'id-SendEmailForm'
         self.helper.form_class = 'SendEmailForm'
         self.helper.form_method = 'post'
-        self.helper.form_action = 'submit'
+        self.helper.form_action = ''
         self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:
