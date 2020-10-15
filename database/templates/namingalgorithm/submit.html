@@ -34,10 +34,13 @@
 {% block extrajs %}
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
+<script type="text/javascript" src="{% static 'database/js/sweetalert.min.js' %}"> </script>
+
 <script>
 // $(function() {
 //   $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' target='_blank'> Where can I find taxonid?</a>")
 // });
+// $("id_public_or_private").update("New text");
 </script>
 
 <script>
@@ -46,13 +49,13 @@ $(function() {
 });
 </script>
 
-<script>
+<!-- <script>
 $(function() {
     $('input[name="sourcebacterium"]').change(function(obj) {
     console.log($(this).val());
     if ($(this).val() === 'True') {
         $('#id_sourcebacterium_textbox').parent().parent().show();
-        $("#id_bacterium_textbox").text("Name of source bacterium (ideally taxon id)");
+        $("#id_bacterium_textbox").text("Name of source bacterium (ideally taxonid)");
     } else {
       $('#id_sourcebacterium_textbox').parent().parent().hide();
       $("#id_bacterium_textbox").text("Enter details of source organism in comments box below");
@@ -60,30 +63,36 @@ $(function() {
   });
   $('#id_sourcebacterium_textbox').parent().parent().hide();
 });
-</script>
+</script> -->
 
 <script>
+function setBacteriumState(val) {
+  if (val === 'True') {
+      $('#id_bacterium_textbox').parent().parent().show();
+      $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxon id)");
+      if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length == 0) {
+        $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxon id?</a>")
+      } else {
+        $('#div_id_bacterium_textbox').find('.taxonid-hint').show();
+      }
+
+  } else {
+    $('#id_bacterium_textbox').parent().parent().show();
+    $("#div_id_bacterium_textbox").find('label').text("Enter details of source organism in comments box below");
+    if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length > 0) {
+    $('#div_id_bacterium_textbox').find('.taxonid-hint').hide();
+    swal("The BPPRC does not normally assign names to proteins that are not of bacterial origin.  If you wish to make a special case for your sequence, please explain in the Comments box below!");
+  }
+  }
+}
 $(function() {
     $('input[name="bacterium"]').change(function(obj) {
     console.log($(this).val());
-    if ($(this).val() === 'True') {
-        $('#id_bacterium_textbox').parent().parent().show();
-        $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxon id)");
-        if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length == 0) {
-          $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxon id?</a>")
-        } else {
-          $('#div_id_bacterium_textbox').find('.taxonid-hint').show();
-        }
+    setBacteriumState($(this).val());
 
-    } else {
-      $('#id_bacterium_textbox').parent().parent().show();
-      $("#div_id_bacterium_textbox").find('label').text("Enter details of source organism in comments box below");
-      if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length > 0) {
-      $('#div_id_bacterium_textbox').find('.taxonid-hint').hide();
-    }
-    }
   });
   $('#id_bacterium_textbox').parent().parent().show();
+  setBacteriumState('True');
 });
 </script>
 
@@ -103,6 +112,7 @@ $(function() {
 });
 </script>
 
+
 <script type="text/javascript">
 
   $('.js-captcha-refresh').click(function (evt) {
@@ -120,5 +130,11 @@ $(function() {
 
 </script>
 
+<script>
+$(function() {
+  document.getElementById('id_terms_condition').label = 'Your tip has been submitted!';
+  $("#div_id_terms_condition").find('label').text("Enter details of source organism in comments box below");
+});
+</script>
 
 {% endblock %}
