@@ -47,6 +47,21 @@ class PesticidalProteinStructureDatabase(models.Model):
     bt = models.BooleanField(default=True)
 
 
+class PesticidalProteinHiddenSequence(models.Model):
+    """
+    """
+    name = models.CharField(max_length=15, blank=True, null=False)
+    oldname = models.CharField(max_length=105, blank=True, null=False)
+    othernames = models.TextField(blank=True, null=False)
+    accession = models.CharField(max_length=25, blank=True, null=False)
+    year = models.CharField(max_length=5, blank=True, null=False)
+    sequence = models.TextField(blank=True, null=False)
+    uploaded = models.DateTimeField('Uploaded', default=timezone.now)
+    fastasequence_file = models.FileField(
+        upload_to='fastasequence_files/', null=True, blank=True)
+    public = models.BooleanField(default=False)
+
+
 class PesticidalProteinPrivateDatabase(models.Model):
     """
     """

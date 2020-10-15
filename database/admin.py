@@ -11,7 +11,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from django.contrib.auth.models import Group
 from .models import PesticidalProteinDatabase, \
-    Description, ProteinDetail, PesticidalProteinPrivateDatabase, PesticidalProteinStructureDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
+    Description, ProteinDetail, PesticidalProteinPrivateDatabase, PesticidalProteinStructureDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight, PesticidalProteinHiddenSequence
 from import_export import resources
 from django.db import models
 from django.forms import TextInput, Textarea
@@ -73,6 +73,18 @@ class PesticidalProteinStructureDatabaseAdmin(ImportExportModelAdmin):
 
 class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinPrivateDatabaseResource
+
+    search_fields = ('name', 'oldname', 'othernames',
+                     'accession', 'year', 'public')
+    fields = ('name', 'oldname', 'othernames', 'accession', 'year',
+              'sequence', 'uploaded', 'fastasequence_file', 'public')
+    list_display = ('name', 'oldname',  'othernames',
+                    'accession', 'year', 'fastasequence_file', 'public')
+    ordering = ('name',)
+
+
+class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
+    #resource_class = PesticidalProteinHiddenSequence
 
     search_fields = ('name', 'oldname', 'othernames',
                      'accession', 'year', 'public')
@@ -154,6 +166,8 @@ admin.site.register(Description, DescriptionAdmin)
 admin.site.register(ProteinDetail, ProteinDetailAdmin)
 admin.site.register(PesticidalProteinPrivateDatabase,
                     PesticidalProteinPrivateDatabaseAdmin)
+admin.site.register(PesticidalProteinHiddenSequence,
+                    PesticidalProteinHiddenSequenceAdmin)
 admin.site.register(PesticidalProteinStructureDatabase,
                     PesticidalProteinStructureDatabaseAdmin)
 admin.site.register(OldnameNewnameTableLeft,
