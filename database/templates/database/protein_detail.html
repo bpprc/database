@@ -12,7 +12,7 @@
  </div>
 
 {% for protein in proteins %}
-
+<p><strong>Name :</strong> &nbsp; {{ protein.name }} </p>
 <p><strong>Accession :</strong> &nbsp; {{ protein.accession }} </p>
 
 <p><strong>Length: </strong> &nbsp; {{ protein.get_sequence_length }} </p>
