@@ -2,7 +2,7 @@
 
 from django import forms
 from django.forms import modelformset_factory
-from .models import UserSubmission
+from .models import UserSubmission, SendEmail
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
 # from crispy_forms.bootstrap import AppendedText
@@ -12,6 +12,53 @@ RECAPTCHA_PUBLIC_KEY = "6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT"
 
 # class CustomToxinBox(Field):
 #     template = 'namingalgorithm/toxinbox.html'
+
+class SendEmailForm(forms.ModelForm):
+    """Sequence submission form."""
+    submittersname = forms.CharField(
+        label="Submitter's Name",
+        widget=forms.TextInput(
+            attrs={'placeholder': ''})
+    )
+
+    submittersemail = forms.CharField(
+        label="Submitter's Email",
+        widget=forms.TextInput(
+            attrs={'placeholder': ''})
+    )
+
+    proteinname = forms.CharField(
+        label='Protein Name',
+        widget=forms.TextInput(
+            attrs={'placeholder': ''}),
+        required=False
+    )
+
+    message = forms.CharField(
+        label='message',
+        widget=forms.Textarea(
+            attrs={'placeholder': ''}),
+        required=False
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(SendEmailForm, self).__init__(*args, **kwargs)
+
+        self.fields['proteinname'].widget.attrs['cols'] = 50
+        # self.fields['proteinsname'].widget.attrs['cols'] = 20
+        self.fields['message'].widget.attrs['cols'] = 50
+        # self.fields['message'].widget.attrs['cols'] = 20
+
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-SendEmailForm'
+        self.helper.form_class = 'SendEmailForm'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'submit'
+        self.helper.add_input(Submit('submit', 'Submit'))
+
+    class Meta:
+        model = SendEmail
+        fields = "__all__"
 
 
 class UserSubmissionForm(forms.ModelForm):
@@ -45,6 +92,13 @@ class UserSubmissionForm(forms.ModelForm):
         label='Protein Sequence',
         widget=forms.Textarea(
             attrs={'placeholder': ""}),
+        required=True
+    )
+
+    public_or_private = forms.TypedChoiceField(
+        label='Do you require the sequence to be maintained privately?',
+        coerce=lambda x: x == 'True',
+        choices=(('', 'Select one option'), (False, 'Yes'), (True, 'No')),
         required=True
     )
 
@@ -127,6 +181,12 @@ class UserSubmissionForm(forms.ModelForm):
         required=False
     )
 
+    terms_conditions = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(attrs={'size': '10'}),
+        label='Our service is provided "as is". We expressly disclaim all warranties with respect to the services. We make no warranties or guarantees whatsoever, express or implied, including, any implied warranties of mechantability or fitness for a particular purpose. We are not liable for any use of the services, or for any loss, claim, damage, or liability of any kind or nature which may arise from or in connection with this service or our storage of your submission.'
+    )
+
     def __init__(self, *args, **kwargs):
         super(UserSubmissionForm, self).__init__(*args, **kwargs)
 
@@ -175,6 +235,7 @@ class UserSubmissionForm(forms.ModelForm):
             ),
             'dnasequence',
             'proteinsequence',
+            'public_or_private',
             Row(
                 Column('partnerprotein',
                        css_class='form-group col-md-3 mb-0'),
@@ -187,6 +248,7 @@ class UserSubmissionForm(forms.ModelForm):
             'pdbcode',
             'publication',
             'comment',
+            'terms_conditions',
             HTML('<div class="form-group col-md-6"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %
                  RECAPTCHA_PUBLIC_KEY),
             # ButtonHolder(
@@ -202,9 +264,9 @@ class UserSubmissionForm(forms.ModelForm):
                   'proteinname',
                   'year',
                   'proteinsequence',
+                  'public_or_private',
                   'bacterium',
                   'bacterium_textbox',
-                  # 'taxonid',
                   'accessionnumber',
                   'dnasequence',
                   'partnerprotein',
@@ -213,7 +275,8 @@ class UserSubmissionForm(forms.ModelForm):
                   'nontoxic',
                   'pdbcode',
                   'publication',
-                  'comment']
+                  'comment',
+                  'terms_conditions']
 
 
 # ToxicToFormSet = modelformset_factory(
