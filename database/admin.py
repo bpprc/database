@@ -11,7 +11,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from django.contrib.auth.models import Group
 from .models import PesticidalProteinDatabase, \
-    Description, ProteinDetail, PesticidalProteinPrivateDatabase, PesticidalProteinStructureDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight, PesticidalProteinHiddenSequence
+    Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight, StructureDatabase, PesticidalProteinHiddenSequence
 from import_export import resources
 from django.db import models
 from django.forms import TextInput, Textarea
@@ -54,20 +54,17 @@ class PesticidalProteinPrivateDatabaseResource(resources.ModelResource):
         model = PesticidalProteinPrivateDatabase
 
 
-class PesticidalProteinStructureDatabaseResource(resources.ModelResource):
+class StructureDatabaseResource(resources.ModelResource):
     class Meta:
-        model = PesticidalProteinStructureDatabase
+        model = StructureDatabase
 
 
-class PesticidalProteinStructureDatabaseAdmin(ImportExportModelAdmin):
-    resource_class = PesticidalProteinStructureDatabaseResource
+class StructureDatabaseAdmin(ImportExportModelAdmin):
+    resource_class = StructureDatabaseResource
 
-    search_fields = ('name', 'accession', 'uniprot', 'gene_names', 'pdbid', 'pubmedid', 'year', 'chimeric', 'organism', 'expression_system',
-                     'length', 'resolution', 'experiment_method', 'release_date', 'deposited', 'publication', 'structure_file', 'structure_doi')
-    fields = ('name', 'uniprot', 'gene_names', 'pdbid',
-              'pubmedid', 'year', 'chimeric', 'organism', 'length', 'resolution', 'expression_system', 'experiment_method', 'release_date', 'deposited', 'publication', 'structure_file', 'structure_doi')
-    list_display = ('name', 'accession', 'uniprot', 'gene_names', 'pdbid',
-                    'pubmedid', 'year', 'chimeric', 'organism', 'expression_system', 'length', 'resolution', 'experiment_method', 'structure_file', 'structure_doi')
+    search_fields = ('name', 'oldname', 'accession', 'pdbid', 'pubmedid', 'year')
+    fields = ('name','oldname', 'pdbid', 'pubmedid', 'year')
+    list_display = ('name','oldname', 'pdbid', 'pubmedid', 'year')
     ordering = ('name',)
 
 
@@ -168,8 +165,8 @@ admin.site.register(PesticidalProteinPrivateDatabase,
                     PesticidalProteinPrivateDatabaseAdmin)
 admin.site.register(PesticidalProteinHiddenSequence,
                     PesticidalProteinHiddenSequenceAdmin)
-admin.site.register(PesticidalProteinStructureDatabase,
-                    PesticidalProteinStructureDatabaseAdmin)
+admin.site.register(StructureDatabase,
+                    StructureDatabaseAdmin)
 admin.site.register(OldnameNewnameTableLeft,
                     OldnameNewnameTableLeftAdmin)
 admin.site.register(OldnameNewnameTableRight,

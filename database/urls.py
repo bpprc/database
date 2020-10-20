@@ -44,4 +44,8 @@ urlpatterns = [
          name='export_old_name_table'),
     path('export_new_name_table/', views.export_new_name_table,
          name='export_new_name_table'),
+    path('structures/', views.structures,
+         name='structures'),
+    path('structure_pdbid_<str:pdbid>', views.structure_pdbid,
+         name='structure_pdbid'),
 ]

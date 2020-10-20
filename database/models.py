@@ -20,31 +20,28 @@ class OldnameNewnameTableRight(models.Model):
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
 
 
-class PesticidalProteinStructureDatabase(models.Model):
+class StructureDatabase(models.Model):
     name = models.CharField(max_length=25, blank=True, null=False)
+    oldname = models.CharField(max_length=75, blank=True, null=False)
     accession = models.CharField(max_length=25, blank=True, null=False)
-    uniprot = models.CharField(max_length=25, blank=True, null=False)
+    #uniprot = models.CharField(max_length=25, blank=True, null=False)
     pdbid = models.CharField(max_length=25, blank=True, null=False)
-    ligand = models.CharField(max_length=250, blank=True, null=False)
-    gene_names = models.CharField(max_length=250, blank=True, null=False)
-    experiment_method = models.CharField(
-        max_length=250, blank=True, null=False)
-    resolution = models.CharField(max_length=250, blank=True, null=False)
-    deposited = models.DateTimeField('deposition date', default=timezone.now)
-    release_date = models.DateTimeField('release date', default=timezone.now)
-    chimeric = models.BooleanField(default=False)
-    publication = models.TextField(blank=True, null=False)
+    #ligand = models.CharField(max_length=250, blank=True, null=False)
+    #gene_names = models.CharField(max_length=250, blank=True, null=False)
+    #experiment_method = models.CharField(max_length=250, blank=True, null=False)
+    #resolution = models.CharField(max_length=250, blank=True, null=False)
+    #deposited = models.DateTimeField('deposition date', default=timezone.now)
+    #release_date = models.DateTimeField('release date', default=timezone.now)
+    #chimeric = models.BooleanField(default=False)
+    #publication = models.TextField(blank=True, null=False)
     pubmedid = models.CharField(max_length=15, blank=True, null=False)
     year = models.CharField(max_length=5, blank=True, null=False)
-    organism = models.CharField(
-        max_length=250, blank=True)
-    expression_system = models.CharField(
-        max_length=250, blank=True)
-    length = models.CharField(max_length=25, blank=True, null=False)
-    structure_file = models.FileField(
-        upload_to='pdb_files/', null=True, blank=True)
-    structure_doi = models.CharField(max_length=250, blank=True, null=False)
-    bt = models.BooleanField(default=True)
+    #organism = models.CharField(max_length=250, blank=True)
+    #expression_system = models.CharField(max_length=250, blank=True)
+    #length = models.CharField(max_length=25, blank=True, null=False)
+    #structure_file = models.FileField(upload_to='pdb_files/', null=True, blank=True)
+    #structure_doi = models.CharField(max_length=250, blank=True, null=False)
+    #bt = models.BooleanField(default=True)
 
 
 class PesticidalProteinHiddenSequence(models.Model):

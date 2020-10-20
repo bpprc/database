@@ -14,7 +14,7 @@ from django.db.models import Q
 from django.contrib import messages
 from database.admin import OldnameNewnameTableLeftResource, OldnameNewnameTableRightResource
 from django.http import HttpResponse, HttpResponseRedirect
-from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
+from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, StructureDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
 from database.forms import SearchForm, DownloadForm
 from bokeh.plotting import figure, output_file, show
 from bokeh.palettes import Category20c, Spectral6, Category20
@@ -382,6 +382,32 @@ def add_cart(request):
         request.session['list_cterminal'] = previously_selected_cterminal
 
     return redirect("search_database")
+
+
+def structures(request):
+    structures = \
+        StructureDatabase.objects.order_by('name')
+
+    context = \
+        {'structures': structures}
+
+    return render(request, 'database/structures.html', context)
+
+
+def structure_pdbid(request, pdbid=None):
+    """Categorize the protein database with unqiue, first three letter pattern."""
+
+    protein = StructureDatabase.objects.filter(
+        pdbid__istartswith=pdbid)
+    structures = \
+        StructureDatabase.objects.order_by('name')
+    print(protein)
+
+    context = \
+        {'proteins': protein,
+         'structures': structures
+         }
+    return render(request, 'database/display_structure_pdbid.html', context)
 
 
 def clear_session_database(request):
