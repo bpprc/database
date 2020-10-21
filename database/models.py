@@ -13,11 +13,17 @@ class OldnameNewnameTableLeft(models.Model):
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
 
+    class Meta:
+        verbose_name_plural = "Oldname Newname Table Left Side"
+
 
 class OldnameNewnameTableRight(models.Model):
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
     name_2020 = models.CharField(max_length=250, blank=True, null=False)
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
+
+    class Meta:
+        verbose_name_plural = "Oldname Newname Table Right Side"
 
 
 class StructureDatabase(models.Model):
@@ -43,6 +49,9 @@ class StructureDatabase(models.Model):
     #structure_doi = models.CharField(max_length=250, blank=True, null=False)
     #bt = models.BooleanField(default=True)
 
+    class Meta:
+        verbose_name_plural = "Structure Database"
+
 
 class PesticidalProteinHiddenSequence(models.Model):
     """
@@ -58,6 +67,9 @@ class PesticidalProteinHiddenSequence(models.Model):
         upload_to='fastasequence_files/', null=True, blank=True)
     public = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name_plural = "Hidden sequences for naming purpose"
+
 
 class PesticidalProteinPrivateDatabase(models.Model):
     """
@@ -72,6 +84,9 @@ class PesticidalProteinPrivateDatabase(models.Model):
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
     public = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "Private Sequences"
 
 
 class PesticidalProteinDatabase(models.Model):
@@ -93,6 +108,7 @@ class PesticidalProteinDatabase(models.Model):
 
     class Meta:
         ordering = ('name',)
+        verbose_name_plural = "Public Sequences"
 
     def publish(self):
         self.published_date = timezone.now()
@@ -188,6 +204,9 @@ class ProteinDetail(models.Model):
     start_C = models.CharField(max_length=10, blank=True, null=False)
     end_C = models.CharField(max_length=10, blank=True, null=False)
 
+    class Meta:
+        verbose_name_plural = "Three domains data"
+
     def get_endotoxin_n(self):
         if not self.start_N or not self.end_N:
             return ''
@@ -208,6 +227,8 @@ class ProteinDetail(models.Model):
 
     # def fulllength(self):
     #     return self.sequence
+
+
 
 
 class Description(models.Model):
