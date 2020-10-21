@@ -15,7 +15,7 @@ from django.contrib import messages
 from database.admin import OldnameNewnameTableLeftResource, OldnameNewnameTableRightResource
 from django.http import HttpResponse, HttpResponseRedirect
 from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, StructureDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
-from database.forms import SearchForm, DownloadForm
+from database.forms import SearchForm, DownloadForm, ThreedomainDownloadForm
 from bokeh.plotting import figure, output_file, show
 from bokeh.palettes import Category20c, Spectral6, Category20
 from bokeh.models import HoverTool, LassoSelectTool, WheelZoomTool, PointDrawTool, ColumnDataSource
@@ -729,7 +729,6 @@ def download_single_sequence(request, proteinname=None):
     response['Content-Length'] = file.tell()
     return response
 
-
 def download_category_form(request):
 
     form = DownloadForm()
@@ -778,10 +777,12 @@ def download_category(request, category=None):
 
 
 def category_form(request):
-    form = DownloadForm()
+    form1 = DownloadForm()
+    form2 = ThreedomainDownloadForm()
 
     context = {
-        'form': form
+        'form1': form1,
+        'form2': form2,
     }
     return render(request, 'database/download_form.html', context)
 
@@ -812,6 +813,70 @@ def category_download(request):
         response = HttpResponse(file.getvalue(), content_type="text/plain")
         download_file = f"{'_'.join(categories)}_fasta_sequences.txt"
         response['Content-Disposition'] = 'attachment;filename=' + download_file
+        response['Content-Length'] = file.tell()
+        return response
+
+
+def threedomain_download(request):
+    if request.method == 'POST':
+        type_option = request.POST.getlist('category_type')
+        file = StringIO()
+        print(type_option)
+        print("type", type(type_option))
+
+        accession = {}
+        output = ''
+
+        data = PesticidalProteinDatabase.objects.filter(
+            name__istartswith="cry").order_by('name')
+        if data:
+            for item in data:
+                if item.name[-1] == '1' and not item.name[-2].isdigit():
+                    accession[item.accession] = item
+
+        protein_detail = ProteinDetail.objects.filter(
+            accession__in=list(accession.keys()))
+
+        protein_data = PesticidalProteinDatabase.objects.filter(
+            accession__in=list(accession.keys()))
+
+        count = 0
+        for item in protein_data:
+            output = ''
+            if 'domain1' in type_option:
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
+                for item1 in nterminal:
+                    count += 1
+                    output += item1.get_endotoxin_n()
+            if 'domain2' in type_option:
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
+                for item1 in nterminal:
+                    count += 1
+                    output += item1.get_endotoxin_m()
+            if 'domain3' in type_option:
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
+                for item1 in nterminal:
+                    count += 1
+                    output += item1.get_endotoxin_c()
+            if 'full_length' in type_option:
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
+                for item1 in nterminal:
+                    count += 1
+                    output += item1.sequence
+            if output:
+                str_to_write = f">{item.name}\n{output}\n"
+                file.write(str_to_write)
+
+        print(count)
+        response = HttpResponse(
+            file.getvalue(), content_type="text/plain")
+        download_file = f"{'_'.join(type_option)}_holotype_fasta_sequences.txt"
+        response['Content-Disposition'] = 'attachment;filename=' + \
+            download_file
         response['Content-Length'] = file.tell()
         return response
 

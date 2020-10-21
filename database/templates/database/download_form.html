@@ -5,10 +5,17 @@
 
 
 {% block content %}
-<h1> Download the sequences by categories </h1>
+<div>
+<h3> Download the fasta sequences by categories </h1>
 </br>
-{% crispy form %}
+{% crispy form1 %}
+</div>
 
+<div>
+<h3> Download the Cry (three-domain) fasta sequences </h1>
+</br>
+{% crispy form2 %}
+</div>
 
 {% endblock content %}
 

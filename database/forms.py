@@ -134,6 +134,9 @@ class SearchForm(forms.Form):
         if data is None:
             raise ValidationError(
                 "Please provide the keywords to search in the database")
+        elif data != 'R1' and len(data) < 3:
+            raise ValidationError(
+                "Please keep the search term under 3 characters")
 
         return data
 
@@ -227,3 +230,55 @@ class DownloadForm(forms.Form):
     #
     #     download_file = f"{'_'.join(category_type)}_fasta_sequences.txt"
     #     return download_file
+
+
+class ThreedomainDownloadForm(forms.Form):
+
+    category_type = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        choices='',
+        label='',
+        required=True
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(ThreedomainDownloadForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-threedomain'
+        self.helper.form_class = 'threedomaindownloadforms'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'threedomain_download'
+
+        self.helper.add_input(Submit('submit', 'Download'))
+
+        # categories = PesticidalProteinDatabase.objects.order_by(
+        #     'name').values_list('name', flat=True)
+        # description = Description.objects.order_by(
+        #     'name')
+
+        # self.category_prefixes = {}
+        # self.category_description = {}
+        self.category_options = [('full_length', 'Full_Length'),
+                                 ('domain1', 'Domain1'),
+                                 ('domain2', 'Domain2'),
+                                 ('domain3', 'Domain3')]
+        # for category in categories:
+        #     prefix = category[0:3]
+        #     self.category_prefixes[prefix.lower()] = prefix.title()
+        #
+        # for key, value in self.category_prefixes.items():
+        #     for detail in description:
+        #         if detail.name.lower() == key.lower():
+        #             self.category_description[key.lower(
+        #             )] = value + "      :  " + detail.description
+        #
+        # self.category_options.extend(
+        #     sorted(self.category_description.items(), key=lambda x: x[0][:3]))
+        self.fields['category_type'].choices = self.category_options
+        self.fields['category_type'].label = ''
+        # self.helper.layout = Layout(
+        #     'category_type',
+        #     HTML('<div class="form-group"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %
+        #          RECAPTCHA_PUBLIC_KEY),
+        # )
