@@ -15,18 +15,18 @@
             <th scope="col">New Name</th>
             <th scope="col">Old Name</th>
             <th scope="col">PDBID</th>
+            <th scope="col">Year</th>
             <th scope="col">Publication</th>
           </tr>
         </thead>
       {% for structure in structures %}
       <tbody>
         <tr>
-          <td> <a href="/structure_pdbid_{{ structure.pdbid }}" target="_blank"> {{ structure.pdbid}}</td>
-          <td> <a href="https://www.uniprot.org/uniprot/{{ structure.uniprot}}" target="_blank"> {{ structure.uniprot}} </td>
+          <td>{{ structure.name}}</td>
+          <td>{{ structure.oldname}}</td>
           <td> <a href="https://www.rcsb.org/structure/{{ structure.pdbid }}" target="_blank"> {{ structure.pdbid}}</td>
-
           <td> <a href="https://pubmed.ncbi.nlm.nih.gov/{{ structure.pubmedid }}" target="_blank"> {{ structure.pubmedid}}</td>
-          <td> <i>{{ structure.organism}} </i></td>
+          <td>{{ structure.year}}</td>
         </tr>
     </tbody>
      {% endfor %}
