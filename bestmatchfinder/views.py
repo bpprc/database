@@ -112,18 +112,19 @@ def bestmatchfinder_database_sequence_run(request):
         if form.is_valid():
             protein1 = form.cleaned_data['protein_id1']
             protein2 = form.cleaned_data['protein_id2']
-            data = form.cleaned_data
-            name1 = data['protein_id1'] or data['sequence1_in_form']
-            name2 = data['protein_id2'] or data['sequence2_in_form']
-
-            try:
-                query = "Query: " + name1.name + ' '
-                subject = "Subject: " + name2.name + ' '
-                tool = form.cleaned_data['tool']
-            except:
-                query = "Query: " + name1 + ' '
-                subject = "Subject: " + name2 + ' '
-                tool = form.cleaned_data['tool']
+            # sequence1 = form.cleaned_data['sequence1_in_form']
+            # sequence2 = form.cleaned_data['sequence2_in_form']
+            tool = form.cleaned_data['tool']
+            #data = form.cleaned_data
+            # name1 = data['protein_id1'] or data['sequence1_in_form']
+            # name2 = data['protein_id2'] or data['sequence2_in_form']
+            #
+            # try:
+            #     query = "Query: " + name1.name + ' '
+            #     subject = "Subject: " + name2.name + ' '
+            # except:
+            #     query = "Query: " + name1 + ' '
+            #     subject = "Subject: " + name2 + ' '
 
             if protein1:
                 protein1 = os.path.join(
@@ -146,7 +147,7 @@ def bestmatchfinder_database_sequence_run(request):
                 removed_blast_title = align.split('>')[1]
                 removed_blast_title = removed_blast_title.lstrip()
                 filtered_result = removed_blast_title.split('Lambda')
-                align = query + subject + '\n\n' + filtered_result[0]
+                align = protein1 + protein2 + '\n\n' + filtered_result[0]
 
             context = {
                 'align': align
