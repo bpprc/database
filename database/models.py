@@ -147,7 +147,10 @@ class PesticidalProteinDatabase(models.Model):
 
     def get_sequence_molecular_weight(self):
         x = ProteinAnalysis(self.sequence)
-        return "{0:0.2f}".format(x.molecular_weight())
+        x = x.molecular_weight() / 1000
+        #x = x.molecular_weight()
+        # return "{0:0.2f}".format(x.molecular_weight())
+        return "{0:0.2f}".format(x)
 
     def get_sequence_instability_index(self):
         x = ProteinAnalysis(self.sequence)
