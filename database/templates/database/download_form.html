@@ -11,11 +11,6 @@
 {% crispy form1 %}
 </div>
 
-<div>
-<h3> Download the Cry (three-domain) fasta sequences </h1>
-</br>
-{% crispy form2 %}
-</div>
 
 {% endblock content %}
 
@@ -34,6 +29,18 @@
 {% block extrajs %}
 <script>
 $('#id_category_type_1').click(function() {
+   if(this.checked) {
+       $(':checkbox').each(function() {
+           this.checked = true;
+       });
+   } else {
+      $(':checkbox').each(function() {
+           this.checked = false;
+       });
+   }
+});
+
+$('#id_download_category_type_1').click(function() {
    if(this.checked) {
        $(':checkbox').each(function() {
            this.checked = true;
