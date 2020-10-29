@@ -341,6 +341,31 @@ def search_database(request):
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
+            elif field_type == 'holotype':
+                # categories = \
+                #     PesticidalProteinDatabase.objects.order_by(
+                #         'name').values_list('name', flat=True).distinct()
+                q_objects = Q()
+                filtered_q_objects = Q()
+                for search in searches:
+                    q_objects.add(Q(name__icontains=search), Q.OR)
+
+                categories = PesticidalProteinDatabase.objects.filter(q_objects)
+
+                for category in categories:
+                    if category.name[-1] == '1' and not category.name[-2].isdigit():
+                        filtered_q_objects.add(Q(name__iexact=category.name), Q.OR)
+                proteins = PesticidalProteinDatabase.objects.filter(filtered_q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
+            elif field_type == 'structure':
+                q_objects = Q()
+                for search in searches:
+                    q_objects.add(Q(name__icontains=search), Q.OR)
+
+                structures = StructureDatabase.objects.filter(q_objects)
+                structures = _sorted_nicely(structures, sort_key='name')
+                return render(request, 'database/filter_structures.html', {'structures': structures})
+
         show_extra_data = False
         cry_count = 0
         for protein in proteins:
