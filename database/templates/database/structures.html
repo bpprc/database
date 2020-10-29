@@ -8,15 +8,32 @@
 <div class="container">
   <div class="row">
     <div class="table-responsive col-lg-12">
-	  	<a>List of structures </a>
+      <h3>Interpreting linked structural information:</h3>
+      </br>
+      <h5>Links to structures in the PDB are given where:</h5>
+      </br>
+          <ul>
+           <li>The structure corresponds to a BPPRC sequence entry.  Note, where two BPPRC entries represent identical amino acid sequences (eg App6Aa1 and App6Aa2), the structure PDB entry will be associated with both (regardless of which quaternary rank was described in any associated publication).</li>
+            </br>
+            <li>The structure corresponds to a mutant of a BPPRC sequence entry where a small number of mutations have been included to aid crystallisation and/or to elucidate function.</li>
+            </br>
+            <li>The structure represents either a full length or an activated form of the toxin (the structure may not represent the full-length sequence in the BPPRC database entry).</li>
+          </ul>
+          </br>
+          <h7><b>  NOTE: Users are advised to check the correspondence between the PDB entry sequence and the BPPRC sequence (eg using both the BPPRC best match finder needle and blast alignments) and should take care in the interpretation of the data. </b> </h7>
+          </br>
+          </br>
       <table class="table table-bordered table-hover table-fit">
         <thead>
           <tr>
-            <th scope="col">New Name</th>
+            <th scope="col">Name</th>
             <th scope="col">Old Name</th>
+            <th scope="col">Accession</th>
             <th scope="col">PDBID</th>
+            <th scope="col">PubMed ID</th>
             <th scope="col">Year</th>
-            <th scope="col">Publication</th>
+            <th scope="col">Chimeric</th>
+            <th scope="col">Comment</th>
           </tr>
         </thead>
       {% for structure in structures %}
@@ -24,9 +41,12 @@
         <tr>
           <td>{{ structure.name}}</td>
           <td>{{ structure.oldname}}</td>
+          <td><a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ structure.accession }} </a></td>
           <td> <a href="https://www.rcsb.org/structure/{{ structure.pdbid }}" target="_blank"> {{ structure.pdbid}}</td>
           <td> <a href="https://pubmed.ncbi.nlm.nih.gov/{{ structure.pubmedid }}" target="_blank"> {{ structure.pubmedid}}</td>
           <td>{{ structure.year}}</td>
+          <td>{{ structure.chimeric}}</td>
+          <td>{{ structure.comment}}</td>
         </tr>
     </tbody>
      {% endfor %}
@@ -43,14 +63,14 @@
 
 
 {% block extrahead %}
-<style>
+<!-- <style>
 
 .table-fit {
     width: 1px;
     white-space: nowrap;
 }
 
-</style>
+</style> -->
 {% endblock extrahead %}
 
 
