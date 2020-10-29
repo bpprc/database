@@ -69,6 +69,14 @@ class SendEmailAdmin(admin.ModelAdmin):
     )
 
 
+class ArchiveAdmin(admin.ModelAdmin):
+    search_fields = ('proteinname', 'year', 'submittersname',
+                     'submittersemail')
+    fields = ('submittersname','submittersemail','proteinname', 'year','proteinsequence','bacterium','bacterium_textbox','taxonid','accessionnumber','partnerprotein','partnerprotein_textbox','toxicto','nontoxic','dnasequence','pdbcode','publication','comment','uploaded','predict_name','alignresults','terms_conditions')
+    list_display = ('proteinname', 'submittersname',
+                     'submittersemail','uploaded',)
+    ordering = ('uploaded',)
+
 admin.site.register(UserSubmission, UserSubmissionAdmin)
 admin.site.register(Archive, ArchiveAdmin)
 admin.site.register(SendEmail, SendEmailAdmin)

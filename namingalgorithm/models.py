@@ -13,7 +13,6 @@ TRUE_FALSE_CHOICES = (
 
 
 class AbstractModel(models.Model):
-
     submittersname = models.CharField(max_length=25, null=True, blank=True)
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
     proteinname = models.CharField(max_length=25, null=True, blank=True)
