@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.utils import timezone
 from django.db.models.signals import post_save, pre_save
 from django.core.mail import send_mail
+from django.dispatch import receiver
 
 
 TRUE_FALSE_CHOICES = (
@@ -11,7 +12,7 @@ TRUE_FALSE_CHOICES = (
 )
 
 
-class UserSubmission(models.Model):
+class AbstractModel(models.Model):
 
     submittersname = models.CharField(max_length=25, null=True, blank=True)
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
@@ -40,24 +41,46 @@ class UserSubmission(models.Model):
     # date = models.DateField(default=timezone.now, blank=True)
 
     class Meta:
-        ordering = ('submittersemail',)
+        abstract = True
+        ordering = ('uploaded',)
 
     def publish(self):
         self.published_date = timezone.now()
         self.save()
 
 
-def save_post(sender, instance, **kwargs):
-    sequence_message = '''Dear Dr.Neil Crickmore and Dr.Colin Berry,
-There is a new sequence submission in the database. Please check the database admin page for more details.'''
+class UserSubmission(AbstractModel):
+    pass
 
-    send_mail(
-        subject="New Submission for the database",
-        message=sequence_message,
-        from_email='bpprc.database@gmail.com',
-        recipient_list=['sureshcbt@gmail.com', 'n.crickmore@sussex.ac.uk'],
-        fail_silently=False,
-    )
+
+class Archive(AbstractModel):
+    pass
+
+
+def save_archive(sender, instance, **kwargs):
+    archive = Archive()
+    archive.submittersname = instance.submittersname
+    archive.submittersemail = instance.submittersemail
+    archive.proteinname = instance.proteinname
+    archive.proteinsequence = instance.proteinsequence
+    archive.bacterium = instance.bacterium
+    archive.bacterium_textbox = instance.bacterium_textbox
+    archive.taxonid = instance.taxonid
+    archive.year = instance.year
+    archive.accessionnumber = instance.accessionnumber
+    archive.partnerprotein = instance.partnerprotein
+    archive.partnerprotein_textbox = instance.partnerprotein_textbox
+    archive.toxicto = instance.toxicto
+    archive.nontoxic = instance.nontoxic
+    archive.dnasequence = instance.dnasequence
+    archive.pdbcode = instance.pdbcode
+    archive.publication = instance.publication
+    archive.comment = instance.comment
+    archive.uploaded = instance.uploaded
+    archive.alignresults = instance.alignresults
+    archive.predict_name = instance.predict_name
+    archive.terms_conditions = instance.terms_conditions
+    archive.save()
 
 
 class SendEmail(models.Model):
@@ -80,4 +103,19 @@ def _trigger_email_everyday():
     )
 
 
-post_save.connect(save_post, sender=UserSubmission)
+def save_post(sender, instance, **kwargs):
+    sequence_message = '''Dear Dr.Neil Crickmore and Dr.Colin Berry,
+There is a new sequence submission in the database. Please check the database admin page for more details.'''
+
+    send_mail(
+        subject="New Submission for the database",
+        message=sequence_message,
+        from_email='bpprc.database@gmail.com',
+        recipient_list=['sureshcbt@gmail.com','ruchirjd@gmail.com'],
+        fail_silently=False,
+    )
+
+
+post_save.connect(save_archive, sender=UserSubmission)
+
+# post_save.connect(save_post, sender=UserSubmission)

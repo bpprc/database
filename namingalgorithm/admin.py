@@ -2,8 +2,12 @@
 
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import UserSubmission, SendEmail
+from .models import UserSubmission, Archive, SendEmail
 from django.shortcuts import render
+
+
+class ArchiveAdmin(admin.ModelAdmin):
+    pass
 
 
 class UserSubmissionAdmin(admin.ModelAdmin):
@@ -66,4 +70,5 @@ class SendEmailAdmin(admin.ModelAdmin):
 
 
 admin.site.register(UserSubmission, UserSubmissionAdmin)
+admin.site.register(Archive, ArchiveAdmin)
 admin.site.register(SendEmail, SendEmailAdmin)
