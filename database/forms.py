@@ -1,6 +1,5 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from Bio.Alphabet.IUPAC import IUPACProtein
 from .models import PesticidalProteinDatabase, Description
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
@@ -9,7 +8,7 @@ from django.core.validators import MinLengthValidator
 
 RECAPTCHA_PUBLIC_KEY = "6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT"
 
-ALLOWED_AMINOACIDS = set(IUPACProtein.letters)
+ALLOWED_AMINOACIDS = {'E', 'Q', 'L', 'Y', 'V', 'W', 'I', 'A', 'H', 'G', 'P', 'S', 'R', 'C', 'T', 'F', 'K', 'N', 'D', 'M'}
 # ALLOWED_NUCLEOTIDE = set(IUPACAmbiguousDNA.letters)
 
 # maximum number of query sequences in form
