@@ -41,7 +41,7 @@ class StructureDatabase(models.Model):
     #resolution = models.CharField(max_length=250, blank=True, null=False)
     #deposited = models.DateTimeField('deposition date', default=timezone.now)
     #release_date = models.DateTimeField('release date', default=timezone.now)
-    chimeric = models.CharField(max_length=2, choices=CHOICES)
+    chimeric = models.CharField(max_length=3, choices=CHOICES)
     #publication = models.TextField(blank=True, null=False)
     pubmedid = models.CharField(max_length=75, blank=True, null=False)
     year = models.CharField(max_length=5, blank=True, null=False)
