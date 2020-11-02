@@ -32,11 +32,11 @@ from io import BytesIO
 
 def home(request):
     """Loads the homepage."""
-    return render(request, 'database/about_page1.html')
+    return render(request, 'database/about_page.html')
 
 
 def about_page(request):
-    return render(request, 'database/about_page1.html')
+    return render(request, 'database/about_page.html')
 
 
 def statistics(request):
