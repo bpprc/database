@@ -3,14 +3,11 @@ import tempfile
 from django import forms
 from Bio import SeqIO
 from Bio import Seq
-# from Bio.Seq import Seq
-from Bio.Alphabet.IUPAC import IUPACProtein, IUPACAmbiguousDNA
-from Bio.Alphabet import IUPAC, ProteinAlphabet
 from database.models import PesticidalProteinDatabase
 from crispy_forms.helper import FormHelper
 
 
-ALLOWED_AMINOACIDS = set(IUPACProtein.letters)
+ALLOWED_AMINOACIDS = {'E', 'Q', 'L', 'Y', 'V', 'W', 'I', 'A', 'H', 'G', 'P', 'S', 'R', 'C', 'T', 'F', 'K', 'N', 'D', 'M'}
 # ALLOWED_NUCLEOTIDE = set(IUPACAmbiguousDNA.letters)
 
 # maximum number of query sequences in form

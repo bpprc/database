@@ -7,7 +7,6 @@ from ete3 import Tree, TreeStyle, faces
 from Bio.Align.Applications import ClustalOmegaCommandline
 from django.http import HttpResponseRedirect, JsonResponse
 from Bio.Seq import Seq
-from Bio.Alphabet import IUPAC
 from django.contrib import messages
 from clustalanalysis.forms import AnalysisForm
 from clustalanalysis.models import StoreResultFiles
