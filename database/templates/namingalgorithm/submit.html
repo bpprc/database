@@ -4,11 +4,11 @@
 {% block content %}
 
 {% block extrahead %}
-<style>
+<!-- <style>
 .asteriskField {
     display: none;
 }
-</style>
+</style> -->
 {% endblock extrahead %}
 
   <h1 class="text-center list-unstyled"> <ul> Naming</h1>
@@ -18,7 +18,7 @@
   <h3> Proteins will only be named if they are derived from a bacterium and satisfy one of the following criteria </h3>
   <br>
   <h5> <li> Have >95% identity to an existing named protein (or)</li> </h5>
-  <h5> <li> Have demonstrated activity against a target pest organism</li></ul> </h5>
+  <h5> <li> Have demonstrated activity against an invertebrate organism</li></ul> </h5>
   </br>
   <p><b>Note:</b>The official name will be assigned only by the committee</p>
 <h7>* required field</h7>
@@ -77,9 +77,9 @@ $(function() {
 function setBacteriumState(val) {
   if (val === 'True') {
       $('#id_bacterium_textbox').parent().parent().show();
-      $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxonid)");
+      $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxon id)");
       if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length == 0) {
-        $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxonid?</a>")
+        $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxon id?</a>")
       } else {
         $('#div_id_bacterium_textbox').find('.taxonid-hint').show();
       }

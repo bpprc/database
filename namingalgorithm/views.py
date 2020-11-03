@@ -12,16 +12,38 @@ from .forms import UserSubmissionForm, SendEmailForm
 from django.core.mail import send_mail
 
 
-# def send_mail(required):
-#     email_text = send_mail(
-#         subject="New Submission",
-#         message="There is a new sequence submission.",
-#         from_email=['bpprc.database@gmail.com'],
-#         recipient_list=['sureshcbt@gmail.com'],
-#         fail_silently=False,
-#     )
-#     return HttpResponse(f"Email sent to {email_text} members")
+def send_mail(required):
+    email_text = send_mail(
+        subject="New Submission",
+        message="There is a new sequence submission.",
+        from_email=['bpprc.database@gmail.com'],
+        recipient_list=['sureshcbt@gmail.com'],
+        fail_silently=False,
+    )
+    return HttpResponse(f"Email sent to {email_text} members")
 
+
+def contactView(request):
+    if request.method == 'GET':
+        form = SendEmailForm()
+    else:
+        form = SendEmailForm(request.POST)
+        if form.is_valid():
+            submittersname = form.cleaned_data['submittersname']
+            submittersemail = form.cleaned_data['submittersemail']
+            proteinname = form.cleaned_data['proteinname']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email,
+                          ['sureshcbt@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('success')
+    return render(request, "namingalgorithm/email.html", {'form': form})
+
+
+def successView(request):
+    return HttpResponse('Success! Thank you for your message.')
 
 def is_admin(user):
     """Check the user is admin staff."""

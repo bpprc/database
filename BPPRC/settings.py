@@ -34,7 +34,8 @@ if os.environ.get('DEVELOPMENT'):
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'camtech-bpp.test.ifas.ufl.edu']
+ALLOWED_HOSTS = ['127.0.0.1', 'camtech-bpp.test.ifas.ufl.edu',
+                 'camtech-bpp.ifas.ufl.edu']
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -49,7 +50,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'proteindatabase_test',
+            'NAME': 'proteindatabase',
             'USER': 'suresh',
             'PASSWORD': 'pannerselvam123',
             'HOST': 'localhost',
@@ -248,9 +249,9 @@ SESSION_SAVE_EVERY_REQUEST = True
 TRACK_AJAX_REQUESTS = True
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE') == 'True'
 CORS_ORIGIN_ALLOW_ALL = True
-# CSRF_TRUSTED_ORIGINS = ['www.bpprc.org', 'bpprc.org']
+CSRF_TRUSTED_ORIGINS = ['camtech-bpp.ifas.ufl.edu']
 
 CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK')
 

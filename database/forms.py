@@ -88,6 +88,8 @@ class SearchForm(forms.Form):
         ('name', 'Name'),
         ('old name/other name', 'Old Name/Other Name'),
         ('accession', 'Accession'),
+        ('holotype', 'Holotype'),
+        ('structure', 'Structure'),
     )
 
     search_term = forms.CharField(label="", required=True, widget=forms.TextInput(

@@ -6,7 +6,7 @@
 
 {% block content %}
 <div>
-<h1> Download the sequences by categories </h1>
+<h3> Download the fasta sequences by categories </h1>
 </br>
 {% crispy form1 %}
 </div>
@@ -34,6 +34,18 @@
 {% block extrajs %}
 <script>
 $('#id_category_type_1').click(function() {
+   if(this.checked) {
+       $(':checkbox').each(function() {
+           this.checked = true;
+       });
+   } else {
+      $(':checkbox').each(function() {
+           this.checked = false;
+       });
+   }
+});
+
+$('#id_download_category_type_1').click(function() {
    if(this.checked) {
        $(':checkbox').each(function() {
            this.checked = true;

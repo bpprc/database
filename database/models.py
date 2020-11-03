@@ -26,32 +26,54 @@ class OldnameNewnameTableRight(models.Model):
     class Meta:
         verbose_name_plural = "Oldname Newname Table Right Side"
 
-
-class PesticidalProteinStructureDatabase(models.Model):
+CHOICES = [
+    ('yes','Yes'),
+    ('no','No'),
+]
+class StructureDatabase(models.Model):
     name = models.CharField(max_length=25, blank=True, null=False)
-    accession = models.CharField(max_length=25, blank=True, null=False)
-    uniprot = models.CharField(max_length=25, blank=True, null=False)
+    oldname = models.CharField(max_length=75, blank=True, null=False)
+    accession = models.CharField(max_length=75, blank=True, null=False)
+    #uniprot = models.CharField(max_length=25, blank=True, null=False)
     pdbid = models.CharField(max_length=25, blank=True, null=False)
-    ligand = models.CharField(max_length=250, blank=True, null=False)
-    gene_names = models.CharField(max_length=250, blank=True, null=False)
-    experiment_method = models.CharField(
-        max_length=250, blank=True, null=False)
-    resolution = models.CharField(max_length=250, blank=True, null=False)
-    deposited = models.DateTimeField('deposition date', default=timezone.now)
-    release_date = models.DateTimeField('release date', default=timezone.now)
-    chimeric = models.BooleanField(default=False)
-    publication = models.TextField(blank=True, null=False)
-    pubmedid = models.CharField(max_length=15, blank=True, null=False)
+    #ligand = models.CharField(max_length=250, blank=True, null=False)
+    #gene_names = models.CharField(max_length=250, blank=True, null=False)
+    #experiment_method = models.CharField(max_length=250, blank=True, null=False)
+    #resolution = models.CharField(max_length=250, blank=True, null=False)
+    #deposited = models.DateTimeField('deposition date', default=timezone.now)
+    #release_date = models.DateTimeField('release date', default=timezone.now)
+    chimeric = models.CharField(max_length=3, choices=CHOICES)
+    #publication = models.TextField(blank=True, null=False)
+    pubmedid = models.CharField(max_length=75, blank=True, null=False)
     year = models.CharField(max_length=5, blank=True, null=False)
-    organism = models.CharField(
-        max_length=250, blank=True)
-    expression_system = models.CharField(
-        max_length=250, blank=True)
-    length = models.CharField(max_length=25, blank=True, null=False)
-    structure_file = models.FileField(
-        upload_to='pdb_files/', null=True, blank=True)
-    structure_doi = models.CharField(max_length=250, blank=True, null=False)
-    bt = models.BooleanField(default=True)
+    comment = models.TextField(null=True, blank=True)
+    #organism = models.CharField(max_length=250, blank=True)
+    #expression_system = models.CharField(max_length=250, blank=True)
+    #length = models.CharField(max_length=25, blank=True, null=False)
+    #structure_file = models.FileField(upload_to='pdb_files/', null=True, blank=True)
+    #structure_doi = models.CharField(max_length=250, blank=True, null=False)
+    #bt = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name_plural = "Structure Database"
+
+
+class PesticidalProteinHiddenSequence(models.Model):
+    """
+    """
+    name = models.CharField(max_length=15, blank=True, null=False)
+    oldname = models.CharField(max_length=105, blank=True, null=False)
+    othernames = models.TextField(blank=True, null=False)
+    accession = models.CharField(max_length=25, blank=True, null=False)
+    year = models.CharField(max_length=5, blank=True, null=False)
+    sequence = models.TextField(blank=True, null=False)
+    uploaded = models.DateTimeField('Uploaded', default=timezone.now)
+    fastasequence_file = models.FileField(
+        upload_to='fastasequence_files/', null=True, blank=True)
+    public = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "Hidden sequences for naming purpose"
 
 
 TRUE_FALSE_CHOICES = (
@@ -98,6 +120,9 @@ class PesticidalProteinPrivateDatabase(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Private Sequences"
+
 
 class PesticidalProteinDatabase(models.Model):
     """
@@ -119,6 +144,7 @@ class PesticidalProteinDatabase(models.Model):
 
     class Meta:
         ordering = ('name',)
+        verbose_name_plural = "Public Sequences"
 
     def publish(self):
         self.published_date = timezone.now()
@@ -217,6 +243,9 @@ class ProteinDetail(models.Model):
     start_C = models.CharField(max_length=10, blank=True, null=False)
     end_C = models.CharField(max_length=10, blank=True, null=False)
 
+    class Meta:
+        verbose_name_plural = "Three domains data"
+
     def get_endotoxin_n(self):
         if not self.start_N or not self.end_N:
             return ''
@@ -237,6 +266,8 @@ class ProteinDetail(models.Model):
 
     # def fulllength(self):
     #     return self.sequence
+
+
 
 
 class Description(models.Model):

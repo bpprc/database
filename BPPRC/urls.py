@@ -36,3 +36,15 @@ urlpatterns = [
     path('', include('extra.urls')),
     path('', include('graphs.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# https://stackoverflow.com/questions/20997863/add-a-prefix-to-url-patterns-in-django
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('database/', include('database.urls')),
+#     path('database/', include('bestmatchfinder.urls')),
+#     path('database/', include('namingalgorithm.urls')),
+#     path('database/', include('clustalanalysis.urls')),
+#     path('database/', include('extra.urls')),
+#     path('database/', include('graphs.urls')),
+# ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

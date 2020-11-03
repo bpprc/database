@@ -13,8 +13,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib import messages
 from database.admin import OldnameNewnameTableLeftResource, OldnameNewnameTableRightResource
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
+from django.http import HttpResponse, HttpResponseRedirect
+from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, StructureDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
 from database.forms import SearchForm, DownloadForm, ThreedomainDownloadForm
 from bokeh.plotting import figure, output_file, show
 from bokeh.palettes import Category20c, Spectral6, Category20
@@ -341,6 +341,31 @@ def search_database(request):
 
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
+            elif field_type == 'holotype':
+                # categories = \
+                #     PesticidalProteinDatabase.objects.order_by(
+                #         'name').values_list('name', flat=True).distinct()
+                q_objects = Q()
+                filtered_q_objects = Q()
+                for search in searches:
+                    q_objects.add(Q(name__icontains=search), Q.OR)
+
+                categories = PesticidalProteinDatabase.objects.filter(q_objects)
+
+                for category in categories:
+                    if category.name[-1] == '1' and not category.name[-2].isdigit():
+                        filtered_q_objects.add(Q(name__iexact=category.name), Q.OR)
+                proteins = PesticidalProteinDatabase.objects.filter(filtered_q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
+            elif field_type == 'structure':
+                q_objects = Q()
+                for search in searches:
+                    q_objects.add(Q(name__icontains=search), Q.OR)
+
+                structures = StructureDatabase.objects.filter(q_objects)
+                structures = _sorted_nicely(structures, sort_key='name')
+                return render(request, 'database/filter_structures.html', {'structures': structures})
+
         show_extra_data = False
         cry_count = 0
         for protein in proteins:
@@ -382,6 +407,32 @@ def add_cart(request):
         request.session['list_cterminal'] = previously_selected_cterminal
 
     return redirect("search_database")
+
+
+def structures(request):
+    structures = \
+        StructureDatabase.objects.order_by('name')
+
+    context = \
+        {'structures': structures}
+
+    return render(request, 'database/structures.html', context)
+
+
+def structure_pdbid(request, pdbid=None):
+    """Categorize the protein database with unqiue, first three letter pattern."""
+
+    protein = StructureDatabase.objects.filter(
+        pdbid__istartswith=pdbid)
+    structures = \
+        StructureDatabase.objects.order_by('name')
+    print(protein)
+
+    context = \
+        {'proteins': protein,
+         'structures': structures
+         }
+    return render(request, 'database/display_structure_pdbid.html', context)
 
 
 def clear_session_database(request):
@@ -702,7 +753,6 @@ def download_single_sequence(request, proteinname=None):
     response['Content-Disposition'] = 'attachment;filename=' + download_file
     response['Content-Length'] = file.tell()
     return response
-
 
 def download_category_form(request):
 

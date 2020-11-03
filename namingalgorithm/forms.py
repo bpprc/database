@@ -53,7 +53,7 @@ class SendEmailForm(forms.ModelForm):
         self.helper.form_id = 'id-SendEmailForm'
         self.helper.form_class = 'SendEmailForm'
         self.helper.form_method = 'post'
-        self.helper.form_action = ''
+        self.helper.form_action = 'submit'
         self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:
@@ -184,7 +184,7 @@ class UserSubmissionForm(forms.ModelForm):
     terms_conditions = forms.BooleanField(
         required=True,
         widget=forms.CheckboxInput(attrs={'size': '10'}),
-        label='Our service is provided "as is". We expressly disclaim all warranties with respect to the services. We make no warranties or guarantees whatsoever, express or implied, including, any implied warranties of mechantability or fitness for a particular purpose. We are not liable for any use of the services, or for any loss, claim, damage, or liability of any kind or nature which may arise from or in connection with this service or our storage of your submission.'
+        label='By using our service and submitting your sequences of pesticidal proteins to us, you agree to the following:  You acknowledge that our services are being provided on our regularly operating IT systems, and we cannot guarantee the complete security of your submission.  OUR SERVICE IS PROVIDED “AS IS”.  WE EXPRESSLY DISCLAIM ALL WARRANTIES WITH RESPECT TO THE SERVICES.  WE MAKE NO WARRANTIES OR GUARANTEES WHATSOEVER, EXPRESS OR IMPLIED, INCLUDING, ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.  WE ARE NOT LIABLE FOR ANY USE OF THE SERVICES, OR FOR ANY LOSS, CLAIM, DAMAGE, OR LIABILITY OF ANY KIND OR NATURE WHICH MAY ARISE FROM OR IN CONNECTION WITH THIS SERVICE OR OUR STORAGE OF YOUR SUBMISSION.'
     )
 
     def __init__(self, *args, **kwargs):
