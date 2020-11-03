@@ -224,7 +224,7 @@ ADMIN_REORDER = [
         {'model': 'database.PesticidalProteinDatabase', 'label': 'Database'},
         {'model': 'database.PesticidalProteinPrivateDatabase',
             'label': 'Private Sequence Database'},
-        {'model': 'database.PesticidalProteinStructureDatabase',
+        {'model': 'database.StructureDatabase',
             'label': 'Structure Database'},
         {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
         {'model': 'database.OldnameNewnameTableRight',
