@@ -32,7 +32,7 @@
             <th scope="col">PDBID</th>
             <th scope="col">PubMed ID</th>
             <th scope="col">Year</th>
-            <th scope="col">Chimeric</th>
+            <th scope="col">Modified</th>
             <th scope="col">Comment</th>
           </tr>
         </thead>
@@ -45,7 +45,7 @@
           <td> <a href="https://www.rcsb.org/structure/{{ structure.pdbid }}" target="_blank"> {{ structure.pdbid}}</td>
           <td> <a href="https://pubmed.ncbi.nlm.nih.gov/{{ structure.pubmedid }}" target="_blank"> {{ structure.pubmedid}}</td>
           <td>{{ structure.year}}</td>
-          <td>{{ structure.chimeric}}</td>
+          <td>{{ structure.modified}}</td>
           <td>{{ structure.comment}}</td>
         </tr>
     </tbody>
