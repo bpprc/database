@@ -63,8 +63,8 @@ class StructureDatabaseAdmin(ImportExportModelAdmin):
     resource_class = StructureDatabaseResource
 
     search_fields = ('name', 'oldname', 'accession', 'pdbid', 'pubmedid', 'year')
-    fields = ('name','oldname','accession','pdbid','chimeric', 'pubmedid', 'year','comment')
-    list_display = ('name','oldname','accession','pdbid','chimeric', 'pubmedid', 'year','comment')
+    fields = ('name','oldname','accession','pdbid','modified', 'pubmedid', 'year','comment')
+    list_display = ('name','oldname','accession','pdbid','modified', 'pubmedid', 'year','comment')
     ordering = ('name',)
 
 
