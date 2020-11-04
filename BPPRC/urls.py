@@ -6,6 +6,9 @@ from django.contrib.auth import views as auth_views
 handler404 = 'database.views.page_not_found'
 handler500 = 'database.views.server_error'
 
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(
