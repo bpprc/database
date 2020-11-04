@@ -2,24 +2,38 @@
 {% load static %}
 {% block content %}
 
+<style>
+td{
+    border:1px solid #000;
+}
+
+tr td:last-child{
+    width:1%;
+    white-space:nowrap;
+}
+</style>
+
 </br>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-						<th>Name </th>
-						<th>Old Name </th>
-						<th>Accession Number </th>
-						<th>Year </th>
+						<th scope="col">Name </th>
+						<th scope="col">Old Name </th>
+						<th scope="col">Accession Number </th>
+						<th scope="col">PDB ID</th>
+						<th scope="col">Year </th>
 					</tr>
 					{% for protein in structures %}
 					<tr>
-						<td>
-						</td>
             <td>{{protein.name}}</td>
 						<td>{{ protein.oldname }}</td>
 						<td>
 							<a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a>
 						</td>
+						<td>{{ protein.pdbid }}</td>
 						<td>{{ protein.year }}</td>
 					</tr>
       {% endfor %}
@@ -33,6 +47,9 @@
 							<input type="button" class="btn btn-primary" value="Back" onclick="window.history.back()" />
 
 </form>
+</div>
+</div>
+</div>
 
 {% endblock content %}
 
