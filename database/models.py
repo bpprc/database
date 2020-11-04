@@ -35,7 +35,7 @@ class StructureDatabase(models.Model):
     oldname = models.CharField(max_length=75, blank=True, null=False)
     accession = models.CharField(max_length=75, blank=True, null=False)
     #uniprot = models.CharField(max_length=25, blank=True, null=False)
-    pdbid = models.CharField(max_length=500, blank=True, null=False)
+    pdbid = models.JSONField(max_length=500, blank=True, null=False)
     #ligand = models.CharField(max_length=250, blank=True, null=False)
     #gene_names = models.CharField(max_length=250, blank=True, null=False)
     #experiment_method = models.CharField(max_length=250, blank=True, null=False)
