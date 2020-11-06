@@ -33,7 +33,7 @@ tr td:last-child{
 						<td>
 							<a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a>
 						</td>
-						<td>{{ protein.pdbid }}</td>
+            <td> <a href="https://www.rcsb.org/structure/{{ protein.pdbid }}" target="_blank"> {{ protein.pdbid}}</td>
 						<td>{{ protein.year }}</td>
 					</tr>
       {% endfor %}
