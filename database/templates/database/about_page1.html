@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+
+<div>
+	<img src="/media/bpprc.png" alt="UF" width="290" height="120">
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+<b>Welcome to the Pesticidal Protein Database</b>
+<br>
+	<br>
+		<div>
+			<p>The pesticidal protein database is part of the Bacterial Pesticidal Protein Resource Center (BPPRC), which is currently under development. This database is intended to replace and extend the old <i> Bacillus thuringiensis </i> toxin nomenclature site.
+
+			</p>
+			<p>The database currently contains proteins listed in the Bt nomenclature site but with new mnemonics to reflect the assignment of proteins to different homology groups.
+		New bacteria-derived proteins with pesticidal properties have also been added.</p>
+			<p>This site allows users to find the best matches within the database to their own sequence. Database sequences can be downloaded and analysed in various ways</p>
+			<p>The development team is composed of: </p>
+			<p>
+				<font size="3">
+					<div>
+						<i> Suresh Panneerselvam </i>
+						<sup>1</sup> ,
+
+						<i> Neil Crickmore </i>
+						<sup>2</sup> ,
+
+						<i> Colin Berry </i>
+						<sup>3</sup>,
+
+						<i> Thomas Connor </i>
+						<sup>3</sup>,
+
+						<i>Ruchir Mishra </i>
+						<sup>1</sup>  and
+
+						<i> Bryony C. Bonning </i>
+						<sup>1</sup>
+					</div>
+				</font>
+			</p>
+			<sup> 1 </sup>
+			<i> <a href="http://entnemdept.ufl.edu/" target="_blank"> Department of Entomology and Nematology, University of Florida, USA </a> </i>
+				<sup> 2 </sup>
+				<i> <a href="http://www.sussex.ac.uk/lifesci/" target="_blank"> School of Life Sciences, University of Sussex, UK </a>  </i>
+					<sup> 3 </sup>
+					<i> <a href="https://www.cardiff.ac.uk/biosciences" target="_blank"> School of Biosciences, Cardiff University, UK </a> </i>
+				</div>
+		</br>
+				<p><h5>Funding:</h5> This project is supported by the <a href="https://www.nsf.gov/" target="_blank">National Science Foundation I/UCRC</a>, the <a href="https://www.iucrc-camtech.org/" target="_blank">Center for Arthropod Management Technologies</a>, under Grant Nos. IIP-1338775 and 1821914, and by industry partners.
+				</p>
+		</div>
+	<div class="col-md-6">
+		<div id="center" class="orbit-center">
+		  <span>Bacterial Pesticidal Proteins</span>
+		</div>
+	<span class="moonSelector"><a href="http://127.0.0.1:8000/categorize_database_app"> App </a></span>
+	<span class="moonSelector">Cry</span>
+	<span class="moonSelector">3</span>
+	<span class="moonSelector">4</span>
+	<span class="moonSelector">5</span>
+	<span class="moonSelector">6</span>
+	<span class="moonSelector">7</span>
+	<span class="moonSelector">3</span>
+	<span class="moonSelector">4</span>
+	<span class="moonSelector">5</span>
+	<span class="moonSelector">6</span>
+	<span class="moonSelector">7</span>
+	<span class="moonSelector">7</span>
+	<span class="moonSelector">3</span>
+	<span class="moonSelector">4</span>
+	<span class="moonSelector">5</span>
+	<span class="moonSelector">6</span>
+	<span class="moonSelector">7</span>
+  </div>
+</div>
+</br>
+</br>
+
+<p><h5>Citing this website:</h5> To cite this website in a publication please use the following format:
+
+Crickmore, N., Berry, C., Panneerselvam, S., Mishra, R., Connor, T.R. and Bonning, B.C. (2020). Bacterial Pesticidal Protein Resource Center, viewed (date that you accessed the site), https://www.bpprc.org.</p>
+
+<!-- position:absolute -->
+<!-- <div style="position:fixed;bottom: 100px; left: 0; width: 100% ; height: 40px; margin-top: 20px ;white-space:nowrap; justify-content: space-between;"> -->
+
+<footer class="footer page-footer small pt-4 mt-4 border-top" role="contentinfo">
+  <div class="container">
+          <div>
+						  <a>
+              <img class="US" src="/media/logos.png" alt="US" width="100%" height="100%">
+          </div>
+
+  </div>
+
+</footer>
+</div>
+{% endblock content %}
+
+{% block extrahead %}
+<style>
+
+@media screen and (max-width: 600px) {
+	.US {
+		width: 60px;
+		height: 60px;
+	}
+}
+
+</style>
+{% endblock extrahead %}
+
+{% block extrajs %}
+<script>
+var map = new MoonMap('#center', {
+  active: function(orbit){
+
+    var active = orbit.currentlyActive,
+        activeMoon = orbit.moons[active];
+
+    // Do something with the active moon
+    console.log('New moon is active');
+
+  },
+  activeClass: 'active',
+  moonSelector: '.moonSelector',
+  radius: 300
+});
+
+map.startCarousel(); // change moons every 1200 ms
+</script>
+
+{% endblock %}

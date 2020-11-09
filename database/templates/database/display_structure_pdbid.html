@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<!-- <protvista-uniprot accession="P0A377"></protvista-uniprot> -->
+<div id="litemol" style="width: 1000px; height: 800px; margin-top: 100px; position: relative"></div>
+
+
+
+
+
+{% endblock content %}
+
+{% block extrajs %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'database/css/LiteMol-plugin.min.css' %}">
+
+<script type="text/javascript" src="{% static 'database/js/LiteMol-plugin.min.js' %}"> </script>
+
+
+<script>
+var plugin = LiteMol.Plugin.create({ target: '#litemol' });
+
+plugin.loadMolecule({
+    id: '4ARX',
+    url: 'https://www.ebi.ac.uk/pdbe/static/entry/4arx_updated.cif',
+    format: 'cif' // default
+});
+</script>
+
+
+<!-- Fetch polyfill and D3 library -->
+<script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.min.js" defer></script>
+<script src="https://d3js.org/d3.v4.min.js" charset="utf-8" defer></script>
+
+<!-- LiteMol plugin and style -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litemol@2.4.2/dist/css/LiteMol-plugin.min.css" type="text/css"></link>
+<script src="https://cdn.jsdelivr.net/npm/litemol@2.4.2/dist/js/LiteMol-plugin.min.js" defer></script>
+
+<!-- Webcomponents polyfill for IE -->
+<script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js" charset="utf-8" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.2.10/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
+<!-- Babel polyfill / The order between this and webcomponents polyfill is important and means we can't bundle it with the main component -->
+<!-- See https://github.com/babel/babel/issues/9829 -->
+<script src="https://cdn.jsdelivr.net/npm/@babel/polyfill@7.4.4/dist/polyfill.min.js" charset="utf-8" defer></script>
+<script>
+  window.addEventListener('protvista-event', (e) => console.log(e.detail))
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/protvista-uniprot@2.0.9/dist/protvista-uniprot.js" defer></script>
+
+
+
+{% endblock %}

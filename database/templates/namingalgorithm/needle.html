@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+        </style>
+        </head>
+        <body>
+
+        <br></br>
+        <h2> <pre>Category: {{ category }} </pre> </h2>
+        <br></br>
+        <h2><pre>Predicted name: {{ predicted_name }} </pre> </h2>
+        <br></br>
+        <h2> <pre>Best Match Found: {{ name }} </pre> </h2>
+        <br></br>
+        <pre>Alignment : {{ align }} </pre>
+
+{% endblock content %}

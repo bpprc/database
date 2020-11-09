@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+
+{% if context %}
+
+      <h3> Feedback successfully submitted</h3>
+      <br>
+      <!-- <h5> Name: name </h5>
+      <h5> Subject: subject </h5>
+      <h5> Email: email </h5>
+      <h5> Message: message </h5> -->
+
+{% else %}
+<h1>Feedback form</h1>
+</br>
+</br>
+
+  {% crispy form %}
+
+{% endif %}
+
+{% endblock content %}
+
+{% block extrahead %}
+
+<style>
+i {
+  color: darkblue;
+}
+
+.infomessage {
+  color: blue;
+}
+</style>
+{% endblock extrahead %}
+
+
+{% block extrajs %}
+
+<script>
+$(function() {
+  $('#div_id_message .col-form-label').append('<i> <i class="fas fa-question-circle"></i> </i>')
+
+
+});
+</script>
+
+<script>
+$(function() {
+  $('#div_id_email .col-form-label').append('<i onclick="myFunction()" class="fas fa-question-circle"> </i>')
+});
+</script>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<script type="text/javascript">
+
+  $('.js-captcha-refresh').click(function (evt) {
+      evt.preventDefault();
+      $.getJSON("/captcha/refresh/", function (result) {
+          $('.captcha').attr('src', result['image_url']);
+          $('#id_captcha_0').val(result['key'])
+      });
+  });
+
+
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  });
+
+</script>
+
+<script>
+function myFunction() {
+  if($("#div_id_email .col-form-label").find('.infomessage').length) {
+    $("#div_id_email .col-form-label").find('.infomessage').remove();
+  } else {
+
+  $("#div_id_email .col-form-label").append("<div class='infomessage'> </div>").val();
+}
+}
+</script>
+
+{% endblock %}

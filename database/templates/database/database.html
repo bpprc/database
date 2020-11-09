@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<br> </br>
+	<div>
+	<span class=" text-center font-weight-bold">Pesticidal proteins are newly categorized into the following classes.</span>
+	</br> </br>
+	<span class=" text-center font-weight-bold">Cick on a button to view all the proteins currently in each class.</span>
+	</br> </br>
+	</div>
+	<div id="wrapper">
+		<ul id="circles">
+      {% for prefix in category_prefixes %}
+
+			<li>
+				<a href="/categorize_database_{{ prefix|lower }}" >
+					<div class="circle">
+						<div>{{ prefix }}</div>
+					</div>
+				</a>
+			</li>
+        {% endfor %}
+		<br> </br>
+		<br> </br>
+		</ul>
+	</div>
+
+
+	<div class="clear-float"></div>
+	<div class="mt-2"></div>
+{% for description in descriptions %}
+	<div>
+		<p <a class="text-left font-weight-bold">{{description.name}}:</a> <span class="font-weight-light"> {{description.description}} </span> </p>
+	</div>
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<h3> Email</h3>
+<br>
+</br>
+</br>
+
+  {% crispy form %}
+
+{% endblock content %}
+
+
+
+{% block extrajs %}
+<script>
+
+subName=localStorage.getItem('submittersname');
+subEmail=localStorage.getItem('email');
+subProteinname=localStorage.getItem('proteinname');
+
+if (subName) {
+    document.getElementById("id_submittersname").value = subName;
+    document.getElementById("id_subemail").value = subEmail;
+    document.getElementById("id_proteinname").value = subProteinname;
+    localStorage.clear()
+  }
+
+</script>
+
+{% endblock extrajs %}

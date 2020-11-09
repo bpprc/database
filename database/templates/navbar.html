@@ -1,0 +1,71 @@
+
+<!--navbar -->
+<header class="site-header">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-steel fixed-top">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarToggle">
+					<div class="navbar-nav mr-auto">
+						<a class="nav-item nav-link" href="{% url 'home' %}">
+							<strong> Home
+								</strong>
+						</a>
+						</div>
+						<div class="dropdown">
+						  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    Database
+						  </button>
+						  <div class="dropdown-menu" aria-labelledby="Database">
+						    <a class="dropdown-item" href="{% url 'database' %}">Database</a>
+						    <a class="dropdown-item" href="{% url 'search_database' %}">Search</a>
+								<a class="dropdown-item" href="{% url 'structures' %}">Structures</a>
+								<a class="dropdown-item" href="{% url 'category_form' %}">Download data</a>
+						  </div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								BestMatchFinder
+							</button>
+							<div class="dropdown-menu" aria-labelledby="BestMatchFinder">
+								<a class="dropdown-item" href="{% url 'bestmatchfinder_home' %}">Search by sequence</a>
+								<a class="dropdown-item" href="{% url 'bestmatchfinder_database' %}">Pairwise comparision</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Analysis
+							</button>
+							<div class="dropdown-menu" aria-labelledby="Analysis">
+								<a class="dropdown-item" href="{% url 'dendogram_homepage2' %}">Dendogram</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Submit your sequence for naming
+							</button>
+							<div class="dropdown-menu" aria-labelledby="database">
+								<a class="dropdown-item" target="_blank" href="{% url 'submit' %}">Submit</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Links
+							</button>
+							<div class="dropdown-menu" aria-labelledby="Links">
+								<a class="dropdown-item" target="_blank" href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/">Old Bt nomenclature site</a>
+								<a class="dropdown-item" target="_blank" href="https://www.bpprc.org/">Bacterial Pesticidal Protein Resource Center</a>
+								<a class="dropdown-item" href="{% url 'old_name_new_name'%} ">Old name/new name table</a>
+								<a class="dropdown-item" href="{% url 'github_home'%} ">Github</a>
+								<a class="dropdown-item" href="{% url 'statistics' %}">Statistics</a>
+							</div>
+						</div>
+						<div class="navbar-nav">
+							<a class="nav-item nav-link" id="x" href="{% url 'feedback_home' %}">Feedback</a>
+						</div>
+						<div class="navbar-nav ml-auto mr-5">
+							<a class="nav-item nav-link" id="x" href="{% url 'view_cart' %}">Cart (<span id="cart-value" style="border-radius: 10px;"></span>)</a>
+						</div>
+				</div>
+		</nav>
+</header>
