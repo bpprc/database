@@ -20,12 +20,12 @@
 
 subName=localStorage.getItem('submittersname');
 subEmail=localStorage.getItem('email');
-subProteinname=localStorage.getItem('proteinname');
+subname=localStorage.getItem('name');
 
 if (subName) {
     document.getElementById("id_submittersname").value = subName;
     document.getElementById("id_subemail").value = subEmail;
-    document.getElementById("id_proteinname").value = subProteinname;
+    document.getElementById("id_name").value = subname;
     localStorage.clear()
   }
 
