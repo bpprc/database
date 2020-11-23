@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.db.models.signals import post_save, pre_save
 from django.core.mail import send_mail
 from django.dispatch import receiver
+from django.conf import settings
 
 
 TRUE_FALSE_CHOICES = (
@@ -36,8 +37,13 @@ class AbstractModel(models.Model):
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)
-    terms_conditions = models.BooleanField(null=False, blank=False)
-    user = models.CharField(max_length=50, blank=True, null=False)
+    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
+    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
+    admin_comments = models.TextField(null=True, blank=True)
+    private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+    uploaded = models.DateTimeField('Uploaded', default=timezone.now)
+    user_provided_proteinname = models.CharField(max_length=105, blank=True, null=False)
 
     class Meta:
         abstract = True
@@ -79,7 +85,8 @@ def save_archive(sender, instance, **kwargs):
     archive.alignresults = instance.alignresults
     archive.predict_name = instance.predict_name
     archive.terms_conditions = instance.terms_conditions
-    archive.user = instance.user
+    archive.admin_user = instance.admin_user
+    archive.admin_comments = instance.admin_comments
     archive.save()
 
 

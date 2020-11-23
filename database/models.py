@@ -85,27 +85,16 @@ TRUE_FALSE_CHOICES = (
 class PesticidalProteinPrivateDatabase(models.Model):
     """
     """
-    name = models.CharField(max_length=15, blank=True, null=False)
-    oldname = models.CharField(max_length=105, blank=True, null=False)
-    othernames = models.TextField(blank=True, null=False)
-    accession = models.CharField(max_length=25, blank=True, null=False)
-    year = models.CharField(max_length=5, blank=True, null=False)
-    sequence = models.TextField(blank=True, null=False)
-    uploaded = models.DateTimeField('Uploaded', default=timezone.now)
-    fastasequence_file = models.FileField(
-        upload_to='fastasequence_files/', null=True, blank=True)
-    public = models.BooleanField(default=False)
-    private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
-    # sequence_is_private = models.BooleanField(
-    #     default=True, choices=TRUE_FALSE_CHOICES)
-    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
     submittersname = models.CharField(max_length=25, null=True, blank=True)
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
+    name = models.CharField(max_length=15, blank=True, null=False)
+    sequence = models.TextField(blank=True, null=False)
     bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     bacterium_textbox = models.CharField(
         max_length=250, null=True, blank=True)
     taxonid = models.CharField(max_length=25, null=True, blank=True)
+    year = models.CharField(max_length=5, blank=True, null=False)
+    accession = models.CharField(max_length=25, blank=True, null=False)
     partnerprotein = models.BooleanField(
         default=True, choices=TRUE_FALSE_CHOICES)
     partnerprotein_textbox = models.CharField(
@@ -116,6 +105,21 @@ class PesticidalProteinPrivateDatabase(models.Model):
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
     publication = models.TextField(null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
+    uploaded = models.DateTimeField('Uploaded', default=timezone.now)
+    alignresults = models.TextField(null=True, blank=True)
+    predict_name = models.TextField(null=True, blank=True)
+    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
+    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
+    admin_comments = models.TextField(null=True, blank=True)
+    public = models.BooleanField(default=False)
+    private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+    oldname = models.CharField(max_length=105, blank=True, null=False)
+    othernames = models.TextField(blank=True, null=False)
+    fastasequence_file = models.FileField(
+        upload_to='fastasequence_files/', null=True, blank=True)
+    name_category = models.CharField(max_length=15, blank=True)
+
 
     def __str__(self):
         return self.name
@@ -155,9 +159,10 @@ class PesticidalProteinDatabase(models.Model):
     public = models.BooleanField(default=True)
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
     predict_name = models.TextField(null=True, blank=True)
-    terms_conditions = models.BooleanField(null=False, blank=False)
+    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, default="1", null=False, blank=True)
+    admin_comments = models.TextField(null=True, blank=True)
     # oldname_category = models.CharField(max_length=15, blank=True)
     # protein_metadata = PesticidalProteinDatabaseManager()
 
