@@ -127,18 +127,37 @@ class PesticidalProteinPrivateDatabase(models.Model):
 class PesticidalProteinDatabase(models.Model):
     """
     """
+    submittersname = models.CharField(max_length=25, null=True, blank=True)
+    submittersemail = models.EmailField(max_length=70, null=True, blank=False)
     name = models.CharField(max_length=15, blank=True, null=False)
     oldname = models.CharField(max_length=105, blank=True, null=False)
     othernames = models.TextField(blank=True, null=False)
     accession = models.CharField(max_length=25, blank=True, null=False)
     year = models.CharField(max_length=5, blank=True, null=False)
     sequence = models.TextField(blank=True, null=False)
+    bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+    taxonid = models.CharField(max_length=25, null=True, blank=True)
+    bacterium_textbox = models.CharField(
+        max_length=250, null=True, blank=True)
+    partnerprotein = models.BooleanField(
+        default=True, choices=TRUE_FALSE_CHOICES)
+    partnerprotein_textbox = models.CharField(
+        max_length=250, null=True, blank=True)
+    toxicto = models.CharField(max_length=250, blank=True, null=False)
+    nontoxic = models.CharField(max_length=250, blank=True, null=False)
+    dnasequence = models.TextField(null=True, blank=False)
+    publication = models.TextField(null=True, blank=True)
+    comment = models.TextField(null=True, blank=True)
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
     name_category = models.CharField(max_length=15, blank=True)
     public = models.BooleanField(default=True)
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
+    predict_name = models.TextField(null=True, blank=True)
+    terms_conditions = models.BooleanField(null=False, blank=False)
+    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
     # oldname_category = models.CharField(max_length=15, blank=True)
     # protein_metadata = PesticidalProteinDatabaseManager()
 
