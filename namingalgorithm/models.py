@@ -15,14 +15,14 @@ TRUE_FALSE_CHOICES = (
 class AbstractModel(models.Model):
     submittersname = models.CharField(max_length=25, null=True, blank=True)
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
-    proteinname = models.CharField(max_length=25, null=True, blank=True)
-    proteinsequence = models.TextField(null=True, blank=False)
+    name = models.CharField(max_length=25, null=True, blank=True)
+    sequence = models.TextField(null=True, blank=False)
     bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     bacterium_textbox = models.CharField(
         max_length=250, null=True, blank=True)
     taxonid = models.CharField(max_length=25, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
-    accessionnumber = models.CharField(max_length=25, blank=True, null=False)
+    accession = models.CharField(max_length=25, blank=True, null=False)
     partnerprotein = models.BooleanField(
         default=True, choices=TRUE_FALSE_CHOICES)
     partnerprotein_textbox = models.CharField(
@@ -37,7 +37,7 @@ class AbstractModel(models.Model):
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)
     terms_conditions = models.BooleanField(null=False, blank=False)
-    # date = models.DateField(default=timezone.now, blank=True)
+    user = models.CharField(max_length=50, blank=True, null=False)
 
     class Meta:
         abstract = True
@@ -60,13 +60,13 @@ def save_archive(sender, instance, **kwargs):
     archive = Archive()
     archive.submittersname = instance.submittersname
     archive.submittersemail = instance.submittersemail
-    archive.proteinname = instance.proteinname
-    archive.proteinsequence = instance.proteinsequence
+    archive.name = instance.name
+    archive.sequence = instance.sequence
     archive.bacterium = instance.bacterium
     archive.bacterium_textbox = instance.bacterium_textbox
     archive.taxonid = instance.taxonid
     archive.year = instance.year
-    archive.accessionnumber = instance.accessionnumber
+    archive.accession = instance.accession
     archive.partnerprotein = instance.partnerprotein
     archive.partnerprotein_textbox = instance.partnerprotein_textbox
     archive.toxicto = instance.toxicto
@@ -79,13 +79,14 @@ def save_archive(sender, instance, **kwargs):
     archive.alignresults = instance.alignresults
     archive.predict_name = instance.predict_name
     archive.terms_conditions = instance.terms_conditions
+    archive.user = instance.user
     archive.save()
 
 
 class SendEmail(models.Model):
     submittersname = models.CharField(max_length=25, null=True, blank=True)
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
-    proteinname = models.CharField(max_length=25, null=True, blank=True)
+    name = models.CharField(max_length=25, null=True, blank=True)
     message = models.TextField(null=True, blank=True)
 
 

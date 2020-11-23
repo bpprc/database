@@ -31,7 +31,7 @@ def contactView(request):
         if form.is_valid():
             submittersname = form.cleaned_data['submittersname']
             submittersemail = form.cleaned_data['submittersemail']
-            proteinname = form.cleaned_data['proteinname']
+            name = form.cleaned_data['name']
             message = form.cleaned_data['message']
             try:
                 send_mail(subject, message, from_email,
@@ -165,7 +165,7 @@ def contactView(request):
         if form.is_valid():
             submittersname = form.cleaned_data['submittersname']
             submittersemail = form.cleaned_data['submittersemail']
-            proteinname = form.cleaned_data['proteinname']
+            name = form.cleaned_data['name']
             message = form.cleaned_data['message']
             _trigger_email_everyday()
             return HttpResponse(f"Email sent to {submittersemail} members")
