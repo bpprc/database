@@ -49,7 +49,7 @@ class UserSubmissionAdmin(admin.ModelAdmin):
         return format_html('<a href="/admin/namingalgorithm/usersubmission/">refresh</a>')
 
     def send_email(self, obj):
-        return format_html('<a href="/admin/contact/?submittersname={0}&email={1}&proteinname={2}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.proteinname or ''))
+        return format_html('<a href="/admin/contact/?submittersname={0}&email={1}&name={2}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.name or ''))
 
     run_align_link.allow_tags = True
     run_align_link.description = 'Run the align link for the submission'
@@ -65,15 +65,15 @@ class SendEmailAdmin(admin.ModelAdmin):
     list_display = (
         'submittersname',
         'submittersemail',
-        'proteinname',
+        'name',
     )
 
 
 class ArchiveAdmin(admin.ModelAdmin):
-    search_fields = ('proteinname', 'year', 'submittersname',
+    search_fields = ('name', 'year', 'submittersname',
                      'submittersemail')
-    fields = ('submittersname','submittersemail','proteinname', 'year','proteinsequence','bacterium','bacterium_textbox','taxonid','accessionnumber','partnerprotein','partnerprotein_textbox','toxicto','nontoxic','dnasequence','pdbcode','publication','comment','uploaded','predict_name','alignresults','terms_conditions')
-    list_display = ('proteinname', 'submittersname',
+    fields = ('submittersname','submittersemail','name', 'year','proteinsequence','bacterium','bacterium_textbox','taxonid','accession','partnerprotein','partnerprotein_textbox','toxicto','nontoxic','dnasequence','pdbcode','publication','comment','uploaded','predict_name','alignresults','terms_conditions')
+    list_display = ('name', 'submittersname',
                      'submittersemail','uploaded',)
     ordering = ('uploaded',)
 

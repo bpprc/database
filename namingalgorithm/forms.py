@@ -27,7 +27,7 @@ class SendEmailForm(forms.ModelForm):
             attrs={'placeholder': ''})
     )
 
-    proteinname = forms.CharField(
+    name = forms.CharField(
         label='Protein Name',
         widget=forms.TextInput(
             attrs={'placeholder': ''}),
@@ -44,7 +44,7 @@ class SendEmailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SendEmailForm, self).__init__(*args, **kwargs)
 
-        self.fields['proteinname'].widget.attrs['cols'] = 50
+        self.fields['name'].widget.attrs['cols'] = 50
         # self.fields['proteinsname'].widget.attrs['cols'] = 20
         self.fields['message'].widget.attrs['cols'] = 50
         # self.fields['message'].widget.attrs['cols'] = 20
@@ -119,7 +119,7 @@ class UserSubmissionForm(forms.ModelForm):
             attrs={'placeholder': ''})
     )
 
-    accessionnumber = forms.CharField(
+    accession = forms.CharField(
         label='Genbank accession Number',
         widget=forms.TextInput(
             attrs={'placeholder': ''}),
@@ -213,7 +213,7 @@ class UserSubmissionForm(forms.ModelForm):
                 css_class='form-row'
             ),
             Row(
-                Column('proteinsname',
+                Column('name',
                        css_class='form-group col-md-10 mb-0'),
                 Column('year',
                        css_class='form-group col-md-2 mb-0'),
@@ -229,7 +229,7 @@ class UserSubmissionForm(forms.ModelForm):
                 css_class='form-row'
             ),
             Row(
-                Column('accessionnumber',
+                Column('accession',
                        css_class='form-group col-md-3 mb-0'),
                 css_class='form-row'
             ),
@@ -261,13 +261,13 @@ class UserSubmissionForm(forms.ModelForm):
         model = UserSubmission
         fields = ['submittersname',
                   'submittersemail',
-                  'proteinname',
+                  'name',
                   'year',
                   'proteinsequence',
                   'public_or_private',
                   'bacterium',
                   'bacterium_textbox',
-                  'accessionnumber',
+                  'accession',
                   'dnasequence',
                   'partnerprotein',
                   'partnerprotein_textbox',
