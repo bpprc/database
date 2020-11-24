@@ -27,12 +27,12 @@ class UserSubmissionAdmin(admin.ModelAdmin):
     )
 
     def run_align_link(self, obj):
-        if ">" in str(obj.proteinsequence).split('\n')[0]:
-            obj.proteinsequence = '\n'.join(
-                str(obj.proteinsequence).split('\n')[1:])
+        if ">" in str(obj.sequence).split('\n')[0]:
+            obj.sequence = '\n'.join(
+                str(obj.sequence).split('\n')[1:])
 
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/run_naming_algorithm/?fulltextarea={0}&submission_id={1}" target="_blank">Run Align</a>'.format(obj.proteinsequence, obj.id))
+        return format_html('<a href="/run_naming_algorithm/?fulltextarea={0}&submission_id={1}" target="_blank">Run Align</a>'.format(obj.sequence, obj.id))
 
     def align_results(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
@@ -42,7 +42,7 @@ class UserSubmissionAdmin(admin.ModelAdmin):
 
     def create_data(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&proteinsequence={1}" target="_blank">Create Data</a>'.format(obj.predict_name or '', obj.proteinsequence))
+        return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&sequence={1}" target="_blank">Create Data</a>'.format(obj.predict_name or '', obj.sequence))
 
     def refresh(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
@@ -72,7 +72,7 @@ class SendEmailAdmin(admin.ModelAdmin):
 class ArchiveAdmin(admin.ModelAdmin):
     search_fields = ('name', 'year', 'submittersname',
                      'submittersemail')
-    fields = ('submittersname','submittersemail','name', 'year','proteinsequence','bacterium','bacterium_textbox','taxonid','accession','partnerprotein','partnerprotein_textbox','toxicto','nontoxic','dnasequence','pdbcode','publication','comment','uploaded','predict_name','alignresults','terms_conditions')
+    fields = ('submittersname','submittersemail','name', 'year','sequence','bacterium','bacterium_textbox','taxonid','accession','partnerprotein','partnerprotein_textbox','toxicto','nontoxic','dnasequence','pdbcode','publication','comment','uploaded','predict_name','alignresults','terms_conditions')
     list_display = ('name', 'submittersname',
                      'submittersemail','uploaded',)
     ordering = ('uploaded',)

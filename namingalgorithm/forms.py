@@ -88,7 +88,7 @@ class UserSubmissionForm(forms.ModelForm):
             attrs={'placeholder': ''}),
         required=False
     )
-    proteinsequence = forms.CharField(
+    sequence = forms.CharField(
         label='Protein Sequence',
         widget=forms.Textarea(
             attrs={'placeholder': ""}),
@@ -190,8 +190,8 @@ class UserSubmissionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserSubmissionForm, self).__init__(*args, **kwargs)
 
-        self.fields['proteinsequence'].widget.attrs['cols'] = 50
-        self.fields['proteinsequence'].widget.attrs['cols'] = 20
+        self.fields['sequence'].widget.attrs['cols'] = 50
+        self.fields['sequence'].widget.attrs['cols'] = 20
         self.fields['bacterium_textbox'].widget.attrs['cols'] = 10
         self.fields['comment'].widget.attrs['cols'] = 50
         self.fields['comment'].widget.attrs['cols'] = 20
@@ -234,7 +234,7 @@ class UserSubmissionForm(forms.ModelForm):
                 css_class='form-row'
             ),
             'dnasequence',
-            'proteinsequence',
+            'sequence',
             'public_or_private',
             Row(
                 Column('partnerprotein',
@@ -263,7 +263,7 @@ class UserSubmissionForm(forms.ModelForm):
                   'submittersemail',
                   'name',
                   'year',
-                  'proteinsequence',
+                  'sequence',
                   'public_or_private',
                   'bacterium',
                   'bacterium_textbox',
