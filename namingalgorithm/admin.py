@@ -23,6 +23,8 @@ class UserSubmissionAdmin(admin.ModelAdmin):
         'refresh',
         'send_email',
         'uploaded',
+        'admin_user',
+        'admin_comments',
     )
 
     def run_align_link(self, obj):
