@@ -124,5 +124,4 @@ There is a new sequence submission in the database. Please check the database ad
 
 
 post_save.connect(save_archive, sender=UserSubmission)
-
-# post_save.connect(save_post, sender=UserSubmission)
+post_save.connect(save_post, sender=UserSubmission)
