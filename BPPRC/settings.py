@@ -228,9 +228,9 @@ ADMIN_REORDER = [
             'label': 'Structure Database'},
         {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
         {'model': 'database.OldnameNewnameTableRight',
-            'label': 'Old Name Table Right Side'},
+            'label': 'Organized by Oldname'},
         {'model': 'database.OldnameNewnameTableLeft',
-            'label': 'Old Name Table Left Side'})},
+            'label': 'Organized by new name'})},
     'namingalgorithm',
     'extra',
     {'app': 'auth', 'models': (
