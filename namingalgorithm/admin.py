@@ -3,14 +3,38 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import UserSubmission, Archive, SendEmail
-from django.shortcuts import render
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
 
-class ArchiveAdmin(admin.ModelAdmin):
-    pass
+class ArchiveResource(resources.ModelResource):
 
 
-class UserSubmissionAdmin(admin.ModelAdmin):
+    class Meta:
+        model = Archive
+
+
+class ArchiveAdmin(ImportExportModelAdmin):
+    resource_class = ArchiveResource
+
+    search_fields = ['submittersemail', 'submittersname']
+    list_display = (
+        'submittersname',
+        'accession',
+        'uploaded',
+        'admin_user',
+        'admin_comments',
+    )
+
+
+class UserSubmissionResource(resources.ModelResource):
+
+
+    class Meta:
+        model = UserSubmission
+
+class UserSubmissionAdmin(ImportExportModelAdmin):
+    resource_class = UserSubmissionResource
 
     """Submit the sequence by user and name of the protein is predicted."""
 
@@ -70,13 +94,14 @@ class SendEmailAdmin(admin.ModelAdmin):
     )
 
 
-class ArchiveAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'year', 'submittersname',
-                     'submittersemail')
-    fields = ('submittersname','submittersemail','name', 'year','sequence','bacterium','bacterium_textbox','taxonid','accession','partnerprotein','partnerprotein_textbox','toxicto','nontoxic','dnasequence','pdbcode','publication','comment','uploaded','predict_name','alignresults','terms_conditions')
-    list_display = ('name', 'submittersname',
-                     'accession','uploaded',)
-    ordering = ('-uploaded',)
+# class ArchiveAdmin(admin.ModelAdmin):
+#     search_fields = ('name', 'year', 'submittersname',
+#                      'submittersemail')
+#     fields = ('submittersname', 'submittersemail', 'name', 'year', 'sequence', 'bacterium', 'bacterium_textbox', 'taxonid', 'accession', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'pdbcode', 'publication', 'comment', 'uploaded', 'predict_name', 'alignresults', 'terms_conditions')
+#     list_display = ('name', 'submittersname',
+#                      'accession', 'uploaded',)
+#     ordering = ('-uploaded',)
+
 
 admin.site.register(UserSubmission, UserSubmissionAdmin)
 admin.site.register(Archive, ArchiveAdmin)
