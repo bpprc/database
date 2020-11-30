@@ -47,7 +47,7 @@ class AbstractModel(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ('uploaded',)
+        ordering = ('-uploaded',)
 
     def publish(self):
         self.published_date = timezone.now()
