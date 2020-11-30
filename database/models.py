@@ -15,7 +15,8 @@ class OldnameNewnameTableLeft(models.Model):
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
 
     class Meta:
-        verbose_name_plural = "Oldname Newname Table Left Side"
+        verbose_name = ("Organized by new name")
+        verbose_name_plural = "Organized by new name"
 
 
 class OldnameNewnameTableRight(models.Model):
@@ -24,7 +25,8 @@ class OldnameNewnameTableRight(models.Model):
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
 
     class Meta:
-        verbose_name_plural = "Oldname Newname Table Right Side"
+        verbose_name = ("Organized by Oldname")
+        verbose_name_plural = "Organized by Oldname"
 
 CHOICES = [
     ('yes','Yes'),
