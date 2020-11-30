@@ -14,12 +14,11 @@ class UserSubmissionAdmin(admin.ModelAdmin):
 
     """Submit the sequence by user and name of the protein is predicted."""
 
-    search_fields = ['submittersemail']
+    search_fields = ['submittersemail', 'submittersname']
     list_display = (
         'submittersname',
-        'submittersemail',
+        'accession',
         'run_align_link',
-        'align_results',
         'create_data',
         'refresh',
         'send_email',
@@ -74,8 +73,8 @@ class ArchiveAdmin(admin.ModelAdmin):
                      'submittersemail')
     fields = ('submittersname','submittersemail','name', 'year','sequence','bacterium','bacterium_textbox','taxonid','accession','partnerprotein','partnerprotein_textbox','toxicto','nontoxic','dnasequence','pdbcode','publication','comment','uploaded','predict_name','alignresults','terms_conditions')
     list_display = ('name', 'submittersname',
-                     'submittersemail','uploaded',)
-    ordering = ('uploaded',)
+                     'accession','uploaded',)
+    ordering = ('-uploaded',)
 
 admin.site.register(UserSubmission, UserSubmissionAdmin)
 admin.site.register(Archive, ArchiveAdmin)
