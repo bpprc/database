@@ -44,7 +44,11 @@
           <td><a href="https://www.ncbi.nlm.nih.gov/protein/{{ structure.accession }}" target="_blank"> {{ structure.accession }} </a></td>
           <td>
             {% for id in structure.pdbid %}
-            <a href="https://www.rcsb.org/structure/{{ id }}" target="_blank">{{ id }}</a>
+            {% if structure.pdbid|length > 1 %}
+              <a href="https://www.rcsb.org/structure/{{ id }}" target="_blank">{{ id }},</a>
+            {% else %}
+              <a href="https://www.rcsb.org/structure/{{ id }}" target="_blank">{{ id }}</a>
+            {% endif %}
             {% endfor %}
           </td>
           <!-- <td> <a href="https://www.rcsb.org/structure/{{ structure.pdbid }}" target="_blank"> {{ structure.pdbid}}</td> -->
