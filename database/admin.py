@@ -99,12 +99,11 @@ class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
 class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
     #resource_class = PesticidalProteinHiddenSequence
 
-    search_fields = ('name', 'oldname', 'othernames',
+    search_fields = ('name', 'othernames',
                      'accession', 'year', 'public')
-    fields = ('name', 'oldname', 'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'public')
-    list_display = ('name', 'oldname',  'othernames',
-                    'accession', 'year', 'fastasequence_file', 'public')
+    fields = ('name', 'othernames', 'accession', 'year', 'sequence', 'bacterium_textbox', 'strain', 'publication', 'family', 'toxicto', 'nontoxic', 'mammalian_active', 'pdbcode', 'comment')
+    list_display = ('name', 'othernames',
+                    'accession', 'year', 'public')
     ordering = ('name',)
 
 
