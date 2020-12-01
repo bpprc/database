@@ -226,6 +226,7 @@ ADMIN_REORDER = [
             'label': 'Private Sequence Database'},
         {'model': 'database.StructureDatabase',
             'label': 'Structure Database'},
+        {'model': 'database.PesticidalProteinHiddenSequence', 'label': 'Hidden Sequence Database'},
         {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
         {'model': 'database.OldnameNewnameTableRight',
             'label': 'Organized by Oldname'},
