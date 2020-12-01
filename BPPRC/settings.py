@@ -220,18 +220,18 @@ LOGGING = {
 
 ADMIN_REORDER = [
     {'app': 'database', 'models': (
-        {'model': 'database.Description', 'label': 'Category Description'},
-        {'model': 'database.PesticidalProteinDatabase', 'label': 'Database'},
+        {'model': 'database.Description', 'label': 'Category Descriptions'},
+        {'model': 'database.PesticidalProteinDatabase', 'label': 'Public Sequences'},
         {'model': 'database.PesticidalProteinPrivateDatabase',
-            'label': 'Private Sequence Database'},
+            'label': 'Private Sequences'},
         {'model': 'database.StructureDatabase',
-            'label': 'Structure Database'},
-        {'model': 'database.PesticidalProteinHiddenSequence', 'label': 'Hidden Sequence Database'},
+            'label': 'Structures'},
+        {'model': 'database.PesticidalProteinHiddenSequence', 'label': 'Hidden Sequences'},
         {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
         {'model': 'database.OldnameNewnameTableRight',
             'label': 'Organized by Oldname'},
         {'model': 'database.OldnameNewnameTableLeft',
-            'label': 'Organized by new name'})},
+            'label': 'Organized by New name'})},
     'namingalgorithm',
     'extra',
     {'app': 'auth', 'models': (
