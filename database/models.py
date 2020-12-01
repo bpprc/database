@@ -7,7 +7,13 @@ from django.db import models
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 
+
+TRUE_FALSE_CHOICES = (
+    (True, 'Yes'),
+    (False, 'No')
+)
 
 class OldnameNewnameTableLeft(models.Model):
     name_2020 = models.CharField(max_length=250, blank=True, null=False)
@@ -37,7 +43,8 @@ class StructureDatabase(models.Model):
     oldname = models.CharField(max_length=75, blank=True, null=False)
     accession = models.CharField(max_length=75, blank=True, null=False)
     #uniprot = models.CharField(max_length=25, blank=True, null=False)
-    pdbid = models.JSONField(max_length=500, blank=True, null=False)
+    #pdbid = models.JSONField(max_length=500, blank=True, null=False)
+    pdbid = ArrayField(models.CharField(max_length = 1000, blank=True), default = list)
     #ligand = models.CharField(max_length=250, blank=True, null=False)
     #gene_names = models.CharField(max_length=250, blank=True, null=False)
     #experiment_method = models.CharField(max_length=250, blank=True, null=False)
@@ -47,7 +54,7 @@ class StructureDatabase(models.Model):
     #publication = models.TextField(blank=True, null=False)
     pubmedid = models.CharField(max_length=75, blank=True, null=False)
     year = models.CharField(max_length=5, blank=True, null=False)
-    modified = models.CharField(max_length=100, choices=CHOICES)
+    modified = models.CharField(max_length=100, choices=CHOICES, default="No")
     comment = models.TextField(null=True, blank=True)
     #organism = models.CharField(max_length=250, blank=True)
     #expression_system = models.CharField(max_length=250, blank=True)
@@ -63,25 +70,48 @@ class StructureDatabase(models.Model):
 class PesticidalProteinHiddenSequence(models.Model):
     """
     """
-    name = models.CharField(max_length=15, blank=True, null=False)
+    name = models.CharField(max_length=15, default="None")
+    oldname = models.CharField(max_length=305, default="None")
+    othernames = models.TextField(blank=True, null=False)
+    accession = models.CharField(max_length=25)
+    year = models.CharField(max_length=5, default="None")
+    sequence = models.TextField(blank=True, null=False)
+    bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+    bacterium_textbox = models.CharField(
+        max_length=250, default="Bacillus Thuringiensis")
+    strain = models.CharField(
+        max_length=250, default="None")
+    publication = models.TextField(null=True, blank=True)
+    family = models.CharField(max_length=305, default="None")
+    toxicto = models.CharField(max_length=250, default="None")
+    nontoxic = models.CharField(max_length=250, default="None")
+    mammalian_active = models.CharField(max_length=250, default="None")
+    pdbcode = models.CharField(max_length=10, default="None")
+    comment = models.TextField(null=True, blank=True)
+    submittersname = models.CharField(max_length=25, default="None")
+    submittersemail = models.EmailField(max_length=70, default="None")
+    taxonid = models.CharField(max_length=25, default="None")
+    partnerprotein = models.BooleanField(
+        default=True, choices=TRUE_FALSE_CHOICES)
+    partnerprotein_textbox = models.CharField(
+        max_length=250, default="None")
+    dnasequence = models.TextField(null=True, blank=False)
+    uploaded = models.DateTimeField('Uploaded', default=timezone.now)
+    alignresults = models.TextField(null=True, blank=True)
+    predict_name = models.TextField(null=True, blank=True)
+    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
+    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
+    admin_comments = models.TextField(null=True, blank=True)
+    public = models.BooleanField(default=False)
+    private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     oldname = models.CharField(max_length=105, blank=True, null=False)
     othernames = models.TextField(blank=True, null=False)
-    accession = models.CharField(max_length=25, blank=True, null=False)
-    year = models.CharField(max_length=5, blank=True, null=False)
-    sequence = models.TextField(blank=True, null=False)
-    uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
-    public = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "Hidden sequences for naming purpose"
-
-
-TRUE_FALSE_CHOICES = (
-    (True, 'Yes'),
-    (False, 'No')
-)
 
 
 class PesticidalProteinPrivateDatabase(models.Model):
