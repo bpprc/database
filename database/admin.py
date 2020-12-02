@@ -13,8 +13,12 @@ from django.contrib.auth.models import Group
 from .models import PesticidalProteinDatabase, \
     Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight, StructureDatabase, PesticidalProteinHiddenSequence
 from import_export import resources
+from django.utils.html import format_html
 from django.db import models
 from django.forms import TextInput, Textarea
+from Bio import Entrez
+
+Entrez.email = 'sureshcbt@gmail.com'
 
 
 class FilterByCategories(admin.SimpleListFilter):
@@ -68,32 +72,43 @@ class StructureDatabaseAdmin(ImportExportModelAdmin):
     ordering = ('name',)
 
 
-class PesticidalProteinPrivateDatabaseAdmin(admin.ModelAdmin):
-    # resource_class = PesticidalProteinPrivateDatabaseResource
+class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
+    resource_class = PesticidalProteinPrivateDatabaseResource
     # actions = None
-    actions = ['make_public']
+    # actions = ['make_public']
 
     search_fields = ('name', 'oldname', 'othernames',
                      'accession', 'year', 'private')
     fields = ('name', 'oldname', 'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'private', 'admin_user')
-    list_display = ('name', 'oldname',  'othernames',
-                    'accession', 'year', 'fastasequence_file', 'private')
+              'sequence', 'uploaded', 'fastasequence_file', 'private', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
+    list_display = ('name', 'oldname',
+                    'accession_url','accession_availability', 'year', 'private','admin_user', 'admin_comments')
     ordering = ('name',)
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return False
+    def accession_url(self, obj):
+        return format_html('<a href="%s%s" target="_blank">%s</a>' % ('https://www.ncbi.nlm.nih.gov/protein/', obj.accession, obj.accession))
 
-    def get_changeform_initial_data(self, request):
-        return {'admin_user': request.user.id}
+    accession_url.allow_tags = True
+    accession_url.description = 'View the accession number as an URL'
 
-    def make_public(self, request, queryset):
-        queryset.update(public=True)
+    def accession_availability(self, obj):
+        accession = obj.accession
+        if not accession:
+            return format_html('<body> <p>No accession number</p> </body>')
+        try:
+            handle = Entrez.efetch(db="nucleotide", id=accession, rettype="fasta", retmode="text")
+            return format_html('<body> <p style="color:#FF0000";>Sequence is Public</p> </body>')
+        except:
+            return format_html('<body> <p>Sequence is Private</p> </body>')
 
-    # def has_change_permission(self, request, obj=None):
-    #     return False
-    # def move_to_public(self, request):
-    # save_on_top = True
+    accession_availability.allow_tags = True
+    accession_availability.description = 'Accession Available in NCBI'
+
+    # def get_changeform_initial_data(self, request):
+    #     return {'admin_user': request.user.id}
+    #
+    # def make_public(self, request, queryset):
+    #     queryset.update(public=True)
 
 
 class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
@@ -111,13 +126,23 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
     # categories = PesticidalProteinDatabase.objects.order_by('name').values_list('name').distinct()
     search_fields = ('name', 'oldname',  'othernames',
-                     'accession', 'year', 'public', 'pdbcode')
+                     'accession', 'year', 'public', 'pdbcode', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
     fields = ('name', 'oldname',  'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'public', 'pdbcode')
+              'sequence', 'uploaded', 'fastasequence_file', 'public', 'pdbcode', 'submittersname','submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
     list_display = ('name', 'oldname',  'othernames',
-                    'accession', 'year', 'public', 'pdbcode')
+                    'accession_url', 'year', 'public', 'admin_user', 'admin_comments')
     list_filter = ['uploaded', FilterByCategories]
     ordering = ('name',)
+
+    # def accession_url(self, obj):
+    #     """Add URL to the accession number"""
+    #     base_url = 'https://www.ncbi.nlm.nih.gov/protein/'
+    #     return format_html('<a href="{url}" target="_blank">{url}</a>', url=base_url+obj.accession)
+    def accession_url(self, obj):
+        return format_html('<a href="%s%s" target="_blank">%s</a>' % ('https://www.ncbi.nlm.nih.gov/protein/', obj.accession, obj.accession))
+
+    accession_url.allow_tags = True
+    accession_url.description = 'View the align results'
 
 
 class DescriptionResource(resources.ModelResource):
