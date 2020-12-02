@@ -268,6 +268,13 @@ class PesticidalProteinDatabase(models.Model):
         sheet = "{0:0.2f}".format(sec_stru[2])
         return helix, turn, sheet
 
+    # def accession_url(self):
+    #     base_url = 'https://www.ncbi.nlm.nih.gov/protein/'
+    #     url = base_url+(self.accession)
+    #     from django.utils.html import format_html
+    #     return format_html("<a href='%s'>%s</a>" % (url, url))
+
+
 
 # class BacteriaTaxonomy(models.Model):
 #     bacteria_name = models.CharField(max_length=100, blank=False)

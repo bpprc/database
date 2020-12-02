@@ -74,7 +74,10 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         return format_html('<a href="/admin/namingalgorithm/usersubmission/">refresh</a>')
 
     def send_email(self, obj):
-        return format_html('<a href="/admin/contact/?submittersname={0}&email={1}&name={2}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.name or ''))
+        return format_html('<a href="/admin/contact/?submittersname={0}&submittersemail={1}&name={2}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.name or ''))
+
+    def Pfam(self, obj):
+        return format_html()
 
     run_align_link.allow_tags = True
     run_align_link.description = 'Run the align link for the submission'
