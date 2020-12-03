@@ -235,7 +235,7 @@ class DownloadForm(forms.Form):
 
 class ThreedomainDownloadForm(forms.Form):
 
-    category_type = forms.MultipleChoiceField(
+    category_type2 = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         choices='',
         label='',
@@ -276,8 +276,8 @@ class ThreedomainDownloadForm(forms.Form):
         #
         # self.category_options.extend(
         #     sorted(self.category_description.items(), key=lambda x: x[0][:3]))
-        self.fields['category_type'].choices = self.category_options
-        self.fields['category_type'].label = ''
+        self.fields['category_type2'].choices = self.category_options
+        self.fields['category_type2'].label = ''
         # self.helper.layout = Layout(
         #     'category_type',
         #     HTML('<div class="form-group"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %

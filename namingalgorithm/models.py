@@ -45,6 +45,9 @@ class AbstractModel(models.Model):
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     user_provided_proteinname = models.CharField(max_length=105, blank=True, null=False)
 
+    def __str__(self):
+        return 'User submission ' + self.accession
+
     class Meta:
         abstract = True
         ordering = ('-uploaded',)
@@ -118,7 +121,7 @@ There is a new sequence submission in the database. Please check the database ad
         subject="New Submission for the database",
         message=sequence_message,
         from_email='bpprc.database@gmail.com',
-        recipient_list=['sureshcbt@gmail.com','n.crickmore@sussex.ac.uk','Berry@cardiff.ac.uk'],
+        recipient_list=['sureshcbt@gmail.com'],
         fail_silently=False,
     )
 

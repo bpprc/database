@@ -125,12 +125,12 @@ class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
 class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
     # categories = PesticidalProteinDatabase.objects.order_by('name').values_list('name').distinct()
-    search_fields = ('name', 'oldname',  'othernames',
-                     'accession', 'year', 'public', 'pdbcode', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
+    search_fields =  ('name', 'oldname',  'othernames',
+                     'accession', 'year')
     fields = ('name', 'oldname',  'othernames', 'accession', 'year',
               'sequence', 'uploaded', 'fastasequence_file', 'public', 'pdbcode', 'submittersname','submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
     list_display = ('name', 'oldname',  'othernames',
-                    'accession_url', 'year', 'public', 'admin_user', 'admin_comments')
+                    'accession_url', 'year', 'public', 'Pfam_Info', 'admin_user', 'admin_comments')
     list_filter = ['uploaded', FilterByCategories]
     ordering = ('name',)
 
@@ -140,6 +140,13 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     #     return format_html('<a href="{url}" target="_blank">{url}</a>', url=base_url+obj.accession)
     def accession_url(self, obj):
         return format_html('<a href="%s%s" target="_blank">%s</a>' % ('https://www.ncbi.nlm.nih.gov/protein/', obj.accession, obj.accession))
+
+    def Pfam_Info(self, obj):
+        if obj.name.startswith('Cry'):
+            domain_details = ProteinDetail.objects.get(accession=obj.accession)
+            if domain_details:
+                return format_html('Data Available')
+            return format_html('<body> <p style="color:#FF0000";>Pfam data needed</p> </body>')
 
     accession_url.allow_tags = True
     accession_url.description = 'View the align results'

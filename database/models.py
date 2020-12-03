@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.core.files.base import ContentFile
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
+from django.utils.html import format_html
 
 
 TRUE_FALSE_CHOICES = (
@@ -163,8 +164,8 @@ class PesticidalProteinPrivateDatabase(models.Model):
 class PesticidalProteinDatabase(models.Model):
     """
     """
-    submittersname = models.CharField(max_length=25, null=True, blank=True)
-    submittersemail = models.EmailField(max_length=70, null=True, blank=False)
+    submittersname = models.CharField(max_length=125, default="Uploaded by Suresh")
+    submittersemail = models.EmailField(max_length=70, null=True, blank=False, default="suresh.pannersel@ufl.edu")
     name = models.CharField(max_length=15, blank=True, null=False)
     oldname = models.CharField(max_length=105, blank=True, null=False)
     othernames = models.TextField(blank=True, null=False)
@@ -181,7 +182,7 @@ class PesticidalProteinDatabase(models.Model):
         max_length=250, null=True, blank=True)
     toxicto = models.CharField(max_length=250, blank=True, null=False)
     nontoxic = models.CharField(max_length=250, blank=True, null=False)
-    dnasequence = models.TextField(null=True, blank=False)
+    dnasequence = models.TextField(default="NA")
     publication = models.TextField(null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
@@ -268,11 +269,18 @@ class PesticidalProteinDatabase(models.Model):
         sheet = "{0:0.2f}".format(sec_stru[2])
         return helix, turn, sheet
 
-    # def accession_url(self):
-    #     base_url = 'https://www.ncbi.nlm.nih.gov/protein/'
-    #     url = base_url+(self.accession)
-    #     from django.utils.html import format_html
-    #     return format_html("<a href='%s'>%s</a>" % (url, url))
+    # def Pfam_Info(self):
+    #     if self.name.startswith('Cry'):
+    #         domain_details = ProteinDetail.objects.get(accession=self.accession)
+    #         print(domain_details)
+    #         if not domain_details:
+    #             return format_html('<body> <p style="color:#FF0000";>Pfam data needed</p> </body>')
+    #         else:
+    #             return format_html('Data Available')
+        #
+        # else:
+        #     return format_html('Data Available')
+
 
 
 

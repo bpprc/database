@@ -2,16 +2,85 @@
 
 from django import forms
 from django.forms import modelformset_factory
+from Bio import SeqIO
+from Bio import Seq
+import tempfile
+import textwrap
+from io import StringIO
 from .models import UserSubmission, SendEmail
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
 # from crispy_forms.bootstrap import AppendedText
 
 RECAPTCHA_PUBLIC_KEY = "6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT"
+NEEDLE_CORRECT_SEQ_ERROR_MSG = "please paste correct sequence!"
+
+ALLOWED_AMINOACIDS = {'E', 'Q', 'L', 'Y', 'V', 'W', 'I', 'A', 'H', 'G', 'P', 'S', 'R', 'C', 'T', 'F', 'K', 'N', 'D', 'M'}
+
+def hasNumbers(sequence: str):
+    return any(char.isdigit() for char in sequence)
 
 
-# class CustomToxinBox(Field):
-#     template = 'namingalgorithm/toxinbox.html'
+def invalidSymbol(sequence: str):
+    invalidsymbols = ["`", "~", "!", "@", "#", "$"]
+    return any(i in sequence for i in invalidsymbols)
+
+
+def write_sequence_file(sequence: str):
+    """ Validate protein sequence"""
+
+    # open a temperorary file
+    tmp_seq = tempfile.NamedTemporaryFile(mode="wb+", delete=False)
+    #print(tmp_seq.name)
+
+    # if sequence is none raise the ValidationError
+    if len(str(sequence.strip())) == 0:
+        raise forms.ValidationError(NEEDLE_CORRECT_SEQ_ERROR_MSG)
+
+    # Write fasta sequence
+    if str(sequence).strip()[0] != ">":
+        tmp_seq.write(">seq1\n".encode())
+
+    tmp_seq.write(sequence.encode())
+    tmp_seq.close()
+    # Return name of the temporary file
+    return tmp_seq.name
+
+
+def guess_if_protein(seq, thresh=0.99):
+    """Guess if the given sequence is Protein."""
+    # protein_letters = ['C', 'D', 'S', 'Q', 'K','I','P','T','F','N','G',
+    #                'H','L','R','W','A','V','E','Y','M']
+    dna_letters = ['A', 'C', 'G', 'T']
+    #print(seq)
+
+    for record in SeqIO.parse(seq, "fasta"):
+        seq = record.seq
+
+    seq = seq.upper()
+    protein_alpha_count = 0
+    for letter in dna_letters:
+        protein_alpha_count += seq.count(letter)
+
+    return (len(seq) == 0 or float(protein_alpha_count) / float(len(seq)) >= thresh)
+
+def guess_if_dna(seq, thresh=0.99):
+    """Guess if the given sequence is Protein."""
+    # protein_letters = ['C', 'D', 'S', 'Q', 'K','I','P','T','F','N','G',
+    #                'H','L','R','W','A','V','E','Y','M']
+    protein_letters = ['A', 'C', 'G', 'T']
+    #print(seq)
+
+    for record in SeqIO.parse(seq, "fasta"):
+        seq = record.seq
+
+    seq = seq.upper()
+    protein_alpha_count = 0
+    for letter in protein_letters:
+        protein_alpha_count += seq.count(letter)
+
+    return (len(seq) == 0 or float(protein_alpha_count) / float(len(seq)) <= thresh)
+
 
 class SendEmailForm(forms.ModelForm):
     """Sequence submission form."""
@@ -191,10 +260,10 @@ class UserSubmissionForm(forms.ModelForm):
         super(UserSubmissionForm, self).__init__(*args, **kwargs)
 
         self.fields['sequence'].widget.attrs['cols'] = 50
-        self.fields['sequence'].widget.attrs['cols'] = 20
+        # self.fields['sequence'].widget.attrs['cols'] = 20
         self.fields['bacterium_textbox'].widget.attrs['cols'] = 10
         self.fields['comment'].widget.attrs['cols'] = 50
-        self.fields['comment'].widget.attrs['cols'] = 20
+        # self.fields['comment'].widget.attrs['cols'] = 20
 
         self.fields['toxicto'].label = 'Toxic to'
         self.helper = FormHelper()
@@ -256,6 +325,56 @@ class UserSubmissionForm(forms.ModelForm):
             # )
 
         )
+
+
+    def clean_sequence(self):
+        sequence_in_form = self.cleaned_data['sequence']
+
+        #invalidsymbols = invalid_symbol(sequence_in_form)
+        if invalidSymbol(sequence_in_form):
+            raise forms.ValidationError("There are invalid symbols in the sequence")
+
+        if hasNumbers(sequence_in_form):
+            raise forms.ValidationError("There are numbers in the sequence. Please paste protein sequence only")
+
+        if sequence_in_form:
+            filename = write_sequence_file(sequence_in_form)
+            sequence_is_protein = guess_if_protein(filename)
+
+        if not sequence_in_form:
+            raise forms.ValidationError("Please paste valid protein sequences")
+
+        if sequence_is_protein:
+            raise forms.ValidationError(
+                "Please paste only protein sequences here")
+        # print(self.cleaned_data)
+        formatted_sequence = textwrap.fill(sequence_in_form, 60)
+
+        return formatted_sequence
+
+    def clean_dnasequence(self):
+        dnasequence_in_form = self.cleaned_data['dnasequence']
+
+        if invalidSymbol(dnasequence_in_form):
+            raise forms.ValidationError("There are invalid symbols in the sequence")
+
+        if hasNumbers(dnasequence_in_form):
+            raise forms.ValidationError("There are numbers in the sequence. Please paste DNA sequence only")
+
+        if dnasequence_in_form:
+            filename = write_sequence_file(dnasequence_in_form)
+            sequence_is_dna = guess_if_dna(filename)
+
+        if not dnasequence_in_form:
+            raise forms.ValidationError("Please paste valid DNA sequences")
+
+        if sequence_is_dna:
+            raise forms.ValidationError(
+                "Please paste only DNA sequences here")
+
+        formatted_dnasequence = textwrap.fill(dnasequence_in_form, 60)
+
+        return formatted_dnasequence
 
     class Meta:
         model = UserSubmission

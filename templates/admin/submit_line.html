@@ -16,7 +16,6 @@ label.required { color: red; }
 {% endif %}
 <input class="databox" type="button" value="Copy to Public Database" name="_saveasnew">
 
-<input class="databox" type="button" value="Copy to Private Database" name="_saveasnew">
 
 {% if show_close %}<a href="{% url opts|admin_urlname:'changelist' %}" class="closelink">{% trans 'Close' %}</a>{% endif %}
 {% endblock %}
@@ -29,12 +28,12 @@ label.required { color: red; }
 <script>
 
 moveName=localStorage.getItem('name');
-moveOldname=localStorage.getItem('oldname');
+// moveOldname=localStorage.getItem('oldname');
 moveSeq=localStorage.getItem('sequence');
 moveAccession=localStorage.getItem('accession');
 if (moveName) {
     document.getElementById("id_name").value = moveName;
-    document.getElementById("id_oldname").value = moveOldname;
+    // document.getElementById("id_oldname").value = moveOldname;
     document.getElementById("id_sequence").value = moveSeq;
     document.getElementById("id_accession").value = moveAccession;
     localStorage.clear()
@@ -61,12 +60,12 @@ document.body.addEventListener('click', function (evt) {
           case "move":
 
             const name=document.getElementById('id_name').value;
-            const oldname=document.getElementById('id_oldname').value;
+            // const oldname=document.getElementById('id_oldname').value;
             const accession=document.getElementById('id_accession').value;
             const sequence=document.getElementById('id_sequence').value;
 
             localStorage.setItem('name', name);
-            localStorage.setItem('oldname', oldname);
+            // localStorage.setItem('oldname', oldname);
             localStorage.setItem('sequence', sequence);
             localStorage.setItem('accession', accession);
             window.location = "/admin/database/pesticidalproteindatabase/add/";

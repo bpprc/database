@@ -11,11 +11,11 @@
 {% crispy form1 %}
 </div>
 
-<div>
+<!-- <div>
 <h3> Download the threedomain sequences </h3>
 </br>
 {% crispy form2 %}
-</div>
+</div> -->
 
 {% endblock content %}
 
@@ -45,17 +45,6 @@ $('#id_category_type_1').click(function() {
    }
 });
 
-$('#id_download_category_type_1').click(function() {
-   if(this.checked) {
-       $(':checkbox').each(function() {
-           this.checked = true;
-       });
-   } else {
-      $(':checkbox').each(function() {
-           this.checked = false;
-       });
-   }
-});
 </script>
 
 {% endblock extrajs %}
