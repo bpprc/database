@@ -121,6 +121,7 @@ def run_bug(query_data):
 
     PPD_proteins_filtered = PesticidalProteinDatabase.objects.filter(
         name__in=endwith1)
+    print(PPD_proteins_filtered)
 
     private_proteins_filtered = PesticidalProteinPrivateDatabase.objects.filter(
         name__in=private_endwith1)
@@ -132,8 +133,8 @@ def run_bug(query_data):
         if not hasattr(protein, 'fastasequence_file'):
             continue
 
-        print("I am running now", protein.name)
-        print(protein.fastasequence_file.path)
+        # print("I am running now", protein.name)
+        # print(protein.fastasequence_file.path)
         s = os.path.join(settings.MEDIA_ROOT,
                          protein.fastasequence_file.path)
         # print("combined_file", s)
