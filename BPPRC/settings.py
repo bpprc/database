@@ -189,7 +189,7 @@ LOGGING = {
         'logfile': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': BASE_DIR + "/djangologfile",
+            'filename': BASE_DIR + "/logs",
             'maxBytes': 50000,
             'backupCount': 2,
             'formatter': 'standard',
@@ -226,7 +226,8 @@ ADMIN_REORDER = [
             'label': 'Private Sequences'},
         {'model': 'database.StructureDatabase',
             'label': 'Structures'},
-        {'model': 'database.PesticidalProteinHiddenSequence', 'label': 'Hidden Sequences'},
+        {'model': 'database.PesticidalProteinHiddenSequence',
+            'label': 'Hidden Sequences'},
         {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
         {'model': 'database.OldnameNewnameTableRight',
             'label': 'Organized by Oldname'},
@@ -252,7 +253,8 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 
 CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE') == 'True'
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = ['camtech-bpp.ifas.ufl.edu', 'ifs-ent-camtech2.ifas.ufl.edu']
+CSRF_TRUSTED_ORIGINS = ['camtech-bpp.ifas.ufl.edu',
+                        'ifs-ent-camtech2.ifas.ufl.edu']
 
 CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK')
 
