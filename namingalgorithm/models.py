@@ -37,13 +37,15 @@ class AbstractModel(models.Model):
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)
-    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
+    terms_conditions = models.BooleanField(
+        default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, default="1", null=False, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
     private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
-    user_provided_proteinname = models.CharField(max_length=105, blank=True, null=False)
+    user_provided_proteinname = models.CharField(
+        max_length=105, blank=True, null=False)
 
     def __str__(self):
         return 'User submission ' + self.accession
