@@ -123,7 +123,8 @@ There is a new sequence submission in the database. Please check the database ad
         subject="New Submission for the database",
         message=sequence_message,
         from_email='bpprc.database@gmail.com',
-        recipient_list=['sureshcbt@gmail.com'],
+        recipient_list=['sureshcbt@gmail.com',
+                        'n.crickmore@sussex.ac.uk', 'Berry@cardiff.ac.uk'],
         fail_silently=False,
     )
 
