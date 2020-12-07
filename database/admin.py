@@ -66,9 +66,12 @@ class StructureDatabaseResource(resources.ModelResource):
 class StructureDatabaseAdmin(ImportExportModelAdmin):
     resource_class = StructureDatabaseResource
 
-    search_fields = ('name', 'oldname', 'accession', 'pdbid', 'pubmedid', 'year')
-    fields = ('name','oldname','accession','pdbid','modified', 'pubmedid', 'year','comment')
-    list_display = ('name','oldname','accession','pdbid','modified', 'pubmedid', 'year','comment')
+    search_fields = ('name', 'oldname', 'accession',
+                     'pdbid', 'pubmedid', 'year')
+    fields = ('name', 'oldname', 'accession', 'pdbid',
+              'modified', 'pubmedid', 'year', 'comment')
+    list_display = ('name', 'oldname', 'accession', 'pdbid',
+                    'modified', 'pubmedid', 'year', 'comment')
     ordering = ('name',)
 
 
@@ -82,7 +85,7 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     fields = ('name', 'oldname', 'othernames', 'accession', 'year',
               'sequence', 'uploaded', 'fastasequence_file', 'private', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
     list_display = ('name', 'oldname',
-                    'accession_url','accession_availability', 'year', 'private','admin_user', 'admin_comments')
+                    'accession_url', 'accession_availability', 'year', 'private', 'admin_user', 'admin_comments')
     ordering = ('name',)
 
     def accession_url(self, obj):
@@ -96,7 +99,8 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
         if not accession:
             return format_html('<body> <p>No accession number</p> </body>')
         try:
-            handle = Entrez.efetch(db="nucleotide", id=accession, rettype="fasta", retmode="text")
+            handle = Entrez.efetch(
+                db="nucleotide", id=accession, rettype="fasta", retmode="text")
             return format_html('<body> <p style="color:#FF0000";>Sequence is Public</p> </body>')
         except:
             return format_html('<body> <p>Sequence is Private</p> </body>')
@@ -116,7 +120,8 @@ class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
 
     search_fields = ('name', 'othernames',
                      'accession', 'year', 'public')
-    fields = ('name', 'othernames', 'accession', 'year', 'sequence', 'bacterium_textbox', 'strain', 'publication', 'family', 'toxicto', 'nontoxic', 'mammalian_active', 'pdbcode', 'comment')
+    fields = ('name', 'othernames', 'accession', 'year', 'sequence', 'bacterium_textbox', 'strain',
+              'publication', 'family', 'toxicto', 'nontoxic', 'mammalian_active', 'pdbcode', 'comment')
     list_display = ('name', 'othernames',
                     'accession', 'year', 'public')
     ordering = ('name',)
@@ -125,10 +130,10 @@ class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
 class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
     # categories = PesticidalProteinDatabase.objects.order_by('name').values_list('name').distinct()
-    search_fields =  ('name', 'oldname',  'othernames',
+    search_fields = ('name', 'oldname',  'othernames',
                      'accession', 'year')
     fields = ('name', 'oldname',  'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'public', 'pdbcode', 'submittersname','submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
+              'sequence', 'uploaded', 'fastasequence_file', 'public', 'pdbcode', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
     list_display = ('name', 'oldname',  'othernames',
                     'accession_url', 'year', 'public', 'Pfam_Info', 'admin_user', 'admin_comments')
     list_filter = ['uploaded', FilterByCategories]
@@ -143,10 +148,14 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
 
     def Pfam_Info(self, obj):
         if obj.name.startswith('Cry'):
-            domain_details = ProteinDetail.objects.get(accession=obj.accession)
+            try:
+                domain_details = ProteinDetail.objects.get(
+                    accession=obj.accession)
+            except ProteinDetail.DoesNotExist:
+                domain_details = None
             if domain_details:
-                return format_html('Data Available')
-            return format_html('<body> <p style="color:#FF0000";>Pfam data needed</p> </body>')
+                return format_html('<p>Data Available</p>')
+            return format_html('<p style="color:#FF0000";>Pfam data needed</p>')
 
     accession_url.allow_tags = True
     accession_url.description = 'View the align results'
