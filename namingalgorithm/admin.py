@@ -68,8 +68,6 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         'refresh',
         'send_email',
         'uploaded',
-        'admin_user',
-        'admin_comments',
     )
 
     inlines = [ModelAdminLog]
