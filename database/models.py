@@ -22,6 +22,9 @@ class OldnameNewnameTableLeft(models.Model):
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = ("Organized by new name")
         verbose_name_plural = "Organized by new name"
@@ -31,6 +34,9 @@ class OldnameNewnameTableRight(models.Model):
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
     name_2020 = models.CharField(max_length=250, blank=True, null=False)
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = ("Organized by Oldname")
@@ -68,6 +74,9 @@ class StructureDatabase(models.Model):
     #structure_file = models.FileField(upload_to='pdb_files/', null=True, blank=True)
     #structure_doi = models.CharField(max_length=250, blank=True, null=False)
     #bt = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name_plural = "Structure Database"
@@ -116,6 +125,9 @@ class PesticidalProteinHiddenSequence(models.Model):
     othernames = models.TextField(blank=True, null=False)
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name_plural = "Hidden sequences for naming purpose"
