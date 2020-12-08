@@ -15,10 +15,31 @@ from .models import PesticidalProteinDatabase, \
 from import_export import resources
 from django.utils.html import format_html
 from django.db import models
+from django.contrib.admin.checks import BaseModelAdminChecks
+from django.contrib.admin.models import LogEntry
+from django.contrib.contenttypes.admin import GenericStackedInline
+
 from django.forms import TextInput, Textarea
 from Bio import Entrez
 
 Entrez.email = 'sureshcbt@gmail.com'
+
+
+class ModelAdminLog(GenericStackedInline):
+    model = LogEntry
+
+    # All fields are read-only, obviously
+    readonly_fields = fields = ["action_time", "user", "change_message"]
+    # No extra fields so noone can add new logs
+    extra = 0
+    # No one can delete logs
+    can_delete = False
+
+    # This is a hackity hack! See below
+    checks_class = BaseModelAdminChecks
+
+    def change_message(self, obj):
+        return obj.get_change_message()
 
 
 class FilterByCategories(admin.SimpleListFilter):
@@ -74,6 +95,8 @@ class StructureDatabaseAdmin(ImportExportModelAdmin):
                     'modified', 'pubmedid', 'year', 'comment')
     ordering = ('name',)
 
+    inlines = [ModelAdminLog]
+
 
 class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinPrivateDatabaseResource
@@ -87,6 +110,12 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     list_display = ('name', 'oldname',
                     'accession_url', 'accession_availability', 'year', 'private', 'admin_user', 'admin_comments')
     ordering = ('name',)
+
+    inlines = [ModelAdminLog]
+
+    def save_model(self, request, obj):
+        obj.user_var_id = request.user.id
+        super().save_model(request, obj)
 
     def accession_url(self, obj):
         return format_html('<a href="%s%s" target="_blank">%s</a>' % ('https://www.ncbi.nlm.nih.gov/protein/', obj.accession, obj.accession))
@@ -126,6 +155,8 @@ class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
                     'accession', 'year', 'public')
     ordering = ('name',)
 
+    inlines = [ModelAdminLog]
+
 
 class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
@@ -138,6 +169,8 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
                     'accession_url', 'year', 'public', 'Pfam_Info', 'admin_user', 'admin_comments')
     list_filter = ['uploaded', FilterByCategories]
     ordering = ('name',)
+
+    inlines = [ModelAdminLog]
 
     # def accession_url(self, obj):
     #     """Add URL to the accession number"""
@@ -171,6 +204,8 @@ class DescriptionAdmin(ImportExportModelAdmin):
     fields = ('name', 'description')
     list_display = ('name', 'description')
 
+    inlines = [ModelAdminLog]
+
 
 class OldnameNewnameTableLeftResource(resources.ModelResource):
     class Meta:
@@ -183,6 +218,8 @@ class OldnameNewnameTableLeftAdmin(ImportExportModelAdmin):
     fields = ('name_2020', 'name_1998', 'alternative_name')
     list_display = ('name_2020', 'name_1998', 'alternative_name')
 
+    inlines = [ModelAdminLog]
+
 
 class OldnameNewnameTableRightResource(resources.ModelResource):
     class Meta:
@@ -194,6 +231,8 @@ class OldnameNewnameTableRightAdmin(ImportExportModelAdmin):
     resource_class = OldnameNewnameTableRightResource
     fields = ('name_1998', 'name_2020', 'alternative_name')
     list_display = ('name_1998', 'name_2020', 'alternative_name')
+
+    inlines = [ModelAdminLog]
 
 
 class ProteinDetailResource(resources.ModelResource):
@@ -215,6 +254,8 @@ class ProteinDetailAdmin(ImportExportModelAdmin):
               'start_N', 'end_N', 'domain_M', 'pfam_M', 'cdd_M', 'start_M', 'end_M', 'domain_C', 'pfam_C', 'cdd_C', 'start_C', 'end_C')
     list_display = ('accession', 'fulllength', 'species', 'taxon', 'domain_N', 'pfam_N', 'cdd_N',
                     'start_N', 'end_N', 'domain_M', 'pfam_M', 'cdd_M', 'start_M', 'end_M', 'domain_C', 'pfam_C', 'cdd_C', 'start_C', 'end_C')
+
+    inlines = [ModelAdminLog]
 
     class Meta:
         skip_unchanged = True

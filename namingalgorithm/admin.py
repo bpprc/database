@@ -5,10 +5,29 @@ from django.utils.html import format_html
 from .models import UserSubmission, Archive, SendEmail
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
+from django.contrib.admin.checks import BaseModelAdminChecks
+from django.contrib.admin.models import LogEntry
+from django.contrib.contenttypes.admin import GenericStackedInline
+
+
+class ModelAdminLog(GenericStackedInline):
+    model = LogEntry
+
+    # All fields are read-only, obviously
+    readonly_fields = fields = ["action_time", "user", "change_message"]
+    # No extra fields so noone can add new logs
+    extra = 0
+    # No one can delete logs
+    can_delete = False
+
+    # This is a hackity hack! See below
+    checks_class = BaseModelAdminChecks
+
+    def change_message(self, obj):
+        return obj.get_change_message()
 
 
 class ArchiveResource(resources.ModelResource):
-
 
     class Meta:
         model = Archive
@@ -26,12 +45,14 @@ class ArchiveAdmin(ImportExportModelAdmin):
         'admin_comments',
     )
 
+    inlines = [ModelAdminLog]
+
 
 class UserSubmissionResource(resources.ModelResource):
 
-
     class Meta:
         model = UserSubmission
+
 
 class UserSubmissionAdmin(ImportExportModelAdmin):
     resource_class = UserSubmissionResource
@@ -50,6 +71,8 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         'admin_user',
         'admin_comments',
     )
+
+    inlines = [ModelAdminLog]
 
     def run_align_link(self, obj):
         if ">" in str(obj.sequence).split('\n')[0]:
@@ -96,6 +119,7 @@ class SendEmailAdmin(admin.ModelAdmin):
         'name',
     )
 
+    inlines = [ModelAdminLog]
 
 # class ArchiveAdmin(admin.ModelAdmin):
 #     search_fields = ('name', 'year', 'submittersname',
