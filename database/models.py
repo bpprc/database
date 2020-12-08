@@ -16,6 +16,7 @@ TRUE_FALSE_CHOICES = (
     (False, 'No')
 )
 
+
 class OldnameNewnameTableLeft(models.Model):
     name_2020 = models.CharField(max_length=250, blank=True, null=False)
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
@@ -35,17 +36,21 @@ class OldnameNewnameTableRight(models.Model):
         verbose_name = ("Organized by Oldname")
         verbose_name_plural = "Organized by Oldname"
 
+
 CHOICES = [
-    ('yes','Yes'),
-    ('no','No'),
+    ('yes', 'Yes'),
+    ('no', 'No'),
 ]
+
+
 class StructureDatabase(models.Model):
     name = models.CharField(max_length=25, blank=True, null=False)
     oldname = models.CharField(max_length=75, blank=True, null=False)
     accession = models.CharField(max_length=75, blank=True, null=False)
     #uniprot = models.CharField(max_length=25, blank=True, null=False)
     #pdbid = models.JSONField(max_length=500, blank=True, null=False)
-    pdbid = ArrayField(models.CharField(max_length = 1000, blank=True), default = list)
+    pdbid = ArrayField(models.CharField(
+        max_length=1000, blank=True), default=list)
     #ligand = models.CharField(max_length=250, blank=True, null=False)
     #gene_names = models.CharField(max_length=250, blank=True, null=False)
     #experiment_method = models.CharField(max_length=250, blank=True, null=False)
@@ -100,7 +105,8 @@ class PesticidalProteinHiddenSequence(models.Model):
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)
-    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
+    terms_conditions = models.BooleanField(
+        default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, default="1", null=False, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
@@ -141,7 +147,8 @@ class PesticidalProteinPrivateDatabase(models.Model):
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)
-    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
+    terms_conditions = models.BooleanField(
+        default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, default="1", null=False, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
@@ -153,7 +160,6 @@ class PesticidalProteinPrivateDatabase(models.Model):
         upload_to='fastasequence_files/', null=True, blank=True)
     name_category = models.CharField(max_length=15, blank=True)
 
-
     def __str__(self):
         return self.name
 
@@ -164,8 +170,10 @@ class PesticidalProteinPrivateDatabase(models.Model):
 class PesticidalProteinDatabase(models.Model):
     """
     """
-    submittersname = models.CharField(max_length=125, default="Uploaded by Suresh")
-    submittersemail = models.EmailField(max_length=70, null=True, blank=False, default="suresh.pannersel@ufl.edu")
+    submittersname = models.CharField(
+        max_length=125, default="Uploaded by Suresh")
+    submittersemail = models.EmailField(
+        max_length=70, null=True, blank=False, default="suresh.pannersel@ufl.edu")
     name = models.CharField(max_length=15, blank=True, null=False)
     oldname = models.CharField(max_length=105, blank=True, null=False)
     othernames = models.TextField(blank=True, null=False)
@@ -192,7 +200,8 @@ class PesticidalProteinDatabase(models.Model):
     public = models.BooleanField(default=True)
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
     predict_name = models.TextField(null=True, blank=True)
-    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
+    terms_conditions = models.BooleanField(
+        default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, default="1", null=False, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
@@ -282,8 +291,6 @@ class PesticidalProteinDatabase(models.Model):
         #     return format_html('Data Available')
 
 
-
-
 # class BacteriaTaxonomy(models.Model):
 #     bacteria_name = models.CharField(max_length=100, blank=False)
 #     bacteria_taxonid = models.IntegerField(max_length=20, blank=False)
@@ -337,8 +344,6 @@ class ProteinDetail(models.Model):
 
     # def fulllength(self):
     #     return self.sequence
-
-
 
 
 class Description(models.Model):
