@@ -25,6 +25,7 @@ from Bio import Entrez
 Entrez.email = 'sureshcbt@gmail.com'
 
 
+# https://blog.askesis.pl/post/2019/02/django-admin-inline.html
 class ModelAdminLog(GenericStackedInline):
     model = LogEntry
 
