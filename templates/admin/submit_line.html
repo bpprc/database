@@ -41,6 +41,7 @@ movenontoxic=localStorage.getItem('nontoxic');
 movednasequence=localStorage.getItem('dnasequence');
 movepublication=localStorage.getItem('publication');
 movecomment=localStorage.getItem('comment');
+movepredict_name=localStorage.getItem('predict_name');
 if (moveSubmittersname) {
     document.getElementById("id_submittersname").value = moveSubmittersname;
 }
@@ -83,6 +84,9 @@ if (movepublication) {
 if (movecomment) {
     document.getElementById("id_comment").value = movecomment;
   }
+if (movepredict_name) {
+    document.getElementById("id_predict_name").value = movepredict_name;
+  }
   localStorage.clear()
 
 </script>
@@ -118,6 +122,7 @@ document.body.addEventListener('click', function (evt) {
             const dnasequence=document.getElementById('id_dnasequence').value;
             const publication=document.getElementById('id_publication').value;
             const comment=document.getElementById('id_comment').value;
+            const predict_name=document.getElementById('id_predict_name').value;
 
             localStorage.setItem('submittersname', submittersname);
             localStorage.setItem('submittersemail', submittersemail);
@@ -133,6 +138,7 @@ document.body.addEventListener('click', function (evt) {
             localStorage.setItem('dnasequence', dnasequence);
             localStorage.setItem('publication', publication);
             localStorage.setItem('comment', comment);
+            localStorage.setItem('predict_name', predict_name)
             window.location = "/admin/database/pesticidalproteindatabase/add/";
             break;
 
@@ -176,6 +182,8 @@ document.body.addEventListener('click', function (evt) {
             const dnasequence=document.getElementById('id_dnasequence').value;
             const publication=document.getElementById('id_publication').value;
             const comment=document.getElementById('id_comment').value;
+            const predict_name=document.getElementById('id_predict_name').value;
+
 
             localStorage.setItem('submittersname', submittersname);
             localStorage.setItem('submittersemail', submittersemail);
@@ -191,6 +199,7 @@ document.body.addEventListener('click', function (evt) {
             localStorage.setItem('dnasequence', dnasequence);
             localStorage.setItem('publication', publication);
             localStorage.setItem('comment', comment);
+            localStorage.setItem('predict_name', predict_name)
             window.location = "/admin/database/pesticidalproteinprivatedatabase/add/";
             break;
 
