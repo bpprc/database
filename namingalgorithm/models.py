@@ -16,14 +16,17 @@ TRUE_FALSE_CHOICES = (
 class AbstractModel(models.Model):
     submittersname = models.CharField(max_length=25, null=True, blank=True)
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
-    name = models.CharField(max_length=25, null=True, blank=True)
-    sequence = models.TextField(null=True, blank=False)
+    name = models.CharField(max_length=25, null=True,
+                            blank=True, verbose_name="Protein Name")
+    sequence = models.TextField(
+        null=True, blank=False, verbose_name="Protein Sequence")
     bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     bacterium_textbox = models.CharField(
         max_length=250, null=True, blank=True)
     taxonid = models.CharField(max_length=25, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
-    accession = models.CharField(max_length=25, blank=True, null=False)
+    accession = models.CharField(
+        max_length=25, blank=True, null=False, verbose_name="NCBI accession number")
     partnerprotein = models.BooleanField(
         default=True, choices=TRUE_FALSE_CHOICES)
     partnerprotein_textbox = models.CharField(
@@ -33,7 +36,8 @@ class AbstractModel(models.Model):
     dnasequence = models.TextField(null=True, blank=False)
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
     publication = models.TextField(null=True, blank=True)
-    comment = models.TextField(null=True, blank=True)
+    comment = models.TextField(
+        null=True, blank=True, verbose_name="User comments")
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)

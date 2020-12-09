@@ -138,14 +138,17 @@ class PesticidalProteinPrivateDatabase(models.Model):
     """
     submittersname = models.CharField(max_length=25, null=True, blank=True)
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
-    name = models.CharField(max_length=15, blank=True, null=False)
-    sequence = models.TextField(blank=True, null=False)
+    name = models.CharField(max_length=15, blank=True,
+                            null=False, verbose_name="Protein Name")
+    sequence = models.TextField(
+        blank=True, null=False, verbose_name="Protein Sequence")
     bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     bacterium_textbox = models.CharField(
         max_length=250, null=True, blank=True)
     taxonid = models.CharField(max_length=25, null=True, blank=True)
     year = models.CharField(max_length=5, blank=True, null=False)
-    accession = models.CharField(max_length=25, blank=True, null=False)
+    accession = models.CharField(
+        max_length=25, blank=True, null=False, verbose_name="NCBI accession number")
     partnerprotein = models.BooleanField(
         default=True, choices=TRUE_FALSE_CHOICES)
     partnerprotein_textbox = models.CharField(
@@ -155,7 +158,8 @@ class PesticidalProteinPrivateDatabase(models.Model):
     dnasequence = models.TextField(null=True, blank=False)
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
     publication = models.TextField(null=True, blank=True)
-    comment = models.TextField(null=True, blank=True)
+    comment = models.TextField(
+        null=True, blank=True, verbose_name="User comments")
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)
@@ -186,12 +190,15 @@ class PesticidalProteinDatabase(models.Model):
         max_length=125, default="Uploaded by Suresh")
     submittersemail = models.EmailField(
         max_length=70, null=True, blank=False, default="suresh.pannersel@ufl.edu")
-    name = models.CharField(max_length=15, blank=True, null=False)
+    name = models.CharField(max_length=15, blank=True,
+                            null=False, verbose_name="Protein Name")
     oldname = models.CharField(max_length=105, blank=True, null=False)
     othernames = models.TextField(blank=True, null=False)
-    accession = models.CharField(max_length=25, blank=True, null=False)
+    accession = models.CharField(
+        max_length=25, blank=True, null=False, verbose_name="NCBI accession number")
     year = models.CharField(max_length=5, blank=True, null=False)
-    sequence = models.TextField(blank=True, null=False)
+    sequence = models.TextField(
+        blank=True, null=False, verbose_name="Protein Sequence")
     bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     taxonid = models.CharField(max_length=25, null=True, blank=True)
     bacterium_textbox = models.CharField(
@@ -204,7 +211,8 @@ class PesticidalProteinDatabase(models.Model):
     nontoxic = models.CharField(max_length=250, blank=True, null=False)
     dnasequence = models.TextField(default="NA")
     publication = models.TextField(null=True, blank=True)
-    comment = models.TextField(null=True, blank=True)
+    comment = models.TextField(
+        null=True, blank=True, verbose_name="User comments")
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
@@ -298,9 +306,9 @@ class PesticidalProteinDatabase(models.Model):
     #             return format_html('<body> <p style="color:#FF0000";>Pfam data needed</p> </body>')
     #         else:
     #             return format_html('Data Available')
-        #
-        # else:
-        #     return format_html('Data Available')
+    #
+    # else:
+    #     return format_html('Data Available')
 
 
 # class BacteriaTaxonomy(models.Model):
