@@ -59,7 +59,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
 
     """Submit the sequence by user and name of the protein is predicted."""
 
-    search_fields = ['submittersemail', 'submittersname']
+    search_fields = ['submittersemail', 'submittersname', 'accession']
     list_display = (
         'submittersname',
         'accession',
