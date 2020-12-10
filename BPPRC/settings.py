@@ -111,6 +111,7 @@ INSTALLED_APPS = [
     'django_ses',
     'admin_reorder',
     'django_celery_beat',
+    'association',
 ]
 
 

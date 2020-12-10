@@ -38,6 +38,7 @@ urlpatterns = [
     path('', include('clustalanalysis.urls')),
     path('', include('extra.urls')),
     path('', include('graphs.urls')),
+    path('', include('association.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
