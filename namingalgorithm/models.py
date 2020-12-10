@@ -5,7 +5,9 @@ from django.db.models.signals import post_save, pre_save
 from django.core.mail import send_mail
 from django.dispatch import receiver
 from django.conf import settings
-
+from celery.task import periodic_task
+from celery.schedules import crontab
+from datetime import timedelta, datetime
 
 TRUE_FALSE_CHOICES = (
     (True, 'Yes'),
@@ -127,11 +129,10 @@ There is a new sequence submission in the database. Please check the database ad
         subject="New Submission for the database",
         message=sequence_message,
         from_email='bpprc.database@gmail.com',
-        recipient_list=['sureshcbt@gmail.com',
-                        'n.crickmore@sussex.ac.uk', 'Berry@cardiff.ac.uk'],
+        recipient_list=['sureshcbt@gmail.com', ],
         fail_silently=False,
     )
 
 
 post_save.connect(save_archive, sender=UserSubmission)
-post_save.connect(save_post, sender=UserSubmission)
+#post_save.connect(save_post, sender=UserSubmission)
