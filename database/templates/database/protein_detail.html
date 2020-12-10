@@ -12,8 +12,8 @@
  </div>
 
 {% for protein in proteins %}
-<p><strong>Name :</strong> &nbsp; {{ protein.name }} </p>
-<p><strong>Accession :</strong> &nbsp; {{ protein.accession }} </p>
+<p><strong>Protein Name :</strong> &nbsp; {{ protein.name }} </p>
+<p><strong>Accession :</strong> &nbsp; <a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a></p>
 
 <p><strong>Length: </strong> &nbsp; {{ protein.get_sequence_length }} </p>
 
