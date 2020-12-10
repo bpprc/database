@@ -97,11 +97,12 @@ class PesticidalProteinHiddenSequence(models.Model):
     strain = models.CharField(
         max_length=250, default="None")
     publication = models.TextField(null=True, blank=True)
-    family = models.CharField(max_length=305, default="None")
-    toxicto = models.CharField(max_length=250, default="None")
-    nontoxic = models.CharField(max_length=250, default="None")
-    mammalian_active = models.CharField(max_length=250, default="None")
-    pdbcode = models.CharField(max_length=10, default="None")
+    family = models.CharField(max_length=305, blank=True, default="None")
+    toxicto = models.CharField(max_length=250, blank=True, default="None")
+    nontoxic = models.CharField(max_length=250, blank=True, default="None")
+    mammalian_active = models.CharField(
+        max_length=250, blank=True, default="None")
+    pdbcode = models.CharField(max_length=10, blank=True, default="None")
     comment = models.TextField(null=True, blank=True)
     submittersname = models.CharField(max_length=25, default="None")
     submittersemail = models.EmailField(max_length=70, default="None")
