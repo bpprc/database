@@ -187,9 +187,9 @@ class PesticidalProteinDatabase(models.Model):
     """
     """
     submittersname = models.CharField(
-        max_length=125, default="Uploaded by Suresh")
+        max_length=125, blank=True, default="Uploaded by Suresh")
     submittersemail = models.EmailField(
-        max_length=70, null=True, blank=False, default="suresh.pannersel@ufl.edu")
+        max_length=70, blank=True)
     name = models.CharField(max_length=15, blank=True,
                             null=False, verbose_name="Protein Name")
     oldname = models.CharField(max_length=105, blank=True, null=False)
@@ -209,7 +209,7 @@ class PesticidalProteinDatabase(models.Model):
         max_length=250, null=True, blank=True)
     toxicto = models.CharField(max_length=250, blank=True, null=False)
     nontoxic = models.CharField(max_length=250, blank=True, null=False)
-    dnasequence = models.TextField(default="NA")
+    dnasequence = models.TextField(blank=True)
     publication = models.TextField(null=True, blank=True)
     comment = models.TextField(
         null=True, blank=True, verbose_name="User comments")
