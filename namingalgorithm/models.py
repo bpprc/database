@@ -78,7 +78,7 @@ class AbstractModel(models.Model):
     terms_conditions = models.BooleanField(
         default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
+                                   on_delete=models.CASCADE, default="1", blank=True)
     admin_comments = models.TextField(null=True, blank=True)
     private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
