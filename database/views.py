@@ -33,6 +33,7 @@ from io import BytesIO
 def home(request):
     """Loads the homepage."""
     return render(request, 'database/about_page.html')
+    # return render(request, 'index.html')
 
 
 def about_page(request):
@@ -350,12 +351,15 @@ def search_database(request):
                 for search in searches:
                     q_objects.add(Q(name__icontains=search), Q.OR)
 
-                categories = PesticidalProteinDatabase.objects.filter(q_objects)
+                categories = PesticidalProteinDatabase.objects.filter(
+                    q_objects)
 
                 for category in categories:
                     if category.name[-1] == '1' and not category.name[-2].isdigit():
-                        filtered_q_objects.add(Q(name__iexact=category.name), Q.OR)
-                proteins = PesticidalProteinDatabase.objects.filter(filtered_q_objects)
+                        filtered_q_objects.add(
+                            Q(name__iexact=category.name), Q.OR)
+                proteins = PesticidalProteinDatabase.objects.filter(
+                    filtered_q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
             elif field_type == 'structure':
                 q_objects = Q()
@@ -753,6 +757,7 @@ def download_single_sequence(request, proteinname=None):
     response['Content-Disposition'] = 'attachment;filename=' + download_file
     response['Content-Length'] = file.tell()
     return response
+
 
 def download_category_form(request):
 
