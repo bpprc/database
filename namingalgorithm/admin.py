@@ -1,6 +1,7 @@
 """Submit the sequence by user and name of the protein is predicted."""
 
 from django.contrib import admin
+from django.db import models
 from django.utils.html import format_html
 from .models import UserSubmission, Archive, SendEmail
 from import_export import resources
@@ -8,6 +9,32 @@ from import_export.admin import ImportExportModelAdmin
 from django.contrib.admin.checks import BaseModelAdminChecks
 from django.contrib.admin.models import LogEntry
 from django.contrib.contenttypes.admin import GenericStackedInline
+from namingalgorithm.models import AuditEntry
+
+
+@admin.register(AuditEntry)
+class AuditEntryLogAdmin(admin.ModelAdmin):
+    list_display = ['action', 'username', 'ip', ]
+    list_filter = ['action', ]
+
+
+class LogEntryAdmin(admin.ModelAdmin):
+    readonly_fields = ('content_type',
+                       'user',
+                       'action_time',
+                       'object_id',
+                       'object_repr',
+                       'action_flag',
+                       'change_message'
+                       )
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_actions(self, request):
+        actions = super(LogEntryAdmin, self).get_actions(request)
+        del actions['delete_selected']
+        return actions
 
 
 class ModelAdminLog(GenericStackedInline):
@@ -24,7 +51,8 @@ class ModelAdminLog(GenericStackedInline):
     checks_class = BaseModelAdminChecks
 
     def change_message(self, obj):
-        return obj.get_change_message()
+        message = obj.get_change_message()
+        return message
 
 
 class ArchiveResource(resources.ModelResource):
@@ -71,6 +99,9 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
     )
 
     inlines = [ModelAdminLog]
+
+    # def copy_to_public(self, obj):
+    #     return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&sequence={1}&name={2}" target="_blank">Create Data</a>'.format(obj.predict_name or '', obj.sequence))
 
     def run_align_link(self, obj):
         if ">" in str(obj.sequence).split('\n')[0]:
@@ -119,6 +150,7 @@ class SendEmailAdmin(admin.ModelAdmin):
 
     inlines = [ModelAdminLog]
 
+
 # class ArchiveAdmin(admin.ModelAdmin):
 #     search_fields = ('name', 'year', 'submittersname',
 #                      'submittersemail')
@@ -126,8 +158,7 @@ class SendEmailAdmin(admin.ModelAdmin):
 #     list_display = ('name', 'submittersname',
 #                      'accession', 'uploaded',)
 #     ordering = ('-uploaded',)
-
-
+admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(UserSubmission, UserSubmissionAdmin)
 admin.site.register(Archive, ArchiveAdmin)
 admin.site.register(SendEmail, SendEmailAdmin)
