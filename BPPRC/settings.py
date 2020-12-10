@@ -294,9 +294,9 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'US/Eastern'
 
 # other celery settings
-CELERY_BEAT_SCHEDULE = {
-    'check_new_submission': {
-        'task': 'namingalgorithm.tasks.check_new_submission',
-        'schedule': crontab(minute=28, hour=12),
-    }
-}
+# CELERY_BEAT_SCHEDULE = {
+#     'check_new_submission': {
+#         'task': 'namingalgorithm.tasks.check_new_submission',
+#         'schedule': crontab(minute=28, hour=12),
+#     }
+# }
