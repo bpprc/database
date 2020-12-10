@@ -18,6 +18,7 @@ from django.db import models
 from django.contrib.admin.checks import BaseModelAdminChecks
 from django.contrib.admin.models import LogEntry
 from django.contrib.contenttypes.admin import GenericStackedInline
+from django.contrib.admin.options import get_content_type_for_model
 
 from django.forms import TextInput, Textarea
 from Bio import Entrez
@@ -98,6 +99,20 @@ class StructureDatabaseAdmin(ImportExportModelAdmin):
 
     inlines = [ModelAdminLog]
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if change:
+            change_message = '{} - {} - {}'.format(
+                obj.name, obj.oldname, obj.year, obj.accession, obj.pdbid, obj.modified, obj.pubmedid, obj.year, obj.comment)
+            LogEntry.objects.create(
+                user=request.user,
+                content_type=get_content_type_for_model(obj),
+                object_id=obj.id,
+                action_flag=2,
+                change_message=change_message,
+                object_repr=obj.__str__()[:200]
+            )
+
 
 class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinPrivateDatabaseResource
@@ -114,9 +129,19 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
 
     inlines = [ModelAdminLog]
 
-    def save_model(self, request, obj):
-        obj.user_var_id = request.user.id
-        super().save_model(request, obj)
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if change:
+            change_message = '{} - {} - {}'.format(
+                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.predict_name)
+            LogEntry.objects.create(
+                user=request.user,
+                content_type=get_content_type_for_model(obj),
+                object_id=obj.id,
+                action_flag=2,
+                change_message=change_message,
+                object_repr=obj.__str__()[:200]
+            )
 
     def accession_url(self, obj):
         return format_html('<a href="%s%s" target="_blank">%s</a>' % ('https://www.ncbi.nlm.nih.gov/protein/', obj.accession, obj.accession))
@@ -158,6 +183,20 @@ class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
 
     inlines = [ModelAdminLog]
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if change:
+            change_message = '{} - {} - {}'.format(
+                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.strain, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.mammalian_active)
+            LogEntry.objects.create(
+                user=request.user,
+                content_type=get_content_type_for_model(obj),
+                object_id=obj.id,
+                action_flag=2,
+                change_message=change_message,
+                object_repr=obj.__str__()[:200]
+            )
+
 
 class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     resource_class = PesticidalProteinDatabaseResource
@@ -172,6 +211,20 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     ordering = ('name',)
 
     inlines = [ModelAdminLog]
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if change:
+            change_message = '{} - {} - {}'.format(
+                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.uploaded, obj.predict_name)
+            LogEntry.objects.create(
+                user=request.user,
+                content_type=get_content_type_for_model(obj),
+                object_id=obj.id,
+                action_flag=2,
+                change_message=change_message,
+                object_repr=obj.__str__()[:200]
+            )
 
     # def accession_url(self, obj):
     #     """Add URL to the accession number"""
@@ -207,6 +260,20 @@ class DescriptionAdmin(ImportExportModelAdmin):
 
     inlines = [ModelAdminLog]
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if change:
+            change_message = '{} - {} - {}'.format(
+                obj.submittersname, obj.description)
+            LogEntry.objects.create(
+                user=request.user,
+                content_type=get_content_type_for_model(obj),
+                object_id=obj.id,
+                action_flag=2,
+                change_message=change_message,
+                object_repr=obj.__str__()[:200]
+            )
+
 
 class OldnameNewnameTableLeftResource(resources.ModelResource):
     class Meta:
@@ -221,6 +288,20 @@ class OldnameNewnameTableLeftAdmin(ImportExportModelAdmin):
 
     inlines = [ModelAdminLog]
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if change:
+            change_message = '{} - {} - {}'.format(
+                obj.name_2020, obj.name_1998, obj.alternative_name)
+            LogEntry.objects.create(
+                user=request.user,
+                content_type=get_content_type_for_model(obj),
+                object_id=obj.id,
+                action_flag=2,
+                change_message=change_message,
+                object_repr=obj.__str__()[:200]
+            )
+
 
 class OldnameNewnameTableRightResource(resources.ModelResource):
     class Meta:
@@ -234,6 +315,20 @@ class OldnameNewnameTableRightAdmin(ImportExportModelAdmin):
     list_display = ('name_1998', 'name_2020', 'alternative_name')
 
     inlines = [ModelAdminLog]
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if change:
+            change_message = '{} - {} - {}'.format(
+                obj.name_1998, obj.name_2020, obj.alternative_name)
+            LogEntry.objects.create(
+                user=request.user,
+                content_type=get_content_type_for_model(obj),
+                object_id=obj.id,
+                action_flag=2,
+                change_message=change_message,
+                object_repr=obj.__str__()[:200]
+            )
 
 
 class ProteinDetailResource(resources.ModelResource):
