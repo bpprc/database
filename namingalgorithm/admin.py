@@ -70,8 +70,8 @@ class ArchiveAdmin(ImportExportModelAdmin):
         'submittersname',
         'accession',
         'uploaded',
-        'admin_user',
-        'admin_comments',
+        # 'admin_user',
+        # 'admin_comments',
     )
 
     inlines = [ModelAdminLog]
@@ -104,8 +104,8 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         if change:
-            change_message = '{} - {} - {}'.format(
-                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.uploaded, obj.predict_name)
+            change_message = '{} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {}'.format(
+                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.admin_user, obj.admin_comments, obj.comment, obj.uploaded, obj.predict_name)
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
