@@ -15,6 +15,7 @@ from django.contrib import messages
 from database.admin import OldnameNewnameTableLeftResource, OldnameNewnameTableRightResource
 from django.http import HttpResponse, HttpResponseRedirect
 from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, StructureDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
+from association.models import DataModel
 from database.forms import SearchForm, DownloadForm, ThreedomainDownloadForm
 from bokeh.plotting import figure, output_file, show
 from bokeh.palettes import Category20c, Spectral6, Category20
