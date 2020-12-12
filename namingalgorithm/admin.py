@@ -91,7 +91,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
     search_fields = ['submittersemail', 'submittersname', 'accession']
     list_display = (
         'submittersname',
-        'accession',
+        'accession_url',
         'run_align_link',
         'create_data',
         'refresh',
@@ -117,6 +117,9 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
 
     # def copy_to_public(self, obj):
     #     return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&sequence={1}&name={2}" target="_blank">Create Data</a>'.format(obj.predict_name or '', obj.sequence))
+
+    def accession_url(self, obj):
+        return format_html('<a href="%s%s" target="_blank">%s</a>' % ('https://www.ncbi.nlm.nih.gov/protein/', obj.accession, obj.accession))
 
     def run_align_link(self, obj):
         if ">" in str(obj.sequence).split('\n')[0]:
