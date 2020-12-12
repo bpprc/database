@@ -71,7 +71,7 @@ class ArchiveAdmin(ImportExportModelAdmin):
         'accession',
         'uploaded',
         # 'admin_user',
-        # 'admin_comments',
+        'admin_comments',
     )
 
     inlines = [ModelAdminLog]
