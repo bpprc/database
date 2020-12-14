@@ -131,11 +131,13 @@ def save_archive(sender, instance, **kwargs):
     archive.terms_conditions = instance.terms_conditions
     archive.admin_user = instance.admin_user
     archive.admin_comments = instance.admin_comments
-    archive.created_by = instance.created_by
-    archive.created_on = instance.created_on
-    archive.edited_by = instance.edited_by
-    archive.edited_on = instance.edited_on
-    archive.published = instance.published
+    # if archive.created_by:
+    #     archive.created_by = instance.created_by
+    # if archive.created_on:
+    # archive.created_on = instance.created_on
+    # archive.edited_by = instance.edited_by
+    # archive.edited_on = instance.edited_on
+    # archive.published = instance.published
     archive.save()
 
 
