@@ -9,6 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 
 
+# https://stackoverflow.com/questions/37618473/how-can-i-log-both-successful-and-failed-login-and-logout-attempts-in-django
 class AuditEntry(models.Model):
     action = models.CharField(max_length=64)
     ip = models.GenericIPAddressField(null=True)
@@ -23,7 +24,12 @@ class AuditEntry(models.Model):
 
 @receiver(user_logged_in)
 def user_logged_in_callback(sender, request, user, **kwargs):
-    ip = request.META.get('REMOTE_ADDR')
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    # ip = request.META.get('REMOTE_ADDR')
     AuditEntry.objects.create(action='user_logged_in',
                               ip=ip, username=user.username)
 
