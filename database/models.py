@@ -399,7 +399,7 @@ class Description(models.Model):
 class UserUploadData(models.Model):
     """
     """
-    session_key = models.CharField(max_length=250, default=None)
+    session_key = models.CharField(max_length=250, default=None, null=True)
     name = models.CharField(max_length=250, null=True)
     sequence = models.TextField(null=True)
 
