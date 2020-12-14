@@ -15,6 +15,7 @@ from .models import PesticidalProteinDatabase, \
 from import_export import resources
 from django.utils.html import format_html
 from django.db import models
+from django.utils import timezone
 from django.contrib.admin.checks import BaseModelAdminChecks
 from django.contrib.admin.models import LogEntry
 from django.contrib.contenttypes.admin import GenericStackedInline
@@ -122,15 +123,19 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     search_fields = ('name', 'oldname', 'othernames',
                      'accession', 'year', 'private')
     fields = ('name', 'oldname', 'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'private', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
+              'sequence', 'uploaded', 'fastasequence_file', 'private', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_comments', 'created_by', 'created_on', 'edited_by', 'edited_on')
     list_display = ('name', 'oldname',
-                    'accession_url', 'accession_availability', 'year', 'private', 'admin_user', 'admin_comments')
+                    'accession_url', 'accession_availability', 'year', 'private', 'admin_comments')
     ordering = ('name',)
 
     inlines = [ModelAdminLog]
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
+        if change:
+            obj.edited_by = request.user
+            obj.edited_on = timezone.now()
+            obj.save()
         if change:
             change_message = '{} - {} - {}'.format(
                 obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.predict_name)
@@ -142,6 +147,13 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
                 change_message=change_message,
                 object_repr=obj.__str__()[:200]
             )
+
+    # def get_changeform_initial_data(self, request):
+    #     get_data = super(PesticidalProteinPrivateDatabaseAdmin,
+    #                      self).get_changeform_initial_data(request)
+    #     get_data['created_by'] = request.user
+    #     get_data['edited_by'] = request.user
+    #     return get_data
 
     def accession_url(self, obj):
         return format_html('<a href="%s%s" target="_blank">%s</a>' % ('https://www.ncbi.nlm.nih.gov/protein/', obj.accession, obj.accession))
@@ -204,9 +216,9 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     search_fields = ('name', 'oldname',  'othernames',
                      'accession', 'year')
     fields = ('name', 'oldname',  'othernames', 'accession', 'year',
-              'sequence', 'uploaded', 'fastasequence_file', 'public', 'pdbcode', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_user', 'admin_comments')
+              'sequence', 'uploaded', 'fastasequence_file', 'public', 'pdbcode', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_comments', 'created_by', 'created_on', 'edited_by', 'edited_on')
     list_display = ('name', 'oldname',  'othernames',
-                    'accession_url', 'year', 'public', 'Pfam_Info', 'admin_user', 'admin_comments')
+                    'accession_url', 'year', 'public', 'Pfam_Info', 'admin_comments')
     list_filter = ['uploaded', FilterByCategories]
     ordering = ('name',)
 
@@ -214,6 +226,10 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
+        if change:
+            obj.edited_by = request.user
+            obj.edited_on = timezone.now()
+            obj.save()
         if change:
             change_message = '{} - {} - {}'.format(
                 obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.uploaded, obj.predict_name)

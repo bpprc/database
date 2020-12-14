@@ -166,8 +166,8 @@ class PesticidalProteinPrivateDatabase(models.Model):
     predict_name = models.TextField(null=True, blank=True)
     terms_conditions = models.BooleanField(
         default=False, choices=TRUE_FALSE_CHOICES)
-    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
+    # admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+    #                                on_delete=models.CASCADE, default="1", null=False, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
     public = models.BooleanField(default=False)
     private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
@@ -176,6 +176,15 @@ class PesticidalProteinPrivateDatabase(models.Model):
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
     name_category = models.CharField(max_length=15, blank=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="%(class)s_created_by", null=True, blank=True)
+    created_on = models.DateTimeField(
+        'Created on', null=True, blank=True, default=timezone.now)
+    edited_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name="%(class)s_edited_by")
+    edited_on = models.DateTimeField(
+        'Edited on', null=True, blank=True, default=timezone.now)
+    # published = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
 
     def __str__(self):
         return self.name
@@ -223,11 +232,18 @@ class PesticidalProteinDatabase(models.Model):
     predict_name = models.TextField(null=True, blank=True)
     terms_conditions = models.BooleanField(
         default=False, choices=TRUE_FALSE_CHOICES)
-    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
+    # admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+    #                                on_delete=models.CASCADE, default="1", null=False, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
-    # oldname_category = models.CharField(max_length=15, blank=True)
-    # protein_metadata = PesticidalProteinDatabaseManager()
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="%(class)s_created_by", null=True, blank=True,)
+    created_on = models.DateTimeField(
+        'Created on', null=True, blank=True, default=timezone.now)
+    edited_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name="%(class)s_edited_by")
+    edited_on = models.DateTimeField(
+        'Edited on', null=True, blank=True, default=timezone.now)
+    published = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
 
     class Meta:
         ordering = ('name',)
