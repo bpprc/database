@@ -166,8 +166,6 @@ class AnalysisForm(forms.Form):
         self.userdata = self.cleaned_data.get('userdataids', [])
         if self.userdata:
             self.userdata = [int(s) for s in self.userdata.split(',')]
-        print(self.userdata)
-        print(type(self.userdata))
         return self.userdata
 
     def clean(self):
@@ -204,13 +202,10 @@ class AnalysisForm(forms.Form):
             self.combined_selection += self.list_cterminal
         if self.selected_values:
             self.combined_selection += self.selected_values
-        if self.userdata:
-            self.length = self.combined_selection.append(self.userdata)
-        self.length = self.combined_selection
 
-        if len(self.length) <= 3:
+        if len(self.combined_selection) <= 3:
             raise forms.ValidationError(
-                "At least three sequences is needed for the analysis")
+                "Select more than three sequences for the analysis")
         elif self.combined_selection:
             self.combined_selection = list(set(self.combined_selection))
         else:
@@ -231,9 +226,9 @@ class AnalysisForm(forms.Form):
         self.write_input_file_clustal()
         self.count_number_lines()
 
-        # print("tree output file", self.guidetree_out_tmp.name)
-        # print("input file clustal", self.clustalomega_in_tmp.name)
-        # print("output file clustal", self.clustalomega_out_tmp.name)
+        print("tree output file", self.guidetree_out_tmp.name)
+        print("input file clustal", self.clustalomega_in_tmp.name)
+        print("output file clustal", self.clustalomega_out_tmp.name)
 
         return self.clustalomega_in_tmp.name, self.guidetree_out_tmp.name, self.num_lines
 
