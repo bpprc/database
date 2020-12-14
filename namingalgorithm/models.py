@@ -80,6 +80,7 @@ class AbstractModel(models.Model):
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, default="1", blank=True)
     admin_comments = models.TextField(null=True, blank=True)
+    # public_or_private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     user_provided_proteinname = models.CharField(
@@ -130,6 +131,11 @@ def save_archive(sender, instance, **kwargs):
     archive.terms_conditions = instance.terms_conditions
     archive.admin_user = instance.admin_user
     archive.admin_comments = instance.admin_comments
+    archive.created_by = instance.created_by
+    archive.created_on = instance.created_on
+    archive.edited_by = instance.edited_by
+    archive.edited_on = instance.edited_on
+    archive.published = instance.published
     archive.save()
 
 
