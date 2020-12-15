@@ -125,12 +125,17 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     fields = ('name', 'oldname', 'othernames', 'accession', 'year',
               'sequence', 'uploaded', 'fastasequence_file', 'private', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_comments', 'created_by', 'created_on', 'edited_by', 'edited_on')
     list_display = ('name', 'oldname',
-                    'accession_url', 'accession_availability', 'year', 'private', 'admin_comments')
+                    'accession_url', 'accession_availability', 'year', 'private')
     ordering = ('name',)
 
     inlines = [ModelAdminLog]
 
     def save_model(self, request, obj, form, change):
+        user = request.user
+        if user:
+            obj.created_by = user
+            obj.created_on = timezone.now()
+            super().save_model(request, obj, form, change)
         super().save_model(request, obj, form, change)
         if change:
             obj.edited_by = request.user
@@ -147,13 +152,6 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
                 change_message=change_message,
                 object_repr=obj.__str__()[:200]
             )
-
-    # def get_changeform_initial_data(self, request):
-    #     get_data = super(PesticidalProteinPrivateDatabaseAdmin,
-    #                      self).get_changeform_initial_data(request)
-    #     get_data['created_by'] = request.user
-    #     get_data['edited_by'] = request.user
-    #     return get_data
 
     def accession_url(self, obj):
         return format_html('<a href="%s%s" target="_blank">%s</a>' % ('https://www.ncbi.nlm.nih.gov/protein/', obj.accession, obj.accession))
@@ -183,7 +181,7 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
 
 
 class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
-    #resource_class = PesticidalProteinHiddenSequence
+    # resource_class = PesticidalProteinHiddenSequence
 
     search_fields = ('name', 'othernames',
                      'accession', 'year', 'public')
@@ -196,10 +194,19 @@ class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):
     inlines = [ModelAdminLog]
 
     def save_model(self, request, obj, form, change):
+        user = request.user
+        if user:
+            obj.created_by = user
+            obj.created_on = timezone.now()
+            super().save_model(request, obj, form, change)
         super().save_model(request, obj, form, change)
         if change:
+            obj.edited_by = request.user
+            obj.edited_on = timezone.now()
+            obj.save()
+        if change:
             change_message = '{} - {} - {}'.format(
-                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.strain, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.mammalian_active)
+                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.predict_name)
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
@@ -218,13 +225,18 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     fields = ('name', 'oldname',  'othernames', 'accession', 'year',
               'sequence', 'uploaded', 'fastasequence_file', 'public', 'pdbcode', 'submittersname', 'submittersemail', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment', 'admin_comments', 'created_by', 'created_on', 'edited_by', 'edited_on')
     list_display = ('name', 'oldname',  'othernames',
-                    'accession_url', 'year', 'public', 'Pfam_Info', 'admin_comments')
+                    'accession_url', 'year', 'public', 'Pfam_Info')
     list_filter = ['uploaded', FilterByCategories]
     ordering = ('name',)
 
     inlines = [ModelAdminLog]
 
     def save_model(self, request, obj, form, change):
+        user = request.user
+        if user:
+            obj.created_by = user
+            obj.created_on = timezone.now()
+            super().save_model(request, obj, form, change)
         super().save_model(request, obj, form, change)
         if change:
             obj.edited_by = request.user
@@ -232,7 +244,7 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
             obj.save()
         if change:
             change_message = '{} - {} - {}'.format(
-                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.uploaded, obj.predict_name)
+                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.comment, obj.predict_name)
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
