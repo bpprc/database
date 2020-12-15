@@ -78,9 +78,10 @@ class AbstractModel(models.Model):
     publication = models.TextField(null=True, blank=True)
     comment = models.TextField(
         null=True, blank=True, verbose_name="User comments")
-    uploaded = models.DateTimeField('Uploaded', default=timezone.now)
-    alignresults = models.TextField(null=True, blank=True)
-    predict_name = models.TextField(null=True, blank=True)
+    # uploaded = models.DateTimeField('Uploaded', default=timezone.now)
+    # alignresults = models.TextField(null=True, blank=True)
+    predict_name = models.TextField(
+        null=True, blank=True, verbose_name="Predicted Name")
     terms_conditions = models.BooleanField(
         default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -88,6 +89,7 @@ class AbstractModel(models.Model):
     admin_comments = models.TextField(null=True, blank=True)
     # public_or_private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+    public = models.BooleanField(default=False, blank=False)
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     user_provided_proteinname = models.CharField(
         max_length=105, blank=True, null=False)
@@ -132,7 +134,7 @@ def save_archive(sender, instance, **kwargs):
     archive.publication = instance.publication
     archive.comment = instance.comment
     archive.uploaded = instance.uploaded
-    archive.alignresults = instance.alignresults
+    # archive.alignresults = instance.alignresults
     archive.predict_name = instance.predict_name
     archive.terms_conditions = instance.terms_conditions
     archive.admin_user = instance.admin_user
