@@ -11,6 +11,7 @@ from django.contrib.admin.models import LogEntry
 from django.contrib.contenttypes.admin import GenericStackedInline
 from namingalgorithm.models import AuditEntry
 from django.contrib.admin.options import get_content_type_for_model
+from database.models import PesticidalProteinDatabase, PesticidalProteinPrivateDatabase
 
 
 @admin.register(AuditEntry)
@@ -80,7 +81,7 @@ class ArchiveAdmin(ImportExportModelAdmin):
         super().save_model(request, obj, form, change)
         if change:
             change_message = '{} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {}'.format(
-                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.admin_user, obj.admin_comments, obj.comment, obj.uploaded, obj.predict_name, obj.user_provided_proteinname, obj.created_by, obj.created_on, obj.edited_by, obj.edited_on)
+                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.admin_user, obj.admin_comments, obj.comment, obj.uploaded, obj.predict_name, obj.user_provided_proteinname)
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
@@ -106,8 +107,8 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
     list_display = (
         'submittersname',
         'accession_url',
-        'run_align_link',
-        'create_public',
+        'naming_algorithm',
+        'availability',
         'refresh',
         'send_email',
         'uploaded',
@@ -119,7 +120,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         super().save_model(request, obj, form, change)
         if change:
             change_message = '{} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {}'.format(
-                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.admin_user, obj.admin_comments, obj.comment, obj.uploaded, obj.predict_name, obj.user_provided_proteinname, obj.created_by, obj.created_on, obj.edited_by, obj.edited_on)
+                obj.submittersname, obj.submittersemail, obj.name, obj.year, obj.sequence, obj.bacterium, obj.bacterium_textbox, obj.taxonid, obj.accession, obj.partnerprotein, obj.partnerprotein_textbox, obj.toxicto, obj.nontoxic, obj.dnasequence, obj.pdbcode, obj.publication, obj.admin_user, obj.admin_comments, obj.comment, obj.uploaded, obj.predict_name, obj.user_provided_proteinname)
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
@@ -129,26 +130,16 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
                 object_repr=obj.__str__()[:200]
             )
 
-    # def copy_to_public(self, obj):
-    #     return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&sequence={1}&name={2}" target="_blank">Create Data</a>'.format(obj.predict_name or '', obj.sequence))
-
-    # def get_changeform_initial_data(self, request):
-    #     get_data = super(UserSubmissionAdmin,
-    #                      self).get_changeform_initial_data(request)
-    #     get_data['created_by'] = request.user.pk
-    #     get_data['edited_by'] = request.user.pk
-    #     return get_data
-
     def accession_url(self, obj):
         return format_html('<a href="%s%s" target="_blank">%s</a>' % ('https://www.ncbi.nlm.nih.gov/protein/', obj.accession, obj.accession))
 
-    def run_align_link(self, obj):
+    def naming_algorithm(self, obj):
         if ">" in str(obj.sequence).split('\n')[0]:
             obj.sequence = '\n'.join(
                 str(obj.sequence).split('\n')[1:])
 
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/run_naming_algorithm/?fulltextarea={0}&submission_id={1}" target="_blank">Run Align</a>'.format(obj.sequence, obj.id))
+        return format_html('<a href="/run_naming_algorithm/?fulltextarea={0}&submission_id={1}" target="_blank">Naming Algorithm</a>'.format(obj.sequence, obj.id))
 
     def align_results(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
@@ -156,9 +147,9 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
             return format_html('<a href="/align_results/?submission_id={0}" target="_blank">View Result</a>'.format(obj.id))
         return ''
 
-    def create_public(self, obj):
-        """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&sequence={1}" target="_blank">Create Public</a>'.format(obj.predict_name or '', obj.sequence))
+    # def create_public(self, obj):
+    #     """Submit the sequence by user and name of the protein is predicted."""
+    #     return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&sequence={1}" target="_blank">Create Public</a>'.format(obj.predict_name or '', obj.sequence))
 
     def refresh(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
@@ -167,11 +158,25 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
     def send_email(self, obj):
         return format_html('<a href="/admin/contact/?submittersname={0}&submittersemail={1}&name={2}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.name or ''))
 
+    def availability(self, obj):
+        accession_number = obj.accession
+        if not accession_number:
+            return format_html('<body> <p>No accession number</p> </body>')
+        public = PesticidalProteinDatabase.objects.filter(
+            accession=accession_number)
+        private = PesticidalProteinPrivateDatabase.objects.filter(
+            accession=accession_number)
+        if public:
+            print(accession_number)
+            return format_html('<body> <p style="color:#FF0000";>Available in Public</p></body>')
+        if private:
+            return format_html('<body> <p style="color:#FF0000";>Available in Private</p></body>')
+
     def Pfam(self, obj):
         return format_html()
 
-    run_align_link.allow_tags = True
-    run_align_link.description = 'Run the align link for the submission'
+    naming_algorithm.allow_tags = True
+    naming_algorithm.description = 'Run the align link for the submission'
 
     align_results.allow_tags = True
     align_results.description = 'View the align results'
