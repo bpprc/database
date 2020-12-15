@@ -118,7 +118,7 @@ class PesticidalProteinHiddenSequence(models.Model):
     terms_conditions = models.BooleanField(
         default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
+                                   on_delete=models.CASCADE, null=True, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
     public = models.BooleanField(default=False)
     private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
@@ -167,7 +167,7 @@ class PesticidalProteinPrivateDatabase(models.Model):
     terms_conditions = models.BooleanField(
         default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
+                                   on_delete=models.CASCADE, null=True, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
     public = models.BooleanField(default=False)
     private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
@@ -233,7 +233,7 @@ class PesticidalProteinDatabase(models.Model):
     terms_conditions = models.BooleanField(
         default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   on_delete=models.CASCADE, default="1", null=False, blank=True)
+                                   on_delete=models.CASCADE, null=True, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="%(class)s_created_by", null=True, blank=True,)
