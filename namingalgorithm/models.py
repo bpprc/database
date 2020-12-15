@@ -79,7 +79,7 @@ class AbstractModel(models.Model):
     comment = models.TextField(
         null=True, blank=True, verbose_name="User comments")
     # uploaded = models.DateTimeField('Uploaded', default=timezone.now)
-    # alignresults = models.TextField(null=True, blank=True)
+    alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(
         null=True, blank=True, verbose_name="Predicted Name")
     terms_conditions = models.BooleanField(
