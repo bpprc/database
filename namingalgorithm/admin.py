@@ -158,7 +158,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
 
     def create_public(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&sequence={1}" target="_blank">Create Data</a>'.format(obj.predict_name or '', obj.sequence))
+        return format_html('<a href="/admin/database/pesticidalproteindatabase/add/?name={0}&sequence={1}" target="_blank">Create Public</a>'.format(obj.predict_name or '', obj.sequence))
 
     def refresh(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
