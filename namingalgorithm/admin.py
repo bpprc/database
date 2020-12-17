@@ -113,6 +113,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         'send_email',
         'uploaded',
     )
+    exclude = ['alignresults']
 
     inlines = [ModelAdminLog]
 
