@@ -79,6 +79,8 @@ class StructureDatabase(models.Model):
         return self.name
 
     class Meta:
+        ordering = ('name',)
+        verbose_name = 'Structure Information'
         verbose_name_plural = "Structure Database"
 
 
@@ -131,6 +133,7 @@ class PesticidalProteinHiddenSequence(models.Model):
         return self.name
 
     class Meta:
+        verbose_name = 'Hidden sequence'
         verbose_name_plural = "Hidden sequences for naming purpose"
 
 
@@ -190,6 +193,8 @@ class PesticidalProteinPrivateDatabase(models.Model):
         return self.name
 
     class Meta:
+        ordering = ('name',)
+        verbose_name = 'Private Sequence'
         verbose_name_plural = "Private Sequences"
 
 
@@ -247,6 +252,7 @@ class PesticidalProteinDatabase(models.Model):
 
     class Meta:
         ordering = ('name',)
+        verbose_name = 'Public Sequence'
         verbose_name_plural = "Public Sequences"
 
     def publish(self):
@@ -381,6 +387,10 @@ class ProteinDetail(models.Model):
 
     # def fulllength(self):
     #     return self.sequence
+    class Meta:
+        ordering = ('accession',)
+        verbose_name = 'Three domain sequence detail'
+        verbose_name_plural = "Three domain details"
 
 
 class Description(models.Model):
