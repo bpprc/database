@@ -155,6 +155,9 @@ class SendEmail(models.Model):
     accession = models.CharField(max_length=25, null=True, blank=True)
     message = models.TextField(null=True, blank=True)
 
+    def __str__(self):
+        return 'Email sent to: ' + self.submittersemail
+
 
 def _trigger_email_everyday():
 

@@ -385,11 +385,14 @@ class ProteinDetail(models.Model):
         sequence = self.sequence
         return sequence[int(self.start_C):int(self.end_C)]
 
+    def __str__(self):
+        return 'Domain details added for: ' + self.accession
+
     # def fulllength(self):
     #     return self.sequence
     class Meta:
         ordering = ('accession',)
-        verbose_name = 'Three domain sequence detail'
+        verbose_name = 'Three domain detail'
         verbose_name_plural = "Three domain details"
 
 
