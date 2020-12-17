@@ -14,7 +14,7 @@ label.required { color: red; }
     {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
     <p class="deletelink-box"><a href="{% add_preserved_filters delete_url %}" class="deletelink">{% trans "Delete" %}</a></p>
 {% endif %}
-<input class="databox" type="button" value="Copy to Public Database" name="_saveasnew">
+<input class="public" type="button" value="Copy to Public Database" name="_saveasnew">
 <input class="private" type="button" value="Copy to Private Database" name="_saveasnew">
 
 
@@ -65,7 +65,7 @@ var predict_nameElement = document.getElementById("id_predict_name");
 var user_provided_proteinnameElement = document.getElementById("id_user_provided_proteinname");
 
 if (moveSubmittersname && submittersnameElement) {
-    submittersnameElement.value = moveSubmittersname;
+    document.getElementById("id_submittersemail").value = moveSubmittersname;
 }
 if (moveSubmittersemail && submittersemailElement) {
     document.getElementById("id_submittersemail").value = moveSubmittersemail;
@@ -118,13 +118,13 @@ if (moveadmin_comments && admin_commentsElement) {
 if (moveuser_provided_proteinname && user_provided_proteinnameElement) {
     document.getElementById("id_user_provided_proteinname").value = moveuser_provided_proteinname;
   }
-localStorage.clear()
+// localStorage.clear()
 
 </script>
 
 <script>
 document.body.addEventListener('click', function (evt) {
-    if (evt.target.className === 'databox') {
+    if (evt.target.className === 'public') {
       swal("Are you sure? This data will be visible to the public?", {
         buttons: {
           cancel: "No!",
@@ -138,45 +138,101 @@ document.body.addEventListener('click', function (evt) {
         switch (value) {
 
           case "move":
-            const submittersname=document.getElementById('id_submittersname').value;
-            const submittersemail=document.getElementById('id_submittersemail').value;
-            const name=document.getElementById('id_name').value;
-            const accession=document.getElementById('id_accession').value;
-            const sequence=document.getElementById('id_sequence').value;
-            const taxonid=document.getElementById('id_taxonid').value;
-            const year=document.getElementById('id_year').value;
-            const bacterium_textbox=document.getElementById('id_bacterium_textbox').value;
-            const partnerprotein_textbox=document.getElementById('id_partnerprotein_textbox').value;
-            const toxicto=document.getElementById('id_toxicto').value;
-            const nontoxic=document.getElementById('id_nontoxic').value;
-            const dnasequence=document.getElementById('id_dnasequence').value;
-            const publication=document.getElementById('id_publication').value;
-            const pdbcode=document.getElementById('id_pdbcode').value;
-            const comment=document.getElementById('id_comment').value;
-            const admin_comments=document.getElementById('id_admin_comments').value;
-            const predict_name=document.getElementById('id_predict_name').value;
-            const user_provided_proteinname=document.getElementById('id_user_provided_proteinname').value;
+          let Name=document.getElementById('id_submittersname');
+          let Email=document.getElementById('id_submittersemail');
+          let Proteinname=document.getElementById('id_name');
+          let Sequence=document.getElementById('id_sequence');
+          let Accession=document.getElementById('id_accession');
+          let Taxon=document.getElementById('id_taxonid');
+          let Year=document.getElementById('id_year');
+          let Bacterium=document.getElementById('id_bacterium_textbox');
+          let Partnerprotein=document.getElementById('id_partnerprotein_textbox');
+          let Toxicto=document.getElementById('id_toxicto');
+          let Nontoxic=document.getElementById('id_nontoxic');
+          let Dnasequence=document.getElementById('id_dnasequence');
+          let Publication=document.getElementById('id_publication');
+          let Pdbcode=document.getElementById('id_pdbcode');
+          let Usercomment=document.getElementById('id_comment');
+          let Predictname=document.getElementById('id_predict_name');
+          let Admincomments=document.getElementById('id_admin_comments');
+          let Userprovidedproteinname=document.getElementById('id_user_provided_proteinname')
 
-            localStorage.setItem('submittersname', submittersname);
-            localStorage.setItem('submittersemail', submittersemail);
-            localStorage.setItem('name', name);
-            localStorage.setItem('sequence', sequence);
-            localStorage.setItem('accession', accession);
-            localStorage.setItem('taxonid', taxonid);
-            localStorage.setItem('year', year);
-            localStorage.setItem('bacterium_textbox', bacterium_textbox);
-            localStorage.setItem('partnerprotein_textbox', partnerprotein_textbox);
-            localStorage.setItem('toxicto', toxicto);
-            localStorage.setItem('nontoxic', nontoxic);
-            localStorage.setItem('dnasequence', dnasequence);
-            localStorage.setItem('publication', publication);
-            localStorage.setItem('pdbcode', pdbcode);
-            localStorage.setItem('admin_comments', admin_comments);
-            localStorage.setItem('comment', comment);
-            localStorage.setItem('predict_name', predict_name)
-            localStorage.setItem('user_provided_proteinname', user_provided_proteinname)
-            window.location = "/admin/database/pesticidalproteindatabase/add/";
-            break;
+          if (Name) {
+              const submittersname=document.getElementById('id_submittersname').value;
+              localStorage.setItem('submittersname', submittersname);
+              console.log(submittersname)
+          }
+          if (Email) {
+              const submittersemail=document.getElementById('id_submittersemail').value;
+              localStorage.setItem('submittersemail', submittersemail);
+              console.log(submittersemail);
+          }
+          if (Proteinname) {
+              const name=document.getElementById('id_name').value;
+              localStorage.setItem('name', name);
+          }
+          if (Sequence) {
+              const sequence=document.getElementById('id_sequence').value;
+              localStorage.setItem('sequence', sequence);
+          }
+          if (Accession) {
+              const accession=document.getElementById('id_accession').value;
+              localStorage.setItem('accession', accession);
+            }
+          if (Taxon) {
+              const taxonid=document.getElementById('id_taxonid').value;
+              localStorage.setItem('taxonid', taxonid);
+            }
+          if (Year) {
+              const year=document.getElementById('id_year').value;
+              localStorage.setItem('year', year);
+            }
+          if (Bacterium) {
+              const bacterium_textbox=document.getElementById('id_bacterium_textbox').value;
+              localStorage.setItem('bacterium_textbox', bacterium_textbox);
+            }
+          if (Partnerprotein) {
+              const partnerprotein_textbox=document.getElementById('id_partnerprotein_textbox').value;
+              localStorage.setItem('partnerprotein_textbox', partnerprotein_textbox);
+            }
+          if (Toxicto) {
+              const toxicto=document.getElementById('id_toxicto').value;
+              localStorage.setItem('toxicto', toxicto);
+            }
+          if (Nontoxic) {
+              const nontoxic=document.getElementById('id_nontoxic').value;
+              localStorage.setItem('nontoxic', nontoxic);
+            }
+          if (Dnasequence) {
+              const dnasequence=document.getElementById('id_dnasequence').value;
+              localStorage.setItem('dnasequence', dnasequence);
+            }
+          if (Publication) {
+              const publication=document.getElementById('id_publication').value;
+              localStorage.setItem('publication', publication);
+            }
+          if (Pdbcode) {
+              const pdbcode=document.getElementById('id_pdbcode').value;
+              localStorage.setItem('pdbcode', pdbcode);
+            }
+          if (Usercomment) {
+              const comment=document.getElementById('id_comment').value;
+              localStorage.setItem('comment', comment);
+            }
+          if (Predictname) {
+              const predict_name=document.getElementById('id_predict_name').value;
+              localStorage.setItem('predict_name', predict_name)
+            }
+          if (Admincomments) {
+              const admin_comments=document.getElementById('id_admin_comments').value;
+              localStorage.setItem('admin_comments', admin_comments);
+            }
+          if (Userprovidedproteinname) {
+              const user_provided_proteinname=document.getElementById('id_user_provided_proteinname').value;
+              localStorage.setItem('user_provided_proteinname', user_provided_proteinname);
+            }
+          window.location = "/admin/database/pesticidalproteindatabase/add/";
+          break;
 
           default:
             swal("Okay!");
@@ -203,45 +259,101 @@ document.body.addEventListener('click', function (evt) {
         switch (value) {
 
           case "move":
-            const submittersname=document.getElementById('id_submittersname').value;
-            const submittersemail=document.getElementById('id_submittersemail').value;
-            const name=document.getElementById('id_name').value;
-            const accession=document.getElementById('id_accession').value;
-            const sequence=document.getElementById('id_sequence').value;
-            const taxonid=document.getElementById('id_taxonid').value;
-            const year=document.getElementById('id_year').value;
-            const bacterium_textbox=document.getElementById('id_bacterium_textbox').value;
-            const partnerprotein_textbox=document.getElementById('id_partnerprotein_textbox').value;
-            const toxicto=document.getElementById('id_toxicto').value;
-            const nontoxic=document.getElementById('id_nontoxic').value;
-            const dnasequence=document.getElementById('id_dnasequence').value;
-            const publication=document.getElementById('id_publication').value;
-            const pdbcode=document.getElementById('id_pdbcode').value;
-            const comment=document.getElementById('id_comment').value;
-            const admin_comments=document.getElementById('id_admin_comments').value;
-            const predict_name=document.getElementById('id_predict_name').value;
-            const user_provided_proteinname=document.getElementById('id_user_provided_proteinname').value;
+          let Name=document.getElementById('id_submittersname');
+          let Email=document.getElementById('id_submittersemail');
+          let Proteinname=document.getElementById('id_name');
+          let Sequence=document.getElementById('id_sequence');
+          let Accession=document.getElementById('id_accession');
+          let Taxon=document.getElementById('id_taxonid');
+          let Year=document.getElementById('id_year');
+          let Bacterium=document.getElementById('id_bacterium_textbox');
+          let Partnerprotein=document.getElementById('id_partnerprotein_textbox');
+          let Toxicto=document.getElementById('id_toxicto');
+          let Nontoxic=document.getElementById('id_nontoxic');
+          let Dnasequence=document.getElementById('id_dnasequence');
+          let Publication=document.getElementById('id_publication');
+          let Pdbcode=document.getElementById('id_pdbcode');
+          let Usercomment=document.getElementById('id_comment');
+          let Predictname=document.getElementById('id_predict_name');
+          let Admincomments=document.getElementById('id_admin_comments');
+          let Userprovidedproteinname=document.getElementById('id_user_provided_proteinname')
 
-            localStorage.setItem('submittersname', submittersname);
-            localStorage.setItem('submittersemail', submittersemail);
-            localStorage.setItem('name', name);
-            localStorage.setItem('sequence', sequence);
-            localStorage.setItem('accession', accession);
-            localStorage.setItem('taxonid', taxonid);
-            localStorage.setItem('year', year);
-            localStorage.setItem('bacterium_textbox', bacterium_textbox);
-            localStorage.setItem('partnerprotein_textbox', partnerprotein_textbox);
-            localStorage.setItem('toxicto', toxicto);
-            localStorage.setItem('nontoxic', nontoxic);
-            localStorage.setItem('dnasequence', dnasequence);
-            localStorage.setItem('publication', publication);
-            localStorage.setItem('pdbcode', pdbcode);
-            localStorage.setItem('admin_comments', admin_comments);
-            localStorage.setItem('comment', comment);
-            localStorage.setItem('predict_name', predict_name)
-            localStorage.setItem('user_provided_proteinname', user_provided_proteinname)
-            window.location = "/admin/database/pesticidalproteinprivatedatabase/add/";
-            break;
+          if (Name) {
+              const submittersname=document.getElementById('id_submittersname').value;
+              localStorage.setItem('submittersname', submittersname);
+              console.log(submittersname)
+          }
+          if (Email) {
+              const submittersemail=document.getElementById('id_submittersemail').value;
+              localStorage.setItem('submittersemail', submittersemail);
+              console.log(submittersemail);
+          }
+          if (Proteinname) {
+              const name=document.getElementById('id_name').value;
+              localStorage.setItem('name', name);
+          }
+          if (Sequence) {
+              const sequence=document.getElementById('id_sequence').value;
+              localStorage.setItem('sequence', sequence);
+          }
+          if (Accession) {
+              const accession=document.getElementById('id_accession').value;
+              localStorage.setItem('accession', accession);
+            }
+          if (Taxon) {
+              const taxonid=document.getElementById('id_taxonid').value;
+              localStorage.setItem('taxonid', taxonid);
+            }
+          if (Year) {
+              const year=document.getElementById('id_year').value;
+              localStorage.setItem('year', year);
+            }
+          if (Bacterium) {
+              const bacterium_textbox=document.getElementById('id_bacterium_textbox').value;
+              localStorage.setItem('bacterium_textbox', bacterium_textbox);
+            }
+          if (Partnerprotein) {
+              const partnerprotein_textbox=document.getElementById('id_partnerprotein_textbox').value;
+              localStorage.setItem('partnerprotein_textbox', partnerprotein_textbox);
+            }
+          if (Toxicto) {
+              const toxicto=document.getElementById('id_toxicto').value;
+              localStorage.setItem('toxicto', toxicto);
+            }
+          if (Nontoxic) {
+              const nontoxic=document.getElementById('id_nontoxic').value;
+              localStorage.setItem('nontoxic', nontoxic);
+            }
+          if (Dnasequence) {
+              const dnasequence=document.getElementById('id_dnasequence').value;
+              localStorage.setItem('dnasequence', dnasequence);
+            }
+          if (Publication) {
+              const publication=document.getElementById('id_publication').value;
+              localStorage.setItem('publication', publication);
+            }
+          if (Pdbcode) {
+              const pdbcode=document.getElementById('id_pdbcode').value;
+              localStorage.setItem('pdbcode', pdbcode);
+            }
+          if (Usercomment) {
+              const comment=document.getElementById('id_comment').value;
+              localStorage.setItem('comment', comment);
+            }
+          if (Predictname) {
+              const predict_name=document.getElementById('id_predict_name').value;
+              localStorage.setItem('predict_name', predict_name)
+            }
+          if (Admincomments) {
+              const admin_comments=document.getElementById('id_admin_comments').value;
+              localStorage.setItem('admin_comments', admin_comments);
+            }
+          if (Userprovidedproteinname) {
+              const user_provided_proteinname=document.getElementById('id_user_provided_proteinname').value;
+              localStorage.setItem('user_provided_proteinname', user_provided_proteinname);
+            }
+          window.location = "/admin/database/pesticidalproteinprivatedatabase/add/";
+          break;
 
           default:
             swal("Okay!");
