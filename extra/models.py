@@ -9,3 +9,6 @@ class Feedback(models.Model):
     email = models.EmailField(max_length=70, null=True, blank=False)
     message = models.TextField(blank=True, null=False)
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
+
+    def __str__(self):
+        return 'New Feedback ' + self.email
