@@ -152,7 +152,7 @@ def save_archive(sender, instance, **kwargs):
 class SendEmail(models.Model):
     submittersname = models.CharField(max_length=25, null=True, blank=True)
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
-    name = models.CharField(max_length=25, null=True, blank=True)
+    accession = models.CharField(max_length=25, null=True, blank=True)
     message = models.TextField(null=True, blank=True)
 
 

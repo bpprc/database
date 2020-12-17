@@ -157,7 +157,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         return format_html('<a href="/admin/namingalgorithm/usersubmission/">refresh</a>')
 
     def send_email(self, obj):
-        return format_html('<a href="/admin/contact/?submittersname={0}&submittersemail={1}&name={2}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.name or ''))
+        return format_html('<a href="/admin/contact/?submittersname={0}&submittersemail={1}&accession={2}" target="_blank">Send Email</a>'.format(obj.submittersname, obj.submittersemail, obj.accession))
 
     def availability(self, obj):
         accession_number = obj.accession
@@ -190,7 +190,8 @@ class SendEmailAdmin(admin.ModelAdmin):
     list_display = (
         'submittersname',
         'submittersemail',
-        'name',
+        'accession',
+        'message'
     )
 
     inlines = [ModelAdminLog]

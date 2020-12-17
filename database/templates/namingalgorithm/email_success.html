@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <b><strong><p> Your email sent to {{ submittersemail }}. A saved copy in the Send Email admin. &nbsp;</p> </strong></b>
+
+  </br>
+  </br>
+  <a href="{% url 'admin:index' %}">Return to admin panel</a>
+
+
+
+
+{% endblock content %}

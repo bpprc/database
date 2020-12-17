@@ -13,40 +13,6 @@ from .forms import UserSubmissionForm, SendEmailForm
 from django.core.mail import send_mail
 
 
-def send_mail(required):
-    email_text = send_mail(
-        subject="New Submission",
-        message="There is a new sequence submission.",
-        from_email=['bpprc.database@gmail.com'],
-        recipient_list=['sureshcbt@gmail.com'],
-        fail_silently=False,
-    )
-    return HttpResponse(f"Email sent to {email_text} members")
-
-
-def contactView(request):
-    if request.method == 'GET':
-        form = SendEmailForm()
-    else:
-        form = SendEmailForm(request.POST)
-        if form.is_valid():
-            submittersname = form.cleaned_data['submittersname']
-            submittersemail = form.cleaned_data['submittersemail']
-            name = form.cleaned_data['name']
-            message = form.cleaned_data['message']
-            try:
-                send_mail(subject, message, from_email,
-                          ['sureshcbt@gmail.com'])
-            except BadHeaderError:
-                return HttpResponse('Invalid header found.')
-            return redirect('success')
-    return render(request, "namingalgorithm/email.html", {'form': form})
-
-
-def successView(request):
-    return HttpResponse('Success! Thank you for your message.')
-
-
 def is_admin(user):
     """Check the user is admin staff."""
     return user.is_staff
@@ -141,20 +107,19 @@ def run_naming_algorithm(request):
     return render(request, 'namingalgorithm/needle.html', context)
 
 
-def _trigger_email_everyday():
-
-    sequence_message = "The bot is monitoring the sequence submission in the bpprc database for a day. If there is a new submission you will be notified through this email."
-
+def _trigger_email_everyday(submittersname, submittersemail, accession, message):
+    recipient_list = []
+    recipient_list.append(submittersemail)
     send_mail(
-        subject="New Sequence submission in the database",
-        message=sequence_message,
+        subject=accession,
+        message=message,
         from_email='bpprc.database@gmail.com',
-        recipient_list=['sureshcbt@gmail.com'],
+        recipient_list=recipient_list,
         fail_silently=False,
     )
 
 
-def contactView(request):
+def contact_email(request):
     if request.method == 'GET':
         form = SendEmailForm(initial=request.GET.dict())
     else:
@@ -162,15 +127,24 @@ def contactView(request):
         if form.is_valid():
             submittersname = form.cleaned_data['submittersname']
             submittersemail = form.cleaned_data['submittersemail']
-            name = form.cleaned_data['name']
+            accession = form.cleaned_data['accession']
             message = form.cleaned_data['message']
-            _trigger_email_everyday()
-            return HttpResponse(f"Email sent to {submittersemail} members")
+            try:
+                _trigger_email_everyday(
+                    submittersname, submittersemail, accession, message)
+                form.save()
+            except:
+                return HttpResponse('Invalid header found.')
+
+            context = \
+                {'submittersname': submittersname,
+                 'submittersemail': submittersemail}
+            return render(request, "namingalgorithm/email_success.html", context)
     return render(request, "namingalgorithm/email.html", {'form': form})
 
 
-def successView(request):
-    return HttpResponse('Success! Thank you for your message.')
+def success_email(request):
+    return HttpResponse('Success! Your message sent. See SendEmail for the list of emails')
 
 
 # def cloneUserSubmission(request):

@@ -99,15 +99,15 @@ class SendEmailForm(forms.ModelForm):
             attrs={'placeholder': ''})
     )
 
-    name = forms.CharField(
-        label='Protein Name',
+    accession = forms.CharField(
+        label='Accession Number',
         widget=forms.TextInput(
             attrs={'placeholder': ''}),
         required=False
     )
 
     message = forms.CharField(
-        label='message',
+        label='Message',
         widget=forms.Textarea(
             attrs={'placeholder': ''}),
         required=False
@@ -116,8 +116,9 @@ class SendEmailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SendEmailForm, self).__init__(*args, **kwargs)
 
-        self.fields['name'].widget.attrs['cols'] = 50
-        # self.fields['proteinsname'].widget.attrs['cols'] = 20
+        self.fields['submittersname'].widget.attrs['cols'] = 50
+        self.fields['submittersemail'].widget.attrs['cols'] = 50
+        self.fields['accession'].widget.attrs['cols'] = 20
         self.fields['message'].widget.attrs['cols'] = 50
         # self.fields['message'].widget.attrs['cols'] = 20
 
@@ -125,7 +126,7 @@ class SendEmailForm(forms.ModelForm):
         self.helper.form_id = 'id-SendEmailForm'
         self.helper.form_class = 'SendEmailForm'
         self.helper.form_method = 'post'
-        self.helper.form_action = 'submit'
+        self.helper.form_action = 'contact'
         self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:
