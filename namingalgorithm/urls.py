@@ -11,5 +11,7 @@ urlpatterns = [
     path('run_naming_algorithm/', views.run_naming_algorithm,
          name='run_naming_algorithm'),
     path('run_align/', views.run_align, name='run_align'),
-    path('align_results/', views.align_results, name='align_results')
+    path('align_results/', views.align_results, name='align_results'),
+    # path('clone_user_submission/', views.cloneUserSubmission,
+    #      name='clone_user_submission')
 ]

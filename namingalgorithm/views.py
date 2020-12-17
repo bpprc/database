@@ -7,6 +7,7 @@ from django.shortcuts import render, HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
 from naming_package import run_data
+from database.models import PesticidalProteinDatabase, PesticidalProteinPrivateDatabase
 from namingalgorithm.models import UserSubmission
 from .forms import UserSubmissionForm, SendEmailForm
 from django.core.mail import send_mail
@@ -44,6 +45,7 @@ def contactView(request):
 
 def successView(request):
     return HttpResponse('Success! Thank you for your message.')
+
 
 def is_admin(user):
     """Check the user is admin staff."""
@@ -169,3 +171,58 @@ def contactView(request):
 
 def successView(request):
     return HttpResponse('Success! Thank you for your message.')
+
+
+# def cloneUserSubmission(request):
+#     id = request.GET['id']
+#     model = request.GET['model']
+#     instance = UserSubmission.objects.get(id=id)
+#     created_model = None
+#
+#     if model == 'private':
+#         try:
+#             created_model = PesticidalProteinPrivateDatabase.objects.create(
+#                 submittersname=instance.submittersname,
+#                 submittersemail=instance.submittersemail,
+#                 name=instance.name,
+#                 sequence=instance.sequence,
+#                 bacterium=instance.bacterium,
+#                 bacterium_textbox=instance.bacterium_textbox,
+#                 taxonid=instance.taxonid,
+#                 year=instance.year,
+#                 accession=instance.accession,
+#                 partnerprotein=instance.partnerprotein,
+#                 partnerprotein_textbox=instance.partnerprotein_textbox,
+#                 toxicto=instance.toxicto,
+#                 nontoxic=instance.nontoxic,
+#                 dnasequence=instance.dnasequence,
+#                 pdbcode=instance.pdbcode,
+#                 publication=instance.publication,
+#                 comment=instance.comment,
+#                 admin_comments=instance.admin_comments,
+#             )
+#         except psycopg2.errors.NotNullViolation:
+#             return HttpResponse("Name cannot be empty", status=400)
+#     else:
+#         created_model = PesticidalProteinDatabase.objects.create(
+#             submittersname=instance.submittersname,
+#             submittersemail=instance.submittersemail,
+#             name=instance.name,
+#             sequence=instance.sequence,
+#             bacterium=instance.bacterium,
+#             bacterium_textbox=instance.bacterium_textbox,
+#             taxonid=instance.taxonid,
+#             year=instance.year,
+#             accession=instance.accession,
+#             partnerprotein=instance.partnerprotein,
+#             partnerprotein_textbox=instance.partnerprotein_textbox,
+#             toxicto=instance.toxicto,
+#             nontoxic=instance.nontoxic,
+#             dnasequence=instance.dnasequence,
+#             pdbcode=instance.pdbcode,
+#             publication=instance.publication,
+#             comment=instance.comment,
+#             admin_comments=instance.admin_comments,
+#         )
+#
+#     return HttpResponse(created_model.id)
