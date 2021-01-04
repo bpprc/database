@@ -194,6 +194,8 @@ def xpp_naming(proteins_available: Iterable[str], protein_name: str) -> str:
         candidate = base_pattern.search(name)
         if candidate:
             candidates.append(candidate.group(1))
+    print("list of candidates")
+    print(candidates)
 
     # best candidate in this example 'B'
     if not candidates:

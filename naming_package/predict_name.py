@@ -1,4 +1,4 @@
-from database.models import PesticidalProteinDatabase, PesticidalProteinPrivateDatabase
+from database.models import PesticidalProteinDatabase, PesticidalProteinPrivateDatabase, PesticidalProteinHiddenSequence
 from django.conf import settings
 from django.core.files import File
 from pathlib import Path
@@ -40,6 +40,8 @@ def blast_two_sequences(file1, file2):
 
     cmd = NEEDLE_PATH + 'needle -datafile EBLOSUM62 -auto Y' + ' -asequence ' + \
         file1 + ' -bsequence ' + file2 + ' -sprotein1 Y -sprotein2 Y ' + ' -auto -stdout'
+    print("Command line")
+    print(cmd)
     results = cmdline(cmd).decode("utf-8")
 
     identity = re.search(r"\d{1,3}\.\d*\%", results)
@@ -113,31 +115,37 @@ def run_bug(query_data):
     PPD_proteins = PesticidalProteinDatabase.objects.exclude(
         fastasequence_file__isnull=True).exclude(fastasequence_file='').values_list('name', flat=True)
 
+    hidden = PesticidalProteinHiddenSequence.objects.exclude(
+        fastasequence_file__isnull=True).exclude(fastasequence_file='').values_list('name', flat=True)
+
     private_proteins = PesticidalProteinPrivateDatabase.objects.values_list(
         'name', flat=True)
 
     endwith1 = filter_files_ending_with_one(list(PPD_proteins))
+    hidden_endwith = filter_files_ending_with_one(list(hidden))
     private_endwith1 = filter_files_ending_with_one(list(private_proteins))
 
     PPD_proteins_filtered = PesticidalProteinDatabase.objects.filter(
         name__in=endwith1)
-    print(PPD_proteins_filtered)
+
+    hidden_proteins_filtered = PesticidalProteinHiddenSequence.objects.filter(
+        name__in=hidden_endwith)
 
     private_proteins_filtered = PesticidalProteinPrivateDatabase.objects.filter(
         name__in=private_endwith1)
 
     # directory = create_directory()
 
-    for protein in itertools.chain(PPD_proteins_filtered, private_proteins_filtered):
+    for protein in itertools.chain(PPD_proteins_filtered, private_proteins_filtered, hidden_proteins_filtered):
 
         if not hasattr(protein, 'fastasequence_file'):
             continue
 
-        # print("I am running now", protein.name)
+        print("I am running now", protein.name)
         # print(protein.fastasequence_file.path)
         s = os.path.join(settings.MEDIA_ROOT,
                          protein.fastasequence_file.path)
-        # print("combined_file", s)
+        print("combined_file", s)
         identity_percentage, results = blast_two_sequences(query_data, s)
 
         # identity_percentage, results = my_blast
@@ -167,42 +175,54 @@ def run_bug(query_data):
             category = "95 to 100%"
             public = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
+            hidden = PesticidalProteinHiddenSequence.objects.filter(
+                name__startswith=name[0:3]).values_list('name', flat=True)
             private = PesticidalProteinPrivateDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
             categories = list(public)
             categories.extend(list(private))
+            categories.extend(list(hidden))
             predicted_name = naming.rank4_naming(categories, name)
 
         elif float(empty[2]) >= 76 and float(empty[2]) <= 94.9:
             category = "76 to 94%"
             public = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
+            hidden = PesticidalProteinHiddenSequence.objects.filter(
+                name__startswith=name[0:3]).values_list('name', flat=True)
             private = PesticidalProteinPrivateDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
             categories = list(public)
             categories.extend(list(private))
+            categories.extend(list(hidden))
             predicted_name = naming.rank3_naming(categories, name)
 
         elif float(empty[2]) >= 45 and float(empty[2]) <= 75.9:
             category = "45 to 75%"
             public = PesticidalProteinDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
+            hidden = PesticidalProteinHiddenSequence.objects.filter(
+                name__startswith=name[0:3]).values_list('name', flat=True)
             private = PesticidalProteinPrivateDatabase.objects.filter(
                 name__startswith=name[0:3]).values_list('name', flat=True)
             categories = list(public)
             categories.extend(list(private))
+            categories.extend(list(hidden))
             predicted_name = naming.rank2_naming(categories, name)
 
         elif float(empty[2]) >= 0 and float(empty[2]) <= 44.9:
             category = "0 to 44%"
             public = PesticidalProteinDatabase.objects.filter(
-                name__startswith='Xpp').values_list('name', flat=True)
+                name__startswith=name[0:3]).values_list('name', flat=True)
+            hidden = PesticidalProteinHiddenSequence.objects.filter(
+                name__startswith=name[0:3]).values_list('name', flat=True)
             private = PesticidalProteinPrivateDatabase.objects.filter(
-                name__startswith='Xpp').values_list('name', flat=True)
+                name__startswith=name[0:3]).values_list('name', flat=True)
             categories = list(public)
             categories.extend(list(private))
+            categories.extend(list(hidden))
             # predicted_name = naming.rank1_naming(categories, name)
-            predicted_name = naming.xpp_naming(categories, 'Xpp')
+            predicted_name = naming.xpp_naming(categories, name)
             # predicted_name = "Name manually"
 
         else:
