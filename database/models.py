@@ -66,7 +66,7 @@ class StructureDatabase(models.Model):
     #publication = models.TextField(blank=True, null=False)
     pubmedid = models.CharField(max_length=75, blank=True, null=False)
     year = models.CharField(max_length=5, blank=True, null=False)
-    modified = models.CharField(max_length=100, choices=CHOICES, default="No")
+    modified = models.CharField(max_length=100, choices=CHOICES, default="Yes")
     comment = models.TextField(null=True, blank=True)
     #organism = models.CharField(max_length=250, blank=True)
     #expression_system = models.CharField(max_length=250, blank=True)
