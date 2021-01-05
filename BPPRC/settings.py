@@ -238,7 +238,7 @@ ADMIN_REORDER = [
     'extra',
     {'app': 'auth', 'models': (
         'auth.Group',
-        {'model': 'auth.User', 'label': 'Staffs'},
+        {'model': 'auth.User', 'label': 'Staff'},
     )},
     'django_ses',
     'clustalanalysis',

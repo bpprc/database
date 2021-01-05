@@ -21,3 +21,7 @@ class StoreResultFiles(models.Model):
                 content = ContentFile(result)
                 self.resultfile.save(filename, content)
                 # super(StoreResultFiles, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Store result file'
+        verbose_name_plural = "Store results files"

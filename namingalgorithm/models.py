@@ -21,6 +21,10 @@ class AuditEntry(models.Model):
     def __str__(self):
         return '{0} - {1} - {2}'.format(self.action, self.username, self.ip)
 
+    class Meta:
+        verbose_name = 'Audit Entry'
+        verbose_name_plural = "Audit entries"
+
 
 @receiver(user_logged_in)
 def user_logged_in_callback(sender, request, user, **kwargs):
