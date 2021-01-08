@@ -1,70 +1,34 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
 {% block content %}
 
+      <h3> Frequently Asked Questions</h3>
+      <br>
+      <p><h5>Can I name my own protein?</h5></p>
 
-<div class="container ">
-    <div class="panel-group" id="faqAccordion">
-        <div class="panel panel-default ">
-            <div class="panel-heading accordion-toggle question-toggle collapsed" data-toggle="collapse" data-parent="#faqAccordion" data-target="#question0">
-                 <h4 class="panel-title">
-                    <a href="#" class="ing">Q: Where can I find a local copy of the database?</a>
-              </h4>
+      <p>-No. Even though you can identify the most closely related proteins, you can only acquire an official name by use of this site.  Self-naming of proteins will inevitably lead to different users adopting the same protein name, confusing the literature.  Only the nomenclature committee can issue new protein names.</p>
+      <br/>
 
-            </div>
-            <div id="question0" class="panel-collapse collapse" style="height: 0px;">
-                <div class="panel-body">
-                  <p>You can download the database as well as the source code<a href="https://github.com/Amrithasuresh/BPPRC" target="_blank"> here.</a>  </p>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default ">
-            <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse" data-parent="#faqAccordion" data-target="#question1">
-                 <h4 class="panel-title">
-                    <a href="#" class="ing">Q: How do I cite BPPRC?</a>
-              </h4>
+      <p><h5>My protein is completely different. Should I refer to it as Xpp-like?</h5></p>
+      <p>-No. Xpp is a holding group containing members of several disparate protein families.  As a result, Xpp-like would not actually indicate any significant homology.  You could however, refer to your protein in relation to a specific Xpp protein (as Xpp37-like for example). The numeric value will be retained when the protein is re-categorized to a specific protein family in the future. </p>
 
-            </div>
-            <div id="question1" class="panel-collapse collapse" style="height: 0px;">
-                <div class="panel-body">
-                     <h5><span class="label label-primary">Answer</span></h5>
+      <br/>
 
-                    <p></p>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default ">
-            <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse" data-parent="#faqAccordion" data-target="#question2">
-                 <h4 class="panel-title">
-                    <a href="#" class="ing">Q: How many categories of Pesticidal protein are available?</a>
-              </h4>
-
-            </div>
-            <div id="question2" class="panel-collapse collapse" style="height: 0px;">
-                <div class="panel-body">
-                     <h5><span class="label label-primary">Answer</span></h5>
-
-                    <p></p>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default ">
-            <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse" data-parent="#faqAccordion" data-target="#question3">
-                 <h4 class="panel-title">
-                    <a href="#" class="ing">Q: Why naming is important?</a>
-              </h4>
-
-            </div>
-            <div id="question3" class="panel-collapse collapse" style="height: 0px;">
-                <div class="panel-body">
-                     <h5><span class="label label-primary">Answer</span></h5>
-
-                    <p> </p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
+      <p><h5>I have a pesticidal protein derived from a fern. Can I add this sequence to the database?</h5></p>
+      <p>-Probably not.  This site only aims to deal with proteins of bacterial origin.  However, if your protein of non-bacterial origin has a high degree of identity with a protein that is already in the database, you may make a case for its inclusion.  The committee will consider these requests on a case-by-case basis.</p>
+      <br>
 
 
 {% endblock content %}
+
+{% block extrahead %}
+
+{% endblock extrahead %}
+
+
+{% block extrajs %}
+
+
+{% endblock %}

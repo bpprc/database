@@ -7,4 +7,6 @@ urlpatterns = [
          name='feedback_home'),
     path('github_home/', views.github_home,
          name='github_home'),
+    path('faq/', views.faq,
+         name='faq'),
 ]

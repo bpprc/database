@@ -38,3 +38,7 @@ def feedback_home(request):
 
 def github_home(request):
     return render(request, 'extra/github.html')
+
+
+def faq(request):
+    return render(request, 'extra/faq.html')
