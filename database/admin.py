@@ -367,19 +367,26 @@ class ProteinDetailResource(resources.ModelResource):
 
 
 class ProteinDetailAdmin(ImportExportModelAdmin):
-    search_fields = ['accession', 'start_N', 'end_N',
+    search_fields = ['name', 'accession', 'start_N', 'end_N',
                      'start_M', 'end_M', 'start_C', 'end_C']
 
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '20'})},
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 80})}
     }
-    fields = ('accession', 'fulllength', 'species', 'taxon', 'domain_N', 'pfam_N', 'cdd_N',
+    fields = ('name', 'accession', 'fulllength', 'species', 'taxon', 'domain_N', 'pfam_N', 'cdd_N',
               'start_N', 'end_N', 'domain_M', 'pfam_M', 'cdd_M', 'start_M', 'end_M', 'domain_C', 'pfam_C', 'cdd_C', 'start_C', 'end_C')
-    list_display = ('accession', 'fulllength', 'species', 'taxon', 'domain_N', 'pfam_N', 'cdd_N',
+    list_display = ('accession', 'name', 'species', 'domain_N', 'pfam_N', 'cdd_N',
                     'start_N', 'end_N', 'domain_M', 'pfam_M', 'cdd_M', 'start_M', 'end_M', 'domain_C', 'pfam_C', 'cdd_C', 'start_C', 'end_C')
+    ordering = ('accession',)
 
     inlines = [ModelAdminLog]
+
+    # def Protein_Name(self, obj):
+    #     protein = PesticidalProteinDatabase.objects.get(
+    #         accession=obj.accession)
+    #     if protein:
+    #         return protein.name
 
     class Meta:
         skip_unchanged = True

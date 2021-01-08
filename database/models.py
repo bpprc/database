@@ -340,9 +340,11 @@ class PesticidalProteinDatabase(models.Model):
 
 class ProteinDetail(models.Model):
 
-    # name = models.ForeignKey(PesticidalProteinDatabase, related_name="%(class)s_name", on_delete=models.CASCADE,)
+    # name = models.ForeignKey(PesticidalProteinDatabase,
+    #                          related_name="%(class)s_name", on_delete=models.CASCADE,)
     # accession = models.ForeignKey(PesticidalProteinDatabase, related_name="%(class)s_accession", on_delete=models.CASCADE,)
     # sequence = models.ForeignKey(PesticidalProteinDatabase, related_name="%(class)s_fastasequence", on_delete=models.CASCADE,)
+    name = models.CharField(max_length=25)
     accession = models.CharField(max_length=25, blank=True, null=False)
     sequence = models.TextField(blank=True, null=False)
     fulllength = models.TextField(blank=True, null=False)
@@ -364,8 +366,10 @@ class ProteinDetail(models.Model):
     start_C = models.CharField(max_length=10, blank=True, null=False)
     end_C = models.CharField(max_length=10, blank=True, null=False)
 
-    class Meta:
-        verbose_name_plural = "Three domains data"
+    def save(self, *args, **kwargs):
+        p = PesticidalProteinDatabase.objects.get(accession=self.accession)
+        super(ProteinDetail).save(*args, **kwargs)
+        ProteinDetail.filter(pk=self.pk).update(name=p.name)
 
     def get_endotoxin_n(self):
         if not self.start_N or not self.end_N:
