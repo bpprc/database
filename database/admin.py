@@ -376,17 +376,17 @@ class ProteinDetailAdmin(ImportExportModelAdmin):
     }
     fields = ('name', 'accession', 'fulllength', 'species', 'taxon', 'domain_N', 'pfam_N', 'cdd_N',
               'start_N', 'end_N', 'domain_M', 'pfam_M', 'cdd_M', 'start_M', 'end_M', 'domain_C', 'pfam_C', 'cdd_C', 'start_C', 'end_C')
-    list_display = ('accession', 'name', 'species', 'domain_N', 'pfam_N', 'cdd_N',
+    list_display = ('accession', 'Protein_Name', 'species', 'domain_N', 'pfam_N', 'cdd_N',
                     'start_N', 'end_N', 'domain_M', 'pfam_M', 'cdd_M', 'start_M', 'end_M', 'domain_C', 'pfam_C', 'cdd_C', 'start_C', 'end_C')
     ordering = ('accession',)
 
     inlines = [ModelAdminLog]
 
-    # def Protein_Name(self, obj):
-    #     protein = PesticidalProteinDatabase.objects.get(
-    #         accession=obj.accession)
-    #     if protein:
-    #         return protein.name
+    def Protein_Name(self, obj):
+        protein = PesticidalProteinDatabase.objects.get(
+            accession=obj.accession)
+        if protein:
+            return protein.name
 
     class Meta:
         skip_unchanged = True
