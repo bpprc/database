@@ -9,6 +9,7 @@ __pycache__/
 # csv
 *.csv
 *.json
+*.db
 
 #static folder
 static/
