@@ -266,76 +266,68 @@ def search_database(request):
                     proteins = _sorted_nicely(proteins2, sort_key='name')
 
             elif field_type == 'old name/other name':
-                print(" entering oldname")
                 q_objects = Q()
+                q_search = Q()
                 for search in searches:
                     if Search(search).is_wildcard():
                         search = search[:-1]
                     else:
                         search = search
                     k = Search(search)
-
                     if k.is_fullname():
-                        # print('fullname')
                         q_objects.add(Q(oldname__iexact=search), Q.OR)
-                        # q_objects.add(Q(name__iexact=search), Q.OR)
                         q_objects.add(Q(othernames__iexact=search), Q.OR)
                     if k.fulltext():
-                        # print('fulltext')
                         q_objects.add(
                             Q(othernames__icontains=search), Q.OR)
                     if k.is_uppercase():
-                        # print('uppercase')
                         q_objects.add(Q(oldname__icontains=search), Q.OR)
                     if k.is_lowercase():
-                        # print('lowercase')
                         q_objects.add(Q(oldname__icontains=search), Q.OR)
                     if k.is_single_digit():
-                        # print("is single digit")
                         single_digit = True
-                        q_objects.add(
+                        q_search.add(
                             Q(oldname__icontains=search), Q.OR)
-                        # print(q_objects)
                     if k.is_double_digit():
-                        # print('double digit')
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.is_triple_digit():
-                        # print('triple digit')
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.is_three_letter():
-                        # print("three letters")
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.is_three_letter_case():
-                        # print("three letters case")
                         q_objects.add(
                             Q(oldname__icontains=search), Q.OR)
                     if k.bthur0001_55730():
                         q_objects.add(
                             Q(othernames__iexact=search), Q.OR)
-                    # if k.random_pattern():
-                    #     print('roman')
-                    #     q_objects.add(
-                    #         Q(othernames__icontains=search), Q.OR)
                     else:
-                        # print("else loop")
                         q_objects.add(
                             Q(othernames__icontains=search), Q.OR)
                         q_objects.add(
                             Q(oldname__iexact=search), Q.OR)
-                    # else:
-                    #     print("I am inside the loop")
-                    #     q_objects.add(Q(othernames__icontains=search), Q.OR)
-                proteins = PesticidalProteinDatabase.objects.filter(q_objects)
 
-                if single_digit:
-                    filtered_protein = filter_one_oldname(proteins)
-                    proteins = filtered_protein
-
-                proteins = _sorted_nicely(proteins, sort_key='name')
-                # print(proteins)
+                proteins1 = PesticidalProteinDatabase.objects.none()
+                proteins2 = PesticidalProteinDatabase.objects.none()
+                if q_objects:
+                    proteins1 = PesticidalProteinDatabase.objects.filter(
+                        q_objects)
+                if q_search:
+                    proteins2 = PesticidalProteinDatabase.objects.filter(
+                        q_search)
+                if proteins1 and proteins2:
+                    filtered_protein = filter_one_name(proteins2)
+                    proteins2 = filtered_protein
+                    proteins = list(proteins1) + proteins2
+                    proteins = _sorted_nicely(proteins, sort_key='name')
+                elif proteins1:
+                    proteins = _sorted_nicely(proteins1, sort_key='name')
+                elif proteins2:
+                    filtered_protein = filter_one_name(proteins2)
+                    proteins2 = filtered_protein
+                    proteins = _sorted_nicely(proteins2, sort_key='name')
 
             elif field_type == 'accession':
                 q_objects = Q()
@@ -345,12 +337,20 @@ def search_database(request):
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
             elif field_type == 'holotype':
-                # categories = \
-                #     PesticidalProteinDatabase.objects.order_by(
-                #         'name').values_list('name', flat=True).distinct()
                 q_objects = Q()
                 filtered_q_objects = Q()
+                q_search = Q()
                 for search in searches:
+                    if Search(search).is_wildcard():
+                        search = search[:-1]
+                    else:
+                        search = search
+                    k = Search(search)
+                    if k.is_single_digit():
+                        single_digit = True
+                        q_search.add(
+                            Q(name__icontains=search), Q.OR)
+
                     q_objects.add(Q(name__icontains=search), Q.OR)
 
                 categories = PesticidalProteinDatabase.objects.filter(
@@ -365,6 +365,7 @@ def search_database(request):
                 proteins = _sorted_nicely(proteins, sort_key='name')
             elif field_type == 'structure':
                 q_objects = Q()
+                q_search = Q()
                 for search in searches:
                     q_objects.add(Q(name__icontains=search), Q.OR)
 
