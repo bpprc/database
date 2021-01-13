@@ -210,71 +210,41 @@ def search_database(request):
 
             #searches = re.split(r':|, ?|\s |_ |. |; |\n', query)
             searches = re.split(r':|, ?|\s* |_|\n|;|-', query)
-            # console.print("searches split here", style="bold underline red")
-            # console.print(f"Searches = {searches}",
-            #               style="bold underline blue")
-
-            # show_extra_data = False
-            # for search in searches:
-            #     if search[0:3].upper() == 'CRY':
-            #         show_extra_data = True
 
             if field_type == 'name':
                 q_objects = Q()
                 q_search = Q()
                 for search in searches:
                     if Search(search).is_wildcard():
-                        # console.print("wildcard is working now",
-                        #               style="bold underline red")
                         search = search[:-1]
-                        # console.print(
-                        #     f"Searches = {search}", style="bold underline blue")
                     else:
                         search = search
                     k = Search(search)
                     if k.is_fullname():
-                        # console.print('fullname', style="bold underline red")
-                        # console.print(
-                        #     f"Searches = {k}", style="bold underline blue")
                         q_objects.add(Q(name__iexact=search), Q.OR)
                     if k.is_uppercase():
-                        # console.print('uppercase', style="bold underline red")
-                        # console.print(
-                        #     f"Searches = {k}", style="bold underline blue")
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_lowercase():
-                        # console.print('lowercase', style="bold underline red")
-                        # console.print(
-                        #     f"Searches = {k}", style="bold underline blue")
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_single_digit():
-                        # print("single digit")
                         single_digit = True
                         q_search.add(
                             Q(name__icontains=search), Q.OR)
-                        # print(q_search)
-                        # q_objects.add(
-                        #     Q(name__icontains=search), Q.OR)
                     if k.is_double_digit():
-                        # print('double digit')
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_triple_digit():
-                        # print('triple digit')
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_three_letter():
-                        # print("three letters")
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
                     if k.is_three_letter_case():
-                        # print("three letters case")
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
-                    # else:
-                    #     print("else")
-                    #     q_objects.add(
-                    #         Q(name__iexact=search), Q.OR)
+                    else:
+                        q_objects.add(
+                            Q(name__iexact=search), Q.OR)
                 proteins1 = PesticidalProteinDatabase.objects.none()
                 proteins2 = PesticidalProteinDatabase.objects.none()
                 if q_objects:
@@ -283,12 +253,6 @@ def search_database(request):
                 if q_search:
                     proteins2 = PesticidalProteinDatabase.objects.filter(
                         q_search)
-
-                # if single_digit:
-                #     print("I am single digit true")
-                #     filtered_protein = filter_one_name(proteins2)
-                #     proteins2 = filtered_protein
-                #     print(proteins2)
                 if proteins1 and proteins2:
                     filtered_protein = filter_one_name(proteins2)
                     proteins2 = filtered_protein
