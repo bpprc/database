@@ -376,10 +376,57 @@ def search_database(request):
                 q_objects = Q()
                 q_search = Q()
                 for search in searches:
-                    q_objects.add(Q(name__icontains=search), Q.OR)
+                    if Search(search).is_wildcard():
+                        search = search[:-1]
+                    else:
+                        search = search
+                    k = Search(search)
+                    if k.is_fullname():
+                        q_objects.add(Q(name__iexact=search), Q.OR)
+                    if k.is_uppercase():
+                        q_objects.add(Q(name__icontains=search), Q.OR)
+                    if k.is_lowercase():
+                        q_objects.add(Q(name__icontains=search), Q.OR)
+                    if k.is_single_digit():
+                        single_digit = True
+                        q_search.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_double_digit():
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_triple_digit():
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_three_letter():
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_three_letter_case():
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    else:
+                        q_objects.add(
+                            Q(name__iexact=search), Q.OR)
+                proteins1 = StructureDatabase.objects.none()
+                proteins2 = StructureDatabase.objects.none()
+                if q_objects:
+                    proteins1 = StructureDatabase.objects.filter(
+                        q_objects)
+                if q_search:
+                    proteins2 = StructureDatabase.objects.filter(
+                        q_search)
+                if proteins1 and proteins2:
+                    filtered_protein = filter_one_name(proteins2)
+                    proteins2 = filtered_protein
+                    proteins = list(proteins1) + proteins2
+                    proteins = _sorted_nicely(proteins, sort_key='name')
+                elif proteins1:
+                    proteins = _sorted_nicely(proteins1, sort_key='name')
+                elif proteins2:
+                    filtered_protein = filter_one_name(proteins2)
+                    proteins2 = filtered_protein
+                    proteins = _sorted_nicely(proteins2, sort_key='name')
 
-                structures = StructureDatabase.objects.filter(q_objects)
-                structures = _sorted_nicely(structures, sort_key='name')
+                structures = _sorted_nicely(proteins, sort_key='name')
                 return render(request, 'database/filter_structures.html', {'structures': structures})
 
         show_extra_data = False
