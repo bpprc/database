@@ -29,6 +29,10 @@ from numpy import pi
 import xlwt
 from database.filter_results import Search, filter_one_name, filter_one_oldname
 from io import BytesIO
+from itertools import chain
+from rich.console import Console
+
+console = Console()
 
 
 def home(request):
@@ -204,8 +208,11 @@ def search_database(request):
             query = form.cleaned_data['search_term']
             field_type = form.cleaned_data['search_fields']
 
-            searches = re.split(r':|, ?|\s |_ |. |; |\n', query)
-            # print("searches split here", searches)
+            #searches = re.split(r':|, ?|\s |_ |. |; |\n', query)
+            searches = re.split(r':|, ?|\s* |_|\n|;|-', query)
+            # console.print("searches split here", style="bold underline red")
+            # console.print(f"Searches = {searches}",
+            #               style="bold underline blue")
 
             # show_extra_data = False
             # for search in searches:
@@ -214,28 +221,40 @@ def search_database(request):
 
             if field_type == 'name':
                 q_objects = Q()
+                q_search = Q()
                 for search in searches:
-
                     if Search(search).is_wildcard():
-                        # print("wildcard is working now")
+                        # console.print("wildcard is working now",
+                        #               style="bold underline red")
                         search = search[:-1]
+                        # console.print(
+                        #     f"Searches = {search}", style="bold underline blue")
                     else:
                         search = search
                     k = Search(search)
                     if k.is_fullname():
-                        # print('fullname')
+                        # console.print('fullname', style="bold underline red")
+                        # console.print(
+                        #     f"Searches = {k}", style="bold underline blue")
                         q_objects.add(Q(name__iexact=search), Q.OR)
                     if k.is_uppercase():
-                        # print('uppercase')
+                        # console.print('uppercase', style="bold underline red")
+                        # console.print(
+                        #     f"Searches = {k}", style="bold underline blue")
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_lowercase():
-                        # print('lowercase')
+                        # console.print('lowercase', style="bold underline red")
+                        # console.print(
+                        #     f"Searches = {k}", style="bold underline blue")
                         q_objects.add(Q(name__icontains=search), Q.OR)
                     if k.is_single_digit():
                         # print("single digit")
                         single_digit = True
-                        q_objects.add(
+                        q_search.add(
                             Q(name__icontains=search), Q.OR)
+                        # print(q_search)
+                        # q_objects.add(
+                        #     Q(name__icontains=search), Q.OR)
                     if k.is_double_digit():
                         # print('double digit')
                         q_objects.add(
@@ -252,17 +271,35 @@ def search_database(request):
                         # print("three letters case")
                         q_objects.add(
                             Q(name__icontains=search), Q.OR)
-                    else:
-                        q_objects.add(
-                            Q(name__iexact=search), Q.OR)
+                    # else:
+                    #     print("else")
+                    #     q_objects.add(
+                    #         Q(name__iexact=search), Q.OR)
+                proteins1 = PesticidalProteinDatabase.objects.none()
+                proteins2 = PesticidalProteinDatabase.objects.none()
+                if q_objects:
+                    proteins1 = PesticidalProteinDatabase.objects.filter(
+                        q_objects)
+                if q_search:
+                    proteins2 = PesticidalProteinDatabase.objects.filter(
+                        q_search)
 
-                proteins = PesticidalProteinDatabase.objects.filter(q_objects)
-
-                if single_digit:
-                    filtered_protein = filter_one_name(proteins)
-                    proteins = filtered_protein
-
-                proteins = _sorted_nicely(proteins, sort_key='name')
+                # if single_digit:
+                #     print("I am single digit true")
+                #     filtered_protein = filter_one_name(proteins2)
+                #     proteins2 = filtered_protein
+                #     print(proteins2)
+                if proteins1 and proteins2:
+                    filtered_protein = filter_one_name(proteins2)
+                    proteins2 = filtered_protein
+                    proteins = list(proteins1) + proteins2
+                    proteins = _sorted_nicely(proteins, sort_key='name')
+                elif proteins1:
+                    proteins = _sorted_nicely(proteins1, sort_key='name')
+                elif proteins2:
+                    filtered_protein = filter_one_name(proteins2)
+                    proteins2 = filtered_protein
+                    proteins = _sorted_nicely(proteins2, sort_key='name')
 
             elif field_type == 'old name/other name':
                 print(" entering oldname")

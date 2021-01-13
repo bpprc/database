@@ -107,10 +107,8 @@ def filter_one_name(proteins):
     for protein in proteins:
         k = re.split('([0-9]+)', protein.name)
         if int(k[1]) // 10 == 0:
-            print(protein.name)
+            # print(protein.name)
             filtered_protein.append(protein)
-        else:
-            pass
     return filtered_protein
 
 
