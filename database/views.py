@@ -337,40 +337,24 @@ def search_database(request):
                 proteins = PesticidalProteinDatabase.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
             elif field_type == 'holotype':
+                # categories = \
+                #     PesticidalProteinDatabase.objects.order_by(
+                #         'name').values_list('name', flat=True).distinct()
                 q_objects = Q()
-                q_search = Q()
+                filtered_q_objects = Q()
                 for search in searches:
-                    if Search(search).is_wildcard():
-                        search = search[:-1]
-                    else:
-                        search = search
-                    k = Search(search)
-                    if k.is_single_digit():
-                        single_digit = True
-                        q_search.add(
-                            Q(name__icontains=search), Q.OR)
-                    else:
-                        q_objects.add(Q(name__icontains=search), Q.OR)
+                    q_objects.add(Q(name__icontains=search), Q.OR)
 
-                proteins1 = PesticidalProteinDatabase.objects.none()
-                proteins2 = PesticidalProteinDatabase.objects.none()
-                if q_objects:
-                    proteins1 = PesticidalProteinDatabase.objects.filter(
-                        q_objects)
-                if q_search:
-                    proteins2 = PesticidalProteinDatabase.objects.filter(
-                        q_search)
-                if proteins1 and proteins2:
-                    filtered_protein = filter_one_name(proteins2)
-                    proteins2 = filtered_protein
-                    proteins = list(proteins1) + proteins2
-                    proteins = _sorted_nicely(proteins, sort_key='name')
-                elif proteins1:
-                    proteins = _sorted_nicely(proteins1, sort_key='name')
-                elif proteins2:
-                    filtered_protein = filter_one_name(proteins2)
-                    proteins2 = filtered_protein
-                    proteins = _sorted_nicely(proteins2, sort_key='name')
+                categories = PesticidalProteinDatabase.objects.filter(
+                    q_objects)
+
+                for category in categories:
+                    if category.name[-1] == '1' and not category.name[-2].isdigit():
+                        filtered_q_objects.add(
+                            Q(name__iexact=category.name), Q.OR)
+                proteins = PesticidalProteinDatabase.objects.filter(
+                    filtered_q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
 
             elif field_type == 'structure':
                 q_objects = Q()
