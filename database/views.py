@@ -209,7 +209,7 @@ def search_database(request):
             field_type = form.cleaned_data['search_fields']
 
             #searches = re.split(r':|, ?|\s |_ |. |; |\n', query)
-            searches = re.split(r':|, ?|\s* |_|\n|;|-', query)
+            searches = re.split(r':|, ?|\s* |\n|;', query)
 
             if field_type == 'name':
                 q_objects = Q()
