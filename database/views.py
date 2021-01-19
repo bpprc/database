@@ -1026,3 +1026,22 @@ def server_error(request):
 
 def faq(request):
     return render(request, 'extra/faq.html')
+
+
+def list_proteins(request):
+
+    category_endswith1 = []
+
+    categories = \
+        PesticidalProteinDatabase.objects.order_by(
+            'name').values_list('name', flat=True).distinct()
+    for category in categories:
+        if category[-1] == '1' and not category[-2].isdigit():
+            category_endswith1.append(category)
+
+    proteins = _sorted_nicely(category_endswith1)
+
+    context = \
+        {'proteins': proteins}
+
+    return render(request, 'database/list_proteins.html', context)
