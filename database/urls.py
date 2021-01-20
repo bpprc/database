@@ -50,6 +50,4 @@ urlpatterns = [
          name='structures'),
     path('structure_pdbid_<str:pdbid>', views.structure_pdbid,
          name='structure_pdbid'),
-    path('list_proteins/', views.list_proteins,
-         name='list_proteins'),
 ]
