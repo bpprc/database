@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="table-responsive col-lg-12">
+	  	<h3>Data Association Links </h3>
+    </br>
+        <tbody>
+        <a href="{% url 'example_content' %}"> <b>  Example_content </b> </a>
+      </br>
+        <a href="{% url 'data_teams' %}"> <b> Teams  </b></a>
+      </br>
+        <a href="{% url 'list_proteins' %}"> <b> Representation Table  </b></a>
+       </tbody>
+</div>
+
+
+</div>
+</div>
+
+
+{% endblock content %}
+
+
+
+{% block extrahead %}
+<style>
+
+</style>
+{% endblock extrahead %}
+
+
+
+{% block extrajs %}
+
+{% endblock extrajs %}
