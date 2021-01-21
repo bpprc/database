@@ -7,29 +7,28 @@ TRUE_FALSE_CHOICES = (
 )
 
 
-class DataModel(models.Model):
-    name = models.CharField(max_length=25,
-                            blank=True, verbose_name="Protein Name")
-    accession = models.CharField(
-        max_length=25, blank=True, null=False, verbose_name="NCBI accession number")
-    partnerprotein = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES)
-    partnerprotein_textbox = models.CharField(
-        max_length=250, blank=True)
-    target_order = models.CharField(
-        max_length=250, blank=True)
-    target_species = models.CharField(
-        max_length=250, null=True, blank=True)
-    activity = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES)
-    taxonid = models.CharField(max_length=25, blank=True)
-    lc50 = models.CharField(max_length=25, blank=True)
-    units = models.CharField(max_length=25, blank=True)
-    percentage_mortality = models.CharField(max_length=25, blank=True)
+class Association(models.Model):
+    name = models.TextField(blank=True, verbose_name="Protein Name")
+    oldname = models.TextField(blank=True, verbose_name="Old Name")
+    accession = models.TextField(
+        blank=True, verbose_name="NCBI accession number")
+    partnerprotein = models.CharField(max_length=7,
+                                      default='No', editable=True)
+    partnerprotein_textbox = models.TextField(blank=True)
+    target_order = models.TextField(blank=True)
+    target_species = models.TextField(null=True, blank=True)
+    activity = models.CharField(max_length=7,
+                                default='Yes', editable=True)
+    taxonid = models.TextField(blank=True)
+    lc50 = models.TextField(blank=True)
+    units = models.TextField(blank=True)
+    non_toxic = models.TextField(blank=True)
+    percentage_mortality = models.TextField(blank=True)
     publication = models.TextField(blank=True)
-    stage = models.CharField(max_length=75, blank=True)
+    other_citations = models.TextField(blank=True)
+    life_stage = models.TextField(blank=True)
+    instar = models.TextField(blank=True)
     assay_material = models.TextField(blank=True)
     assay_method = models.TextField(blank=True)
     comment = models.TextField(blank=True)
-    data_entered_by = models.CharField(
-        max_length=250, null=True, blank=True)
+    data_entered_by = models.TextField(blank=True)

@@ -10,13 +10,12 @@
     <div class="table-responsive col-lg-12">
 	  	<h3>Data Association Links </h3>
     </br>
-        <tbody>
-        <a href="{% url 'example_content' %}"> <b>  Example_content </b> </a>
-      </br>
-        <a href="{% url 'data_teams' %}"> <b> Teams  </b></a>
-      </br>
-        <a href="{% url 'list_proteins' %}"> <b> Representation Table  </b></a>
-       </tbody>
+        <ul>
+        <li> <a href="{% url 'example_content' %}"> Example_content </a></li>
+        <li> <a href="{% url 'data_teams' %}">Teams </a></li>
+        <li> <a href="{% url 'list_proteins' %}">Representation Table </a></li>
+        <li> <a href="{% url 'search_association' %}">Search </a></li>
+      </ul>
 </div>
 
 

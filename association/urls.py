@@ -10,4 +10,6 @@ urlpatterns = [
          name='data_teams'),
     path('list_proteins/', views.list_proteins,
          name='list_proteins'),
+    path('search_association/', views.search_association,
+         name='search_association'),
 ]

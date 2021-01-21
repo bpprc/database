@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from association.models import DataModel
+from association.models import Association
+from association.forms import SearchForm
 from database.models import PesticidalProteinDatabase
 import re
 
@@ -26,6 +27,11 @@ def example_content(request):
 
 def data_teams(request):
     return render(request, 'association/data_teams.html')
+
+
+def search_association(request):
+    form = SearchForm()
+    return render(request, 'association/search_page.html', {'form': form})
 
 
 def list_proteins(request):
