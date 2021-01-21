@@ -242,6 +242,7 @@ ADMIN_REORDER = [
     )},
     'django_ses',
     'clustalanalysis',
+    'association',
 ]
 
 # SESSION
