@@ -12,15 +12,13 @@
     </br>
         <ul>
         <li> <a href="{% url 'example_content' %}"> Example_content </a></li>
-        <li> <a href="{% url 'data_teams' %}">Teams </a></li>
-        <li> <a href="{% url 'list_proteins' %}">Representation Table </a></li>
         <li> <a href="{% url 'search_association' %}">Search </a></li>
       </ul>
 </div>
-
-
 </div>
 </div>
+<br>
+<br>
 
 
 {% endblock content %}
@@ -29,6 +27,16 @@
 
 {% block extrahead %}
 <style>
+
+.container1 {
+  display: flex;
+  justify-content: space-between;
+}
+.container1 div {
+  width: 50%;
+  padding: 155px;
+  border: 1px solid black;
+}
 
 </style>
 {% endblock extrahead %}

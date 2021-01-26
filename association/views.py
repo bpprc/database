@@ -2,6 +2,9 @@ from django.shortcuts import render
 from association.models import Association
 from association.forms import SearchForm
 from database.models import PesticidalProteinDatabase
+from django.db.models import Q
+from django.http import HttpResponse, HttpResponseRedirect
+from database.filter_results import Search, filter_one_name, filter_one_oldname
 import re
 
 
@@ -18,7 +21,17 @@ def _sorted_nicely(l, sort_key=None):
 
 
 def data_association_links(request):
-    return render(request, 'association/data_association_links.html')
+    context = \
+        {'items': Association.objects.all()}
+
+    return render(request, 'association/data_association_links.html', context)
+
+
+def display_protein_data(request, name):
+    context = \
+        {'proteins': Association.objects.filter(name=name)}
+
+    return render(request, 'association/display_protein_data.html', context)
 
 
 def example_content(request):
@@ -50,3 +63,75 @@ def list_proteins(request):
         {'proteins': proteins}
 
     return render(request, 'association/list_proteins.html', context)
+
+
+def search_data_association(request):
+    """Returns the results based on the search query."""
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        proteins = []
+        single_digit = False
+        if form.is_valid():
+            query = form.cleaned_data['search_term']
+            field_type = form.cleaned_data['search_fields']
+
+            #searches = re.split(r':|, ?|\s |_ |. |; |\n', query)
+            searches = re.split(r':|, ?|\s* |\n|;', query)
+            print(searches)
+
+            if field_type == 'name':
+                q_objects = Q()
+                q_search = Q()
+                for search in searches:
+                    if Search(search).is_wildcard():
+                        search = search[:-1]
+                    else:
+                        search = search
+                    k = Search(search)
+                    if k.is_fullname():
+                        q_objects.add(Q(name__iexact=search), Q.OR)
+                    if k.is_uppercase():
+                        q_objects.add(Q(name__icontains=search), Q.OR)
+                    if k.is_lowercase():
+                        q_objects.add(Q(name__icontains=search), Q.OR)
+                    if k.is_single_digit():
+                        single_digit = True
+                        q_search.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_double_digit():
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_triple_digit():
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_three_letter():
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    if k.is_three_letter_case():
+                        q_objects.add(
+                            Q(name__icontains=search), Q.OR)
+                    else:
+                        q_objects.add(
+                            Q(name__iexact=search), Q.OR)
+                proteins1 = Association.objects.none()
+                proteins2 = Association.objects.none()
+                if q_objects:
+                    proteins1 = Association.objects.filter(
+                        q_objects)
+                if q_search:
+                    proteins2 = Association.objects.filter(
+                        q_search)
+                if proteins1 and proteins2:
+                    filtered_protein = filter_one_name(proteins2)
+                    proteins2 = filtered_protein
+                    proteins = list(proteins1) + proteins2
+                    proteins = _sorted_nicely(proteins, sort_key='name')
+                elif proteins1:
+                    proteins = _sorted_nicely(proteins1, sort_key='name')
+                elif proteins2:
+                    filtered_protein = filter_one_name(proteins2)
+                    proteins2 = filtered_protein
+                    proteins = _sorted_nicely(proteins2, sort_key='name')
+
+        return render(request, 'association/search_results.html', {'proteins': proteins})
+    return HttpResponseRedirect('/search_association/')

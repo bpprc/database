@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+</br>
+</br>
+</br>
+<div class="container">
+  {% for protein in proteins %}
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  {{ protein.name }}
+  </button>
+
+  <div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <p><strong>Oldname :</strong> &nbsp; {{ protein.oldname }} </p>
+    <p><strong>Partner Protein :</strong> &nbsp; {{ protein.partnerprotein }} </p>
+    <p><strong>Partner Protein Name :</strong> &nbsp; {{ protein.partnerprotein_textbox }} </p>
+    <p><strong>Target Order :</strong> &nbsp; {{ protein.target_order }} </p>
+    <p><strong>Target Species :</strong> &nbsp; <i>{{ protein.target_species}} </i> </p>
+
+
+
+    <p><strong>Protein Activity :</strong> &nbsp; {{ protein.activity}} </p>
+    <p><strong>Protein Taxonid :</strong> &nbsp; <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ protein.taxonid  }}" target="_blank"> {{ protein.taxonid }} </a></p>
+    <p><strong>Protein Lc50 :</strong> &nbsp; {{ protein.lc50 }} </p>
+    <p><strong>Protein Unit :</strong> &nbsp; {{ protein.units }} </p>
+    <p><strong>Protein Non Toxic to :</strong> &nbsp; {{ protein.non_toxic }} </p>
+    <p><strong>Percentage Mortality :</strong> &nbsp; {{ protein.percentage_mortality }} </p>
+
+    <p><strong>Publications :</strong> &nbsp; <a href="https://doi.org/{{ protein.publication }}" target="_blank"> {{ protein.publication }} </a></p>
+
+    <p><strong>Other Citations :</strong> &nbsp; {{ protein.other_citations}} </p>
+    <p><strong>Life Stage :</strong> &nbsp; {{ protein.life_stage}} </p>
+    <p><strong>Instar :</strong> &nbsp; {{ protein.instar}} </p>
+    <p><strong>Assay Material :</strong> &nbsp; {{ protein.assay_material}} </p>
+    <p><strong>Assay Method :</strong> &nbsp; {{ protein.assay_method }} </p>
+    <p><strong>Comments :</strong> &nbsp; {{ protein.comment }} </p>
+    <p><strong>Data Entered by :</strong> &nbsp; {{ protein.data_entered_by }} </p>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+{% endblock content %}
+
+
+
+{% block extrahead %}
+<style>
+
+.table-fit {
+    width: 1px;
+    white-space: nowrap;
+}
+
+td[value="App1Aa1"] {
+    background-color: lightblue;
+}
+
+td[value="Cry1Aa1"] {
+    background-color: orange;
+}
+
+td[value="Cry2Aa1"] {
+    background-color: hotpink;
+}
+
+td[value="Cry3Aa1"] {
+    background-color: salmon;
+}
+
+td[value="Cry4Aa1"] {
+    background-color: Turquoise;
+}
+
+td[value="Cry7Aa1"] {
+    background-color: wheat;
+}
+
+td[value="Cry10Aa1"] {
+    background-color: silver;
+}
+
+
+</style>
+{% endblock extrahead %}
+
+
+
+{% block extrajs %}
+
+{% endblock extrajs %}

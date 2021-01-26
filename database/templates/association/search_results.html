@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+{% if proteins %}
+<p><h4>List of bioassay data for the Pesticidal Protein</h4></p>
+</br>
+		<table id="table_id" class="display table-bordered table-hover responsive nowrap" border='2' align="center" style="width=100%">
+			<thead>
+				<tr>
+						<th>Name </th>
+						<th>Activity </th>
+						<th>Target Order </th>
+						<th>Target Species </th>
+						<th>NCBI Taxon ID </th>
+						<th>LC50</th>
+						<th>Units</th>
+						<th>Non toxic to</th>
+						<th>Life Stage</th>
+						<th>Instar</th>
+						<th>Assay Material</th>
+						<th>Assay Method</th>
+						<th>DOI</th>
+				    <th>Submitted by</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+					{% for protein in proteins %}
+            <TD class="C3" align="center">{{ protein.name}}</TD>
+						<TD class="C3" align="center">{{ protein.activity }}</TD>
+						<TD class="C3" align="center">{{ protein.target_order }}</TD>
+						<TD class="C3" align="center"><i>{{ protein.target_species }} </i></TD>
+					  <TD class="C3" align="center"> <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ protein.taxonid  }}" target="_blank"> {{ protein.taxonid }} </a></TD>
+						<TD class="C3" align="center">{{ protein.lc50 }}</TD>
+						<TD class="C3" align="center">{{ protein.units }}</TD>
+						<TD class="C3" align="center">{{ protein.non_toxic }}</TD>
+						<TD class="C3" align="center">{{ protein.life_stage}}</TD>
+						<TD class="C3" align="center">{{ protein.instar }}</TD>
+						<TD class="C3" align="center">{{ protein.assay_material }}</TD>
+						<TD class="C3" align="center">{{ protein.assay_method }}</TD>
+						<TD class="C3" align="center"> <a href="https://doi.org/{{ protein.publication }}" target="_blank">{{ protein.publication}}</a></TD>
+						<TD class="C3" align="center">{{ protein.data_entered_by }}</TD>
+					</tr>
+      {% endfor %}
+		</tbody>
+			</table>
+
+
+</form>
+
+{% else %}
+			<p> No results found </p>
+{% endif %}
+
+{% endblock content %}
+
+
+{% block extrahead %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.23/af-2.3.5/b-1.6.5/b-colvis-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.3/fc-3.3.2/kt-2.5.3/r-2.2.7/rg-1.1.2/rr-1.2.7/sb-1.0.1/sl-1.3.1/datatables.min.css"/>
+
+
+{% endblock extrahead %}
+
+{% block extrajs %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.23/af-2.3.5/b-1.6.5/b-colvis-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.3/fc-3.3.2/kt-2.5.3/r-2.2.7/rg-1.1.2/rr-1.2.7/sb-1.0.1/sl-1.3.1/datatables.min.js"></script>
+
+
+
+<script>
+    $(document).ready( function () {
+    $('#table_id').DataTable({
+
+    dom: 'B<"clear">lfrtip',
+    buttons: {
+        name: 'primary',
+        buttons: [ 'copy', 'csv', 'excel' ]
+
+        }}
+    );
+} );
+</script>
+
+{% endblock extrajs %}

@@ -10,7 +10,7 @@ from django.core.validators import MinLengthValidator
 class SearchForm(forms.Form):
 
     SEARCH_CHOICES = (
-        ('bioassay', 'Bioassay'),
+        ('name', 'Name'),
     )
 
     search_term = forms.CharField(label="", required=True, widget=forms.TextInput(

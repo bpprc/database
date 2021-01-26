@@ -12,4 +12,8 @@ urlpatterns = [
          name='list_proteins'),
     path('search_association/', views.search_association,
          name='search_association'),
+    path('search_data_association/', views.search_data_association,
+         name='search_data_association'),
+    path('display_protein_data/<slug:name>/',
+         views.display_protein_data, name='display_protein_data'),
 ]
