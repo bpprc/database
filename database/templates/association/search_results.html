@@ -13,13 +13,13 @@
 						<th>Target Order </th>
 						<th>Target Species </th>
 						<th>NCBI Taxon ID </th>
+						<th>DOI</th>
 						<th>LC50</th>
 						<th>Units</th>
 						<th>Life Stage</th>
 						<th>Instar</th>
 						<th>Assay Material</th>
 						<th>Assay Method</th>
-						<th>DOI</th>
 				    <th>Submitted by</th>
 					</tr>
 				</thead>
@@ -31,13 +31,13 @@
 						<TD class="C3" align="center">{{ protein.target_order }}</TD>
 						<TD class="C3" align="center"><i>{{ protein.target_species }} </i></TD>
 					  <TD class="C3" align="center"> <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ protein.taxonid  }}" target="_blank"> {{ protein.taxonid }} </a></TD>
+						<TD class="C3" align="center"> <a href="https://doi.org/{{ protein.publication }}" target="_blank">{{ protein.publication}}</a></TD>
 						<TD class="C3" align="center">{{ protein.lc50 }}</TD>
 						<TD class="C3" align="center">{{ protein.units }}</TD>
 						<TD class="C3" align="center">{{ protein.life_stage}}</TD>
 						<TD class="C3" align="center">{{ protein.instar }}</TD>
 						<TD class="C3" align="center">{{ protein.assay_material }}</TD>
 						<TD class="C3" align="center">{{ protein.assay_method }}</TD>
-						<TD class="C3" align="center"> <a href="https://doi.org/{{ protein.publication }}" target="_blank">{{ protein.publication}}</a></TD>
 						<TD class="C3" align="center">{{ protein.data_entered_by }}</TD>
 					</tr>
       {% endfor %}
