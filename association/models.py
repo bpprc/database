@@ -22,7 +22,7 @@ class Association(models.Model):
     taxonid = models.TextField(blank=True)
     lc50 = models.TextField(blank=True)
     units = models.TextField(blank=True)
-    non_toxic = models.TextField(blank=True)
+    # non_toxic = models.TextField(blank=True)
     percentage_mortality = models.TextField(blank=True)
     publication = models.TextField(blank=True)
     other_citations = models.TextField(blank=True)
