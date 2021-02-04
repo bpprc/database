@@ -11,6 +11,9 @@ class SearchForm(forms.Form):
 
     SEARCH_CHOICES = (
         ('name', 'Name'),
+        ('taxon id', 'Taxon id'),
+        ('target species', 'Target Species'),
+        ('target order', 'Target Order'),
     )
 
     search_term = forms.CharField(label="", required=True, widget=forms.TextInput(

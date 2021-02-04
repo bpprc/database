@@ -133,5 +133,29 @@ def search_data_association(request):
                     proteins2 = filtered_protein
                     proteins = _sorted_nicely(proteins2, sort_key='name')
 
+            elif field_type == 'taxon id':
+                q_objects = Q()
+                for search in searches:
+                    q_objects.add(Q(taxonid__icontains=search), Q.OR)
+
+                proteins = Association.objects.filter(q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
+
+            elif field_type == 'target species':
+                q_objects = Q()
+                for search in searches:
+                    q_objects.add(Q(target_species__icontains=search), Q.OR)
+
+                proteins = Association.objects.filter(q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
+
+            elif field_type == 'target order':
+                q_objects = Q()
+                for search in searches:
+                    q_objects.add(Q(target_order__icontains=search), Q.OR)
+
+                proteins = Association.objects.filter(q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
+
         return render(request, 'association/search_results.html', {'proteins': proteins})
     return HttpResponseRedirect('/search_association/')
