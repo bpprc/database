@@ -82,9 +82,15 @@ class PesticidalProteinPrivateDatabaseResource(resources.ModelResource):
         model = PesticidalProteinPrivateDatabase
 
 
+# https://stackoverflow.com/questions/45028975/django-import-export-cannot-exclude-id-field-during-import-keyerror-uid
 class StructureDatabaseResource(resources.ModelResource):
     class Meta:
         model = StructureDatabase
+        skip_unchanged = True
+        report_skipped = True
+        exclude = ('id',)
+        import_id_fields = ('name', 'oldname', 'accession',
+                            'pdbid', 'pubmedid', 'year', 'modified', 'comment')
 
 
 class StructureDatabaseAdmin(ImportExportModelAdmin):
