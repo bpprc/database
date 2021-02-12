@@ -25,6 +25,8 @@ tr td:last-child{
 						<th scope="col">Accession Number </th>
 						<th scope="col">PDB ID</th>
 						<th scope="col">Year </th>
+        		<th scope="col">Modified</th>
+        		<th scope="col">Comment</th>
 					</tr>
 					{% for protein in structures %}
 					<tr>
@@ -43,6 +45,8 @@ tr td:last-child{
               {% endfor %}
             </td>
 						<td>{{ protein.year }}</td>
+						<td>{{ protein.modified }}</td>
+  					<td>{{ protein.comment }}</td>
 					</tr>
       {% endfor %}
 				</thead>
