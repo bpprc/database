@@ -48,7 +48,9 @@
 </form>
 
 {% else %}
-			<p> No results found </p>
+			<p> No results found for {% for search in searches %}</p>
+			{{ search }}
+{% endfor %}
 {% endif %}
 
 {% endblock content %}

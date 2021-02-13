@@ -157,5 +157,5 @@ def search_data_association(request):
                 proteins = Association.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
-        return render(request, 'association/search_results.html', {'proteins': proteins})
+        return render(request, 'association/search_results.html', {'proteins': proteins,  'searches': searches})
     return HttpResponseRedirect('/search_association/')
