@@ -421,7 +421,7 @@ def search_database(request):
         if cry_count == len(proteins):
             show_extra_data = True
 
-        return render(request, 'database/search_results.html', {'proteins': proteins, 'show_extra_data': show_extra_data})
+        return render(request, 'database/search_results.html', {'proteins': proteins, 'show_extra_data': show_extra_data, 'searches': searches})
     return HttpResponseRedirect('/search_database_home/')
 
 
