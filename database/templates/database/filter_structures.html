@@ -16,8 +16,23 @@ tr td:last-child{
 </br>
 <div class="container">
   <div class="row">
-    <div class="col-12">
-		<table class="table table-bordered w-auto table-hover">
+    <div class="table-responsive col-lg-12">
+      <h3>Interpreting linked structural information:</h3>
+      </br>
+      <h5>Links to structures in the PDB are given where:</h5>
+      </br>
+          <ul>
+           <li>The structure corresponds to a BPPRC sequence entry.  Note, where two BPPRC entries represent identical amino acid sequences (eg App6Aa1 and App6Aa2), the structure PDB entry will be associated with both (regardless of which quaternary rank was described in any associated publication).</li>
+            </br>
+            <li>The structure corresponds to a mutant of a BPPRC sequence entry where a small number of mutations have been included to aid crystallisation and/or to elucidate function.</li>
+            </br>
+            <li>The structure represents either a full length or an activated form of the toxin (the structure may not represent the full-length sequence in the BPPRC database entry).</li>
+          </ul>
+          </br>
+          <h7><b>  NOTE: Users are advised to check the correspondence between the PDB entry sequence and the BPPRC sequence (eg using both the BPPRC best match finder needle and blast alignments) and should take care in the interpretation of the data. </b> </h7>
+          </br>
+          </br>
+		<table class="table table-bordered table-hover w-auto table-fit">
 			<thead>
 				<tr>
 						<th scope="col">Name </th>
@@ -58,7 +73,6 @@ tr td:last-child{
 							<br>
 							<input type="button" class="btn btn-primary" value="Back" onclick="window.history.back()" />
 
-</form>
 </div>
 </div>
 </div>
