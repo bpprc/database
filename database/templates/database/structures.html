@@ -1,9 +1,7 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% load static %}
-
-
 {% block content %}
+
 
 <div class="container">
   <div class="row">
@@ -23,26 +21,32 @@
           <h7><b>  NOTE: Users are advised to check the correspondence between the PDB entry sequence and the BPPRC sequence (eg using both the BPPRC best match finder needle and blast alignments) and should take care in the interpretation of the data. </b> </h7>
           </br>
           </br>
-      <table class="table table-bordered table-hover w-auto table-fit">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Old Name</th>
-            <th scope="col">Accession</th>
-            <th scope="col">PDBID</th>
-            <th scope="col">PubMed ID</th>
-            <th scope="col">Year</th>
-            <th scope="col">Modified</th>
-            <th scope="col">Comment</th>
-          </tr>
-        </thead>
-      {% for structure in structures %}
-      <tbody>
-        <tr>
-          <td>{{ structure.name}}</td>
-          <td>{{ structure.oldname}}</td>
-          <td><a href="https://www.ncbi.nlm.nih.gov/protein/{{ structure.accession }}" target="_blank"> {{ structure.accession }} </a></td>
-          <td>
+
+</div>
+</div>
+</div>
+
+
+	<table id="table_id" class="display table-bordered table-hover responsive nowrap" border='2' align="center" style="width=100%">
+		<thead>
+			<tr>
+					<th>Name </th>
+					<th>Old Name</th>
+					<th>Accession</th>
+					<th>PDBID</th>
+					<th>PubMed ID</th>
+					<th>Year</th>
+					<th>Modified</th>
+					<th>Comment</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				{% for structure in structures %}
+          <TD class="C3" align="center">{{ structure.name}}</TD>
+          <TD class="C3" align="center">{{ structure.oldname}}</TD>
+          <TD class="C3" align="center"><a href="https://www.ncbi.nlm.nih.gov/protein/{{ structure.accession }}" target="_blank"> {{ structure.accession }} </a></TD>
+          <TD class="C3" align="center">
             {% for id in structure.pdbid %}
             {% if structure.pdbid|length > 1 %}
               <a href="https://www.rcsb.org/structure/{{ id }}" target="_blank">{{ id }},</a>
@@ -50,21 +54,16 @@
               <a href="https://www.rcsb.org/structure/{{ id }}" target="_blank">{{ id }}</a>
             {% endif %}
             {% endfor %}
-          </td>
-          <!-- <td> <a href="https://www.rcsb.org/structure/{{ structure.pdbid }}" target="_blank"> {{ structure.pdbid}}</td> -->
-          <td> <a href="https://pubmed.ncbi.nlm.nih.gov/{{ structure.pubmedid }}" target="_blank"> {{ structure.pubmedid}}</td>
-          <td>{{ structure.year}}</td>
-          <td>{{ structure.modified}}</td>
-          <td>{{ structure.comment}}</td>
-        </tr>
-    </tbody>
-     {% endfor %}
-    </table>
-</div>
+          </TD>
+          <TD class="C3" align="center"> <a href="https://pubmed.ncbi.nlm.nih.gov/{{ structure.pubmedid }}" target="_blank"> {{ structure.pubmedid}}</TD>
+          <TD class="C3" align="center">{{ structure.year}}</TD>
+          <TD class="C3" align="center">{{ structure.modified}}</TD>
+          <TD class="C3" align="center">{{ structure.comment}}</TD>
+				</tr>
+    {% endfor %}
+	</tbody>
+		</table>
 
-
-</div>
-</div>
 
 
 {% endblock content %}
@@ -72,18 +71,35 @@
 
 
 {% block extrahead %}
-<!-- <style>
 
-.table-fit {
-    width: 1px;
-    white-space: nowrap;
-}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.23/af-2.3.5/b-1.6.5/b-colvis-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.3/fc-3.3.2/kt-2.5.3/r-2.2.7/rg-1.1.2/rr-1.2.7/sb-1.0.1/sl-1.3.1/datatables.min.css"/>
 
-</style> -->
 {% endblock extrahead %}
 
 
 
 {% block extrajs %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.23/af-2.3.5/b-1.6.5/b-colvis-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.3/fc-3.3.2/kt-2.5.3/r-2.2.7/rg-1.1.2/rr-1.2.7/sb-1.0.1/sl-1.3.1/datatables.min.js"></script>
+
+
+<script>
+    $(document).ready( function () {
+    $('#table_id').DataTable({
+
+    dom: 'B<"clear">lfrtip',
+    buttons: {
+        name: 'primary',
+        buttons: [ 'copy', 'csv', 'excel' ]
+
+        }}
+    );
+} );
+</script>
+
 
 {% endblock extrajs %}
