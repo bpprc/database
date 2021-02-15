@@ -9,10 +9,12 @@
 			<thead>
 				<tr>
 						<th>Name </th>
-						<th>Activity </th>
+						<th>Partner protein(s) required?</th>
+						<th>Partner protein name(s)</th>
 						<th>Target Order </th>
 						<th>Target Species </th>
 						<th>NCBI Taxon ID </th>
+						<th>Activity </th>
 						<th>DOI</th>
 						<th>LC50</th>
 						<th>Units</th>
@@ -27,10 +29,12 @@
 					<tr>
 					{% for protein in proteins %}
             <TD class="C3" align="center">{{ protein.name}}</TD>
-						<TD class="C3" align="center">{{ protein.activity }}</TD>
+            <TD class="C3" align="center">{{ protein.partnerprotein}}</TD>
+            <TD class="C3" align="center">{{ protein.partnerprotein_textbox}}</TD>
 						<TD class="C3" align="center">{{ protein.target_order }}</TD>
 						<TD class="C3" align="center"><i>{{ protein.target_species }} </i></TD>
 					  <TD class="C3" align="center"> <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ protein.taxonid  }}" target="_blank"> {{ protein.taxonid }} </a></TD>
+						<TD class="C3" align="center">{{ protein.activity }}</TD>
 						<TD class="C3" align="center"> <a href="https://doi.org/{{ protein.publication }}" target="_blank">{{ protein.publication}}</a></TD>
 						<TD class="C3" align="center">{{ protein.lc50 }}</TD>
 						<TD class="C3" align="center">{{ protein.units }}</TD>

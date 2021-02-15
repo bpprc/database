@@ -26,9 +26,9 @@ TRUE_FALSE_CHOICES = (
 
 class Association(models.Model):
     name = models.TextField(blank=True, verbose_name="Protein Name")
-    oldname = models.TextField(blank=True, verbose_name="Old Name")
-    accession = models.TextField(
-        blank=True, verbose_name="NCBI accession number")
+    # oldname = models.TextField(blank=True, verbose_name="Old Name")
+    # accession = models.TextField(
+    #     blank=True, verbose_name="NCBI accession number")
     partnerprotein = models.CharField(max_length=7,
                                       default='No', editable=True)
     partnerprotein_textbox = models.TextField(blank=True)
