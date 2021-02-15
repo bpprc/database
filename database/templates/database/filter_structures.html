@@ -39,6 +39,7 @@ tr td:last-child{
 						<th scope="col">Old Name </th>
 						<th scope="col">Accession Number </th>
 						<th scope="col">PDB ID</th>
+            <th scope="col">PubMed ID</th>
 						<th scope="col">Year </th>
         		<th scope="col">Modified</th>
         		<th scope="col">Comment</th>
@@ -59,6 +60,7 @@ tr td:last-child{
               {% endif %}
               {% endfor %}
             </td>
+            <td> <a href="https://pubmed.ncbi.nlm.nih.gov/{{ protein.pubmedid }}" target="_blank"> {{ protein.pubmedid}}</td>
 						<td>{{ protein.year }}</td>
 						<td>{{ protein.modified }}</td>
   					<td>{{ protein.comment }}</td>
