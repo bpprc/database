@@ -33,7 +33,7 @@
 					{% for protein in proteins %}
             <TD class="C3" align="center">{{ protein.name}}</TD>
 						<TD class="C3" align="center"><i>{{ protein.target_species }} </i></TD>
-						<TD class="C3" align="center">{{ protein.activity }}</TD>
+						<TD class="C3" align="center" style="{% if protein.activity == "Yes" %} color:red; {% else %} color:grey {% endif %}">{{ protein.activity }}</TD>
 						<TD class="C3" align="center">{{ protein.life_stage}}</TD>
 						<TD class="C3" align="center">{{ protein.assay_method }}</TD>
 						<TD class="C3" align="center"> <a href="https://doi.org/{{ protein.publication }}" target="_blank">{{ protein.publication}}</a></TD>
@@ -56,7 +56,56 @@
 {% elif new_search %}
 	{% for value in new_search %}
 	<p> Did you mean? </p>
-	<a href="/search_association/{{value|join:" "}}">{{ value|join:" or " }}</a>
+	<a href="/keyword_confirm/{{value|join:" "}}">{{ value|join:" or " }}</a>
+	{% endfor %}
+
+{% elif confirm_proteins %}
+	<p><h4>Toxicity and Non toxicity data for pesticidal proteins</h4></p>
+	</br>
+			<table id="table_id" class="display table-bordered table-hover responsive nowrap" border='2' align="center" style="width=100%">
+				<thead>
+					<tr>
+							<th>Protein Name </th>
+							<th>Target Species </th>
+							<th>Activity </th>
+							<th>Life Stage</th>
+							<th>Assay Method</th>
+							<th>DOI</th>
+							<th>Other Citations (Citation, Patent, PubMed)</th>
+							<th>LC50</th>
+							<th>Units</th>
+							<th>Percentage Mortality</th>
+							<th>Instar</th>
+							<th>Assay Material</th>
+							<th>NCBI Taxon ID </th>
+							<th>Target Order </th>
+							<th>Partner protein(s) required?</th>
+							<th>Partner protein name(s)</th>
+						  <th>Submitted by</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							{% for protein in confirm_proteins %}
+	            <TD class="C3" align="center">{{ protein.name}}</TD>
+							<TD class="C3" align="center"><i>{{ protein.target_species }} </i></TD>
+							<TD class="C3" align="center" style="color:red">{{ protein.activity }}</TD>
+							<TD class="C3" align="center">{{ protein.life_stage}}</TD>
+							<TD class="C3" align="center">{{ protein.assay_method }}</TD>
+							<TD class="C3" align="center"> <a href="https://doi.org/{{ protein.publication }}" target="_blank">{{ protein.publication}}</a></TD>
+							<TD class="C3" align="center"></TD>
+							<TD class="C3" align="center">{{ protein.lc50 }}</TD>
+							<TD class="C3" align="center">{{ protein.units }}</TD>
+							<TD class="C3" align="center"> </TD>
+							<TD class="C3" align="center">{{ protein.instar }}</TD>
+							<TD class="C3" align="center">{{ protein.assay_material }}</TD>
+						  <TD class="C3" align="center"> <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ protein.taxonid  }}" target="_blank"> {{ protein.taxonid }} </a></TD>
+							<TD class="C3" align="center">{{ protein.target_order }}</TD>
+							<TD class="C3" align="center">{{ protein.partnerprotein}}</TD>
+	            <TD class="C3" align="center">{{ protein.partnerprotein_textbox}}</TD>
+							<TD class="C3" align="center">{{ protein.data_entered_by }}</TD>
+						</tr>
 	{% endfor %}
 
 {% else %}
