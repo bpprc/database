@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from database.filter_results import Search, filter_one_name, filter_one_oldname
 import re
+from difflib import get_close_matches
 
 
 def _sorted_nicely(l, sort_key=None):
@@ -77,9 +78,8 @@ def search_data_association(request):
 
             #searches = re.split(r':|, ?|\s |_ |. |; |\n', query)
             searches = re.split(r':|, ?|\s* |\n|;', query)
-            print(searches)
 
-            if field_type == 'name':
+            if field_type == 'pesticidal protein name':
                 q_objects = Q()
                 q_search = Q()
                 for search in searches:
@@ -141,10 +141,48 @@ def search_data_association(request):
                 proteins = Association.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
+                if not proteins:
+                    words_taxonid = list(
+                        set(Association.objects.values_list('taxonid', flat=True)))
+                    new_search = []
+
+                    for search in searches:
+                        new_search.append(get_close_matches(
+                            search, words_taxonid, 1, 0.3))
+
+                    context = {
+                        'new_search': new_search
+                    }
+                    return render(request, 'association/search_results.html', context)
+
             elif field_type == 'target species':
                 q_objects = Q()
                 for search in searches:
                     q_objects.add(Q(target_species__icontains=search), Q.OR)
+
+                proteins = Association.objects.filter(q_objects)
+                proteins = _sorted_nicely(proteins, sort_key='name')
+
+                if not proteins:
+                    species = list(
+                        set(Association.objects.values_list('target_species', flat=True)))
+                    words_target_species = [
+                        i.split(' ', 1)[0] for i in species]
+                    new_search = []
+
+                    for search in searches:
+                        new_search.append(get_close_matches(
+                            search, words_target_species, 1, 0.3))
+                    # new_search = [i.split(' ', 1)[0] for i in new_search]
+
+                    context = {
+                        'new_search': new_search
+                    }
+                    return render(request, 'association/search_results.html', context)
+
+                    # for search in new_search:
+                    #     q_objects.add(
+                    #         Q(target_species__icontains=search), Q.OR)
 
                 proteins = Association.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
@@ -157,5 +195,29 @@ def search_data_association(request):
                 proteins = Association.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key='name')
 
+                if not proteins:
+                    words_target_order = list(
+                        set(Association.objects.values_list('target_order', flat=True)))
+                    new_search = []
+
+                    for search in searches:
+                        new_search.append(get_close_matches(
+                            search, words_target_order, 1, 0.3))
+
+                    context = {
+                        'new_search': new_search
+                    }
+                    return render(request, 'association/search_results.html', context)
+
         return render(request, 'association/search_results.html', {'proteins': proteins,  'searches': searches})
     return HttpResponseRedirect('/search_association/')
+
+
+def keyword_confirm(request, name=None):
+    """."""
+    q_objects = Q()
+    q_objects.add(Q(target_species__icontains=name), Q.OR)
+    confirm_proteins = Association.objects.filter(q_objects)
+    confirm_proteins = _sorted_nicely(confirm_proteins, sort_key='name')
+
+    return render(request, 'association/search_results.html', {'confirm_proteins': confirm_proteins})
