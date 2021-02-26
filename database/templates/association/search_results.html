@@ -33,7 +33,7 @@
 					{% for protein in proteins %}
             <TD class="C3" align="center">{{ protein.name}}</TD>
 						<TD class="C3" align="center"><i>{{ protein.target_species }} </i></TD>
-						<TD class="C3" align="center" style="{% if protein.activity == "Yes" %} color:red; {% else %} color:grey {% endif %}">{{ protein.activity }}</TD>
+						<TD class="C3" align="center" style="{% if protein.activity == "Yes" %} color:red; {% else %} color:black {% endif %}">{{ protein.activity }}</TD>
 						<TD class="C3" align="center">{{ protein.life_stage}}</TD>
 						<TD class="C3" align="center">{{ protein.assay_method }}</TD>
 						<TD class="C3" align="center"> <a href="https://doi.org/{{ protein.publication }}" target="_blank">{{ protein.publication}}</a></TD>
