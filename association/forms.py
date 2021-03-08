@@ -12,7 +12,7 @@ class SearchForm(forms.Form):
 
     SEARCH_CHOICES = (
         ('pesticidal protein name', 'Pesticidal Protein Name'),
-        ('taxon id', 'Taxon id'),
+        ('target species taxon id', 'Target species taxon id'),
         ('target species', 'Target Species'),
         ('target order', 'Target Order'),
     )
