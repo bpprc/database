@@ -133,7 +133,7 @@ def search_data_association(request):
                     proteins2 = filtered_protein
                     proteins = _sorted_nicely(proteins2, sort_key='name')
 
-            elif field_type == 'taxon id':
+            elif field_type == 'target species taxon id':
                 q_objects = Q()
                 for search in searches:
                     q_objects.add(Q(taxonid__icontains=search), Q.OR)
