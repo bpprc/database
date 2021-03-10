@@ -140,7 +140,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
                 str(obj.sequence).split('\n')[1:])
 
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html('<a href="/run_naming_algorithm/?fulltextarea={0}&submission_id={1}" target="_blank">Naming Algorithm</a>'.format(obj.sequence, obj.id))
+        return format_html(mark_safe('<a href="/run_naming_algorithm/?fulltextarea={0}&submission_id={1}" target="_blank">Naming Algorithm</a>'.format(obj.sequence, obj.id)))
 
     def align_results(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
