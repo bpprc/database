@@ -3,6 +3,7 @@
 from django.contrib import admin
 from django.db import models
 from django.utils.html import format_html
+from django.utils.safestring mark_safe
 from .models import UserSubmission, Archive, SendEmail
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
