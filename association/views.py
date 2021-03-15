@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from database.filter_results import Search, filter_one_name, filter_one_oldname
 import re
+import requests
 from difflib import get_close_matches
 
 
@@ -221,3 +222,12 @@ def keyword_confirm(request, name=None):
     confirm_proteins = _sorted_nicely(confirm_proteins, sort_key='name')
 
     return render(request, 'association/search_results.html', {'confirm_proteins': confirm_proteins})
+
+
+def home(request):
+    # use 127.0.0.1:8000/api
+    response = requests.get('http://ip-api.com/json/128.227.118.11')
+    geodata = response.json()
+    return render(request, 'association/home_api.html', {
+        'ip': geodata
+    })

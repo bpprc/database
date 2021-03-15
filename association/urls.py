@@ -16,4 +16,8 @@ urlpatterns = [
          name='search_data_association'),
     path('display_protein_data/<slug:name>/',
          views.display_protein_data, name='display_protein_data'),
+    path('keyword_confirm/<slug:name>/',
+         views.keyword_confirm, name='keyword_confirm'),
+    path('api', views.home, name='home'),
+
 ]
