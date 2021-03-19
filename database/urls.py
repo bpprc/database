@@ -38,6 +38,8 @@ urlpatterns = [
          name='category_download'),
     path('threedomain_download', views.threedomain_download,
          name='threedomain_download'),
+    path('holotype_download', views.holotype_download,
+         name='holotype_download'),
     path('protein_detail/<slug:name>/',
          views.protein_detail, name='protein_detail'),
     path('faq/', views.faq, name='faq'),

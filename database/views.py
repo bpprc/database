@@ -15,7 +15,7 @@ from django.contrib import messages
 from database.admin import OldnameNewnameTableLeftResource, OldnameNewnameTableRightResource
 from django.http import HttpResponse, HttpResponseRedirect
 from database.models import PesticidalProteinDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, StructureDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
-from database.forms import SearchForm, DownloadForm, ThreedomainDownloadForm
+from database.forms import SearchForm, DownloadForm, ThreedomainDownloadForm, HolotypeForm
 from bokeh.plotting import figure, output_file, show
 from bokeh.palettes import Category20c, Spectral6, Category20
 from bokeh.models import HoverTool, LassoSelectTool, WheelZoomTool, PointDrawTool, ColumnDataSource
@@ -851,17 +851,20 @@ def download_category(request, category=None):
 def category_form(request):
     form1 = DownloadForm()
     form2 = ThreedomainDownloadForm()
+    form3 = HolotypeForm()
 
     context = {
         'form1': form1,
         'form2': form2,
+        'form3': form3,
     }
     return render(request, 'database/download_form.html', context)
 
 
 def category_download(request):
     if request.method == 'POST':
-        categories = request.POST.getlist('category_type')
+        categories = request.POST.getlist('category')
+        print(categories)
 
         context = {
             'proteins': PesticidalProteinDatabase.objects.all()
@@ -891,10 +894,8 @@ def category_download(request):
 
 def threedomain_download(request):
     if request.method == 'POST':
-        type_option = request.POST.getlist('category_type')
+        type_option = request.POST.getlist('threedomain')
         file = StringIO()
-        print(type_option)
-        print("type", type(type_option))
 
         accession = {}
         output = ''
@@ -903,8 +904,8 @@ def threedomain_download(request):
             name__istartswith="cry").order_by('name')
         if data:
             for item in data:
-                if item.name[-1] == '1' and not item.name[-2].isdigit():
-                    accession[item.accession] = item
+                # if item.name[-1] == '1' and not item.name[-2].isdigit():
+                accession[item.accession] = item
 
         protein_detail = ProteinDetail.objects.filter(
             accession__in=list(accession.keys()))
@@ -915,38 +916,67 @@ def threedomain_download(request):
         count = 0
         for item in protein_data:
             output = ''
+            domain_name = ''
             if 'domain1' in type_option:
                 nterminal = [
                     protein for protein in protein_detail if protein.accession == item.accession]
                 for item1 in nterminal:
                     count += 1
                     output += item1.get_endotoxin_n()
+                    domain_name += '_d1'
             if 'domain2' in type_option:
                 nterminal = [
                     protein for protein in protein_detail if protein.accession == item.accession]
                 for item1 in nterminal:
                     count += 1
                     output += item1.get_endotoxin_m()
+                    domain_name += '_d2'
             if 'domain3' in type_option:
                 nterminal = [
                     protein for protein in protein_detail if protein.accession == item.accession]
                 for item1 in nterminal:
                     count += 1
                     output += item1.get_endotoxin_c()
+                    domain_name += '_d3'
             if 'full_length' in type_option:
                 nterminal = [
                     protein for protein in protein_detail if protein.accession == item.accession]
                 for item1 in nterminal:
                     count += 1
                     output += item1.sequence
+                    domain_name += '_full_length'
             if output:
-                str_to_write = f">{item.name}\n{output}\n"
+                str_to_write = f">{item.name}{domain_name}\n{output}\n"
                 file.write(str_to_write)
 
-        print(count)
         response = HttpResponse(
             file.getvalue(), content_type="text/plain")
-        download_file = f"{'_'.join(type_option)}_holotype_fasta_sequences.txt"
+        download_file = f"{'_'.join(type_option)}_threedomain_fasta_sequences.txt"
+        response['Content-Disposition'] = 'attachment;filename=' + \
+            download_file
+        response['Content-Length'] = file.tell()
+        return response
+
+
+def holotype_download(request):
+    if request.method == 'POST':
+        type_option = request.POST.getlist('holotype')
+        file = StringIO()
+
+        accession = {}
+        output = ''
+
+        data = PesticidalProteinDatabase.objects.filter(
+            name__istartswith="cry").order_by('name').distinct()
+        if data:
+            for item in data:
+                if item.name[-1] == '1' and not item.name[-2].isdigit():
+                    str_to_write = f">{item.name}\n{item.sequence}\n"
+                    file.write(str_to_write)
+
+        response = HttpResponse(
+            file.getvalue(), content_type="text/plain")
+        download_file = f"{'_'.join(type_option)}_fasta_sequences.txt"
         response['Content-Disposition'] = 'attachment;filename=' + \
             download_file
         response['Content-Length'] = file.tell()
