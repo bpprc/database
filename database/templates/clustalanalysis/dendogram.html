@@ -4,31 +4,10 @@
 {% block content %}
 
 
-
-<style>
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #dendogram-container, #dendogram-container * {
-    visibility: visible;
-  }
-  #dendogram-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-}
-</style>
-
-
-
-<input type="button" value="Export as PDF" onclick="printDiv('dendogram-container')" />
-<input type="button" id="pngconvertor" value="Export as PNG"/>
-
+<input type="button" class="btn btn-primary" value="Export as PDF" onclick="printDiv('dendogram-container')" />
+<input type="button" class="btn btn-primary" id="pngconvertor" value="Export as PNG"/>
 
 <script>
-
 function printDiv(divName) {
      var printContents = document.getElementById(divName).innerHTML;
      var originalContents = document.body.innerHTML;
@@ -37,13 +16,15 @@ function printDiv(divName) {
      document.body.innerHTML = originalContents;
 }
 </script>
+
+
 <br/>
 <br/>
 <label id="show-length">
   <input type="checkbox"> Show branch length
 </label>
 
-<div id="dendogram-container" class="specific">
+<div id="dendogram-container">
 </div>
 
 
@@ -99,16 +80,9 @@ function printDiv(divName) {
 <!-- Copyright 2016 Mike Bostock https://d3js.org -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
-    <script type="text/javascript" src="{% static 'database/js/saveSvgAsPng.js' %}"> </script>
+<script type="text/javascript" src="{% static 'database/js/saveSvgAsPng.js' %}"> </script>
 
-<!-- <script>
-window.addEventListener('resize', function() {
-  console.log("The window was resized!");
-});
-
-</script> -->
 <script>
-
 d3.select("#pngconvertor")
 .on('click', function(){
     // Get the d3js SVG element and save using saveSvgAsPng.js
