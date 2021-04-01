@@ -8,7 +8,8 @@ from django.core.validators import MinLengthValidator
 
 RECAPTCHA_PUBLIC_KEY = "6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT"
 
-ALLOWED_AMINOACIDS = {'E', 'Q', 'L', 'Y', 'V', 'W', 'I', 'A', 'H', 'G', 'P', 'S', 'R', 'C', 'T', 'F', 'K', 'N', 'D', 'M'}
+ALLOWED_AMINOACIDS = {'E', 'Q', 'L', 'Y', 'V', 'W', 'I', 'A',
+                      'H', 'G', 'P', 'S', 'R', 'C', 'T', 'F', 'K', 'N', 'D', 'M'}
 # ALLOWED_NUCLEOTIDE = set(IUPACAmbiguousDNA.letters)
 
 # maximum number of query sequences in form
@@ -160,7 +161,7 @@ class UserSubmittedSequenceAnalysis(forms.ModelForm):
 
 class DownloadForm(forms.Form):
 
-    category_type = forms.MultipleChoiceField(
+    category = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         choices='',
         label='',
@@ -171,8 +172,8 @@ class DownloadForm(forms.Form):
         super(DownloadForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper()
-        self.helper.form_id = 'id-download'
-        self.helper.form_class = 'downloadforms'
+        self.helper.form_id = 'category'
+        self.helper.form_class = 'categoryform'
         self.helper.form_method = 'post'
         self.helper.form_action = 'category_download'
 
@@ -198,8 +199,8 @@ class DownloadForm(forms.Form):
 
         self.category_options.extend(
             sorted(self.category_description.items(), key=lambda x: x[0][:3]))
-        self.fields['category_type'].choices = self.category_options
-        self.fields['category_type'].label = ''
+        self.fields['category'].choices = self.category_options
+        # self.fields['category_type'].label = ''
         # self.helper.layout = Layout(
         #     'category_type',
         #     HTML('<div class="form-group"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %
@@ -207,7 +208,7 @@ class DownloadForm(forms.Form):
         # )
 
     def clean_category_type(self):
-        category_type = self.cleaned_data['category_type']
+        category_type = self.cleaned_data['category']
 
     # def save(self):
     #     context = {
@@ -233,9 +234,34 @@ class DownloadForm(forms.Form):
     #     return download_file
 
 
+class HolotypeForm(forms.Form):
+    holotype = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        choices='',
+        label='',
+        required=True
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(HolotypeForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.form_id = 'holotype'
+        self.helper.form_class = 'holotypeform'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'holotype_download'
+
+        self.helper.add_input(Submit('submit', 'Download'))
+
+        self.category_options = [('holotype', 'holotype')]
+
+        self.fields['holotype'].choices = self.category_options
+        self.fields['holotype'].label = ''
+
+
 class ThreedomainDownloadForm(forms.Form):
 
-    category_type2 = forms.MultipleChoiceField(
+    threedomain = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         choices='',
         label='',
@@ -246,8 +272,8 @@ class ThreedomainDownloadForm(forms.Form):
         super(ThreedomainDownloadForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper()
-        self.helper.form_id = 'id-threedomain'
-        self.helper.form_class = 'threedomaindownloadforms'
+        self.helper.form_id = 'threedomain'
+        self.helper.form_class = 'threedomaindownloadform'
         self.helper.form_method = 'post'
         self.helper.form_action = 'threedomain_download'
 
@@ -276,8 +302,8 @@ class ThreedomainDownloadForm(forms.Form):
         #
         # self.category_options.extend(
         #     sorted(self.category_description.items(), key=lambda x: x[0][:3]))
-        self.fields['category_type2'].choices = self.category_options
-        self.fields['category_type2'].label = ''
+        self.fields['threedomain'].choices = self.category_options
+        # self.fields['threedomain_type'].label = ''
         # self.helper.layout = Layout(
         #     'category_type',
         #     HTML('<div class="form-group"><div class="g-recaptcha" data-sitekey="%s"></div></div>' %

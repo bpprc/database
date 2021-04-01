@@ -18,7 +18,7 @@
 </div>
 
 <div>
-<h3> Download the holotype sequences </h3>
+<h3> Download all the holotype sequences </h3>
 </br>
 {% crispy form3 %}
 </div>
@@ -49,6 +49,16 @@ $('input[type=checkbox]').click((e) => {
       form.find('input[type=checkbox][value=all]').prop('checked', true);
     } else {
       form.find('input[type=checkbox][value=all]').prop('checked', false);
+    }
+  }
+  if ($(e.target).val() === 'full_length') {
+    const checkAll = $(e.target).prop('checked');
+    form.find('input[type=checkbox]').prop('checked');
+  } else {
+    if (form.find('input[type=checkbox]:not([value=full_length]):not(:checked)').length === 0) {
+      form.find('input[type=checkbox][value=full_length]').prop('checked', true);
+    } else {
+      form.find('input[type=checkbox][value=full_length]').prop('checked', false);
     }
   }
 
