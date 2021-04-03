@@ -3,14 +3,17 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
-<h3>Select particular proteins/domains using the <a href="{% url 'search_database_home' %}">Database/Search facility</a> </h3>
-</br>
-</br>
-
-<div class="container">
+<br>
+<br>
+<div class="container" >
   <div class="row">
-    <div class="col-12">
+    <div class="col-12" class="lead">
+<h2>Download or analyse specific sequences</h4>
+<br>
+<h4>Database sequences can be added to the cart via the <a href="{% url 'search_database_home' %}">Database/Search by name page</a>. You own sequences can be added using the form below </h4>
+</br>
+</br>
+
 			<a href="{% url 'clear_session_database' %}" > Clear Session </a>
       <table class="table table-bordered table-hover">
         <thead>
@@ -38,9 +41,6 @@
 
 </br>
 </br>
-			<div class="container">
-			  <div class="row">
-			    <div class="col-12">
 						<a href="{% url 'clear_session_user_data' %}" > Clear Session </a>
 			      <table class="table table-bordered table-hover">
 			        <thead>
@@ -62,23 +62,28 @@
 							{% endfor %}
 				      </table>
 							<a href="{% url 'download_sequences' %}"> Download sequences </a>
-</br>
-</br>
-<h3> Add your sequences for the analysis </h3>
-</br>
-</br>
 
-<!-- <form method="post" enctype="multipart/form-data"> -->
-	<!-- {% csrf_token %} -->
+</br>
+</br>
+<p><h4> Paste or upload user sequences in fasta format</h4> </p>
+>Name <br>
+MDNHKLIPYTRECVIKHNASER...<br>
+<br>
+<br>
 	{% crispy userform %}
 
-  <!-- </form> -->
 
 </br>
-<h3> Submit the sequences for the dendogram analysis </h3>
+<h4> Submit the sequences for the dendogram analysis </h4>
 </br>
 {% crispy analysisform %}
 </div>
+</div>
+</div>
+</br>
+</br>
+</br>
+</br>
 {% endblock content %}
 
 {% block extrajs %}
