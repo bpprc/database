@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from api.forms import NeedleAPIForm
 from database.models import PesticidalProteinDatabase
-# Create your views here.
+# from api import emboss_needle
 
 
-def home_api(request):
+def needle_api(request):
     # use 127.0.0.1:8000/home_api
     response = requests.get('http://ip-api.com/json/128.227.118.11')
     geodata = response.json()
