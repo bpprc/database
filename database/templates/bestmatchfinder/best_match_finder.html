@@ -4,14 +4,11 @@
 
 {% block content %}
 
-
-  <br></br>
-  <br></br>
-  <br></br>
-
-  <td class="pgm_list" width="100%"><h2>Search Database</h2></td>
+<div class="container">
+  <div class="row">
+    <div class="lead"><h2>Search Database</h2>
   <br>
-
+  <p>Your submitted sequence will be compared to all publicly available sequences in the database using the Needle algorithm to find the best overall matches.</p>
   <p> Paste amino acid sequence (in plain or fasta format) into the box below</p>
 >Name
 <br>
@@ -19,7 +16,7 @@ MDNNPNINECIPYNCLSNPEVEVLGGERIETGYTPIDISLSLTQFL ...
 <br>
 <br>
 
-  <b><strong> Query sequence&nbsp;</strong></b> <div class="d-inline-block text-right w-50"> <a href="#" class="ml-auto example-sequence-button">Use example sequence</a></div>
+  <b><strong> Query sequence&nbsp;</strong></b> <div class="d-inline-block text-right w-50"> <a href="#" class="example-sequence-button text-md-left">Use example sequence</a></div>
   <form action="{% url 'run_needle_server_celery' %}" method="post">
     {% csrf_token %}
     {{ form |crispy }}
@@ -27,7 +24,9 @@ MDNNPNINECIPYNCLSNPEVEVLGGERIETGYTPIDISLSLTQFL ...
     <input class="btn btn-secondary"  type="reset" value="Clear">
   </form>
 
-
+</div>
+</div>
+</div>
 
 {% endblock content %}
 
