@@ -4,26 +4,24 @@
 
 {% block content %}
 
-
-  <body>
-
-  <br></br>
-  <br></br>
-  <br></br>
-
-  <td class="pgm_list" width="100%"><h2>Compare two proteins - from database or user-supplied</h2></td>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="lead" width=100%>
+    <h2>Compare two proteins - from database or user-supplied</h2>
   <br>
   <form action="/bestmatchfinder_database_sequence_run/" method="post">
     {% csrf_token %}
     {{ form |crispy }}
     <button type="submit" class="btn btn-secondary"  >Submit</button>
-    <br></br>
-    <br></br>
-    <br></br>
+    <br>
+    <br>
+    <br>
   </form>
 
-  </body>
-  </html>
+</div>
+</div>
+</div>
 
 
 {% endblock content %}
