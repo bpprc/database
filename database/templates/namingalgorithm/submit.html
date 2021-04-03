@@ -11,28 +11,32 @@
 </style> -->
 {% endblock extrahead %}
 
-  <h1 class="text-center list-unstyled"> <ul> Naming</h1>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="lead" width=100%>
+      <div> <h1 class="text-center">Naming request form</h1></div>
   <br>
   <br>
   <br>
-  <h3> Proteins will only be named if they are derived from a bacterium and satisfy one of the following criteria </h3>
+  <div> <h3 class="text-left"> Proteins will only be named if they are derived from a bacterium and satisfy one of the following criteria </h3>
   <br>
+  <ul>
   <h5> <li> Have >95% identity to an existing named protein (or)</li> </h5>
-  <h5> <li> Have demonstrated activity against an invertebrate organism</li></ul> </h5>
+  <h5> <li> Have demonstrated activity against an invertebrate organism</li></h5>
+  </ul>
   </br>
-  <p><b>Note:</b>The official name will be assigned only by the committee</p>
-<h7>* required field</h7>
-</br>
-</br>
+  <p><b>Note: The official name will be assigned only by the committee</p></b>
+<p class="text-danger">* required field</p>
+</div>
+<br>
+<br>
 
-
-
-  <!-- <form action="{% url 'submit' %}" method="POST"> -->
-  <!-- {% csrf_token %} -->
+</div>
+</div>
+</div>
   {% crispy form %}
 
-  <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-  <!-- </form> -->
 
 
 {% endblock content %}
