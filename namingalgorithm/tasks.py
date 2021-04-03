@@ -31,10 +31,10 @@ There is a new sequence submission in the database. Please check the database ad
 
 def trigger_email_everyday_feedback():
     sequence_message = '''Dear Dr.Neil Crickmore and Dr.Colin Berry,
-There is a new feedback in the database page. Please check the database admin page for more details.'''
+There is a new feedback in the database page. Please check the database admin Feedback page for more details.'''
 
     send_mail(
-        subject="New Submission for the database",
+        subject="New Feedback for the database",
         message=sequence_message,
         from_email='bpprc.database@gmail.com',
         recipient_list=['sureshcbt@gmail.com',
