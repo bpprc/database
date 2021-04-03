@@ -2,31 +2,19 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+<h3>Get the development version of BBPRC database from <a target="_blank" href="https://github.com/Amrithasuresh/BPPRC"> Github </a> </h3>
 <br>
-<h3>Get the development version from <a target="_blank" href="https://github.com/Amrithasuresh/BPPRC"> Github </a> </h3>
+<p> <h5> If you have Python, Git and pip installed, use the following commands: </h5> </p>
 <br>
-<h5>This is the source code of BBPRC 2019 website developed in Python/Django. To run the website locally, you need to install Django and a list of other Python packages which are listed in the requirements.txt file.</h5>
+<p> <h5> git clone https://github.com/Amrithasuresh/BPPRC.git  </h5> </p>
+<p> <h5> cd bpprc </h5> </p>
+<p> <h5> pip install -r requirements.txt  </h5> </p>
+<p> <h5> python manage.py migrate </h5> </p>
+<p> <h5> python manage.py runserver </h5> </p>
+<p> <h5> Then copy the following URL in your browser</h5> </p>
+<p> <h5> http://127.0.0.1:8000/ </h5> </p>
 
 
-<br>
-<br>
-<code>
-If you have git and pip installed, use this: <br>
-<br>
-pip install virtualenv <br>
-virtualenv env <br>
-source env/bin/activate <br>
-<br>
-git clone https://github.com/Amrithasuresh/BPPRC.git <br>
-cd bpprc <br>
-pip install -r requirements.txt <br>
-python manage.py migrate <br>
-python manage.py runserver <br>
-<br>
-Then copy the following URL in your browser. <br>
-http://127.0.0.1:8000/ <br>
-<br>
-</code>
 
 
 
