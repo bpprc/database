@@ -2,7 +2,8 @@ from django.urls import path
 from database import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.homepage, name='homepage'),
+    path('homepage', views.homepage, name='homepage'),
     path('about_page', views.about_page, name='about_page'),
     path('database/', views.database, name='database'),
     path('categorize_database_<str:category>',

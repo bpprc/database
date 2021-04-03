@@ -34,7 +34,7 @@ from rich.console import Console
 console = Console()
 
 
-def home(request):
+def homepage(request):
     """Loads the homepage."""
     return render(request, 'database/about_page.html')
     # return render(request, 'index.html')
