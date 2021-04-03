@@ -17,11 +17,9 @@
 						    Database
 						  </button>
 						  <div class="dropdown-menu" aria-labelledby="Database">
-						    <a class="dropdown-item" href="{% url 'database' %}">Structural Classes for the Database</a>
-						    <a class="dropdown-item" href="{% url 'search_database' %}">Search</a>
+						    <a class="dropdown-item" href="{% url 'database' %}">Structural Classes</a>
+						    <a class="dropdown-item" href="{% url 'search_database' %}">Search by name</a>
 								<a class="dropdown-item" href="{% url 'structures' %}">Protein Structures</a>
-								<a class="dropdown-item" href="{% url 'category_form' %}">Download data</a>
-								<a class="dropdown-item" href="{% url 'faq' %}">FAQ</a>
 						  </div>
 						</div>
 						<div class="dropdown">
@@ -35,19 +33,10 @@
 						</div>
 						<div class="dropdown">
 							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Analysis
-							</button>
-							<div class="dropdown-menu" aria-labelledby="Analysis">
-								<a class="dropdown-item" href="{% url 'dendogram_homepage2' %}">Dendogram</a>
-							</div>
-						</div>
-						<div class="dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Submit your sequence for naming
 							</button>
 							<div class="dropdown-menu" aria-labelledby="database">
-								<a class="dropdown-item" target="_blank" href="{% url 'submit' %}">Submit</a>
-								<a class="dropdown-item" href="{% url 'faq' %}">FAQ</a>
+								<a class="dropdown-item" target="_blank" href="{% url 'submit' %}">Submission form</a>
 							</div>
 						</div>
 						<div class="dropdown">
@@ -56,18 +45,35 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="Links">
 								<a class="dropdown-item" target="_blank" href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/">Old Bt nomenclature site</a>
-								<a class="dropdown-item" target="_blank" href="https://www.bpprc.org/">Bacterial Pesticidal Protein Resource Center</a>
+								<a class="dropdown-item" target="_blank" href="https://www.bpprc.org/">BPPRC</a>
 								<a class="dropdown-item" href="{% url 'old_name_new_name'%} ">Old name/new name table</a>
-								<a class="dropdown-item" href="{% url 'github_home'%} ">Github</a>
+								<a class="dropdown-item" href="{% url 'github_home'%} ">GitHub</a>
 								<a class="dropdown-item" href="{% url 'statistics' %}">Statistics</a>
-								<a class="dropdown-item" href="{% url 'faq' %}">FAQ</a>
 							</div>
 						</div>
-						<div class="navbar-nav">
-							<a class="nav-item nav-link" id="x" href="{% url 'feedback_home' %}">Feedback</a>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">FAQs</button>
+							<div class="dropdown-menu" aria-labelledby="database">
+								<a class="dropdown-item" target="_blank" href="{% url 'faq' %}">Frequently asked questions</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Feedback
+							</button>
+							<div class="dropdown-menu" aria-labelledby="database">
+								<a class="dropdown-item" target="_blank" href="{% url 'feedback_home' %}">Feedback form</a>
+							</div>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Cart
+							</button>
+							<div class="dropdown-menu" aria-labelledby="database">
+								<a class="dropdown-item" target="_blank" href="{% url 'view_cart' %}">Download or analyse specific sequences</a>
+							</div>
 						</div>
 						<div class="navbar-nav ml-auto mr-5">
-							<a class="nav-item nav-link" id="x" href="{% url 'view_cart' %}">Cart (<span id="cart-value" style="border-radius: 10px;"></span>)</a>
 						</div>
 				</div>
 		</nav>
