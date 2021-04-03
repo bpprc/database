@@ -5,17 +5,21 @@
 
 {% block content %}
 
-<h2>Search database by protein name </h2>
+<div class="row">
+  <div class="col-md-12">
+<h1 class="display-4"> Search database by protein name </h1>
 <br>
-Examples:
+<h5> Examples:</h5>
+<ul class="list-unstyled">
+ <li>Cry1Aa1</li>
+ <li>Cry32B</li>
+ <li>Xpp22</li>
+ <li>Cry41, Cry42, Cry43</li>
+</ul>
+ </div>
+</div>
 <br>
-<h8> Cry1Aa1 <h8> <br>
-<h8> Cry32B <h8> <br>
-<h8> Xpp22 <h8> <br>
-<h8> Cry41, Cry42, Cry43 <h8>
-</br>
-</br>
-
+<br>
 
 <form method="post" action="/search_database/">
   {% csrf_token %}
@@ -26,6 +30,9 @@ Examples:
       <button type="submit" class="btn btn-secondary" > Search </button>
 </form>
 
+<br>
+<br>
+<p class="lead">As well as searching the database by current protein name, the pull down menu also allows you to search just the holotypes (those proteins ending in “1”), &nbsp; to search for a given accession number or to search the structure database for a particular protein. There is also the option of searching using old names for a protein.</p>
 
 {% endblock content %}
 
