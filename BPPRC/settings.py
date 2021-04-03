@@ -109,13 +109,34 @@ INSTALLED_APPS = [
     'import_export',
     'extra',
     'django_ses',
-    'admin_reorder',
     'django_celery_beat',
     'association',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
+    # 'allauth.socialaccount.providers.yahoo',
+    # 'allauth.socialaccount.providers.linkedin',
 ]
 
 
 SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -155,6 +176,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
+
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'stat'), )
 
@@ -219,31 +241,32 @@ LOGGING = {
     }
 }
 
-ADMIN_REORDER = [
-    {'app': 'database', 'models': (
-        {'model': 'database.Description', 'label': 'Category Descriptions'},
-        {'model': 'database.PesticidalProteinDatabase', 'label': 'Public Sequences'},
-        {'model': 'database.PesticidalProteinPrivateDatabase',
-            'label': 'Private Sequences'},
-        {'model': 'database.StructureDatabase',
-            'label': 'Structures'},
-        {'model': 'database.PesticidalProteinHiddenSequence',
-            'label': 'Hidden Sequences'},
-        {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
-        {'model': 'database.OldnameNewnameTableRight',
-            'label': 'Organized by Oldname'},
-        {'model': 'database.OldnameNewnameTableLeft',
-            'label': 'Organized by New name'})},
-    'namingalgorithm',
-    'extra',
-    {'app': 'auth', 'models': (
-        'auth.Group',
-        {'model': 'auth.User', 'label': 'Staff'},
-    )},
-    'django_ses',
-    'clustalanalysis',
-    'association',
-]
+# ADMIN_REORDER = [
+#     {'app': 'database', 'models': (
+#         {'model': 'database.Description', 'label': 'Category Descriptions'},
+#         {'model': 'database.PesticidalProteinDatabase', 'label': 'Public Sequences'},
+#         {'model': 'database.PesticidalProteinPrivateDatabase',
+#             'label': 'Private Sequences'},
+#         {'model': 'database.StructureDatabase',
+#             'label': 'Structures'},
+#         {'model': 'database.PesticidalProteinHiddenSequence',
+#             'label': 'Hidden Sequences'},
+#         {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
+#         {'model': 'database.OldnameNewnameTableRight',
+#             'label': 'Organized by Oldname'},
+#         {'model': 'database.OldnameNewnameTableLeft',
+#             'label': 'Organized by New name'})},
+#     'namingalgorithm',
+#     'extra',
+#     {'app': 'auth', 'models': (
+#         'auth.Group',
+#         {'model': 'auth.User', 'label': 'Staff'},
+#     )},
+#     'django_ses',
+#     'clustalanalysis',
+#     'association',
+#     'sites',
+# ]
 
 # SESSION
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
@@ -265,8 +288,34 @@ CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK')
 # ACCOUNT_USERNAME_REQUIRED = True
 # ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 # ACCOUNT_SESSION_REMEMBER = True
-# ACCOUNT_AUTHENTICATION_METHOD = 'username'
 # ACCOUNT_UNIQUE_EMAIL = True
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+LOGIN_URL = '/submit_login/'
+LOGIN_REDIRECT_URL = '/submit_login/'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+# ACCOUNT_EMAIL_VERIFICATION = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_USERNAME_BLACKLIST = ["Neil", "Colin", "god", "admin"]
+ACCOUNT_USERNAME_MIN_LENGTH = 2
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
+SOCIAL_AUTH_TWITTER_KEY = 'x2FGb9GkeaGFBTCFxU1VSDDdv'
+SOCIAL_AUTH_TWITTER_SECRET = 'cANYB7UKeTtq0FGYuyChwVROqpkV4vr6EMMit9sBUNiWrfJZyJ'
+
 
 # AWS
 # EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
