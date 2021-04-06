@@ -459,7 +459,7 @@ def add_cart(request):
         previously_selected_cterminal.extend(selected_cterminal)
         request.session['list_cterminal'] = previously_selected_cterminal
 
-    return redirect("search_database")
+    return redirect("database")
 
 
 def structures(request):
