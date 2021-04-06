@@ -241,32 +241,32 @@ LOGGING = {
     }
 }
 
-# ADMIN_REORDER = [
-#     {'app': 'database', 'models': (
-#         {'model': 'database.Description', 'label': 'Category Descriptions'},
-#         {'model': 'database.PesticidalProteinDatabase', 'label': 'Public Sequences'},
-#         {'model': 'database.PesticidalProteinPrivateDatabase',
-#             'label': 'Private Sequences'},
-#         {'model': 'database.StructureDatabase',
-#             'label': 'Structures'},
-#         {'model': 'database.PesticidalProteinHiddenSequence',
-#             'label': 'Hidden Sequences'},
-#         {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
-#         {'model': 'database.OldnameNewnameTableRight',
-#             'label': 'Organized by Oldname'},
-#         {'model': 'database.OldnameNewnameTableLeft',
-#             'label': 'Organized by New name'})},
-#     'namingalgorithm',
-#     'extra',
-#     {'app': 'auth', 'models': (
-#         'auth.Group',
-#         {'model': 'auth.User', 'label': 'Staff'},
-#     )},
-#     'django_ses',
-#     'clustalanalysis',
-#     'association',
-#     'sites',
-# ]
+ADMIN_REORDER = [
+    {'app': 'database', 'models': (
+        {'model': 'database.Description', 'label': 'Category Descriptions'},
+        {'model': 'database.PesticidalProteinDatabase', 'label': 'Public Sequences'},
+        {'model': 'database.PesticidalProteinPrivateDatabase',
+            'label': 'Private Sequences'},
+        {'model': 'database.StructureDatabase',
+            'label': 'Structures'},
+        {'model': 'database.PesticidalProteinHiddenSequence',
+            'label': 'Hidden Sequences'},
+        {'model': 'database.ProteinDetail', 'label': 'Three domain details'},
+        {'model': 'database.OldnameNewnameTableRight',
+            'label': 'Organized by Oldname'},
+        {'model': 'database.OldnameNewnameTableLeft',
+            'label': 'Organized by New name'})},
+    'namingalgorithm',
+    'extra',
+    {'app': 'auth', 'models': (
+        'auth.Group',
+        {'model': 'auth.User', 'label': 'Staff'},
+    )},
+    'django_ses',
+    'clustalanalysis',
+    'association',
+    'sites',
+]
 
 # SESSION
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
