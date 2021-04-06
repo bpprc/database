@@ -29,6 +29,9 @@ Entrez.email = 'sureshcbt@gmail.com'
 
 # https://blog.askesis.pl/post/2019/02/django-admin-inline.html
 class ModelAdminLog(GenericStackedInline):
+    """
+    A log message that stores the admin user, log in time, edited model class.
+    """
     model = LogEntry
 
     # All fields are read-only, obviously
@@ -46,6 +49,9 @@ class ModelAdminLog(GenericStackedInline):
 
 
 class FilterByCategories(admin.SimpleListFilter):
+    """
+    A filter categories in the admin login to filter the data based on the category.
+    """
     title = 'Categories'
     parameter_name = 'q'
 
@@ -72,6 +78,10 @@ class FilterByCategories(admin.SimpleListFilter):
 
 
 class PesticidalProteinDatabaseResource(resources.ModelResource):
+    """
+    ModelResource is from django-import-export app and is a subclass
+    for handling Django models.
+    """
     class Meta:
         model = PesticidalProteinDatabase
         exclude = ('id', 'uploaded', 'fastasequence_file')
