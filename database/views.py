@@ -156,9 +156,16 @@ def database(request):
         if prefix not in category_prefixes:
             category_prefixes.append(prefix)
 
+    form1 = DownloadForm()
+    form2 = ThreedomainDownloadForm()
+    form3 = HolotypeForm()
+
     context = \
         {'category_prefixes': category_prefixes,
-         'descriptions': Description.objects.all()}
+         'descriptions': Description.objects.all(),
+         'form1': form1,
+         'form2': form2,
+         'form3': form3, }
     return render(request, 'database/database.html', context)
 
 
