@@ -36,8 +36,29 @@ console = Console()
 
 def homepage(request):
     """Loads the homepage."""
-    return render(request, 'database/about_page.html')
-    # return render(request, 'index.html')
+    # return render(request, 'database/about_page.html')
+    return render(request, 'index.html')
+
+
+def about_protein(request, category=None):
+    """Categorize the protein database with unqiue, first three letter pattern."""
+
+    protein = PesticidalProteinDatabase.objects.filter(
+        name__istartswith=category)
+    private = PesticidalProteinPrivateDatabase.objects.filter(
+        name__istartswith=category)
+
+    protein_list = list(protein) + list(private)
+
+    proteins = _sorted_nicely(protein_list, sort_key='name')
+    # private = _sorted_nicely(private, sort_key='name')
+
+    context = \
+        {'proteins': proteins,
+         'descriptions': Description.objects.filter(
+             name__istartswith=category).order_by('name')
+         }
+    return render(request, 'list_protein.html', context)
 
 
 def about_page(request):
