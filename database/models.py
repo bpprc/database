@@ -18,8 +18,19 @@ TRUE_FALSE_CHOICES = (
 
 
 class OldnameNewnameTableLeft(models.Model):
+    """
+    Class representing a Old Name and New name Table.
+    Organized by New Name.
+    """
+
+    # 2020 Nomenclature based names i.e. New Name of the proteins
     name_2020 = models.CharField(max_length=250, blank=True, null=False)
+
+    # 1998 Nomenclature based names i.e. Old Name of the proteins
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
+
+    # Several different names of the same protein mentioned in the literature by various authors i.e. multiple names for the protein
+    # Specially before the Nomenclature system (1998)
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
 
     def __str__(self):
@@ -31,8 +42,19 @@ class OldnameNewnameTableLeft(models.Model):
 
 
 class OldnameNewnameTableRight(models.Model):
+    """
+    Class representing a Old Name and New name Table.
+    Organized by Old Name.
+    """
+
+    # 1998 Nomenclature based names i.e. Old Name of the proteins
     name_1998 = models.CharField(max_length=250, blank=True, null=False)
+
+    # 2020 Nomenclature based names i.e. New Name of the proteins
     name_2020 = models.CharField(max_length=250, blank=True, null=False)
+
+    # Several different names of the same protein mentioned in the literature by various authors i.e. multiple names for the protein
+    # Specially before the Nomenclature system (1998)
     alternative_name = models.CharField(max_length=250, blank=True, null=False)
 
     def __str__(self):
@@ -50,30 +72,40 @@ CHOICES = [
 
 
 class StructureDatabase(models.Model):
+    """
+    Structure database fields. The data is curated by Prof.Colin Berry.
+    """
+
+    # 2020 Nomenclature based names i.e. New Name of the proteins
     name = models.CharField(max_length=25, blank=True, null=False)
+
+    # 1998 Nomenclature based names i.e. Old Name of the proteins
     oldname = models.CharField(max_length=75, blank=True, null=False)
+
+    # National Center for Biotechnology Information (NCBI) accession number
+    # https://www.ncbi.nlm.nih.gov/genbank/sequenceids/
+    # https://www.ncbi.nlm.nih.gov/genbank/acc_prefix/
     accession = models.CharField(max_length=75, blank=True, null=False)
-    #uniprot = models.CharField(max_length=25, blank=True, null=False)
-    #pdbid = models.JSONField(max_length=500, blank=True, null=False)
+
+    # Protein Data Bank identifier
+    # https://proteopedia.org/wiki/index.php/PDB_code
+    # https://www.rcsb.org/pages/about-us/index
     pdbid = ArrayField(models.CharField(
         max_length=1000, blank=True), default=list)
-    #ligand = models.CharField(max_length=250, blank=True, null=False)
-    #gene_names = models.CharField(max_length=250, blank=True, null=False)
-    #experiment_method = models.CharField(max_length=250, blank=True, null=False)
-    #resolution = models.CharField(max_length=250, blank=True, null=False)
-    #deposited = models.DateTimeField('deposition date', default=timezone.now)
-    #release_date = models.DateTimeField('release date', default=timezone.now)
-    #publication = models.TextField(blank=True, null=False)
+
+    # NCBI PubMed id
+    # https://www.ncbi.nlm.nih.gov/pmc/pmctopmid/
     pubmedid = models.CharField(max_length=75, blank=True, null=False)
+
+    # PDB id released year
     year = models.CharField(max_length=5, blank=True, null=False)
+
+    # This field provides whether the protein sequence is modified or not
+    # If modified "Yes" otherwise "No"
     modified = models.CharField(max_length=100, choices=CHOICES, default="Yes")
+
+    # Any other information related to the protein
     comment = models.TextField(null=True, blank=True)
-    #organism = models.CharField(max_length=250, blank=True)
-    #expression_system = models.CharField(max_length=250, blank=True)
-    #length = models.CharField(max_length=25, blank=True, null=False)
-    #structure_file = models.FileField(upload_to='pdb_files/', null=True, blank=True)
-    #structure_doi = models.CharField(max_length=250, blank=True, null=False)
-    #bt = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -86,7 +118,9 @@ class StructureDatabase(models.Model):
 
 class PesticidalProteinHiddenSequence(models.Model):
     """
+    Here’s a list of toxins that would be useful to add to the naming analysis as extra hidden seqs so that we get extra data for those sequences that don’t have good matches.  I’ve only put in one example each for TcA/B/C but that should be enough to show us if we have a match.  I’m afraid I don’t have accession numbers of most of these.
     """
+
     name = models.CharField(max_length=15, default="None")
     oldname = models.CharField(max_length=305, default="None")
     othernames = models.TextField(blank=True, null=False)
@@ -104,6 +138,10 @@ class PesticidalProteinHiddenSequence(models.Model):
     nontoxic = models.CharField(max_length=250, blank=True, default="None")
     mammalian_active = models.CharField(
         max_length=250, blank=True, default="None")
+
+    # Protein Data Bank identifier
+    # https://proteopedia.org/wiki/index.php/PDB_code
+    # https://www.rcsb.org/pages/about-us/index
     pdbcode = models.CharField(max_length=10, blank=True, default="None")
     comment = models.TextField(null=True, blank=True)
     submittersname = models.CharField(max_length=25, default="None")
@@ -139,29 +177,68 @@ class PesticidalProteinHiddenSequence(models.Model):
 
 class PesticidalProteinPrivateDatabase(models.Model):
     """
+    Private sequences are used only for the naming purpose. These protein sequences are unreleased to public. Once NCBI release's the sequence and the sequences are moved to public model.
     """
+
+    # User who submits the sequence through "sequence submit form"
     submittersname = models.CharField(max_length=25, null=True, blank=True)
+
+    # User corresponding email
     submittersemail = models.EmailField(max_length=70, null=True, blank=False)
+
+    # 2020 Nomenclature New Name
     name = models.CharField(max_length=15, blank=True,
                             null=False, verbose_name="Protein Name")
+
+    # Protein sequence
     sequence = models.TextField(
         blank=True, null=False, verbose_name="Protein Sequence")
+
+    # Is it a bacterium sequence?. If the choice is "yes" then name of the
+    # bacteria should be in the bacterium textbox. If the choice is "no" then explanation about the source.
+    # Note: The BPPRC doesn't normally assign names to proteins that are not of bacterial origin. If user wish to make a special case for the sequence, the explanation can be stored in the text box.
     bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     bacterium_textbox = models.CharField(
         max_length=250, null=True, blank=True)
+
+    # NCBI taxon id
+    # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi
     taxonid = models.CharField(max_length=25, null=True, blank=True)
+
+    # Submission year
     year = models.CharField(max_length=5, blank=True, null=False)
+
+    # National Center for Biotechnology Information (NCBI) accession number
+    # https://www.ncbi.nlm.nih.gov/genbank/sequenceids/
+    # https://www.ncbi.nlm.nih.gov/genbank/acc_prefix/
     accession = models.CharField(
         max_length=25, blank=True, null=False, verbose_name="NCBI accession number")
+
+    # Partner protein required for toxicity?. If the choice is "yes", then user can mention name of the protein
     partnerprotein = models.BooleanField(
         default=True, choices=TRUE_FALSE_CHOICES)
     partnerprotein_textbox = models.CharField(
         max_length=250, null=True, blank=True)
+
+    # If toxic to the organism. User can mention the name.
     toxicto = models.CharField(max_length=250, blank=True, null=False)
+
+    # If nontoxic to the organism. User can mention the name.
     nontoxic = models.CharField(max_length=250, blank=True, null=False)
+
+    # Correponding DNA sequence information
     dnasequence = models.TextField(null=True, blank=False)
+
+    # Protein Data Bank identifier
+    # https://proteopedia.org/wiki/index.php/PDB_code
+    # https://www.rcsb.org/pages/about-us/index
+    # Correponding PDB id
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
+
+    # DOI publication or PubMed ID or Publication text
     publication = models.TextField(null=True, blank=True)
+
+    # Any other comments from user
     comment = models.TextField(
         null=True, blank=True, verbose_name="User comments")
     uploaded = models.DateTimeField('Uploaded', default=timezone.now)
@@ -172,7 +249,11 @@ class PesticidalProteinPrivateDatabase(models.Model):
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, null=True, blank=True)
     admin_comments = models.TextField(null=True, blank=True)
+
+    # If the sequence is public
     public = models.BooleanField(default=False)
+
+    # If the sequence is private
     private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     oldname = models.CharField(max_length=105, blank=True, null=False)
     othernames = models.TextField(blank=True, null=False)
@@ -200,31 +281,68 @@ class PesticidalProteinPrivateDatabase(models.Model):
 
 class PesticidalProteinDatabase(models.Model):
     """
+    Public sequences in the database.
     """
+
+    # User who submits the sequence through "sequence submit form"
     submittersname = models.CharField(
         max_length=125, blank=True, default="Uploaded by Suresh")
+
+    # User corresponding email
     submittersemail = models.EmailField(
         max_length=70, blank=True)
+
+    # 2020 Nomenclature New Name
     name = models.CharField(max_length=15, blank=True,
                             null=False, verbose_name="Protein Name")
+
+    # 1998 Nomenclature name
     oldname = models.CharField(max_length=105, blank=True, null=False)
+
+    # Several different names of the same protein mentioned in the literature by various authors i.e. multiple names for the protein
+    # Specially before the Nomenclature system (1998)
     othernames = models.TextField(blank=True, null=False)
+
+    # National Center for Biotechnology Information (NCBI) accession number
+    # https://www.ncbi.nlm.nih.gov/genbank/sequenceids/
+    # https://www.ncbi.nlm.nih.gov/genbank/acc_prefix/
     accession = models.CharField(
         max_length=25, blank=True, null=False, verbose_name="NCBI accession number")
+
+    # Sequence released year
     year = models.CharField(max_length=5, blank=True, null=False)
+
+    # Protein sequence
     sequence = models.TextField(
         blank=True, null=False, verbose_name="Protein Sequence")
+
+    # Is it a bacterium sequence?. If the choice is "yes" then name of the
+    # bacteria should be in the bacterium textbox. If the choice is "no" then explanation about the source.
+    # Note: The BPPRC doesn't normally assign names to proteins that are not of bacterial origin. If user wish to make a special case for the sequence, the explanation can be stored in the text box.
     bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+
+    # NCBI taxon id
+    # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi
     taxonid = models.CharField(max_length=25, null=True, blank=True)
     bacterium_textbox = models.CharField(
         max_length=250, null=True, blank=True)
+
+    # Partner protein required for toxicity?. If the choice is "yes", then user can mention name of the protein
     partnerprotein = models.BooleanField(
         default=True, choices=TRUE_FALSE_CHOICES)
     partnerprotein_textbox = models.CharField(
         max_length=250, null=True, blank=True)
+
+    # If toxic to the organism. User can mention the name.
     toxicto = models.CharField(max_length=250, blank=True, null=False)
+
+    # If nontoxic to the organism. User can mention the name.
     nontoxic = models.CharField(max_length=250, blank=True, null=False)
+
+    # Correponding DNA sequence information
     dnasequence = models.TextField(blank=True)
+
+    # DOI publication or PubMed ID or Publication text
     publication = models.TextField(null=True, blank=True)
     comment = models.TextField(
         null=True, blank=True, verbose_name="User comments")
@@ -232,14 +350,30 @@ class PesticidalProteinDatabase(models.Model):
     fastasequence_file = models.FileField(
         upload_to='fastasequence_files/', null=True, blank=True)
     name_category = models.CharField(max_length=15, blank=True)
+
+    # If the sequence is public or not, based on the boolean operator
     public = models.BooleanField(default=True)
+
+    # Protein Data Bank identifier
+    # https://proteopedia.org/wiki/index.php/PDB_code
+    # https://www.rcsb.org/pages/about-us/index
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
     predict_name = models.TextField(null=True, blank=True)
+
+    # Whether user accepted BPPRC terms & conditions
     terms_conditions = models.BooleanField(
         default=False, choices=TRUE_FALSE_CHOICES)
+
+    # Admin user who submits the sequence
     admin_user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE, null=True, blank=True)
+
+    # Admin user comments for future reference
     admin_comments = models.TextField(null=True, blank=True)
+
+    # Audit entries details. This is similar to log entry for the sequence
+    # Information like who edited the sequence or modified the field are
+    # logged automatically
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="%(class)s_created_by", null=True, blank=True,)
     created_on = models.DateTimeField(
@@ -321,45 +455,94 @@ class PesticidalProteinDatabase(models.Model):
         sheet = "{0:0.2f}".format(sec_stru[2])
         return helix, turn, sheet
 
-    # def Pfam_Info(self):
-    #     if self.name.startswith('Cry'):
-    #         domain_details = ProteinDetail.objects.get(accession=self.accession)
-    #         print(domain_details)
-    #         if not domain_details:
-    #             return format_html('<body> <p style="color:#FF0000";>Pfam data needed</p> </body>')
-    #         else:
-    #             return format_html('Data Available')
-    #
-    # else:
-    #     return format_html('Data Available')
-
-
-# class BacteriaTaxonomy(models.Model):
-#     bacteria_name = models.CharField(max_length=100, blank=False)
-#     bacteria_taxonid = models.IntegerField(max_length=20, blank=False)
 
 class ProteinDetail(models.Model):
 
-    # name = models.ForeignKey(PesticidalProteinDatabase,
-    #                          related_name="%(class)s_name", on_delete=models.CASCADE,)
-    # accession = models.ForeignKey(PesticidalProteinDatabase, related_name="%(class)s_accession", on_delete=models.CASCADE,)
-    # sequence = models.ForeignKey(PesticidalProteinDatabase, related_name="%(class)s_fastasequence", on_delete=models.CASCADE,)
+    """
+    The domain information from NCBI. NCBI has sequence features like source organism, protein regions (region name and corresponding sequence number).
+    Example:
+    https://www.ncbi.nlm.nih.gov/protein/BAA04468#feature_BAA04468.1_Region_0
+
+    The provided example above accession number is BAA04468.1. If access the link, one can see the FEATURES section where the information are
+    source          1..1176
+                     /organism="Bacillus thuringiensis"
+                     /strain="FU-2-7"
+                     /db_xref="taxon:1428"
+     Protein         1..1176
+                     /product="insecticidal crystal protein"
+     Region          48..251
+                     /region_name="Endotoxin_N"
+                     /note="delta endotoxin, N-terminal domain; pfam03945"
+                     /db_xref="CDD:281878"
+     Region          259..460
+                     /region_name="Endotoxin_M"
+                     /note="delta endotoxin; pfam00555"
+                     /db_xref="CDD:278954"
+     Region          462..605
+                     /region_name="delta_endotoxin_C"
+                     /note="delta-endotoxin C-terminal domain may be associated
+                     with carbohydrate binding functionality; cd04085"
+                     /db_xref="CDD:271151"
+    These information are extracted for all the accession number (if the information is available) added to the model. These sequence information is used to draw guided tree.
+    """
+
+    # 2020 Nomenclature New Name
     name = models.CharField(max_length=25)
+
+    # National Center for Biotechnology Information (NCBI) accession number
+    # https://www.ncbi.nlm.nih.gov/genbank/sequenceids/
+    # https://www.ncbi.nlm.nih.gov/genbank/acc_prefix/
     accession = models.CharField(max_length=25, blank=True, null=False)
+
+    # Protein sequence
     sequence = models.TextField(blank=True, null=False)
+
+    # Length of the protein sequence
     fulllength = models.TextField(blank=True, null=False)
+
+    # Source organism
     species = models.TextField(blank=True, null=False)
+
+    # NCBI taxon id
+    # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi
     taxon = models.TextField(blank=True, null=False)
+
+    # Domain 1 information
+    # N-terminal information length (domain_N)
+    # N-terminal Protein family database (pfam) domain id
+    # Pfam link https://pfam.xfam.org/about
+    # N-terminal Conserved Domain Database (cdd) id
+    # CDD link https://www.ncbi.nlm.nih.gov/Structure/cdd/cdd.shtml
+    # Start position number of the N-terminal
+    # End position number of the N-terminal
     domain_N = models.TextField(blank=True, null=False)
     pfam_N = models.CharField(max_length=25, blank=True, null=False)
     cdd_N = models.CharField(max_length=25, blank=True, null=False)
     start_N = models.CharField(max_length=10, blank=True, null=False)
     end_N = models.CharField(max_length=10, blank=True, null=False)
+
+    # Domain 2 information
+    # Middle domain information length (domain_M)
+    # Middle domain Protein family database (pfam) domain id
+    # Pfam link https://pfam.xfam.org/about
+    # Middle domain Conserved Domain Database (cdd) id
+    # CDD link https://www.ncbi.nlm.nih.gov/Structure/cdd/cdd.shtml
+    # Start position number of the Middle domain
+    # End position number of the Middle domain
     domain_M = models.TextField(blank=True, null=False)
     pfam_M = models.CharField(max_length=25, blank=True, null=False)
     cdd_M = models.CharField(max_length=25, blank=True, null=False)
     start_M = models.CharField(max_length=10, blank=True, null=False)
     end_M = models.CharField(max_length=10, blank=True, null=False)
+
+    # Domain 3 information
+    # C-terminal information length (domain_C)
+    # C-terminal Protein family database (pfam) domain id
+    # Pfam link https://pfam.xfam.org/about
+    # C-terminal Conserved Domain Database (cdd) id
+    # CDD link https://www.ncbi.nlm.nih.gov/Structure/cdd/cdd.shtml
+    # Start position number of the C-terminal
+    # End position number of the C-terminal
     domain_C = models.TextField(blank=True, null=False)
     pfam_C = models.CharField(max_length=25, blank=True, null=False)
     cdd_C = models.CharField(max_length=10, blank=True, null=False)
@@ -402,6 +585,8 @@ class ProteinDetail(models.Model):
 
 class Description(models.Model):
     """
+    Protein structure class descriptions
+    Ex. App : Pesticidal proteins with a predominately Alpha helical structure, e.g. those previously known as Cry6
     """
     name = models.CharField(max_length=7)
     description = models.TextField()
@@ -415,6 +600,9 @@ class Description(models.Model):
 
 class UserUploadData(models.Model):
     """
+    Clustal analysis
+    link: http://www.clustal.org/omega/
+    After the user adds to the cart. User can upload their sequence for the analysis. The model saves name, sequence, as well as session key to retrieve the tree later.
     """
     session_key = models.CharField(max_length=250, default=None, null=True)
     name = models.CharField(max_length=250, null=True)
