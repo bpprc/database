@@ -42,3 +42,8 @@ def github_home(request):
 
 def faq(request):
     return render(request, 'extra/faq.html')
+
+
+def privacy_policy(request):
+    """Loads the homepage."""
+    return render(request, 'extra/privacy-policy.html', context)
