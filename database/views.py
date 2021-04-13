@@ -1,4 +1,4 @@
-"""Database related view functions."""
+"""Pesticidal Protein Database related view functions."""
 
 
 import re
@@ -35,13 +35,20 @@ console = Console()
 
 
 def homepage(request):
-    """Loads the homepage."""
     # return render(request, 'database/about_page.html')
     return render(request, 'index.html')
 
 
 def about_protein(request, category=None):
-    """Categorize the protein database with unqiue, first three letter pattern."""
+    """Categorize the protein database with unqiue and first three letter pattern. Filters the protein based on these categories from public database as well as from private database
+
+    Args:
+        category: First three letter structural class
+
+    Returns:
+        Filtered list of proteins and their three letter descriptions
+
+    """
 
     protein = PesticidalProteinDatabase.objects.filter(
         name__istartswith=category)
@@ -66,10 +73,11 @@ def about_page(request):
 
 
 def statistics(request):
-    """Return the number of categories in the database
-       and its corresponding count.
-        Holotype is a protein name ends in 1. Example: Cry1Aa1
-        A holotype is a single protein name used to name the lower rank based on identity. Cry1Aa2 is named based on the identity to Cry1Aa1
+    """
+    Return the number of categories in the database
+    and its corresponding count.
+    Holotype is a protein name ends in 1. Example: Cry1Aa1
+    A holotype is a single protein name used to name the lower rank based on identity. Cry1Aa2 is named based on the identity to Cry1Aa1
     """
     category_count = {}
     category_holotype_count = {}
@@ -79,6 +87,7 @@ def statistics(request):
     categories = \
         PesticidalProteinDatabase.objects.order_by(
             'name').values_list('name', flat=True).distinct()
+
     for category in categories:
         cat = category[:3]
         if category[-1] == '1' and not category[-2].isdigit():
@@ -127,13 +136,12 @@ def statistics(request):
     return render(request, 'database/statistics.html', context)
 
 
-def privacy_policy(request):
-    """Loads the homepage."""
-    return render(request, 'extra/privacy-policy.html', context)
-
-
 def _sorted_nicely(l, sort_key=None):
-    """ Sort the given iterable in the way that humans expect. https://blog.codinghorror.com/sorting-for-humans-natural-sort-order/ """
+    """
+    Sort the given iterable in the way that humans expect.
+    https://blog.codinghorror.com/sorting-for-humans-natural-sort-order/
+    """
+
     def convert(text): return int(text) if text.isdigit() else text
     if sort_key is None:
         def alphanum_key(key): return [convert(c)
@@ -145,7 +153,15 @@ def _sorted_nicely(l, sort_key=None):
 
 
 def categorize_database(request, category=None):
-    """Categorize the protein database with unqiue, first three letter pattern."""
+    """Categorize the protein database with unqiue and first three letter pattern. Filters the protein based on these categories from public database as well as from private database
+
+    Args:
+        category: First three letter structural class
+
+    Returns:
+        Filtered list of proteins and their three letter descriptions
+
+    """
 
     protein = PesticidalProteinDatabase.objects.filter(
         name__istartswith=category)
@@ -166,7 +182,16 @@ def categorize_database(request, category=None):
 
 
 def database(request):
-    """Returns the protein list for the categories from the database."""
+    """
+    The idea here is to list the categories along with the checkboxes.
+    The user can select the desired category and click the download button.
+
+    Returns:
+        First three letter of the structural class
+        Descriptions of the three letter structural class
+        Three download forms
+        See more details from the database.forms.py
+    """
 
     categories = \
         PesticidalProteinDatabase.objects.order_by(
@@ -190,43 +215,34 @@ def database(request):
     return render(request, 'database/database.html', context)
 
 
-# def _name(search_string):
-#     try:
-#         name = re.match(
-#             r"^[A-Z][a-z]{2}\d{1,3}[A-Z][a-z]\d{1,3}^", search_string).group()
-#         return True
-#     except:
-#         return False
-
-
-# def _category(search_string):
-#     try:
-#         name = re.match(r"^[A-Z][a-z]{2}\d{1,3}$", search_string).group()
-#         return True
-#     except:
-#         return False
-
-
-# def _partial_pattern(search_string):
-#     try:
-#         name = re.match(r"^[A-Z][a-z]{2}\d{1,3}[A-Z]$", search_string).group()
-#         return True
-#     except:
-#         return False
-
-
-# def _wildcard_search(search_term):
-#     if '*' in search_term:
-#         return True
-
-
 def search_database_home(request):
+    """
+    Search form: Search database by protein name
+    User can search based on Name, Old Name, Accession, Holotype and Structure
+
+    Returns:
+        Search form
+        See database.forms.py
+    """
     form = SearchForm()
     return render(request, 'database/search_page.html', {'form': form})
 
 
 def search_database(request):
-    """Returns the results based on the search query."""
+    """
+    Returns the results based on the search query. One complexity with the search here eg. Protein name are Cry1Aa1. It contains numeric, uppercase, lowercase.
+
+    User can able to use keywords i.e.
+    'Cry10*' - wildcard search should work
+    Use multiple keywords with any separator (, or ;)
+    Cry - should list all cry category
+    Cry1 - should not return Cry10. Only Cry1's.
+    Cry10 - should not return Cry1. Only Cry10's
+    Cry10A
+    Cry10Aa
+    Cry10Aa1
+
+    """
     if request.method == 'POST':
         form = SearchForm(request.POST)
         proteins = []
@@ -454,7 +470,11 @@ def search_database(request):
 
 
 def add_cart(request):
-    """Add the profiles to the cart."""
+    """
+    Add the profiles to the cart.
+
+    Search results provides list of proteins where user's have an option to select and add proteins to the cart. Add to cart uses 'request.session' to add the selected values.
+    """
 
     if request.method == 'POST':
 
@@ -484,6 +504,9 @@ def add_cart(request):
 
 
 def structures(request):
+    """
+    List of proteins that has solved structure in the protein data bank database
+    """
     structures = \
         StructureDatabase.objects.order_by('name')
 
@@ -494,13 +517,25 @@ def structures(request):
 
 
 def structure_pdbid(request, pdbid=None):
-    """Categorize the protein database with unqiue, first three letter pattern."""
+    """
+    Categorize the protein database with unqiue, first three letter pattern.
+
+        Args:
+            pdbid: Protein Data Bank ID
+            More information: https://www.rcsb.org/docs/general-help/identifiers-in-pdb
+
+        Returns:
+            - List of proteins in the structure database
+            - Specific protein filtered through pdbid
+
+        Note:
+            This function is not used in the database.
+    """
 
     protein = StructureDatabase.objects.filter(
         pdbid__istartswith=pdbid)
     structures = \
         StructureDatabase.objects.order_by('name')
-    print(protein)
 
     context = \
         {'proteins': protein,
@@ -510,7 +545,9 @@ def structure_pdbid(request, pdbid=None):
 
 
 def clear_session_database(request):
-    """Clear the database session."""
+    """
+    As the name suggest, it clears the selected proteins in the cart using database session.
+    """
 
     session_key = list(request.session.keys())
 
@@ -523,7 +560,13 @@ def clear_session_database(request):
 
 
 def remove_cart(request, database_id):
-    """Remove the selected proteins one by one from the cart."""
+    """
+    Remove the selected proteins one by one from the cart.
+    Assume you have selected proteins in search page and if you view the cart page, there is a table that shows selected prteins. These proteins can be removed from the cart using the trash-can/delete icon.
+
+        Args:
+            database_id:
+    """
 
     protein = PesticidalProteinDatabase.objects.get(id=database_id)
 
@@ -585,7 +628,9 @@ def cart_value(request):
 
 
 def view_cart(request):
-    """View the selected proteins in the session and user uploaded sequences."""
+    """
+    View the selected proteins in the session and user uploaded sequences.
+    """
 
     selected_values = request.session.get('list_names')
     selected_nterminal = request.session.get('list_nterminal')
@@ -683,9 +728,9 @@ def user_data(request):
                             session=request.session)
 
         if form.is_valid():
-            print("form")
+            # print("form")
             messages.success(request, "file upload successful")
-        print(form.errors)
+        # print(form.errors)
 
     # return redirect("view_cart")
     return render(request, 'database/search_user_data_update.html', form)
@@ -699,10 +744,6 @@ def download_sequences(request):
     list_nterminal = request.session.get('list_nterminal', [])
     list_middle = request.session.get('list_middle', [])
     list_cterminal = request.session.get('list_cterminal', [])
-    # print("seleced_values", selected_values)
-    # print("list_nterminal", list_nterminal)
-    # print("list_cterminal", list_cterminal)
-    # print("list_middle", list_middle)
 
     values = []
 
@@ -1071,13 +1112,11 @@ def export_old_name_table(request):
 
 def page_not_found(request, exception):
     """ Return 404 error page."""
-
     return render(request, 'extra/404.html', status=404)
 
 
 def server_error(request):
     """ Return server error."""
-
     return render(request, 'extra/500.html', status=500)
 
 
