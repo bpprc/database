@@ -24,7 +24,7 @@ from django.contrib.admin.options import get_content_type_for_model
 from django.forms import TextInput, Textarea
 from Bio import Entrez
 
-Entrez.email = 'sureshcbt@gmail.com'
+Entrez.email = 'bpprc.database@gmail.com'
 
 
 # https://blog.askesis.pl/post/2019/02/django-admin-inline.html
