@@ -1108,17 +1108,3 @@ def export_old_name_table(request):
     response = HttpResponse(dataset_right.xlsx, content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="organized_oldname.xlsx"'
     return response
-
-
-def page_not_found(request, exception):
-    """ Return 404 error page."""
-    return render(request, 'extra/404.html', status=404)
-
-
-def server_error(request):
-    """ Return server error."""
-    return render(request, 'extra/500.html', status=500)
-
-
-def faq(request):
-    return render(request, 'extra/faq.html')
