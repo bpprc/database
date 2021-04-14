@@ -47,3 +47,17 @@ def faq(request):
 def privacy_policy(request):
     """Loads the homepage."""
     return render(request, 'extra/privacy-policy.html', context)
+
+
+def page_not_found(request, exception):
+    """ Return 404 error page."""
+    return render(request, 'extra/404.html', status=404)
+
+
+def server_error(request):
+    """ Return server error."""
+    return render(request, 'extra/500.html', status=500)
+
+
+def faq(request):
+    return render(request, 'extra/faq.html')

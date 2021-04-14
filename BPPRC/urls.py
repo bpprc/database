@@ -3,8 +3,8 @@ from django.conf.urls.static import static, settings
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
-handler404 = 'database.views.page_not_found'
-handler500 = 'database.views.server_error'
+handler404 = 'extra.views.page_not_found'
+handler500 = 'extra.views.server_error'
 
 admin.autodiscover()
 admin.site.enable_nav_sidebar = False
