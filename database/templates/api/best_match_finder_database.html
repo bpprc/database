@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<br>
+<div class="container">
+  <div class="row">
+    <div class="lead" width=100%>
+    <h2>Compare two proteins - from database or user-supplied</h2>
+  <br>
+  <form action="/bestmatchfinder_database_sequence_run/" method="post">
+    {% csrf_token %}
+    {{ form |crispy }}
+    <button type="submit" class="btn btn-secondary"  >Submit</button>
+    <br>
+    <br>
+    <br>
+  </form>
+
+</div>
+</div>
+</div>
+
+
+{% endblock content %}
+
+{% block extrajs %}
+
+<script type="text/javascript" src="{% static 'database/js/chosen.jquery.min.js' %}"> </script>
+
+<script>
+  $(document).ready(function() {
+    $('#id_protein_id1').chosen();
+    $('#id_protein_id2').chosen();
+  });
+
+</script>
+{% endblock %}
