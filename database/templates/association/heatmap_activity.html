@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% load static %}
+
+<style>
+
+rect {
+        stroke: #E6E6E6;
+        stroke-width: 1.5px;
+      }
+
+.axis text {
+  font-size: 9pt;
+  font-family: Consolas, courier;
+  fill: #000;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: none;
+}
+
+.d3-tip {
+  line-height: 1;
+  font: 14px sans-serif;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: rgb(185, 185, 185);
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+#chart {
+  width: 100%;
+  height: 100%;
+  min-width: 500px;
+  min-height: 500px;
+  position: absolute;
+}
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+<body>
+<svg id="chart"></svg>
+<script type="text/javascript">
+
+    var margin = { top: 100, right: 50, bottom: 50, left: 100 },
+        dim = Math.min(parseInt(d3.select("#chart").style("width")), parseInt(d3.select("#chart").style("height")))
+        width = dim - margin.left - margin.right,
+        height = dim - margin.top - margin.bottom,
+        categories = 17,
+        gridSize = width / categories,
+        colors = ['rgb(84,48,5)','rgb(140,81,10)','rgb(191,129,45)','rgb(223,194,125)','rgb(246,232,195)','rgb(245,245,245)','rgb(199,234,229)','rgb(128,205,193)','rgb(53,151,143)','rgb(1,102,94)','rgb(0,60,48)'];
+
+    var xScale = d3.scale.ordinal().rangeBands([0, width]);
+    var yScale = d3.scale.ordinal().rangeBands([0, height]);
+    var xAxis = d3.svg.axis().orient("top");
+    var yAxis = d3.svg.axis().orient("left");
+
+    // Create the svg canvas
+    var svg = d3.select("#chart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return  "<div><span>Relationship:</span> <span style='color:white'>" + d.axis2 + " and " + d.axis1 + "</span></div>" +
+                  "<div><span>Correlation:</span> <span style='color:white'>" + d3.round(d.value, 3) + "</span></div>";
+        })
+
+    svg.call(tip);
+
+d3.csv("{% static 'correlationCoefficients.csv' %}", format, function(error, data){
+
+  var color = d3.scale.quantile()
+                  .domain([-0.05, 0.105])
+                  .range(colors);
+
+  // Create the heatmap visualization
+  var viz = svg.selectAll(".correlation")
+              .data(data)
+              .enter().append("rect")
+                  .attr("class", "correlation")
+                  .attr("x", function(d, i) {return gridSize * Math.floor(i / categories) ; })
+                  .attr("y", function(d, i) {return gridSize * (i % categories) ; })
+                  .attr("width",gridSize)
+                  .attr("height", gridSize)
+                  .style("fill", function(d){return color(d.value) ; })
+                  .on('mouseover', tip.show)
+                  .on('mouseout', tip.hide);
+
+    var names = [];
+    data.slice(0, categories).forEach(function(d){
+      names.push(d.axis2);
+    });
+
+    // Add the horizontal labels
+    xScale.domain(names);
+
+    xAxis.scale(xScale);
+
+    svg.append("g")
+          .attr("class", "x axis")
+          .call(xAxis)
+          .selectAll("text")
+              .attr("y", -10)
+              .attr("dy", ".5em")
+              .attr("x", 0)
+              .attr("transform", "rotate(-45)")
+              .style("text-anchor", "start")
+              .style("font-weight", "bold");
+
+    // Add the vertical labels
+    yScale.domain(names);
+
+    yAxis.scale(yScale);
+
+    svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+          .selectAll("text")
+              .style("text-anchor", "end");
+
+});
+
+function resize() {
+
+  var dim = Math.min(parseInt(d3.select("#chart").style("width")), parseInt(d3.select("#chart").style("height"))),
+  width = dim - margin.left - margin.right,
+  height = dim - margin.top - margin.bottom;
+
+  gridSize = width / 17;
+
+  // Update the range of the scale with new width/height
+  xScale.rangeBands([0, width]);
+  yScale.rangeBands([0, height]);
+
+  // Update the axis and text with the new scale
+  svg.select('.x.axis')
+    .call(xAxis)
+    .selectAll("text")
+        .attr("y", -10)
+        .attr("dy", ".5em")
+        .attr("x", 0)
+        .attr("transform", "rotate(-45)")
+        .style("text-anchor", "start")
+
+  svg.select('.y.axis')
+    .call(yAxis);
+
+  svg.selectAll('.correlation')
+    .attr("x", function(d, i) {return gridSize * Math.floor( i / categories ) ;})
+    .attr("y", function(d, i) {return gridSize * ( i % categories );})
+    .attr("width",gridSize)
+    .attr("height", gridSize);
+}
+
+d3.select(window).on('resize', resize);
+
+resize();
+
+function format(d) {
+  d.value = +d.value;
+  return d;
+}
+
+</script>
+</body>
