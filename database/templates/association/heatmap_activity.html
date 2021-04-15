@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
+<!-- read this https://towardsdatascience.com/building-a-co-occurrence-matrix-with-d3-to-analyze-overlapping-topics-in-dissertations-fb2ae9470dee -->
+
 <style>
 
 rect {
@@ -96,7 +98,7 @@ rect {
 
     svg.call(tip);
 
-d3.csv("{% static 'correlationCoefficients.csv' %}", format, function(error, data){
+d3.csv("correlationCoefficients.csv", format, function(error, data){
 
   var color = d3.scale.quantile()
                   .domain([-0.05, 0.105])
