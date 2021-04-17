@@ -43,23 +43,23 @@
     <div class="container d-flex align-items-center">
 
       <div class="logo mr-auto">
-        <h1 class="text-light"><a href="{% url 'homepage' %}"><span>Home</span></a></h1>
+        <h1 class="text-light"><a href="homepage"><span>Home</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="/static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="drop-down"><a href="">About us</a>
+          <li class="drop-down"><a href="#about">About</a>
             <ul>
+              <li><a href="#about"></a>About us</li>
               <li><a href="#Funding"></a>Funding</li>
               <li><a href="{% url 'search_database' %}"></a>Cite</li>
             </ul>
           </li>
-          <li class="drop-down"><a href="">Database</a>
+          <li class="drop-down"><a>Database</a>
             <ul>
-              <li><a href="{% url 'database' %}"></a>Structural Classes</li>
-              <li><a href="{% url 'search_database' %}"></a>Search by Name</li>
+              <li><a href="database"></a>Structural Classes</li>
+              <li><a href=""></a>Search by Name</li>
               <li><a href="#"></a>Protein Structures</li>
             </ul>
           </li>
@@ -109,12 +109,15 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
-          <h1 data-aos="fade-up">Welcome to the Bacterial Pesticidal Protein Database</h1>
-          <h2 data-aos="fade-up" data-aos-delay="400"></h2>
+        <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-left" data-aos-delay="200">
+          <h1 data-aos="fade-up" data-aos-delay="400">Welcome to the Bacterial Pesticidal Protein Database</h1>
+          <a><img src="/static/assets/img/bpprc.png" alt="Responsive image" class="img-fluid"></a>
+          <div data-aos="fade-up" data-aos-delay="800">
+          <a href="#about" class="btn-get-started scrollto">About Us</a>
+        </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="200">
-          <img src="/static/assets/img/protein.png" class="img-fluid animated" alt="">
+          <img src="/static/assets/img/protein.png" class="img-fluid" alt="">
         </div>
       </div>
     </div>
@@ -122,16 +125,58 @@
   </section><!-- End Hero -->
 
   <main id="main">
+
+    <!-- ======= Clients Section ======= -->
+    <section id="clients" class="clients clients clients clients">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-2 col-md-4 col-6">
+            <a target="_blank" href="http://www.sussex.ac.uk/lifesci/">
+            <img src="/static/assets/img/clients/US.png" class="img-fluid" alt="" data-aos="zoom-in">
+            </a>
+          </div>
+
+          <div class="ml-3 mr-3 col-lg-2 col-md-4 col-6">
+            <a target="_blank" href="https://www.cardiff.ac.uk/biosciences">
+            <img src="/static/assets/img/clients/CU.png" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="100">
+            </a>
+          </div>
+
+          <div class="ml-3 mr-3 col-lg-2 col-md-4 col-6">
+            <a target="_blank" href="http://entnemdept.ufl.edu/">
+            <img src="/static/assets/img/clients/UF.png" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="200">
+            </a>
+          </div>
+
+          <div class="ml-3 mr-3 col-lg-2 col-md-4 col-6 logos">
+            <a target="_blank" href="https://www.iucrc-camtech.org/">
+            <img src="/static/assets/img/clients/camtech.png" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="300">
+            </a>
+          </div>
+
+          <div class="ml-3 mr-3 col-lg-2 col-md-4 col-6 logos">
+            <a target="_blank" href="https://www.nsf.gov/">
+            <img src="/static/assets/img/clients/NSF.png" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="400">
+            </a>
+          </div>
+
+
+        </div>
+
+      </div>
+    </section><!-- End Clients Section -->
+
     <!-- ======= About Us Section ======= -->
     <section id="about" class="about">
       <div class="container">
-
         <div class="section-title" data-aos="fade-up">
           <h2>About Us</h2>
         </div>
 
         <div class="row content">
-          <div class="col-lg-12" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12" data-aos="fade-up" data-aos-delay="150">
             <p>
               The pesticidal protein database is part of the Bacterial Pesticidal Protein Resource Center (www.bpprc.org). This database is intended to replace and extend the old Bacillus thuringiensis toxin nomenclature site.
             </p>

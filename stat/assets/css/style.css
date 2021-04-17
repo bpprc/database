@@ -513,8 +513,8 @@ section {
 # Clients
 --------------------------------------------------------------*/
 .clients {
-  background: #f3f9fd;
-  padding: 10px 0;
+  background: ;
+  padding: 20px 0;
   text-align: center;
 }
 
@@ -525,12 +525,10 @@ section {
 }
 
 .clients img {
-  width: 50%;
-  -webkit-filter: grayscale(100);
-  filter: grayscale(100);
+  width: 60%;
   transition: all 0.4s ease-in-out;
   display: inline-block;
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
 .clients img:hover {
@@ -541,13 +539,48 @@ section {
 
 @media (max-width: 768px) {
   .clients img {
-    width: 40%;
+    width: 50%;
   }
 }
 
 @media (max-width: 575px) {
   .clients img {
-    width: 30%;
+    width: 40%;
+  }
+}
+
+/*--------------------------------------------------------------
+# Clients
+--------------------------------------------------------------*/
+
+.logos .col-lg-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logos img {
+  width: 75%;
+  transition: all 0.4s ease-in-out;
+  display: inline-block;
+  padding: 5px 0;
+}
+
+.logos img:hover {
+  -webkit-filter: none;
+  filter: none;
+  transform: scale(1.1);
+}
+
+@media (max-width: 999px) {
+  .logos img {
+    width: 70%;
+  }
+}
+
+@media (max-width: 799px) {
+  .logos img {
+    width: 50%;
   }
 }
 
