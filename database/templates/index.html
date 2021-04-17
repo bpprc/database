@@ -49,38 +49,38 @@
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="drop-down"><a href="#about">About</a>
+          <li class="drop-down"><a href="">About</a>
             <ul>
-              <li><a href="#about"></a>About us</li>
-              <li><a href="#Funding"></a>Funding</li>
-              <li><a href="{% url 'search_database' %}"></a>Cite</li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#funding">Funding</a></li>
+              <li><a href="#cite">Cite</a></li>
             </ul>
           </li>
-          <li class="drop-down"><a>Database</a>
+          <li class="drop-down"><a href="">Database</a>
             <ul>
-              <li><a href="database"></a>Structural Classes</li>
-              <li><a href=""></a>Search by Name</li>
-              <li><a href="#"></a>Protein Structures</li>
+              <li><a href="#database">Structural Classes</a></li>
+              <li><a href="/search_database_home/">Search by Name</a></li>
+              <li><a href="/structures/">Protein Structures</a></li>
             </ul>
           </li>
           <li class="drop-down"><a href="">BestMatchFinder</a>
             <ul>
-              <li><a href="#">Search by sequence</a></li>
-              <li><a href="#">Pairwise comparision</a></li>
+              <li><a href="/bestmatchfinder_home/">Search by sequence</a></li>
+              <li><a href="/bestmatchfinder_database/">Pairwise comparision</a></li>
             </ul>
           </li>
           <li class="drop-down"><a href="">Submit your sequence for naming</a>
             <ul>
-              <li><a href="#">Submission form</a></li>
+              <li><a href="/submit/">Submission form</a></li>
             </ul>
           </li>
           <li class="drop-down"><a href="">Links</a>
             <ul>
-              <li><a href="#">Old Bt nomenclature site</a></li>
-              <li><a href="#">BPPRC</a></li>
-              <li><a href="#">Old name/New name table</a></li>
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Statistics</a></li>
+              <li><a target="_blank" href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/">Old Bt nomenclature site</a></li>
+              <li><a target="_blank" href="www.bpprc.org">BPPRC</a></li>
+              <li><a target="_blank" href="/old_name_new_name/">Old name/New name table</a></li>
+              <li><a target="_blank" href="/github_home/">GitHub</a></li>
+              <li><a target="_blank" href="/statistics/">Statistics</a></li>
             </ul>
           </li>
           <li class="drop-down"><a href="">FAQs</a>
@@ -178,13 +178,7 @@
         <div class="row content">
           <div class="col-lg-12" data-aos="fade-up" data-aos-delay="150">
             <p>
-              The pesticidal protein database is part of the Bacterial Pesticidal Protein Resource Center (www.bpprc.org). This database is intended to replace and extend the old Bacillus thuringiensis toxin nomenclature site.
-            </p>
-            <p>
-              The database currently contains proteins listed in the Bt nomenclature site but with new mnemonics to reflect the assignment of proteins to different homology groups. New bacteria-derived proteins with pesticidal properties have also been added.
-            </p>
-            <p>
-              This site allows users to find the best matches within the database to their own sequence. Database sequences can be downloaded and analysed in various ways.
+              The pesticidal protein database is part of the Bacterial Pesticidal Protein Resource Center (<a href="target="_blank" www.bpprc.org">www.bpprc.org<a/>). This database is intended to replace and extend the old Bacillus thuringiensis toxin nomenclature site.           The database currently contains proteins listed in the Bt nomenclature site but with new mnemonics to reflect the assignment of proteins to different homology groups. New bacteria-derived proteins with pesticidal properties have also been added. This site allows users to find the best matches within the database to their own sequence. Database sequences can be downloaded and analysed in various ways.
             </p>
           </div>
         </div>
@@ -193,7 +187,7 @@
     </section><!-- End About Us Section -->
 
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
+    <section id="funding" class="funding">
       <div class="container">
 
         <div class="section-title" data-aos="fade-up">
@@ -203,8 +197,19 @@
       </div>
     </section><!-- End Services Section -->
 
+    <!-- ======= Services Section ======= -->
+    <section id="cite" class="cite">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>Citing the nomenclature</h2>
+          Crickmore, N., Berry, C., Panneerselvam, S., Mishra, R., Connor, T. R., & Bonning, B. C. (2020). A structure-based nomenclature for Bacillus thuringiensis and other bacteria-derived pesticidal proteins. Journal of invertebrate pathology, 107438.<a href="https://doi.org/10.1016/j.jip.2020.107438" target="_blank"> DOI</a></p>
+        </div>
+      </div>
+    </section><!-- End Services Section -->
+
     <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
+    <section id="database" class="portfolio">
       <div class="container">
 
         <div class="section-title" data-aos="fade-up">
@@ -217,30 +222,29 @@
             <ul id="portfolio-flters">
               <li data-filter="*" class="filter-active">All</li>
               <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-app">Cry</li>
-              <li data-filter=".filter-app">Cyt</li>
-              <li data-filter=".filter-app">Gpp</li>
-              <li data-filter=".filter-app">Mcf</li>
-              <li data-filter=".filter-app">Mpf</li>
-              <li data-filter=".filter-app">Mpp</li>
-              <li data-filter=".filter-app">Mtx</li>
-              <li data-filter=".filter-card">Pra</li>
-              <li data-filter=".filter-card">Prb</li>
-              <li data-filter=".filter-card">Spp</li>
-              <li data-filter=".filter-card">Tpp</li>
-              <li data-filter=".filter-card">Vip</li>
-              <li data-filter=".filter-card">Vpa</li>
-              <li data-filter=".filter-card">Vpb</li>
-              <li data-filter=".filter-card">Xpp</li>
+              <li data-filter=".filter-cry">Cry</li>
+              <li data-filter=".filter-cyt">Cyt</li>
+              <li data-filter=".filter-gpp">Gpp</li>
+              <li data-filter=".filter-mcf">Mcf</li>
+              <li data-filter=".filter-mpf">Mpf</li>
+              <li data-filter=".filter-mpp">Mpp</li>
+              <li data-filter=".filter-mtx">Mtx</li>
+              <li data-filter=".filter-pra">Pra</li>
+              <li data-filter=".filter-prb">Prb</li>
+              <li data-filter=".filter-spp">Spp</li>
+              <li data-filter=".filter-tpp">Tpp</li>
+              <li data-filter=".filter-vip">Vip</li>
+              <li data-filter=".filter-vpa">Vpa</li>
+              <li data-filter=".filter-vpb">Vpb</li>
+              <li data-filter=".filter-xpp">Xpp</li>
             </ul>
           </div>
         </div>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="400">
 
-          <div>
           <a href="" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/app.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -249,11 +253,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
-        </div>
+          </div></a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-cry">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/cry.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -262,10 +265,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-cyt">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/cyt.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -274,10 +277,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-gpp">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/gpp.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -286,10 +289,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-mcf">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/xpp.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -298,10 +301,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div></a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-mpf">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/mpf.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -310,10 +313,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-mpp">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/mpp.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -322,10 +325,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-mtx">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/mtx.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -334,10 +337,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-pra">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/pra.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -346,10 +349,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-prb">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/prb.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -358,10 +361,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div></a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-spp">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/xpp.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -370,10 +373,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tpp">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/tpp.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -382,10 +385,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-vip">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/vip.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -394,10 +397,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-vpa">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/vpa.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -406,10 +409,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-vpb">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/vpb.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -418,10 +421,10 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div> </a>
 
           <a href="portfolio-details.html" title="More Details">
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-xpp">
             <div class="portfolio-wrap">
               <img src="/static/assets/img/portfolio/xpp.jpeg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -430,7 +433,7 @@
                 </div>
               </div>
             </div>
-          </div> <i class="bx bx-link"></i></a>
+          </div></a>
       </div>
     </section><!-- End Portfolio Section -->
 
