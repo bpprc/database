@@ -179,6 +179,7 @@ def categorize_database(request, category=None):
              name__istartswith=category).order_by('name')
          }
     return render(request, 'database/category_display_update.html', context)
+    # return render(request, 'portfolio-details.html', context)
 
 
 def database(request):
