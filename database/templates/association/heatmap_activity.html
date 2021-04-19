@@ -61,6 +61,8 @@ rect {
 
 </style>
 
+<link href="{% static 'data/correlationCoefficients.csv' %}" rel="stylesheet">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
@@ -98,7 +100,7 @@ rect {
 
     svg.call(tip);
 
-d3.csv("correlationCoefficients.csv", format, function(error, data){
+d3.csv("{% static 'data/correlationCoefficients.csv' %}", format, function(error, data){
 
   var color = d3.scale.quantile()
                   .domain([-0.05, 0.105])
