@@ -36,7 +36,7 @@ console = Console()
 
 def homepage(request):
     # return render(request, 'database/about_page.html')
-    return render(request, 'index.html')
+    return render(request, 'newwebpage/about.html')
 
 
 def about_protein(request, category=None):
