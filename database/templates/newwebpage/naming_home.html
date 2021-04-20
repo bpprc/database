@@ -1,0 +1,22 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<div class="app-container col-lg-10 pt-5 mt-5 justify-content-center mx-auto">
+<div class="col-lg-10 pt-5 mt-5 pt-b mb-5 mx-auto">
+
+  <b><strong><h2>Naming Algorithm &nbsp;</h2></strong></b>
+
+  <form action="{% url 'run_naming_algorithm' %}" method="post">
+    {% csrf_token %}
+    <textarea name="fulltextarea" placeholder="Paste fasta sequence" rows="15" cols="80"></textarea>
+    <br></br>
+    <input type="submit" value="Submit!"/>
+
+  </form>
+
+</div>
+</div>
+
+{% endblock content %}

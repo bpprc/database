@@ -36,7 +36,7 @@ console = Console()
 
 def homepage(request):
     # return render(request, 'database/about_page.html')
-    return render(request, 'index.html')
+    return render(request, 'newwebpage/about.html')
 
 
 def about_protein(request, category=None):
@@ -179,6 +179,7 @@ def categorize_database(request, category=None):
              name__istartswith=category).order_by('name')
          }
     return render(request, 'database/category_display_update.html', context)
+    # return render(request, 'portfolio-details.html', context)
 
 
 def database(request):
@@ -212,7 +213,7 @@ def database(request):
          'form1': form1,
          'form2': form2,
          'form3': form3, }
-    return render(request, 'database/database.html', context)
+    return render(request, 'newwebpage/database.html', context)
 
 
 def search_database_home(request):
@@ -225,7 +226,7 @@ def search_database_home(request):
         See database.forms.py
     """
     form = SearchForm()
-    return render(request, 'database/search_page.html', {'form': form})
+    return render(request, 'newwebpage/search_page.html', {'form': form})
 
 
 def search_database(request):
@@ -513,7 +514,7 @@ def structures(request):
     context = \
         {'structures': structures}
 
-    return render(request, 'database/structures.html', context)
+    return render(request, 'newwebpage/structures.html', context)
 
 
 def structure_pdbid(request, pdbid=None):

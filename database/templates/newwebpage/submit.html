@@ -1,0 +1,153 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+{% block extrahead %}
+<!-- <style>
+.asteriskField {
+    display: none;
+}
+</style> -->
+{% endblock extrahead %}
+
+<div class="app-container col-lg-12 pt-5 mt-5 justify-content-center mx-auto">
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+
+<div class="container">
+  <div class="row">
+    <div class="lead">
+      <div> <h1 class="text-center">Naming request form</h1></div>
+  <br>
+  <br>
+  <br>
+  <div> <h3 class="text-left"> Proteins will only be named if they are derived from a bacterium and satisfy one of the following criteria </h3>
+  <br>
+  <ul>
+  <h5> <li> Have >95% identity to an existing named protein (or)</li> </h5>
+  <h5> <li> Have demonstrated activity against an invertebrate organism</li></h5>
+  </ul>
+  </br>
+  <p><b>Note: The official name will be assigned only by the committee</p></b>
+<p class="text-danger">* required field</p>
+</div>
+<br>
+<br>
+  {% crispy form %}
+
+{% endblock content %}
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+{% block extrajs %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<script type="text/javascript" src="{% static 'database/js/sweetalert.min.js' %}"> </script>
+
+<script>
+// $(function() {
+//   $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' target='_blank'> Where can I find taxonid?</a>")
+// });
+// $("id_public_or_private").update("New text");
+</script>
+
+<script>
+$(function() {
+  $('').append("<a href='#'> class='glyphicon glyphicon-plus'</a>")
+});
+</script>
+
+<!-- <script>
+$(function() {
+    $('input[name="sourcebacterium"]').change(function(obj) {
+    console.log($(this).val());
+    if ($(this).val() === 'True') {
+        $('#id_sourcebacterium_textbox').parent().parent().show();
+        $("#id_bacterium_textbox").text("Name of source bacterium (ideally taxonid)");
+    } else {
+      $('#id_sourcebacterium_textbox').parent().parent().hide();
+      $("#id_bacterium_textbox").text("Enter details of source organism in comments box below");
+    }
+  });
+  $('#id_sourcebacterium_textbox').parent().parent().hide();
+});
+</script> -->
+
+<script>
+function setBacteriumState(val) {
+  if (val === 'True') {
+      $('#id_bacterium_textbox').parent().parent().show();
+      $("#div_id_bacterium_textbox").find('label').text("Name of source bacterium (ideally taxon id)");
+      if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length == 0) {
+        $('#div_id_bacterium_textbox').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' class='taxonid-hint' target='_blank'> Where can I find taxon id?</a>")
+      } else {
+        $('#div_id_bacterium_textbox').find('.taxonid-hint').show();
+      }
+
+  } else {
+    $('#id_bacterium_textbox').parent().parent().show();
+    $("#div_id_bacterium_textbox").find('label').text("Enter details of source organism in comments box below");
+    if ($('#div_id_bacterium_textbox').find('.taxonid-hint').length > 0) {
+    $('#div_id_bacterium_textbox').find('.taxonid-hint').hide();
+    swal("The BPPRC does not normally assign names to proteins that are not of bacterial origin.  If you wish to make a special case for your sequence, please explain in the Comments box below!");
+  }
+  }
+}
+$(function() {
+    $('input[name="bacterium"]').change(function(obj) {
+    console.log($(this).val());
+    setBacteriumState($(this).val());
+
+  });
+  $('#id_bacterium_textbox').parent().parent().show();
+  setBacteriumState('True');
+});
+</script>
+
+
+
+<script>
+$(function() {
+    $('input[name="partnerprotein"]').change(function(obj) {
+    console.log($(this).val());
+    if ($(this).val() === 'True') {
+        $('#id_partnerprotein_textbox').parent().parent().show();
+    } else {
+      $('#id_partnerprotein_textbox').parent().parent().hide();
+    }
+  });
+  $('#id_partnerprotein_textbox').parent().parent().hide();
+});
+</script>
+
+
+<script type="text/javascript">
+
+  $('.js-captcha-refresh').click(function (evt) {
+      evt.preventDefault();
+      $.getJSON("/captcha/refresh/", function (result) {
+          $('.captcha').attr('src', result['image_url']);
+          $('#id_captcha_0').val(result['key'])
+      });
+  });
+
+
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  });
+
+</script>
+
+<script>
+$(function() {
+  document.getElementById('id_terms_condition').label = 'Your tip has been submitted!';
+  $("#div_id_terms_condition").find('label').text("Enter details of source organism in comments box below");
+});
+</script>
+
+{% endblock %}

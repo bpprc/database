@@ -1,0 +1,45 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+<main id="main">
+
+<div class="app-container col-lg-10 pt-5 mt-5 justify-content-center mx-auto">
+
+<div class="col-lg-10 pt-5 mt-5 pt-b mb-5 mx-auto">
+
+<form method="post" action="/search_database/">
+  {% csrf_token %}
+
+       {{ form.search_term | as_crispy_field }}
+       {{ form.search_fields | as_crispy_field }}
+
+      <button type="submit" class="btn btn-primary" > Search </button>
+</form>
+
+<br>
+<br>
+<p class="lead">As well as searching the database by current protein name, the pull down menu also allows you to search just the holotypes (those proteins ending in “1”), &nbsp; to search for a given accession number or to search the structure database for a particular protein. There is also the option of searching using old names for a protein.</p>
+
+</div>
+</div>
+{% endblock content %}
+</main><!-- End #main -->
+
+
+
+{% block extrahead %}
+<style>
+
+.asteriskField {
+    display: none;
+}
+
+</style>
+{% endblock extrahead %}
+
+{% block extrajs %}
+
+{% endblock extrajs %}

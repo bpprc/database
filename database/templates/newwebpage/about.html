@@ -1,0 +1,61 @@
+{% extends "newwebpage/base.html" %}
+{% block content %}
+{% load static %}
+
+{% include "newwebpage/front-page.html" %}
+
+<!-- ======= About Us Section ======= -->
+<section id="about" class="about">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2>About Us</h2>
+    </div>
+
+    <div class="row content">
+      <div class="col-lg-12" data-aos="fade-up" data-aos-delay="150">
+        <p>
+          The pesticidal protein database is part of the Bacterial Pesticidal Protein Resource Center (<a href="target="_blank" www.bpprc.org">www.bpprc.org<a/>). This database is intended to replace and extend the old Bacillus thuringiensis toxin nomenclature site.           The database currently contains proteins listed in the Bt nomenclature site but with new mnemonics to reflect the assignment of proteins to different homology groups. New bacteria-derived proteins with pesticidal properties have also been added. This site allows users to find the best matches within the database to their own sequence. Database sequences can be downloaded and analysed in various ways.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section><!-- End About Us Section -->
+
+<!-- ======= Services Section ======= -->
+<section id="funding" class="funding">
+  <div class="container">
+
+    <div class="section-title" data-aos="fade-up">
+      <h2>Funding</h2>
+      <p>This project is supported by the <a href="https://www.nsf.gov/" target="_blank">National Science Foundation I/UCRC</a>, the <a href="https://www.iucrc-camtech.org/" target="_blank">Center for Arthropod Management Technologies</a>, under Grant Nos. IIP-1338775 and 1821914, and by industry partners.</p>
+    </div>
+  </div>
+</section><!-- End Services Section -->
+
+<!-- ======= Services Section ======= -->
+<section id="cite" class="cite">
+  <div class="container">
+
+    <div class="section-title" data-aos="fade-up">
+      <h2>Citing the nomenclature</h2>
+      Crickmore, N., Berry, C., Panneerselvam, S., Mishra, R., Connor, T. R., & Bonning, B. C. (2020). A structure-based nomenclature for Bacillus thuringiensis and other bacteria-derived pesticidal proteins. Journal of invertebrate pathology, 107438.<a href="https://doi.org/10.1016/j.jip.2020.107438" target="_blank"> DOI</a></p>
+    </div>
+  </div>
+</section><!-- End Services Section -->
+
+
+<div class="container pt-5 mt-5">
+{% include "newwebpage/logo.html" %}
+</div>
+
+
+{% endblock content %}
+
+
+
+{% block extrahead %}
+<style>
+
+</style>
+{% endblock extrahead %}

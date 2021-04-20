@@ -24,7 +24,7 @@ from django.contrib.admin.options import get_content_type_for_model
 from django.forms import TextInput, Textarea
 from Bio import Entrez
 
-Entrez.email = 'sureshcbt@gmail.com'
+Entrez.email = 'bpprc.database@gmail.com'
 
 
 # https://blog.askesis.pl/post/2019/02/django-admin-inline.html
@@ -83,13 +83,22 @@ class PesticidalProteinDatabaseResource(resources.ModelResource):
     for handling Django models.
     """
     class Meta:
-        model = PesticidalProteinDatabase
-        exclude = ('id', 'uploaded', 'fastasequence_file')
+        model = PesticidalProteinPrivateDatabase
+        skip_unchanged = True
+        report_skipped = True
+        exclude = ('id',)
+        import_id_fields = ('name', 'oldname', 'othernames',            'accession', 'year',
+                            'sequence', 'uploaded', 'fastasequence_file', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication')
 
 
 class PesticidalProteinPrivateDatabaseResource(resources.ModelResource):
     class Meta:
         model = PesticidalProteinPrivateDatabase
+        skip_unchanged = True
+        report_skipped = True
+        exclude = ('id',)
+        import_id_fields = ('name', 'oldname', 'othernames',            'accession', 'year',
+                            'sequence', 'uploaded', 'fastasequence_file', 'bacterium', 'taxonid', 'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication')
 
 
 # https://stackoverflow.com/questions/45028975/django-import-export-cannot-exclude-id-field-during-import-keyerror-uid
@@ -188,12 +197,6 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
 
     accession_availability.allow_tags = True
     accession_availability.description = 'Accession Available in NCBI'
-
-    # def get_changeform_initial_data(self, request):
-    #     return {'admin_user': request.user.id}
-    #
-    # def make_public(self, request, queryset):
-    #     queryset.update(public=True)
 
 
 class PesticidalProteinHiddenSequenceAdmin(admin.ModelAdmin):

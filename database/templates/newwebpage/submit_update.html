@@ -1,0 +1,262 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+
+<div class="app-container col-lg-10 pt-5 mt-5 justify-content-center mx-auto">
+<div class="col-lg-10 pt-5 mt-5 pt-b mb-5 mx-auto">
+
+  <h1 class="text-center list-unstyled"> <ul> Naming</h1>
+  <br>
+  <br>
+  <br>
+  <h3> Proteins will only get a name if they are derived from a bacterium and satisfies one of the criteria </h3>
+  <br>
+  <h5> <li> Have >95% identity to an existing named protein (or)</li> </h5>
+  <h5> <li> Have demonstrated activity against a target pest organism</li></ul> </h5>
+  <br>
+  <br>
+
+  <form action="{% url 'submit' %}" method="POST">
+    {% csrf_token %}
+    {{ formset.management_form }}
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="id_submittersname">Submitters Name</label>
+      <input type="text" name="submittersname" class="form-control" id="id_submittersname" placeholder="Nancy Sanders">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="id_submittersemail">Submitters Email</label>
+      <input type="text" name="submittersemail" class="form-control" id="id_submittersemail" placeholder="Email">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-10">
+      <label for="id_name">Current Protein Name</label>
+      <input type="text" name="name" class="form-control" id="id_name" placeholder="CryE1">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="id_year">Year</label>
+      <input type="text" name="year" class="form-control" id="id_year" placeholder="2020">
+    </div>
+</div>
+  <div class="form-row">
+    <div class="form-group col-md-1">
+      <label for="id_bacterium_0" class="col-form-label  requiredField">
+                Bacterium<span class="asteriskField">*</span> </label>
+      <label for="id_id_bacterium_0_1">Yes</label>
+      <input type="radio" name="bacterium" id="id_id_bacterium_0_1" value="True">
+
+      <label for="id_id_bacterium_0_2">No</label>
+      <input type="radio"  name="bacterium" id="id_id_bacterium_0_2" value="False">
+    </div>
+    <div div="div_id_bacterium_textbox" class="form-group col-md-6">
+      <label for="id_bacterium_textbox">Bacterium Name</label>
+      <div>
+      <input type="text" class="form-control" id="id_bacterium_textbox">
+    </div>
+    </div>
+    <div id="div_id_taxonid" class="form-group col-md-4">
+      <label for="id_taxonid">Taxonid</label>
+      <div>
+      <input type="text" class="form-control" id="id_taxonid">
+    </div>
+    </div>
+  </div>
+<div class="form-row">
+  <div id="div_id_accession" class="form-group col-md-4">
+    <label for="id_accession">Accession Number</label>
+    <input type="text" class="form-control" id="id_accession" placeholder="046395991">
+  </div>
+</div>
+<div id="div_id_dnasequence" class="form-group">
+  <label for="id_dnasequence">DNA Sequence</label> </br>
+  <textarea name="dnasequence" cols="100" rows="10"> </textarea>
+</div>
+<div id="div_id_proteinsequence" class="form-group">
+  <label for="id_proteinsequence">Protein Sequence</label> </br>
+  <textarea name="proteinsequence" cols="100" rows="10"> </textarea>
+</div>
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label for="inputCity">Partner Protein Name</label>
+    <input type="text" class="form-control" id="inputCity">
+  </div>
+</div>
+<input type="hidden" id="id_toxicto-TOTAL_FORMS" value=1 />
+<div id="div_id_toxicto" class="form-group dynamic-rows">
+  <label for="id_toxicto">Toxic to</label>
+  <div class="input-group">
+  <input type="text" class="form-control" id="id_toxicto" placeholder="" name="toxicto">
+  <div class="input-group-append">
+    <button class="btn btn-success add-form-row">+</button>
+  </div>
+  </div>
+</div>
+<div class="form-group">
+  <label for="inputAddress2">PDB Code</label>
+  <input type="text" class="form-control" id="inputAddress2" placeholder="5KUC">
+</div>
+<div class="form-group">
+  <label for="inputAddress2">Publication</label> </br>
+  <textarea name="dnasequence" cols="100" rows="10"> </textarea>
+</div>
+<div class="form-group">
+  <label for="inputAddress2">Comments</label> </br>
+  <textarea name="dnasequence" cols="100" rows="10"> </textarea>
+</div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+</div>
+</div>
+
+
+{% endblock content %}
+
+{% block extrahead %}
+<style>
+
+textarea {
+  width: 100%;
+}
+
+</style>
+{% endblock extrahead %}
+
+
+{% block extrajs %}
+<script>
+$(function() {
+  $('#div_id_taxonid').append("<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi' target='_blank'> Where can I find taxonid?</a>")
+});
+</script>
+
+
+<script>
+$(function() {
+    $('input[name="sourcebacterium"]').change(function(obj) {
+    console.log($(this).val());
+    if ($(this).val() === 'True') {
+        $('#id_sourcebacterium_textbox').parent().parent().show();
+    } else {
+      $('#id_sourcebacterium_textbox').parent().parent().hide();
+    }
+  });
+  $('#id_sourcebacterium_textbox').parent().parent().hide();
+});
+</script>
+
+<script>
+$(function() {
+    $('input[name="bacterium"]').change(function(obj) {
+    console.log($(this).val());
+    if ($(this).val() === 'True') {
+        $('#id_bacterium_textbox').parent().parent().show();
+        $('#id_taxonid').parent().parent().show();
+    } else {
+      $('#id_bacterium_textbox').parent().parent().show();
+      $('#id_taxonid').parent().parent().hide();
+      swal("The BPPRC does not normally assign names to proteins that are not of bacterial origin.  If you wish to make a special case for your sequence, please explain in the Comments box below!");
+    }
+  });
+  $('#id_bacterium_textbox').parent().parent().show();
+  $('#id_taxonid').parent().parent().hide();
+});
+</script>
+
+
+<script>
+$(function() {
+    $('input[name="partnerprotein"]').change(function(obj) {
+    console.log($(this).val());
+    if ($(this).val() === 'True') {
+        $('#id_partnerprotein_textbox').parent().parent().show();
+    } else {
+      $('#id_partnerprotein_textbox').parent().parent().hide();
+    }
+  });
+  $('#id_partnerprotein_textbox').parent().parent().hide();
+});
+</script>
+
+<script type="text/javascript">
+
+  $('.js-captcha-refresh').click(function (evt) {
+      evt.preventDefault();
+      $.getJSON("/captcha/refresh/", function (result) {
+          $('.captcha').attr('src', result['image_url']);
+          $('#id_captcha_0').val(result['key'])
+      });
+  });
+
+
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  });
+
+</script>
+
+
+<script type='text/javascript'>
+function updateElementIndex(el, prefix, ndx) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+    if (el.id) el.id = el.id.replace(id_regex, replacement);
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
+}
+function cloneMore(selector, prefix) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    newElement.find('input').each(function() {
+        var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    newElement.find('label').each(function() {
+        var forValue = $(this).attr('for');
+        if (forValue) {
+          forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+          $(this).attr({'for': forValue});
+        }
+    });
+    total++;
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.dynamic-rows:not(:last)');
+    conditionRow.find('.btn.add-form-row')
+    .removeClass('btn-success').addClass('btn-danger')
+    .removeClass('add-form-row').addClass('remove-form-row')
+    .html('<i class="fa fa-minus"></i>');
+    return false;
+}
+function deleteForm(prefix, btn) {
+    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+    if (total > 1){
+        btn.closest('.dynamic-rows').remove();
+        var forms = $('.dynamic-rows');
+        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i=0, formCount=forms.length; i<formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, prefix, i);
+            });
+        }
+    }
+    return false;
+}
+$(document).on('click', '.add-form-row', function(e){
+    e.preventDefault();
+    cloneMore('.dynamic-rows:last', 'toxicto');
+    return false;
+});
+$(document).on('click', '.remove-form-row', function(e){
+    e.preventDefault();
+    deleteForm('toxicto', $(this));
+    return false;
+});
+</script>
+
+
+{% endblock %}

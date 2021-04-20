@@ -1,0 +1,240 @@
+{% extends "newwebpage/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+
+<!-- ======= Portfolio Section ======= -->
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5">
+<section id="database" class="portfolio">
+  <div class="container">
+
+    <div class="section-title" data-aos="fade-up">
+      <h2>Structural Classes</h2>
+      <p>Click to view all the proteins currently in each class.</p>
+    </div>
+
+    <div class="row" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-lg-12 d-flex justify-content-center">
+        <ul id="portfolio-flters">
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-app">App</li>
+          <li data-filter=".filter-cry">Cry</li>
+          <li data-filter=".filter-cyt">Cyt</li>
+          <li data-filter=".filter-gpp">Gpp</li>
+          <li data-filter=".filter-mcf">Mcf</li>
+          <li data-filter=".filter-mpf">Mpf</li>
+          <li data-filter=".filter-mpp">Mpp</li>
+          <li data-filter=".filter-mtx">Mtx</li>
+          <li data-filter=".filter-pra">Pra</li>
+          <li data-filter=".filter-prb">Prb</li>
+          <li data-filter=".filter-spp">Spp</li>
+          <li data-filter=".filter-tpp">Tpp</li>
+          <li data-filter=".filter-vip">Vip</li>
+          <li data-filter=".filter-vpa">Vpa</li>
+          <li data-filter=".filter-vpb">Vpb</li>
+          <li data-filter=".filter-xpp">Xpp</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="400">
+
+      <a href="/categorize_database_app" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/app.jpeg' %}" class="img-fluid" alt="">
+
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">App</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="/categorize_database_cry" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-cry">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/cry.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Cry</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_cyt" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-cyt">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/cyt.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Cyt</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_gpp" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-gpp">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/gpp.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Gpp</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_xpp" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-mcf">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/xpp.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Mcf</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="/categorize_database_mpf" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-mpf">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/mpf.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Mpf</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_mpp" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-mpp">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/mpp.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Mpp</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_mtx" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-mtx">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/mtx.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Mtx</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_pra" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-pra">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/pra.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Pra</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_prb" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-prb">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/prb.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Prb</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div></a>
+
+      <a href="/categorize_database_xpp" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-spp">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/xpp.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Spp</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_tpp" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-tpp">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/tpp.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Tpp</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_vip" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-vip">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/vip.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Vip</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_vpa" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-vpa">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/vpa.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Vpa</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_vpb" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-vpb">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/vpb.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Vpb</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div> </a>
+
+      <a href="/categorize_database_xpp" title="More Details">
+      <div class="col-lg-4 col-md-6 portfolio-item filter-xpp">
+        <div class="portfolio-wrap">
+          <img src="{% static 'assets/img/portfolio/xpp.jpeg' %}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <h4 style="color:black; font-size: 60px;">Xpp</h4>
+            <div class="portfolio-links">
+            </div>
+          </div>
+        </div>
+      </div></a>
+  </div>
+</section><!-- End Portfolio Section -->
+</div>
+
+{% endblock content %}

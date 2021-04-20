@@ -1,0 +1,169 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>BPPRC</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link rel="icon" type="text/css" href="{% static 'assets/img/favicon.png' %}">
+  <link rel="apple-touch-icon" type="text/css" href="{% static 'assets/img/apple-touch-icon.png' %}">
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/icofont/icofont.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/owl.carousel/assets/owl.carousel.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/venobox/venobox.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/aos/aos.css' %}">
+
+
+  <!-- Template Main CSS File -->
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+
+  <!-- =======================================================
+  * Template Name: Vesperr - v2.2.1
+  * Template URL: https://bootstrapmade.com/vesperr-free-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center">
+
+      <div class="logo mr-auto">
+        <h1 class="text-light"><a href="homepage"><span>Home</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+      </div>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li class="drop-down"><a href="#index.html">About</a>
+            <ul>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#funding">Funding</a></li>
+              <li><a href="#cite">Cite</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="">Database</a>
+            <ul>
+              <li><a href="#database">Structural Classes</a></li>
+              <li><a href="/search_database_home/">Search by Name</a></li>
+              <li><a href="/structures/">Protein Structures</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="">BestMatchFinder</a>
+            <ul>
+              <li><a href="/bestmatchfinder_home/">Search by sequence</a></li>
+              <li><a href="/bestmatchfinder_database/">Pairwise comparision</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="">Submit your sequence for naming</a>
+            <ul>
+              <li><a href="/submit/">Submission form</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="">Links</a>
+            <ul>
+              <li><a target="_blank" href="http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/">Old Bt nomenclature site</a></li>
+              <li><a target="_blank" href="www.bpprc.org">BPPRC</a></li>
+              <li><a target="_blank" href="/old_name_new_name/">Old name/New name table</a></li>
+              <li><a target="_blank" href="/github_home/">GitHub</a></li>
+              <li><a target="_blank" href="/statistics/">Statistics</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="">FAQs</a>
+            <ul>
+              <li><a href="#faq">Frequently asked questions</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="">Feedback</a>
+            <ul>
+              <li><a href="#">Feedback form</a></li>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="">Cart</a>
+            <ul>
+              <li><a href="#">Download or analyse specific sequences</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-12">
+            {% block content %}
+
+            {% endblock content %}
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="row d-flex align-items-center">
+        <div class="col-lg-6 text-lg-left text-center">
+          <div class="copyright">
+            &copy; Copyright <strong>BPPRC</strong>. All Rights Reserved
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+          </nav>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script type="text/javascript" src="{% static 'assets/vendor/jquery/jquery.min.js' %}"> </script>
+  <script type="text/javascript" src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"> </script>
+  <script type="text/javascript" src="{% static 'assets/vendor/jquery.easing/jquery.easing.min.js' %}"> </script>
+  <script type="text/javascript" src="{% static 'assets/vendor/php-email-form/validate.js' %}"> </script>
+  <script type="text/javascript" src="{% static 'assets/vendor/waypoints/jquery.waypoints.min.js' %}"> </script>
+  <script type="text/javascript" src="{% static 'assets/vendor/counterup/counterup.min.js' %}"> </script>
+  <script type="text/javascript" src="{% static 'assets/vendor/owl.carousel/owl.carousel.min.js' %}"> </script>
+  <script type="text/javascript" src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"> </script>
+  <script type="text/javascript" src="{% static 'assets/vendor/venobox/venobox.min.js' %}"> </script>
+  <script type="text/javascript" src="{% static 'assets/vendor/aos/aos.js' %}"> </script>
+
+
+  <!-- Template Main JS File -->
+  <script type="text/javascript" src="{% static 'assets/js/main.js' %}"> </script>
+
+
+</body>
+
+</html>

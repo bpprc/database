@@ -23,7 +23,7 @@ def bestmatchfinder_home(request):
     """This loads the bestmatchfinder homepage."""
 
     form = SequenceForm()
-    return render(request, 'bestmatchfinder/best_match_finder.html', {'form': form})
+    return render(request, 'newwebpage/best_match_finder.html', {'form': form})
 
 
 def run_needle_server(request):
@@ -101,7 +101,7 @@ def celery_task_status(request, task_id):
 def bestmatchfinder_database(request):
     """This loads the bestmatchfinder homepage."""
     form = SearchDatabaseForm()
-    return render(request, 'bestmatchfinder/best_match_finder_database.html', {'form': form})
+    return render(request, 'newwebpage/best_match_finder_database.html', {'form': form})
 
 
 def bestmatchfinder_database_sequence_run(request):
@@ -153,6 +153,6 @@ def bestmatchfinder_database_sequence_run(request):
                 'align': align
             }
 
-            return render(request, 'bestmatchfinder/needle1.html', context)
-        return render(request, 'bestmatchfinder/best_match_finder_database.html', {'form': form})
+            return render(request, 'newwebpage/needle.html', context)
+        return render(request, 'newwebpage/best_match_finder_database.html', {'form': form})
     return HttpResponseRedirect('/bestmatchfinder_database/')

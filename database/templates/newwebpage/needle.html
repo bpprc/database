@@ -1,0 +1,20 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+
+<div class="app-container col-lg-10 pt-5 mt-5 justify-content-center mx-auto">
+  <div class="col-lg-10 pt-5 mt-5 pt-b mb-5 mx-auto">
+    <pre> {{ align }} </pre>
+  </div>
+</div>
+
+{% endblock content %}
