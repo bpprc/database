@@ -1,0 +1,105 @@
+{% extends "newwebpage/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<div class="container" >
+  <div class="row">
+    <div class="col-12" class="lead">
+<h2>Download or analyse specific sequences</h4>
+<br>
+<h4>Database sequences can be added to the cart via the <a href="{% url 'search_database_home' %}">Database/Search by name page</a>. You own sequences can be added using the form below </h4>
+</br>
+</br>
+
+			<a href="{% url 'clear_session_database' %}" > Clear Session </a>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+						<th scope="col">
+              <a href="{% url 'clear_session_database' %}"  class="fa fa-trash"></a>
+            </th>
+            <th scope="col">Name</th>
+            <th scope="col">Oldname</th>
+          </tr>
+        </thead>
+				{% for protein in proteins %}
+				{% if protein.name in selected_groups %}
+        <tbody>
+          <tr>
+            <td>
+						<a href="/remove_cart/{{ protein.id }}" class="fa fa-trash"></a>
+            </td>
+            <td> {{ protein.name }} </td>
+            <td>{{ protein.oldname }}</td>
+      </tbody>
+			{% endif %}
+			{% endfor %}
+      </table>
+
+</br>
+</br>
+						<a href="{% url 'clear_session_user_data' %}" > Clear Session </a>
+			      <table class="table table-bordered table-hover">
+			        <thead>
+			          <tr>
+									<th scope="col">
+			              <a href="{% url 'clear_session_user_data' %}"  class="fa fa-trash"></a>
+			            </th>
+			            <th scope="col">Name</th>
+			          </tr>
+			        </thead>
+							{% for record in userdata %}
+			        <tbody>
+			          <tr>
+			            <td>
+									<a href="/user_data_remove/{{ record.id }}" class="fa fa-trash"></a>
+			            </td>
+			            <td> {{ record.name }} </td>
+				      </tbody>
+							{% endfor %}
+				      </table>
+							<a href="{% url 'download_sequences' %}"> Download sequences </a>
+
+</br>
+</br>
+<p><h4> Paste or upload user sequences in fasta format</h4> </p>
+>Name <br>
+MDNHKLIPYTRECVIKHNASER...<br>
+<br>
+<br>
+	{% crispy userform %}
+
+
+</br>
+<h4> Submit the sequences for the dendogram analysis </h4>
+</br>
+{% crispy analysisform %}
+</div>
+</div>
+</div>
+</br>
+</br>
+</br>
+</br>
+</div>
+</div>
+
+{% endblock content %}
+
+{% block extrajs %}
+
+<style>
+h3 {text-align: center;}
+</style>
+
+<script>
+$(function() {
+  $('#div_id_userdata').append("<a>User upload fasta headers are truncated to 10 characters</a>")
+});
+</script>
+
+{% endblock extrajs %}
