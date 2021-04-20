@@ -48,11 +48,10 @@ def trigger_email_bpprc_SSL_status():
     There is a new feedback in the database page. Please check the bpprc site SSL certification status. It appears not secure'''
 
     send_mail(
-        subject="New Feedback for the database",
+        subject="BPPRC SSL status",
         message=sequence_message,
         from_email='bpprc.database@gmail.com',
-        recipient_list=['sureshcbt@gmail.com',
-                        'n.crickmore@sussex.ac.uk', 'Berry@cardiff.ac.uk'],
+        recipient_list=['sureshcbt@gmail.com'],
         fail_silently=False,
     )
 
@@ -62,11 +61,10 @@ def trigger_email_camtech_SSL_status():
     There is a new feedback in the database page. Please check the camtech database site SSL certification status. It appears not secure'''
 
     send_mail(
-        subject="New Feedback for the database",
+        subject="camtech database SSL status",
         message=sequence_message,
         from_email='bpprc.database@gmail.com',
-        recipient_list=['sureshcbt@gmail.com',
-                        'n.crickmore@sussex.ac.uk', 'Berry@cardiff.ac.uk'],
+        recipient_list=['sureshcbt@gmail.com'],
         fail_silently=False,
     )
 
