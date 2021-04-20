@@ -1,4 +1,12 @@
+{% extends "newwebpage/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+
 <!-- ======= Portfolio Section ======= -->
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5">
 <section id="database" class="portfolio">
   <div class="container">
 
@@ -33,7 +41,7 @@
 
     <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="400">
 
-      <a href="categorize_database_app" title="More Details">
+      <a href="/categorize_database_app" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-app">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/app.jpeg' %}" class="img-fluid" alt="">
@@ -46,7 +54,7 @@
         </div>
       </div></a>
 
-      <a href="categorize_database_cry" title="More Details">
+      <a href="/categorize_database_cry" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-cry">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/cry.jpeg' %}" class="img-fluid" alt="">
@@ -58,7 +66,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_cyt" title="More Details">
+      <a href="/categorize_database_cyt" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-cyt">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/cyt.jpeg' %}" class="img-fluid" alt="">
@@ -70,7 +78,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_gpp" title="More Details">
+      <a href="/categorize_database_gpp" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-gpp">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/gpp.jpeg' %}" class="img-fluid" alt="">
@@ -82,7 +90,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_xpp" title="More Details">
+      <a href="/categorize_database_xpp" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-mcf">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/xpp.jpeg' %}" class="img-fluid" alt="">
@@ -94,7 +102,7 @@
         </div>
       </div></a>
 
-      <a href="categorize_database_mpf" title="More Details">
+      <a href="/categorize_database_mpf" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-mpf">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/mpf.jpeg' %}" class="img-fluid" alt="">
@@ -106,7 +114,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_mpp" title="More Details">
+      <a href="/categorize_database_mpp" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-mpp">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/mpp.jpeg' %}" class="img-fluid" alt="">
@@ -118,7 +126,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_mtx" title="More Details">
+      <a href="/categorize_database_mtx" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-mtx">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/mtx.jpeg' %}" class="img-fluid" alt="">
@@ -130,7 +138,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_pra" title="More Details">
+      <a href="/categorize_database_pra" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-pra">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/pra.jpeg' %}" class="img-fluid" alt="">
@@ -142,7 +150,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_prb" title="More Details">
+      <a href="/categorize_database_prb" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-prb">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/prb.jpeg' %}" class="img-fluid" alt="">
@@ -154,7 +162,7 @@
         </div>
       </div></a>
 
-      <a href="categorize_database_xpp" title="More Details">
+      <a href="/categorize_database_xpp" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-spp">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/xpp.jpeg' %}" class="img-fluid" alt="">
@@ -166,7 +174,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_tpp" title="More Details">
+      <a href="/categorize_database_tpp" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-tpp">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/tpp.jpeg' %}" class="img-fluid" alt="">
@@ -178,7 +186,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_vip" title="More Details">
+      <a href="/categorize_database_vip" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-vip">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/vip.jpeg' %}" class="img-fluid" alt="">
@@ -190,7 +198,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_vpa" title="More Details">
+      <a href="/categorize_database_vpa" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-vpa">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/vpa.jpeg' %}" class="img-fluid" alt="">
@@ -202,7 +210,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_vpb" title="More Details">
+      <a href="/categorize_database_vpb" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-vpb">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/vpb.jpeg' %}" class="img-fluid" alt="">
@@ -214,7 +222,7 @@
         </div>
       </div> </a>
 
-      <a href="categorize_database_xpp" title="More Details">
+      <a href="/categorize_database_xpp" title="More Details">
       <div class="col-lg-4 col-md-6 portfolio-item filter-xpp">
         <div class="portfolio-wrap">
           <img src="{% static 'assets/img/portfolio/xpp.jpeg' %}" class="img-fluid" alt="">
@@ -227,3 +235,6 @@
       </div></a>
   </div>
 </section><!-- End Portfolio Section -->
+</div>
+
+{% endblock content %}

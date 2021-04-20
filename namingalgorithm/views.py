@@ -21,14 +21,14 @@ def is_admin(user):
 @user_passes_test(is_admin)
 def naming_algorithm(request):
     """If the user is admin staff, show the naming html page."""
-    return render(request, 'namingalgorithm/naming_home.html')
+    return render(request, 'newwebpage/naming_home.html')
 
 
 def submit_home(request):
     context = {
         'form': UserSubmissionForm,
     }
-    return render(request, 'namingalgorithm/submit_update.html', context)
+    return render(request, 'newwebpage/submit_update.html', context)
 
 
 def submit(request):
@@ -41,7 +41,7 @@ def submit(request):
             # print("formset", formset)
             form.save()
 
-            return render(request, 'namingalgorithm/view.html', {'form': form})
+            return render(request, 'newwebpage/view.html', {'form': form})
         # else:
         #     print(form.errors)
         #     print("Error in form")
@@ -51,7 +51,7 @@ def submit(request):
     #     formset = ToxicToFormSet()
     # helper = ToxicFormSetHelper()
 
-    return render(request, 'namingalgorithm/submit.html', {'form': form})
+    return render(request, 'newwebpage/submit.html', {'form': form})
 
 
 def run_align(request):

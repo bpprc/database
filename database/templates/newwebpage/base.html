@@ -25,6 +25,7 @@
   <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/owl.carousel/assets/owl.carousel.min.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/venobox/venobox.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/aos/aos.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'database/css/chosen.min.css' %}">
 
 
   <!-- Template Main CSS File -->
@@ -39,22 +40,30 @@
 
   {% block extrahead %}{% endblock %}
 
+{% include "newwebpage/navbar.html" %}
+
 </head>
 
 <body>
 
-{% include "newwebpage/navbar.html" %}
+<!-- ======= Portfolio Details Section ======= -->
+<section id="portfolio-details" class="portfolio-details">
+  <div class="container">
 
-<main id="main">
-{% block content %}
+    <div class="row">
+      <div class="col-lg-12">
+        {% block content %}
 
-{% endblock content %}
+        {% endblock content %}
 
-</main><!-- End #main -->
+      </div>
 
-{% include "newwebpage/logo.html" %}
+    </div>
 
-{% include "newwebpage/footer.html" %}
+  </div>
+</section><!-- End Portfolio Details Section -->
+
+
 
 
 <!-- Vendor JS Files -->
