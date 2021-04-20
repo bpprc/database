@@ -43,6 +43,34 @@ There is a new feedback in the database page. Please check the database admin Fe
     )
 
 
+def trigger_email_bpprc_SSL_status():
+    sequence_message = '''Dear Dr.Neil Crickmore and Dr.Colin Berry,
+    There is a new feedback in the database page. Please check the bpprc site SSL certification status. It appears not secure'''
+
+    send_mail(
+        subject="New Feedback for the database",
+        message=sequence_message,
+        from_email='bpprc.database@gmail.com',
+        recipient_list=['sureshcbt@gmail.com',
+                        'n.crickmore@sussex.ac.uk', 'Berry@cardiff.ac.uk'],
+        fail_silently=False,
+    )
+
+
+def trigger_email_camtech_SSL_status():
+    sequence_message = '''Dear Dr.Neil Crickmore and Dr.Colin Berry,
+    There is a new feedback in the database page. Please check the camtech database site SSL certification status. It appears not secure'''
+
+    send_mail(
+        subject="New Feedback for the database",
+        message=sequence_message,
+        from_email='bpprc.database@gmail.com',
+        recipient_list=['sureshcbt@gmail.com',
+                        'n.crickmore@sussex.ac.uk', 'Berry@cardiff.ac.uk'],
+        fail_silently=False,
+    )
+
+
 def feedback():
     today = datetime.now().date()
     tomorrow = today + timedelta(1)
@@ -77,3 +105,23 @@ def run():
 #     time.sleep(60)
 #
 # schedule.every().day.at("17:25").do(check_new_submission())
+
+
+@shared_task
+def check_bpprc_ssl_status():
+    print("I check the SSL status of bpprc site")
+    import requests
+    try:
+        requests.get('https://www.bpprc.org', verify=True)
+    except SSLError:
+        trigger_email_bpprc_SSL_status()
+
+
+@shared_task
+def check_camtech_ssl_status():
+    print("I check the SSL status of bpprc site")
+    import requests
+    try:
+        requests.get('https://camtech-bpp.ifas.ufl.edu/', verify=True)
+    except SSLError:
+        trigger_email_camtech_SSL_status()
