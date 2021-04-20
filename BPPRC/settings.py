@@ -279,7 +279,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE') == 'True'
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = ['camtech-bpp.ifas.ufl.edu',
-                        'ifs-ent-camtech2.ifas.ufl.edu']
+                        'camtech-bpp.test.ifas.ufl.edu', 'ifs-ent-camtech2.ifas.ufl.edu']
 
 CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK')
 
