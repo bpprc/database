@@ -133,7 +133,7 @@ def statistics(request):
         {'category_prefixes': category_prefixes,
          'category_count': category_count}
 
-    return render(request, 'database/statistics.html', context)
+    return render(request, 'newwebpage/statistics.html', context)
 
 
 def _sorted_nicely(l, sort_key=None):
@@ -673,7 +673,7 @@ def view_cart(request):
                'selected_groups': values, 'userdata': userdata,
                'analysisform': analysisform, 'userform': userform}
 
-    return render(request, 'database/search_user_data_update.html', context)
+    return render(request, 'newwebpage/search_user_data_update.html', context)
 
 
 def clear_session_user_data(request):
@@ -1092,7 +1092,7 @@ def old_name_new_name(request):
     context = {'table1': table1,
                'table2': table2,
                }
-    return render(request, 'database/old_name_new_name.html', context)
+    return render(request, 'newwebpage/old_name_new_name.html', context)
 
 
 def export_new_name_table(request):

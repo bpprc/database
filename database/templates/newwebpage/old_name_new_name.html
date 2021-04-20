@@ -1,0 +1,76 @@
+{% extends "newwebpage/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<div class="container">
+  <div class="row">
+    <div class="table-responsive col-lg-6">
+	  	<a>Organized by new name </a>
+      <a href="{% url 'export_new_name_table' %}"> (Download)</a>
+      <table class="table table-bordered table-hover table-fit">
+        <thead>
+          <tr>
+            <th scope="col">2020 Name</th>
+            <th scope="col">1998 Name</th>
+            <th scope="col">Alternative Name</th>
+          </tr>
+        </thead>
+      {% for protein in table1 %}
+      <tbody>
+        <tr>
+          <td>{{ protein.name_2020 }}</td>
+          <td>{{ protein.name_1998 }}</td>
+          <td>{{ protein.alternative_name}}</td>
+        </tr>
+    </tbody>
+     {% endfor %}
+    </table>
+</div>
+<div class="table-responsive col-lg-6">
+  <a>Organized by old name </a>
+  <a href="{% url 'export_old_name_table' %}"> (Download)</a>
+  <table class="table table-bordered table-hover table-fit">
+    <thead>
+      <tr>
+        <th scope="col">1998 Name</th>
+        <th scope="col">2020 Name</th>
+        <th scope="col">Alternative Name</th>
+      </tr>
+    </thead>
+  {% for protein in table2 %}
+  <tbody>
+    <tr>
+      <td>{{ protein.name_1998 }}</td>
+      <td>{{ protein.name_2020 }}</td>
+      <td>{{ protein.alternative_name}}</td>
+    </tr>
+</tbody>
+ {% endfor %}
+</table>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock content %}
+
+
+
+{% block extrahead %}
+<style>
+
+.table-fit {
+    width: 1px;
+    white-space: nowrap;
+}
+
+</style>
+{% endblock extrahead %}
+
+
+
+{% block extrajs %}
+
+{% endblock extrajs %}
