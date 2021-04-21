@@ -28,7 +28,7 @@ def submit_home(request):
     context = {
         'form': UserSubmissionForm,
     }
-    return render(request, 'newwebpage/submit_update.html', context)
+    return render(request, 'newwebpage/submit.html', context)
 
 
 def submit(request):
