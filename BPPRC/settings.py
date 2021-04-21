@@ -115,9 +115,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.twitter',
+    # 'allauth.socialaccount.providers.twitter',
     # 'allauth.socialaccount.providers.yahoo',
     # 'allauth.socialaccount.providers.linkedin',
 ]
@@ -298,8 +298,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-LOGIN_URL = '/submit_login/'
-LOGIN_REDIRECT_URL = '/submit_login/'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/submit/'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_VERIFICATION = True
@@ -324,20 +324,28 @@ SOCIAL_AUTH_TWITTER_KEY = 'x2FGb9GkeaGFBTCFxU1VSDDdv'
 SOCIAL_AUTH_TWITTER_SECRET = 'cANYB7UKeTtq0FGYuyChwVROqpkV4vr6EMMit9sBUNiWrfJZyJ'
 
 
-# AWS
+# AWS US@entomology2021
 # EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
 # AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 # AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 # AWS_SES_REGION_NAME = os.environ.get('AWS_SES_REGION_NAME')
 # AWS_SES_REGION_ENDPOINT = os.environ.get('AWS_SES_REGION_ENDPOINT')
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('AWS_ACCESS_KEY_ID')
-EMAIL_HOST_PASSWORD = os.environ.get('AWS_SECRET_ACCESS_KEY')
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = '<bpprc.database@gmail.com>'
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = os.environ.get('AWS_ACCESS_KEY_ID')
+# EMAIL_HOST_PASSWORD = os.environ.get('AWS_SECRET_ACCESS_KEY')
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = '<bpprc.database@gmail.com>'
+
+# gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'bpprc.database@gmail.com'
+EMAIL_HOST_PASSWORD = 'US@entomology2021'
 
 # google reCAPTCHA
 RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
