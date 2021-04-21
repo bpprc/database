@@ -1,0 +1,22 @@
+{% extends "newwebpage/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+{% block card-body %}
+
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<div class="container">
+
+    <form method="POST">
+        {% csrf_token %}
+        <p>{% trans "Are you sure you want to delete the account" %} {{ object.email }}?</p>
+        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+    </form>
+    <br><p>{% trans "No, keep my account" %}</p>
+    <a href="/" class="btn btn-outline-primary">{% trans "Return to site" %}</a>
+
+{% endblock %}
+
+</div>
+</div>
