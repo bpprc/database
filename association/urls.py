@@ -19,5 +19,5 @@ urlpatterns = [
     path('keyword_confirm/<slug:name>/',
          views.keyword_confirm, name='keyword_confirm'),
     path('api', views.home, name='home'),
-
+    path('heatmap_activity', views.heatmap_activity, name='heatmap_activity'),
 ]

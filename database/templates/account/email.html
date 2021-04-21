@@ -1,12 +1,13 @@
-{% extends "base.html" %}
+{% extends "newwebpage/base.html" %}
 {% load static %}
 {% load i18n %}
 {% load account socialaccount %}
 {% load crispy_forms_tags %}
-
-{% block head_title %}{% trans "E-mail Addresses" %}{% endblock %}
-
 {% block content %}
+
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<div class="container">
+  
     <h1>{% trans "E-mail Addresses" %}</h1>
 {% if user.emailaddress_set.all %}
 <p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
@@ -74,3 +75,6 @@
 })();
 </script>
 {% endblock %}
+
+</div>
+</div>

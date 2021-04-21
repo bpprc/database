@@ -231,3 +231,7 @@ def home(request):
     return render(request, 'association/home_api.html', {
         'ip': geodata
     })
+
+
+def heatmap_activity(request):
+    return render(request, 'association/heatmap_activity.html')

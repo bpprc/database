@@ -50,7 +50,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'proteindatabase',
+            'NAME': 'proteindatabase_test',
             'USER': 'suresh',
             'PASSWORD': 'pannerselvam123',
             'HOST': 'localhost',
@@ -266,6 +266,10 @@ ADMIN_REORDER = [
     'clustalanalysis',
     'association',
     'sites',
+    'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
 ]
 
 # SESSION
@@ -279,15 +283,13 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
 CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE') == 'True'
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = ['camtech-bpp.ifas.ufl.edu',
-                        'ifs-ent-camtech2.ifas.ufl.edu']
+                        'camtech-bpp.test.ifas.ufl.edu', 'ifs-ent-camtech2.ifas.ufl.edu']
 
 CRISPY_TEMPLATE_PACK = os.environ.get('CRISPY_TEMPLATE_PACK')
 
 # All auth
-# ACCOUNT_EMAIL_REQUIRED = False
 # ACCOUNT_USERNAME_REQUIRED = True
 # ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
-# ACCOUNT_SESSION_REMEMBER = True
 # ACCOUNT_UNIQUE_EMAIL = True
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -300,8 +302,8 @@ LOGIN_URL = '/submit_login/'
 LOGIN_REDIRECT_URL = '/submit_login/'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-# ACCOUNT_EMAIL_VERIFICATION = True
-# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
@@ -311,6 +313,11 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_USERNAME_BLACKLIST = ["Neil", "Colin", "god", "admin"]
 ACCOUNT_USERNAME_MIN_LENGTH = 2
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_FORM_CLASS = 'extra.forms.SignupForm'
 # ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
 SOCIAL_AUTH_TWITTER_KEY = 'x2FGb9GkeaGFBTCFxU1VSDDdv'
