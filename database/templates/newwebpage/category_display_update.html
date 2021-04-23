@@ -1,0 +1,117 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center">
+      {% for description in descriptions %}
+      <h6>{{description.name}} : {{description.description}}</h6>
+      {% endfor %}
+    </div>
+
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<section id="" class="">
+<form action="search_database/add_cart/" id="analysis_form" method="POST">
+{% csrf_token %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+						<th scope="col">
+              <input type="checkbox" id="selectall" class="regular-checkbox"/>
+              <label for="selectall"> </label>
+            </th>
+            <th scope="col">Name</th>
+            <th scope="col">Old Name</th>
+            <th scope="col">Other Name</th>
+            <th scope="col">Accession Number</th>
+            <th scope="col">Year</th>
+            <th scope="col">Fasta Sequence</th>
+          </tr>
+        </thead>
+				{% for protein in proteins %}
+        {% if protein.public %}
+        <tbody>
+          <tr>
+            <td>
+                <input type="checkbox" name="name" class="regular-checkbox name" value="{{ protein.name }}" />
+            </td>
+            <td> <a href=protein_detail/{{ protein.name }}> {{ protein.name}}</td>
+            <td>{{ protein.oldname }}</td>
+            <td>{{ protein.othernames }}</td>
+            <td><a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a></td>
+						<td>{{ protein.year }}</td>
+            <!-- <td> <a href="https://www.rcsb.org/structure/{{ protein.pdbcode }}" target="_blank"> {{ protein.pdbcode }}</td> -->
+            <td><a href=download_single_sequence/{{ protein.name }}>Download</a></td>
+          </tr>
+      </tbody>
+      {% else %}
+      <tbody>
+        <tr>
+          <td>*</td>
+          <td>{{ protein.name}}</td>
+          <td>{{ protein.oldname }}</td>
+          <td>{{ protein.othernames }}</td>
+          <td><a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a></td>
+          <td>{{ protein.year }}</td>
+          <td></td>
+        </tr>
+    </tbody>
+      {% endif %}
+			{% endfor %}
+      </table>
+      <p>* not released </p>
+    </br>
+  </br>
+		<button type="submit" class="btn btn-primary" > Add to Cart </button>
+    <br>
+    <br>
+		<input type="button" class="btn btn-primary" value="Back" onclick="window.history.back()"> </input>
+
+  </form>
+</div>
+</div>
+</div>
+
+</br>
+</br>
+</section>
+</div>
+
+{% endblock content %}
+
+{% block extrajs %}
+
+<script type="text/javascript">
+	$(function () {
+	    // add multiple select / deselect functionality
+	    $("#selectall").click(function () {
+	        $('.name').attr('checked', this.checked);
+	    });
+
+	    // if all checkbox are selected, then check the select all checkbox
+	    // and viceversa
+	    $(".name").click(function () {
+
+	        if ($(".name").length == $(".name:checked").length) {
+	            $("#selectall").attr("checked", "checked");
+	        } else {
+	            $("#selectall").removeAttr("checked");
+	        }
+
+	    });
+	});
+</script>
+
+{% endblock %}
