@@ -37,8 +37,8 @@ def run_needle_server(request):
             context = {
                 'align': align
             }
-            return render(request, 'bestmatchfinder/needle.html', context)
-        return render(request, 'bestmatchfinder/best_match_finder.html', {'form': form})
+            return render(request, 'newwebpage/needle.html', context)
+        return render(request, 'newwebpage/best_match_finder.html', {'form': form})
     return HttpResponseRedirect('/bestmatchfinder_home/')
 
 
@@ -59,9 +59,9 @@ def run_needle_server_celery(request):
             context['task_status'] = task.status
             context['task'] = task.info
 
-            return render(request, 'bestmatchfinder/needle_processing.html', context)
+            return render(request, 'newwebpage/needle_processing.html', context)
 
-        return render(request, 'bestmatchfinder/best_match_finder.html', {'form': form})
+        return render(request, 'newwebpage/best_match_finder.html', {'form': form})
     return HttpResponseRedirect('/bestmatchfinder_home/')
 
 
@@ -77,15 +77,15 @@ def taskstatus_needle_celery(request, task_id):
         if task.status == 'SUCCESS':
             context['align'] = task.get()
             print(context)
-            return render(request, 'bestmatchfinder/needle.html', context)
+            return render(request, 'newwebpage/needle.html', context)
 
         elif task.status == 'PENDING':
             context['results'] = task
-            return render(request, 'bestmatchfinder/needle_processing.html', context)
+            return render(request, 'newwebpage/needle_processing.html', context)
 
         context['error'] = task
         # print(task)
-        return render(request, 'bestmatchfinder/needle_processing.html', context)
+        return render(request, 'newwebpage/needle_processing.html', context)
 
 
 def celery_task_status(request, task_id):

@@ -41,6 +41,9 @@ def submit(request):
         # formset = ToxicToFormSet(request.POST)
         # print(form)
         if form.is_valid():
+            print(request.user)
+            form.instance.submittersname = request.user
+            form.instance.submittersemail = request.email
             # print("formset", formset)
             form.save()
 
@@ -50,7 +53,8 @@ def submit(request):
         #     print("Error in form")
             # print("formset", formset)
     else:
-        form = UserSubmissionForm()
+        form = UserSubmissionForm(
+            initial={'submittersname': request.user, 'submittersemail': request.user.email})
     #     formset = ToxicToFormSet()
     # helper = ToxicFormSetHelper()
 

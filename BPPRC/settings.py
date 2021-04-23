@@ -266,10 +266,9 @@ ADMIN_REORDER = [
     'clustalanalysis',
     'association',
     'sites',
-    'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.google',
+    'auth'
+    'account',
+    'socialaccount',
 ]
 
 # SESSION
@@ -320,8 +319,8 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_FORM_CLASS = 'extra.forms.SignupForm'
 # ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
-SOCIAL_AUTH_TWITTER_KEY = 'x2FGb9GkeaGFBTCFxU1VSDDdv'
-SOCIAL_AUTH_TWITTER_SECRET = 'cANYB7UKeTtq0FGYuyChwVROqpkV4vr6EMMit9sBUNiWrfJZyJ'
+# SOCIAL_AUTH_TWITTER_KEY = 'x2FGb9GkeaGFBTCFxU1VSDDdv'
+# SOCIAL_AUTH_TWITTER_SECRET = 'cANYB7UKeTtq0FGYuyChwVROqpkV4vr6EMMit9sBUNiWrfJZyJ'
 
 
 # AWS US@entomology2021

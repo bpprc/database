@@ -178,7 +178,7 @@ def categorize_database(request, category=None):
          'descriptions': Description.objects.filter(
              name__istartswith=category).order_by('name')
          }
-    return render(request, 'database/category_display_update.html', context)
+    return render(request, 'newwebpage/category_display_update.html', context)
     # return render(request, 'portfolio-details.html', context)
 
 
@@ -466,7 +466,7 @@ def search_database(request):
         if cry_count == len(proteins):
             show_extra_data = True
 
-        return render(request, 'database/search_results.html', {'proteins': proteins, 'show_extra_data': show_extra_data, 'searches': searches})
+        return render(request, 'newwebpage/search_results.html', {'proteins': proteins, 'show_extra_data': show_extra_data, 'searches': searches})
     return HttpResponseRedirect('/search_database_home/')
 
 
@@ -501,7 +501,7 @@ def add_cart(request):
         previously_selected_cterminal.extend(selected_cterminal)
         request.session['list_cterminal'] = previously_selected_cterminal
 
-    return redirect("database")
+    return redirect("search_database_home")
 
 
 def structures(request):
@@ -734,7 +734,7 @@ def user_data(request):
         # print(form.errors)
 
     # return redirect("view_cart")
-    return render(request, 'database/search_user_data_update.html', form)
+    return render(request, 'newwebpage/search_user_data_update.html', form)
 
 
 @csrf_exempt
@@ -852,7 +852,7 @@ def download_data(request):
         'descriptions': Description.objects.order_by('name')
 
     }
-    return render(request, 'database/download_category.html', context)
+    return render(request, 'newwebpage/download_category.html', context)
 
 
 def download_single_sequence(request, proteinname=None):
@@ -874,7 +874,7 @@ def download_single_sequence(request, proteinname=None):
 def download_category_form(request):
 
     form = DownloadForm()
-    return render(request, 'database/download_form.html', form)
+    return render(request, 'newwebpage/download_form.html', form)
 
 
 def download_category(request, category=None):
@@ -915,7 +915,7 @@ def download_category(request, category=None):
             response['Content-Length'] = file.tell()
             return response
     form = DownloadForm()
-    return render(request, 'database/download_form.html', form)
+    return render(request, 'newwebpage/download_form.html', form)
 
 
 def category_form(request):
@@ -928,7 +928,7 @@ def category_form(request):
         'form2': form2,
         'form3': form3,
     }
-    return render(request, 'database/download_form.html', context)
+    return render(request, 'newwebpage/download_form.html', context)
 
 
 def category_download(request):
@@ -1082,7 +1082,7 @@ def protein_detail(request, name):
                'script': script, 'div': div
                }
 
-    return render(request, 'database/protein_detail.html', context)
+    return render(request, 'newwebpage/protein_detail.html', context)
 
 
 def old_name_new_name(request):
