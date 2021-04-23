@@ -7,7 +7,7 @@
 <section>
 <div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
 <div class="container">
-<h3> Download the fasta sequences by categories </h3>
+<h3> Click the boxes below to download all the proteins in the specified class(es).</h3>
 </br>
 {% crispy form1 %}
 </div>
@@ -15,14 +15,16 @@
 
 <div class="container">
 <div>
-<h3> Download the threedomain sequences </h3>
+<h3> Download all the threedomain sequences </h3>
 </br>
 {% crispy form2 %}
+</br>
 </div>
 </div>
 
 <div class="container">
 <div>
+  </br>
 <h3> Download all the holotype sequences </h3>
 </br>
 {% crispy form3 %}
@@ -36,6 +38,7 @@
 	</h4>
 </div>
 </div>
+</br>
 
 {% endblock content %}
 

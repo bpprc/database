@@ -101,7 +101,7 @@ class SearchForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['search_term'].error_messages = {
             'required': 'Please type a protein name'}
-        self.fields['search_term'].label = 'Search term'
+        self.fields['search_term'].label = ''
 
         validators = [v for v in self.fields['search_term'].validators if not isinstance(
             v, MinLengthValidator)]
