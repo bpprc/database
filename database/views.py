@@ -1082,7 +1082,7 @@ def protein_detail(request, name):
                'script': script, 'div': div
                }
 
-    return render(request, 'database/protein_detail.html', context)
+    return render(request, 'newwebpage/protein_detail.html', context)
 
 
 def old_name_new_name(request):
