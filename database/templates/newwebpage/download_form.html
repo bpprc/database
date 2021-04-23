@@ -1,0 +1,82 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+<section>
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<div class="container">
+<h3> Download the fasta sequences by categories </h3>
+</br>
+{% crispy form1 %}
+</div>
+</div>
+
+<div class="container">
+<div>
+<h3> Download the threedomain sequences </h3>
+</br>
+{% crispy form2 %}
+</div>
+</div>
+
+<div class="container">
+<div>
+<h3> Download all the holotype sequences </h3>
+</br>
+{% crispy form3 %}
+</div>
+</div>
+
+</section>
+<div class="lead">
+  <h4>
+		Individual proteins can be added to the Cart via <a href="/search_database_home/">Search page </a> or via clicking on the above icons. Proteins in the Cart can be supplemented with your own sequences and then either downloaded or sent for analysis.
+	</h4>
+</div>
+</div>
+
+{% endblock content %}
+
+{% block extrahead %}
+<style>
+
+.form-check {
+  font-size: 16px;
+  line-height: 2;
+}
+</style>
+
+{% endblock extrahead %}
+
+
+{% block extrajs %}
+<script>
+$('input[type=checkbox]').click((e) => {
+  const form = $(e.target).closest('form');
+  if ($(e.target).val() === 'all') {
+    const checkAll = $(e.target).prop('checked');
+    form.find('input[type=checkbox]').prop('checked', checkAll);
+  } else {
+    if (form.find('input[type=checkbox]:not([value=all]):not(:checked)').length === 0) {
+      form.find('input[type=checkbox][value=all]').prop('checked', true);
+    } else {
+      form.find('input[type=checkbox][value=all]').prop('checked', false);
+    }
+  }
+  if ($(e.target).val() === 'full_length') {
+    const checkAll = $(e.target).prop('checked');
+    form.find('input[type=checkbox]').prop('checked');
+  } else {
+    if (form.find('input[type=checkbox]:not([value=full_length]):not(:checked)').length === 0) {
+      form.find('input[type=checkbox][value=full_length]').prop('checked', true);
+    } else {
+      form.find('input[type=checkbox][value=full_length]').prop('checked', false);
+    }
+  }
+
+});
+</script>
+
+{% endblock extrajs %}

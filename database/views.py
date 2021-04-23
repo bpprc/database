@@ -874,7 +874,7 @@ def download_single_sequence(request, proteinname=None):
 def download_category_form(request):
 
     form = DownloadForm()
-    return render(request, 'database/download_form.html', form)
+    return render(request, 'newwebpage/download_form.html', form)
 
 
 def download_category(request, category=None):
@@ -928,7 +928,7 @@ def category_form(request):
         'form2': form2,
         'form3': form3,
     }
-    return render(request, 'database/download_form.html', context)
+    return render(request, 'newwebpage/download_form.html', context)
 
 
 def category_download(request):
