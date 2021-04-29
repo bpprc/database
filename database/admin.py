@@ -310,8 +310,7 @@ class DescriptionAdmin(ImportExportModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         if change:
-            change_message = '{} - {} - {}'.format(
-                obj.submittersname, obj.description)
+            change_message = 'Added description'
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
