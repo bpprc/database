@@ -6,6 +6,7 @@ import textwrap
 from django.shortcuts import render, HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 from naming_package import run_data
 from database.models import PesticidalProteinDatabase, PesticidalProteinPrivateDatabase
 from namingalgorithm.models import UserSubmission
@@ -24,6 +25,7 @@ def naming_algorithm(request):
     return render(request, 'newwebpage/naming_home.html')
 
 
+@login_required
 def submit_home(request):
     context = {
         'form': UserSubmissionForm,
@@ -31,6 +33,7 @@ def submit_home(request):
     return render(request, 'newwebpage/submit.html', context)
 
 
+@login_required
 def submit(request):
     """Submit the sequence for the naming purpose through user form."""
     if request.method == "POST":
@@ -38,6 +41,9 @@ def submit(request):
         # formset = ToxicToFormSet(request.POST)
         # print(form)
         if form.is_valid():
+            print(request.user)
+            form.instance.submittersname = request.user
+            form.instance.submittersemail = request.email
             # print("formset", formset)
             form.save()
 
@@ -47,7 +53,8 @@ def submit(request):
         #     print("Error in form")
             # print("formset", formset)
     else:
-        form = UserSubmissionForm()
+        form = UserSubmissionForm(
+            initial={'submittersname': request.user, 'submittersemail': request.user.email})
     #     formset = ToxicToFormSet()
     # helper = ToxicFormSetHelper()
 

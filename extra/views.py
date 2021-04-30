@@ -2,6 +2,8 @@ from django.shortcuts import render
 from extra.forms import FeedbackForm
 from extra.models import Feedback
 from django.http import HttpResponse
+from allauth.account.utils import complete_signup
+from allauth.account import app_settings
 
 
 def feedback_home(request):
@@ -57,6 +59,16 @@ def page_not_found(request, exception):
 def server_error(request):
     """ Return server error."""
     return render(request, 'extra/500.html', status=500)
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+            user = form.save(request)
+            # Added this!
+            complete_signup(
+                request, user, app_settings.EMAIL_VERIFICATION, "/")
 
 
 # def faq(request):

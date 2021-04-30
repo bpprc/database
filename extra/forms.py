@@ -2,7 +2,6 @@ from extra.models import Feedback
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML, ButtonHolder
-from django.utils.translation import gettext_lazy as _
 
 
 RECAPTCHA_PUBLIC_KEY = "6Lc-HfMUAAAAALHi0-vkno4ntkJvLW3rAF-d5UXT"
@@ -94,10 +93,11 @@ class FeedbackForm(forms.ModelForm):
 
 
 class SignupForm(forms.Form):
-    first_name = forms.CharField(max_length=30, label=_("First name"))
-    last_name = forms.CharField(max_length=30, label=_("Last name"))
+    first_name = forms.CharField(max_length=30, label='First Name')
+    last_name = forms.CharField(max_length=30, label='Last Name')
 
     def signup(self, request, user):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.save()
+        return user

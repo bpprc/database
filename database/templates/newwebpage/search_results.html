@@ -1,0 +1,223 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 portfolio-info">
+{% if proteins %}
+<p><h4>Click the boxes to select full length proteins or individual domains for further analysis (via cart)</h4></p>
+</br>
+	<form action="add_cart/" id="analysis_form" method="POST">
+  {% csrf_token %}
+
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					{% if show_extra_data %}
+					<th>
+						<input type="checkbox" id="selectall" class="regular-checkbox column-class1 column-class2" onchange="cbChange(this)"/>
+						<label for="selectall">Full length
+					</th>
+					{% else %}
+					<th>
+						<input type="checkbox" id="selectall" class="regular-checkbox column-class2"/>
+						<label for="selectall">
+					</th>
+					{% endif %}
+						<th>Name </th>
+						<th>Old Name </th>
+						<th>Other Name </th>
+						<th>Accession Number </th>
+						<th>Year </th>
+							{% if show_extra_data %}
+							<th>
+								<input type="checkbox" id="domain1" class="regular-checkbox" />
+								<label for="domain1">N terminal
+								</th>
+								<th>
+									<input type="checkbox" id="domain2" class="regular-checkbox" />
+									<label for="domain2">Middle domain
+								</th>
+								<th>
+									<input type="checkbox" id="domain3" class="regular-checkbox" />
+									<label for="domain3">C terminal
+								</th>
+							{% endif %}
+					</tr>
+					{% for protein in proteins %}
+					<tr>
+						<td>
+							<input type="checkbox" name="name" class="regular-checkbox name" value="{{ protein.name }}" />
+						</td>
+            <td> <a href=/protein_detail/{{ protein.name }}> {{ protein.name}}</td>
+						<td>{{ protein.oldname }}</td>
+						<td>{{ protein.othernames }}</td>
+						<td>
+							<a href=" https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a>
+						</td>
+						<td>{{ protein.year }}</td>
+						{% if protein.show_extra_data %}
+						<td> <input type="checkbox" name="nterminal" class="regular-checkbox nterminal" value="{{protein.name}}"/> N terminal </td>
+
+						<td> <input type="checkbox" name="middle" class="regular-checkbox middle" value="{{protein.name}}"/> middle domain </td>
+
+						<td> <input type="checkbox" name="cterminal" class="regular-checkbox cterminal" value="{{protein.name}}"/> C terminal </td>
+						{% endif %}
+					</tr>
+      {% endfor %}
+
+
+			</thead>
+			</table>
+			<br>
+				<button type="submit" class="btn btn-primary" > Add to Cart </button>
+				<br>
+					<br>
+						<br>
+							<br>
+							<input type="button" class="btn btn-primary" value="Back" onclick="window.history.back()" />
+
+</form>
+
+</div>
+{% else %}
+			<p> No results found </p>
+{% endif %}
+
+{% endblock content %}
+
+
+{% block extrahead %}
+<style>
+
+.regular-checkbox input {
+  vertical-align: middle;
+  position: relative;
+  bottom: 2px;
+}
+
+</style>
+
+{% endblock extrahead %}
+
+{% block extrajs %}
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
+
+<script type="text/javascript">
+
+  $(function () {
+      // add multiple select / deselect functionality
+      $("#selectall").click(function () {
+          $('.name').attr('checked', this.checked);
+					$('.nterminal').attr('checked', false);
+					$('#domain1').attr('checked', false);
+					$('#domain2').attr('checked', false);
+					$('#domain3').attr('checked', false);
+					$('.cterminal').attr('checked', false);
+					$('.middle').attr('checked', false);
+      });
+
+      $(".name").click(function () {
+
+          if ($(".name").length == $(".name:checked").length) {
+              $("#selectall").attr("checked", "checked");
+          } else {
+              $("#selectall").removeAttr("checked");
+          }
+					var parent = $(this).parent().parent();
+					parent.find('.nterminal').attr('checked', false);
+					parent.find('.cterminal').attr('checked', false);
+					parent.find('.middle').attr('checked', false);
+
+      });
+  });
+
+</script>
+<script>
+
+  $(function () {
+      // add multiple select / deselect functionality
+      $("#domain1").click(function () {
+					$('.nterminal').attr('checked', this.checked);
+					$('.name').attr('checked', false);
+					$('#selectall').attr('checked', false);
+      });
+
+      $(".nterminal").click(function () {
+
+          if ($(".nterminal").length == $(".nterminal:checked").length) {
+              $("#domain1").attr("checked", "checked");
+          } else {
+              $("#domain1").removeAttr("checked");
+          }
+					var parent = $(this).parent().parent();
+					parent.find('.name').attr('checked', false);
+
+
+      });
+  });
+
+</script>
+
+<script>
+
+  $(function () {
+      // add multiple select / deselect functionality
+      $("#domain2").click(function () {
+					$('.middle').attr('checked', this.checked);
+					$('.name').attr('checked', false);
+					$('#selectall').attr('checked', false);
+      });
+
+      $(".middle").click(function () {
+
+          if ($(".middle").length == $(".middle:checked").length) {
+              $("#domain2").attr("checked", "checked");
+          } else {
+              $("#domain2").removeAttr("checked");
+          }
+					var parent = $(this).parent().parent();
+					parent.find('.name').attr('checked', false);
+
+      });
+  });
+
+</script>
+
+<script>
+
+  $(function () {
+      // add multiple select / deselect functionality
+      $("#domain3").click(function () {
+					$('.cterminal').attr('checked', this.checked);
+					$('.name').attr('checked', false);
+					$('#selectall').attr('checked', false);
+      });
+
+      $(".cterminal").click(function () {
+
+          if ($(".cterminal").length == $(".cterminal:checked").length) {
+              $("#domain3").attr("checked", "checked");
+          } else {
+              $("#domain3").removeAttr("checked");
+          }
+					var parent = $(this).parent().parent();
+					parent.find('.name').attr('checked', false);
+
+      });
+  });
+
+</script>
+
+<script>
+function cbChange(obj) {
+    /* var cbs = document.getElementsByClassName("column-class2");
+    for (var i = 0; i < cbs.length; i++) {
+        cbs[i].checked = false;
+    }
+    obj.checked = true; */
+}
+</script>
+
+{% endblock extrajs %}
