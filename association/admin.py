@@ -8,6 +8,14 @@ class AssociationResource(resources.ModelResource):
     class Meta:
         model = Association
 
+    class Meta:
+        model = Association
+        skip_unchanged = True
+        report_skipped = True
+        exclude = ('id',)
+        import_id_fields = ('name', 'partnerprotein', 'partnerprotein_textbox', 'target_order', 'target_species', 'activity', 'taxonid', 'lc50',
+                            'units', 'percentage_mortality', 'publication', 'other_citations', 'life_stage', 'instar', 'assay_material', 'assay_method')
+
 
 class AssociationAdmin(ImportExportModelAdmin):
     resource_class = AssociationResource

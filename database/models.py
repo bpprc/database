@@ -24,14 +24,14 @@ class OldnameNewnameTableLeft(models.Model):
     """
 
     # 2020 Nomenclature based names i.e. New Name of the proteins
-    name_2020 = models.CharField(max_length=250, blank=True, null=False)
+    name_2020 = models.CharField(max_length=250, null=True)
 
     # 1998 Nomenclature based names i.e. Old Name of the proteins
-    name_1998 = models.CharField(max_length=250, blank=True, null=False)
+    name_1998 = models.CharField(max_length=250, null=True)
 
     # Several different names of the same protein mentioned in the literature by various authors i.e. multiple names for the protein
     # Specially before the Nomenclature system (1998)
-    alternative_name = models.CharField(max_length=250, blank=True, null=False)
+    alternative_name = models.CharField(max_length=250, null=True)
 
     def __str__(self):
         return self.name
@@ -48,14 +48,14 @@ class OldnameNewnameTableRight(models.Model):
     """
 
     # 1998 Nomenclature based names i.e. Old Name of the proteins
-    name_1998 = models.CharField(max_length=250, blank=True, null=False)
+    name_1998 = models.CharField(max_length=250, null=True)
 
     # 2020 Nomenclature based names i.e. New Name of the proteins
-    name_2020 = models.CharField(max_length=250, blank=True, null=False)
+    name_2020 = models.CharField(max_length=250, null=True)
 
     # Several different names of the same protein mentioned in the literature by various authors i.e. multiple names for the protein
     # Specially before the Nomenclature system (1998)
-    alternative_name = models.CharField(max_length=250, blank=True, null=False)
+    alternative_name = models.CharField(max_length=250, null=True)
 
     def __str__(self):
         return self.name
@@ -77,35 +77,35 @@ class StructureDatabase(models.Model):
     """
 
     # 2020 Nomenclature based names i.e. New Name of the proteins
-    name = models.CharField(max_length=25, blank=True, null=False)
+    name = models.CharField(max_length=25, null=True)
 
     # 1998 Nomenclature based names i.e. Old Name of the proteins
-    oldname = models.CharField(max_length=75, blank=True, null=False)
+    oldname = models.CharField(max_length=75, null=True)
 
     # National Center for Biotechnology Information (NCBI) accession number
     # https://www.ncbi.nlm.nih.gov/genbank/sequenceids/
     # https://www.ncbi.nlm.nih.gov/genbank/acc_prefix/
-    accession = models.CharField(max_length=75, blank=True, null=False)
+    accession = models.CharField(max_length=75, null=True)
 
     # Protein Data Bank identifier
     # https://proteopedia.org/wiki/index.php/PDB_code
     # https://www.rcsb.org/pages/about-us/index
     pdbid = ArrayField(models.CharField(
-        max_length=1000, blank=True), default=list)
+        max_length=1000, null=True), default=list)
 
     # NCBI PubMed id
     # https://www.ncbi.nlm.nih.gov/pmc/pmctopmid/
-    pubmedid = models.CharField(max_length=75, blank=True, null=False)
+    pubmedid = models.CharField(max_length=75, null=True)
 
     # PDB id released year
-    year = models.CharField(max_length=5, blank=True, null=False)
+    year = models.CharField(max_length=5, null=True)
 
     # This field provides whether the protein sequence is modified or not
     # If modified "Yes" otherwise "No"
     modified = models.CharField(max_length=100, choices=CHOICES, default="Yes")
 
     # Any other information related to the protein
-    comment = models.TextField(null=True, blank=True)
+    comment = models.TextField(null=True)
 
     def __str__(self):
         return self.name
