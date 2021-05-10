@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from extra.forms import FeedbackForm
-from extra.models import Feedback
+from extra.models import Feedback, Links
 from django.http import HttpResponse
 from allauth.account.utils import complete_signup
 from allauth.account import app_settings
@@ -71,5 +71,8 @@ def signup(request):
                 request, user, app_settings.EMAIL_VERIFICATION, "/")
 
 
-# def faq(request):
-#     return render(request, 'newwebpage/faq.html')
+def links(request):
+    context = \
+        {'links': Links.objects.order_by('name')
+         }
+    return render(request, 'newwebpage/links.html', context)

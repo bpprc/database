@@ -1,0 +1,38 @@
+{% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<!-- ======= F.A.Q Section ======= -->
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5 mx-auto">
+<section id="faq" class="faq">
+  <div class="container">
+
+    <div class="section-title" data-aos="fade-up">
+      <h2>External Links</h2>
+    </div>
+
+    <div class="row d-flex align-items-stretch" data-aos="fade-up" >
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Link</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+      {% for link in links %}
+      <tbody>
+        <tr>
+          <td>{{ link.name }}</td>
+          <td> <a href="{{ link.link }}">Link</a></td>
+          <td>{{ link.description  }}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+      </table>
+    </div><!-- End F.A.Q Item-->
+  </div>
+</section><!-- End F.A.Q Section -->
+</div>
+{% endblock content %}

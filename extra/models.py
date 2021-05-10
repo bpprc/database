@@ -16,3 +16,17 @@ class Feedback(models.Model):
     class Meta:
         verbose_name = 'Feedback'
         verbose_name_plural = "Feedback"
+
+
+class Links(models.Model):
+    """
+    """
+    name = models.CharField(max_length=500)
+    description = models.TextField(default="None")
+    link = models.TextField()
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name

@@ -9,4 +9,6 @@ urlpatterns = [
          name='github_home'),
     path('faq/', views.faq,
          name='faq'),
+    path('links/', views.links,
+         name='links'),
 ]
