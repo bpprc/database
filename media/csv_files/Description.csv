@@ -1,17 +1,17 @@
-id,name,description
-1,App,"Pesticidal proteins with a predominately Alpha helical structure, e.g. those previously known as Cry6"
-2,Cry,Mnemonic retained for 3-domain proteins
-3,Cyt,Mnemonic retained for Cyt related proteins
-4,Gpp,"Pesticidal proteins with homology to the aeGerolysins, e.g. those previously known as Cry34"
-5,Mcf,Pesticidal proteins related to Mcf proteins
-6,Mpf,Pesticidal proteins that have homology to the Membrane Attack Complex / Perforin superfamily
-7,Mpp,Pesticidal proteins with homology to the Etx_Mtx2 family
-8,Mtx,Pesticidal protein related to Mtx1 proteins
-9,Pra,Proteins related to the Photorhabdus Insect-Related toxin A component
-10,Prb,Proteins related to the Photorhabdus Insect-Related toxin B component
-11,Spp,Pesticidal protein related to sphaericolysin
-12,Tpp,Pesticidal proteins with homology to the Toxin_10/Bin family
-13,Vip,Mnemonic retained for Vip3 related proteins
-14,Vpa,Pesticidal proteins related to Vip2 catalytic component
-15,Vpb,"Pesticidal proteins related to the binding partner of the Vip1/2 binary toxin, previously known as Vip1 and to the structurally-related proteins previously known as Vip4"
-16,Xpp,A holding name for pesticidal proteins with currently unclassified homology groups
+name,description
+App,"Pesticidal proteins with a predominately Alpha helical structure, e.g. those previously known as Cry6"
+Cry,Mnemonic retained for 3-domain proteins
+Cyt,Mnemonic retained for Cyt related proteins
+Gpp,"Pesticidal proteins with homology to the aeGerolysins, e.g. those previously known as Cry34"
+Mcf,Pesticidal proteins related to Mcf proteins
+Mpf,Pesticidal proteins that have homology to the Membrane Attack Complex / Perforin superfamily
+Mpp,Pesticidal proteins with homology to the Etx_Mtx2 family
+Mtx,Pesticidal protein related to Mtx1 proteins
+Pra,Proteins related to the Photorhabdus Insect-Related toxin A component
+Prb,Proteins related to the Photorhabdus Insect-Related toxin B component
+Spp,Pesticidal protein related to sphaericolysin
+Tpp,Pesticidal proteins with homology to the Toxin_10/Bin family
+Vip,Mnemonic retained for Vip3 related proteins
+Vpa,Pesticidal proteins related to Vip2 catalytic component
+Vpb,"Pesticidal proteins related to the binding partner of the Vip1/2 binary toxin, previously known as Vip1 and to the structurally-related proteins previously known as Vip4"
+Xpp,A holding name for pesticidal proteins with currently unclassified homology groups

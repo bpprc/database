@@ -1,13 +1,13 @@
-id,name,subject,email,message,uploaded
-3,Odessa Govan,How To Get More Traffic to ufl.edu in 2021,odessa.govan29@yahoo.com,"Hi,
+name,subject,email,message
+Odessa Govan,How To Get More Traffic to ufl.edu in 2021,odessa.govan29@yahoo.com,"Hi,
 
 We're wondering if you've considered taking the written content from ufl.edu and converting it into videos to promote on Youtube? It's another method of generating traffic.
 
 There's a 14 day free trial available to you at the following link: https://www.vidnami.com/c/Vaughanv-vn-freetrial
 
 Regards,
-Odessa",2021-03-31 22:53:31
-2,Stefani Diaz,Database usage license,sdiazva@gwdg.de,"Dear members of the BPPRC,
+Odessa"
+Stefani Diaz,Database usage license,sdiazva@gwdg.de,"Dear members of the BPPRC,
 We are developing a tool for the analysis of pesticidal proteins in accordance to the new nomenclature. One of the features we would like to implement requires the use of the sequences from the BPPRC database for a phylogenetic analysis. As our plan is to distribute the tool as a conda package and in a Github repository we would like to know if you agree to such use and distribution of the database sequences, furthermore, is there any type of license associated to the data?
 All the best,
 Stefani Diaz
@@ -15,7 +15,7 @@ ____________
 Stefani Diaz Valerio
 Genomic and Applied Microbiology
 Institute of Microbiology and Genetics
-Georg-August-University Göttingen",2021-01-29 03:16:00
-1,Suresh,sureshcbt@gmail.com,suresh.pannersel@ufl.edu,"Hello,
+Georg-August-University Göttingen"
+Suresh,sureshcbt@gmail.com,suresh.pannersel@ufl.edu,"Hello,
 
-This is a test message. This has to create a trigger email for the feedback.",2020-12-17 17:50:08
+This is a test message. This has to create a trigger email for the feedback."
