@@ -153,6 +153,6 @@ def bestmatchfinder_database_sequence_run(request):
                 'align': align
             }
 
-            return render(request, 'newwebpage/needle.html', context)
+            return render(request, 'newwebpage/two_sequence_needle.html', context)
         return render(request, 'newwebpage/best_match_finder_database.html', {'form': form})
     return HttpResponseRedirect('/bestmatchfinder_database/')
