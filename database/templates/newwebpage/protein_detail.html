@@ -13,7 +13,8 @@
 {% for protein in proteins %}
 <p><strong>Protein Name :</strong> &nbsp; {{ protein.name }} </p>
 <p><strong>Accession :</strong> &nbsp; <a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.accession }}" target="_blank"> {{ protein.accession }} </a></p>
-
+            <th scope="col"></th>
+<p><strong>Download: </strong> &nbsp; <a href=/download_single_sequence/{{ protein.name }}>Fasta Sequence</a></p>
 <p><strong>Length: </strong> &nbsp; {{ protein.get_sequence_length }} </p>
 
 <div class="column" style="word-break: break-all;"> <p> <strong> Sequence:  </strong> &nbsp; {{ protein.sequence|upper }} </p> </div>
