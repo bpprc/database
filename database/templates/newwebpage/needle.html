@@ -1,21 +1,65 @@
 {% extends "newwebpage/base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
-
 {% block content %}
 
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+        </style>
+        </head>
 
-<style>
-table, th, td {
-  border: 1px solid black;
-}
-</style>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h2>Best match results</h2>
+        <br>
+        <body>
+        <table class="table ">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Percentage Identity</th>
+              <th>Alignment</th>
+            </tr>
 
-<div class="app-container col-lg-10 pt-5 mt-5 justify-content-center mx-auto">
-  <div class="col-lg-10 pt-5 mt-5 pt-b mb-5 mx-auto">
-    <pre> {{ align }} </pre>
-  </div>
-</div>
-
-
+            {% for row in align %}
+              <tr>
+                <td>{{row.3}}</td>
+                <td>{{row.2}}</td>
+                <td><a href="#" class="view-sequence-link" data-index="{{forloop.counter}}">View alignment below</a></td>
+              </tr>
+            {% endfor %}
+          </thead>
+        </table>
+      <br> </br>
+      <br> </br
+      <br> </br>
+      <br> </br>
+        <div class="align-sequences">
+          {% for row in align %}
+            <div class="align-sequence" id="sequence-{{forloop.counter}}">
+              <pre>{{row.4}}</pre>
+            </div>
+          {% endfor %}
+        </div>
 {% endblock content %}
+
+
+{% block extrajs %}
+<script>
+  $(document).ready(function() {
+    $('.align-sequence').hide();
+    $('.view-sequence-link').click(function() {
+      $('.align-sequence').hide();
+      var sequenceIndex = $(this).attr('data-index')
+      $('#sequence-' + sequenceIndex).show();
+
+    })
+  })
+</script>
+{% endblock extrajs %}
