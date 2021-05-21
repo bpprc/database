@@ -1,69 +1,454 @@
-name,partnerprotein,partnerprotein_textbox,target_order,target_species,activity,taxonid,lc50,units,non_toxic,percentage_mortality,publication,other_citations,life_stage,instar,assay_material,assay_method,comment,data_entered_by
-Cry2Am1,No,,Diptera,Aedes aegypti,Yes,7159, , ,,20% mortality at 2µg/ml,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,,Neil Crickmore
-Cry2Ah1,No,,Diptera,Aedes aegypti,No,7159,"N/A, not toxic","N/A, not toxic",,,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
-Cry2Ad5,No,,Diptera,Aedes aegypti,No,7159,"N/A, not toxic","N/A, not toxic",,,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
-Cry2Ac11,No,,Diptera,Aedes aegypti,Yes,7159, , ,,50% mortality at 2µg/ml,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,,Neil Crickmore
-Cry2Ab29,No,,Diptera,Aedes aegypti,No,7159,"N/A, not toxic","N/A, not toxic",,,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
-Cry2Ab1,No,,Diptera,Aedes aegypti,No,7159,"N/A, not toxic","N/A, not toxic",,,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
-Cry2Ab4,No,,Diptera,Aedes aegypti,No,7159,"N/A, not toxic","N/A, not toxic",,,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
-Cry2Aa17,No,,Diptera,Aedes aegypti,No,7159,"N/A, not toxic","N/A, not toxic",,,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
-Cry2Aa2,No,,Diptera,Aedes aegypti,Yes,7159, , ,,65% mortality at 2µg/ml,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,,Neil Crickmore
-Cry73Ba1,No,,Lepidoptera,Spodoptera littoralis,No,7109,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
-Cry73Ba1,No,,Lepidoptera,Spodoptera frugiperda,No,7108,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
-Cry73Ba1,No,,Lepidoptera,Spodoptera exigua,No,7107,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
-Cry73Ba1,No,,Lepidoptera,Mamestra brassicae,No,55057,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
-Cry73Ba1,No,,Hemiptera,Myzus persicae,Yes,13164,32.7,µg/mL,, ,10.3390/toxins6113144,,Nymph,2nd Instar,Purified protein,Membrane feeding,,Ruchir and Suresh
-Cry32Wa1,No,,Lepidoptera,Helicoverpa armigera,No,29058,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
-Cry1Ba,No,,Hemiptera,Diaphorina citri,Yes,121845,~120,µg/mL,, ,10.3390/toxins11030173,,Adult,Not specified,Purified protein,Membrane feeding,,Ruchir and Suresh
-Cry1Ab,No,,Hemiptera,Diaphorina citri,Yes,121845,~120,µg/mL,, ,10.3390/toxins11030173,,Adult,Not specified,Purified protein,Membrane feeding,,Ruchir and Suresh
-Mpp51Aa2,No,,Lepidoptera,Spodoptera frugiperda,No,7108,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
-Mpp51Aa2,No,,Lepidoptera,Ostrinia nubilalis,No,29057,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
-Mpp51Aa2,No,,Lepidoptera,Heliothis virescens,No,7102,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
-Mpp51Aa2,No,,Lepidoptera,Helicoverpa zea,No,7113,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
-Mpp51Aa2,No,,Lepidoptera,Agrotis ipsilon,No,56364,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
-Mpp51Aa2,No,,Hemiptera,Lygus hesperus,Yes,30085,72.9,µg/mL,, ,10.1603/EC11207,,Nymph,Not specified,Purified protein,Membrane feeding,,Ruchir and Suresh
-Mpp51Aa2,No,,Coleoptera,Leptinotarsa decemlineata,Yes,7539, , ,,45.8+/- 4.2 % mortality at 26µg/cm2,10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,,Ruchir and Suresh
-Mpp51Aa2,No,,Coleoptera,Diabrotica virgifera virgifera,No,50390,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Surface contamination,,Ruchir and Suresh
-Mpp51Aa2,No,,Coleoptera,Diabrotica undecimpunctata,No,50387,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Surface contamination,,Ruchir and Suresh
-Mpp75Aa3,No,,Coleoptera,Diabrotica vergifera vergifera,Yes,50390, , ,, ,10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,significant stunting / mortality observed at 15.2 µg/cm2,Colin Berry
-Mpp75Aa3,No,,Coleoptera,Leptinotarsa decemlineata ,No,7539,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
-Mpp75Aa3,No,,Coleoptera,Diabrotica undecimpunctata howardi ,No,50388,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
-Mpp75Aa2,No,,Coleoptera,Diabrotica vergifera vergifera,Yes,50390, , ,, ,10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,significant stunting / mortality observed at 43.4 µg/cm2,Colin Berry
-Mpp75Aa2,No,,Coleoptera,Leptinotarsa decemlineata ,No,7539,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
-Mpp75Aa2,No,,Coleoptera,Diabrotica undecimpunctata howardi ,No,50388,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
-Mpp75Aa1,No,,Coleoptera,Diabrotica vergifera vergifera,Yes,50390, , ,, ,10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,significant stunting / mortality observed at 15.2 µg/cm2,Colin Berry
-Mpp75Aa1,No,,Coleoptera,Leptinotarsa decemlineata ,No,7539,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
-Mpp75Aa1,No,,Coleoptera,Diabrotica undecimpunctata howardi ,No,50388,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
-Mpp64Ba/Mpp64Ca,No,,Lepidoptera,Plutella xylostella,No,51655,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1128/AEM.01996-17,,Larvae,Not specified,Purified protein,Leaf-dip,no significant mortality at 300 µg/ml,Ruchir and Suresh
-Mpp64Ba/Mpp64Ca,No,,Lepidoptera,Ostrinia furnacalis,No,93504,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1128/AEM.01996-17,,Larvae,Not specified,Purified protein,Diet incorporation,no significant mortality at 300 µg/g,Ruchir and Suresh
-Mpp64Ba/Mpp64Ca,No,,Hemiptera,Sogatella furcifera,Yes,113103,2.14,µg/mL,, ,10.1128/AEM.01996-17,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Ruchir and Suresh
-Mpp64Ba/Mpp64Ca,No,,Hemiptera,Laodelphax striatellus,Yes,195883,3.15,µg/mL,, ,10.1128/AEM.01996-17,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Ruchir and Suresh
-Mpp64Ba/Mpp64Ca,No,,Coleoptera,Colaphellus bowringi,No,561076,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1128/AEM.01996-17,,Larvae,Not specified,Purified protein,Leaf-dip,no significant mortality at 300 µg/ml,Ruchir and Suresh
-Cyt1Aa,No,,Hemiptera,Acyrthosiphon pisum,Yes,7029, , ,,40% reduction in average weight compared to control group for doses of 125 μg/ml or higher,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
-Cry4Aa,No,,Hemiptera,Acyrthosiphon pisum,Yes,7029,70 to 100,µg/mL,,100% at 500 µg/mL,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
-Cry3Aa,No,,Hemiptera,Acyrthosiphon pisum,Yes,7029, , ,,60% at 500 µg/mL,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
-Cry1Ab,No,,Hemiptera,Acyrthosiphon pisum,Yes,7029, , ,,25% at 500 µg/mL,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
-Cry11Aa,No,,Hemiptera,Acyrthosiphon pisum,Yes,7029, , ,,100% at 500 µg/mL,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
-Cry11A,No,,Hemiptera,Macrosiphum euphorbiae,Yes,13131,,,,64% mortality at 350 µg/mL after 72 hours,10.1111/j.1570-7458.1995.tb02003.x,,Adult,Not applicable,Purified protein,Membrane feeding,,Neil Crickmore
-Cry3A,No,,Hemiptera,Macrosiphum euphorbiae,Yes,13131,,,,52% mortality at 360 µg/mL after 72 hours,10.1111/j.1570-7458.1995.tb02003.x,,Adult,Not applicable,Purified protein,Membrane feeding,,Neil Crickmore
-Cry1Ac,No,,Hemiptera,Macrosiphum euphorbiae,No,13131,"N/A, not toxic","N/A, not toxic",,,10.1111/j.1570-7458.1995.tb02003.x,,Adult,Not applicable,Purified protein,Membrane feeding,,Neil Crickmore
-Cry2Aa,No,,Hemiptera,Macrosiphum euphorbiae,Yes,13131,,,,93% mortality at 200 µg/mL after 72 hours,10.1111/j.1570-7458.1995.tb02003.x,,Adult,Not applicable,Purified protein,Membrane feeding,,Ruchir and Suresh
-Tpp78Ba1,No,,Hymenoptera,Apis mellifera,No,7460,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1093/jee/toaa261,,Adult,Not applicable,Purified protein,Diet incorporation,adult workers assayed; syrup and pollen paste diet incorporation,Colin Berry
-Tpp78Ba1,No,,Hymenoptera,Apis mellifera,No,7460,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1093/jee/toaa261,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
-Tpp78Ba1,No,,Lepidoptera,Plutella xylostella,No,51655,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1021/acs.jafc.9b07429,,Larvae,2nd Instar,Purified protein,Surface contamination,,Colin Berry
-Tpp78Ba1,No,,Hemiptera,Rhopalosiphum maidis,No,43146,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1021/acs.jafc.9b07429,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Colin Berry
-Tpp78Ba1,No,,Hemiptera,Laodelphax striatellus,Yes,195883,9.723,µg/ml,, ,10.1021/acs.jafc.9b07429,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Colin Berry
-Tpp78Ba1,No,,Hemiptera,Bemisia tabaci,No,7038,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1021/acs.jafc.9b07429,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Colin Berry
-Tpp78Ba1,No,,Coleoptera,Colaphellus bowringi,No,561076,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1021/acs.jafc.9b07429,,Larvae,1st Instar ,Purified protein,Surface contamination,,Colin Berry
-Tpp78Aa1,No,,Neuroptera,Chrysoperla sinica,No,413239,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1016/j.jip.2018.07.007,,Adult,Not applicable,Purified protein,Diet incorporation,no significant mortality at 600 µg/g,Ruchir and Suresh
-Tpp78Aa1,No,,Lepidoptera,Plutella xylostella,No,51655,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1016/j.jip.2018.07.007,,Adult,Not specified,Purified protein,Diet incorporation,no significant mortality at 600 µg/g,Ruchir and Suresh
-Tpp78Aa1,No,,Lepidoptera,Helicoverpa armigera,No,29058,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1016/j.jip.2018.07.007,,Adult,Not specified,Purified protein,Diet incorporation,no significant mortality at 600 µg/g,Ruchir and Suresh
-Tpp78Aa1,No,,Hemiptera,Nilaparvata lugens,Yes,108931,15.78,µg/mL,, ,10.1016/j.jip.2018.07.007,,Adult,Not applicable,Purified protein,Membrane feeding,,Ruchir and Suresh
-Tpp78Aa1,No,,Hemiptera,Laodelphax striatellus,Yes,195883,6.89,µg/mL,, ,10.1016/j.jip.2018.07.007,,Adult,Not applicable,Purified protein,Membrane feeding,,Ruchir and Suresh
-Tpp78Aa1,No,,Coleoptera,Colaphellus bowringi,No,561076,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1016/j.jip.2018.07.007,,Adult,Not specified,Purified protein,Not specified,no significant mortality at 600 µg/mL,Ruchir and Suresh
-Cry2Ab2,No,,Diptera,Culex pipiens,No,7175,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,,Colin Berry
-Cry2Ab2,No,,Diptera,Anopheles gambiae,Yes,7165,540,ng/ml,, ,10.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,,Colin Berry
-Cry2Ab2,No,,Diptera,Aedes aegypti,No,7159,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,,Colin Berry
-Cry2Aa,No,,Diptera,Culex pipiens,No,7175,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,Paper not clear which Cry2Aa variant is used,Colin Berry
-Cry2Aa,No,,Diptera,Anopheles gambiae,Yes,7165,110,ng/ml,, ,10.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,Paper not clear which Cry2Aa variant is used,Colin Berry
-Cry2Aa,No,,Diptera,Aedes aegypti,No,7159,"N/A, not toxic","N/A, not toxic",,"N/A, not toxic",10.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,Paper not clear which Cry2Aa variant is used,Colin Berry
+﻿Cry2Aa,No,,7159,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",0.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,Paper not clear which Cry2Aa variant is used,Colin Berry
+Cry2Aa,No,,7165,Yes,110,ng/ml, ,0.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,Paper not clear which Cry2Aa variant is used,Colin Berry
+Cry2Aa,No,,7175,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",0.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,Paper not clear which Cry2Aa variant is used,Colin Berry
+Cry2Ab2,No,,7159,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",0.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,,Colin Berry
+Cry2Ab2,No,,7165,Yes,540,ng/ml, ,0.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,,Colin Berry
+Cry2Ab2,No,,7175,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",0.1111/j.1574-6968.2011.02403.x ,,Larvae,3rd Instar,Purified protein,Addition to water,,Colin Berry
+Cry78Aa1,No,,561076,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1016/j.jip.2018.07.007,,Adult,Not specified,Purified protein,Not specified,no significant mortality at 600 µg/mL,Ruchir and Suresh
+Cry78Aa1,No,,195883,Yes,6.89,µg/mL, ,10.1016/j.jip.2018.07.007,,Adult,Not applicable,Purified protein,Membrane feeding,,Ruchir and Suresh
+Cry78Aa1,No,,108931,Yes,15.78,µg/mL, ,10.1016/j.jip.2018.07.007,,Adult,Not applicable,Purified protein,Membrane feeding,,Ruchir and Suresh
+Cry78Aa1,No,,29058,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1016/j.jip.2018.07.007,,Adult,Not specified,Purified protein,Diet incorporation,no significant mortality at 600 µg/g,Ruchir and Suresh
+Cry78Aa1,No,,51655,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1016/j.jip.2018.07.007,,Adult,Not specified,Purified protein,Diet incorporation,no significant mortality at 600 µg/g,Ruchir and Suresh
+Cry78Aa1,No,,413239,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1016/j.jip.2018.07.007,,Adult,Not applicable,Purified protein,Diet incorporation,no significant mortality at 600 µg/g,Ruchir and Suresh
+Cry78Ba1,No,,561076,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1021/acs.jafc.9b07429,,Larvae,1st Instar ,Purified protein,Surface contamination,,Colin Berry
+Cry78Ba1,No,,7038,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1021/acs.jafc.9b07429,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Colin Berry
+Cry78Ba1,No,,195883,Yes,9.723,µg/ml, ,10.1021/acs.jafc.9b07429,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Colin Berry
+Cry78Ba1,No,,43146,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1021/acs.jafc.9b07429,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Colin Berry
+Cry78Ba1,No,,51655,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1021/acs.jafc.9b07429,,Larvae,2nd Instar,Purified protein,Surface contamination,,Colin Berry
+Cry78Ba1,No,,7460,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1093/jee/toaa261,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
+Cry78Ba1,No,,7460,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1093/jee/toaa261,,Adult,Not applicable,Purified protein,Diet incorporation,adult workers assayed; syrup and pollen paste diet incorporation,Colin Berry
+Cry2Aa,No,,13131,Yes,,,93% mortality at 200 µg/mL after 72 hours,10.1111/j.1570-7458.1995.tb02003.x,,Adult,Not applicable,Purified protein,Membrane feeding,,Ruchir and Suresh
+Cry1Ac,No,,13131,No,"N/A, not toxic","N/A, not toxic",,10.1111/j.1570-7458.1995.tb02003.x,,Adult,Not applicable,Purified protein,Membrane feeding,,Neil Crickmore
+Cry3A,No,,13131,Yes,,,52% mortality at 360 µg/mL after 72 hours,10.1111/j.1570-7458.1995.tb02003.x,,Adult,Not applicable,Purified protein,Membrane feeding,,Neil Crickmore
+Cry11A,No,,13131,Yes,,,64% mortality at 350 µg/mL after 72 hours,10.1111/j.1570-7458.1995.tb02003.x,,Adult,Not applicable,Purified protein,Membrane feeding,,Neil Crickmore
+Cry11Aa,No,,7029,Yes, , ,100% at 500 µg/mL,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
+Cry1Ab,No,,7029,Yes, , ,25% at 500 µg/mL,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
+Cry3Aa,No,,7029,Yes, , ,60% at 500 µg/mL,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
+Cry4Aa,No,,7029,Yes,70 to 100,µg/mL,100% at 500 µg/mL,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
+Cyt1Aa,No,,7029,Yes, , ,40% reduction in average weight compared to control group for doses of 125 μg/ml or higher,10.1128/AEM.00686-09,,Nymph,Not specified,Purified protein,Membrane feeding,mortality was observed after 3 to 6 days of exposure,Ruchir and Suresh
+Mpp64Ba/Mpp64Ca,No,,561076,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1128/AEM.01996-17,,Larvae,Not specified,Purified protein,Leaf-dip,no significant mortality at 300 µg/ml,Ruchir and Suresh
+Mpp64Ba/Mpp64Ca,No,,195883,Yes,3.15,µg/mL, ,10.1128/AEM.01996-17,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Ruchir and Suresh
+Mpp64Ba/Mpp64Ca,No,,113103,Yes,2.14,µg/mL, ,10.1128/AEM.01996-17,,Nymph,3rd Instar,Purified protein,Membrane feeding,,Ruchir and Suresh
+Mpp64Ba/Mpp64Ca,No,,93504,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1128/AEM.01996-17,,Larvae,Not specified,Purified protein,Diet incorporation,no significant mortality at 300 µg/g,Ruchir and Suresh
+Mpp64Ba/Mpp64Ca,No,,51655,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1128/AEM.01996-17,,Larvae,Not specified,Purified protein,Leaf-dip,no significant mortality at 300 µg/ml,Ruchir and Suresh
+Mpp75Aa1,No,,50388,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
+Mpp75Aa1,No,,7539,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
+Mpp75Aa1,No,,50390,Yes, , , ,10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,significant stunting / mortality observed at 15.2 µg/cm2,Colin Berry
+Mpp75Aa2,No,,50388,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
+Mpp75Aa2,No,,7539,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
+Mpp75Aa2,No,,50390,Yes, , , ,10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,significant stunting / mortality observed at 43.4 µg/cm2,Colin Berry
+Mpp75Aa3,No,,50388,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
+Mpp75Aa3,No,,7539,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,,Colin Berry
+Mpp75Aa3,No,,50390,Yes, , , ,10.1128/AEM.02507-20,,Larvae,Not specified,Purified protein,Diet incorporation,significant stunting / mortality observed at 15.2 µg/cm2,Colin Berry
+Mpp51Aa2,No,,50387,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Surface contamination,,Ruchir and Suresh
+Mpp51Aa2,No,,50390,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Surface contamination,,Ruchir and Suresh
+Mpp51Aa2,No,,7539,Yes, , ,45.8+/- 4.2 % mortality at 26µg/cm2,10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,,Ruchir and Suresh
+Mpp51Aa2,No,,30085,Yes,72.9,µg/mL, ,10.1603/EC11207,,Nymph,Not specified,Purified protein,Membrane feeding,,Ruchir and Suresh
+Mpp51Aa2,No,,56364,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
+Mpp51Aa2,No,,7113,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
+Mpp51Aa2,No,,7102,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
+Mpp51Aa2,No,,29057,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
+Mpp51Aa2,No,,7108,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1603/EC11207,,Larvae,Not specified,Purified protein,Diet incorporation,26 µg/cm2,Ruchir and Suresh
+Cry1Ab,No,,121845,Yes,~120,µg/mL, ,10.3390/toxins11030173,,Adult,Not specified,Purified protein,Membrane feeding,,Ruchir and Suresh
+Cry1Ba,No,,121845,Yes,~120,µg/mL, ,10.3390/toxins11030173,,Adult,Not specified,Purified protein,Membrane feeding,,Ruchir and Suresh
+Cry32Wa1,No,,29058,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
+Cry73Ba1,No,,13164,Yes,32.7,µg/mL, ,10.3390/toxins6113144,,Nymph,2nd Instar,Purified protein,Membrane feeding,,Ruchir and Suresh
+Cry73Ba1,No,,55057,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
+Cry73Ba1,No,,7107,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
+Cry73Ba1,No,,7108,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
+Cry73Ba1,No,,7109,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.3390/toxins6113144,,Larvae,1st Instar ,Purified protein,Surface contamination,no larvicidal activity or impaired growth at 3.5 µg/cm2,Ruchir and Suresh
+Cry2Aa2,No,,7159,Yes, , ,65% mortality at 2µg/ml,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,,Neil Crickmore
+Cry2Aa17,No,,7159,No,"N/A, not toxic","N/A, not toxic",,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
+Cry2Ab4,No,,7159,No,"N/A, not toxic","N/A, not toxic",,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
+Cry2Ab1,No,,7159,No,"N/A, not toxic","N/A, not toxic",,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
+Cry2Ab29,No,,7159,No,"N/A, not toxic","N/A, not toxic",,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
+Cry2Ac11,No,,7159,Yes, , ,50% mortality at 2µg/ml,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,,Neil Crickmore
+Cry2Ad5,No,,7159,No,"N/A, not toxic","N/A, not toxic",,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
+Cry2Ah1,No,,7159,No,"N/A, not toxic","N/A, not toxic",,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,less than 10% mortality at 2µg/ml,Neil Crickmore
+Cry2Am1,No,,7159,Yes, , ,20% mortality at 2µg/ml,10.1016/j.jip.2020.107423,,Larvae,3rd Instar,Purified protein,Addition to water,,Neil Crickmore
+axmi058,No,,51655,Yes, , , ,,US patent 8461421,,,Purified protein,Diet incorporation,,Colin Berry
+axmi058,No,,129554,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,Purified protein,Diet incorporation,,Colin Berry
+axmi058,No,,61289,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,Purified protein,Diet incorporation,,Colin Berry
+axmi058,No,,7539,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,Purified protein,Diet incorporation,,Colin Berry
+axmi058,No,,29057,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,Purified protein,Diet incorporation,,Colin Berry
+axmi058,No,,7113,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,Purified protein,Diet incorporation,,Colin Berry
+axmi058,No,,7102,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,Purified protein,Diet incorporation,,Colin Berry
+axmi058,No,,6239,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,Purified protein,Diet incorporation,,Colin Berry
+axmi100,No,,51655,Yes, , , ,,US patent 8461421,,,,,,Colin Berry
+axmi100,No,,129554,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi100,No,,61289,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi100,No,,7539,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi100,No,,29057,Yes, , , ,,US patent 8461421,,,,,,Colin Berry
+axmi100,No,,7113,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi100,No,,7102,Yes, , , ,,US patent 8461421,,,,,,Colin Berry
+axmi100,No,,6239,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi102,No,,51655,Yes, , , ,,US patent 8461421,,,,,,Colin Berry
+axmi102,No,,129554,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi102,No,,61289,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi102,No,,7539,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi102,No,,29057,Yes, , , ,,US patent 8461421,,,,,75% mortallity under assay conditions,Colin Berry
+axmi102,No,,7113,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi102,No,,7102,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi102,No,,6239,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi112,No,,51655,Yes, , , ,,US patent 8461421,,,,,,Colin Berry
+axmi112,No,,129554,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,possible stunting,Colin Berry
+axmi112,No,,61289,Yes, , , ,,US patent 8461421,,,,,25% mortality under assay conditions,Colin Berry
+axmi112,No,,7539,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi112,No,,29057,Yes, , , ,,US patent 8461421,,,,,75% mortlity under assay conditions,Colin Berry
+axmi112,No,,7113,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,Possible mild stunting,Colin Berry
+axmi112,No,,7102,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,possible stunting,Colin Berry
+axmi112,No,,6239,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",,US patent 8461421,,,,,,Colin Berry
+axmi079,No,,51655,Yes, , , ,,US patent 8461421,,,Purified protein,,,Colin Berry
+axmi082,No,,51655,Yes, , , ,,US patent 8461421,,,Purified protein,,,Colin Berry
+AflP-1A,Yes,AflP-1B,50390,Yes,30.4,ppm, ,10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Diet incorporation,,Colin Berry
+AflP-1B,Yes,AflP-1A,50390,Yes,30.4,ppm, ,10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Diet incorporation,,Colin Berry
+AflP-1A,Yes,AflP-1B,50387,Yes,11.2,ppm, ,10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Diet incorporation,,Colin Berry
+AflP-1B,Yes,AflP-1A,50387,Yes,11.2,ppm, ,10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Diet incorporation,,Colin Berry
+AflP-1A,Yes,AflP-1B,50386,Yes,>240,ppm, ,10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Diet incorporation,12.5% mortality at 240ppm,Colin Berry
+AflP-1B,Yes,AflP-1A,50386,Yes,>240,ppm, ,10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Diet incorporation,12.5% mortality at 240ppm,Colin Berry
+AflP-1A,Yes,AflP-1B,279632,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Not specified,,Colin Berry
+AflP-1B,Yes,AflP-1A,279632,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Not specified,,Colin Berry
+AflP-1A,Yes,AflP-1B,7113,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,,Colin Berry
+AflP-1B,Yes,AflP-1A,7113,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,,Colin Berry
+AflP-1A,Yes,AflP-1B,29057,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,,Colin Berry
+AflP-1B,Yes,AflP-1A,29057,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,,Colin Berry
+AflP-1A,Yes,AflP-1B,7108,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,,Colin Berry
+AflP-1B,Yes,AflP-1A,7108,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,,Colin Berry
+AflP-1A,Yes,AflP-1B,56364,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,,Colin Berry
+AflP-1B,Yes,AflP-1A,56364,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,,Colin Berry
+AflP-1A,Yes,AflP-1B,129554,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,Stunting when used in combination at ≥125ppm,Colin Berry
+AflP-1B,Yes,AflP-1A,129554,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,Stunting when used in combination at ≥125ppm,Colin Berry
+AflP-1A,Yes,AflP-1B,689277,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,Stunting when used in combination at ≥125ppm,Colin Berry
+AflP-1B,Yes,AflP-1A,689277,No,"N/A, not toxic","N/A, not toxic","N/A, not toxic",10.1038/s41598-017-03544-9 ,,Larvae,Neonates,Purified protein,Surface contamination,Stunting when used in combination at ≥125ppm,Colin Berry
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
+,,,,, , , ,,,,,,,,
