@@ -3,7 +3,7 @@ from django.conf.urls.static import static, settings
 import csv
 
 # Import the model
-from association.models   import Association as PD
+from association.models import Association
 
 ALREDY_LOADED_ERROR_MESSAGE = """
 If you need to reload the Association data from the CSV file, first delete the POSTGRES data file to destroy the database. Then, run `python manage.py migrate` for a new empty
@@ -18,7 +18,7 @@ class Command(BaseCommand):
         file_path = settings.MEDIA_ROOT + '/csv_files/Association.csv'
         print("file path", file_path)
         # Show this if the data already exist in the database
-        if PD.objects.exists():
+        if Association.objects.exists():
             print('Data already loaded...exiting.')
             print(ALREDY_LOADED_ERROR_MESSAGE)
             return
@@ -34,4 +34,4 @@ class Command(BaseCommand):
         print("file path", file_path)
         raw_data = open(file_path, 'rt', encoding='utf-8-sig')
         for row in csv.reader(raw_data):
-            PD.objects.create(**dict(zip(fields, row)))
+            Association.objects.create(**dict(zip(fields, row)))

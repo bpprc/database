@@ -27,9 +27,9 @@ class Command(BaseCommand):
         print("Loading PesticidalProteinDatabase data")
 
         # Load the data into the database
-        fields = ['name', 'oldname', 'othernames',
-                  'accession', 'year', 'sequence']
-        file_path = settings.MEDIA_ROOT + '/csv_files/Cry_May2020.csv'
+        fields = ['submittersname', 'submittersemail', 'name', 'oldname', 'othernames', 'accession', 'year', 'sequence', 'bacterium', 'taxonid',
+                  'bacterium_textbox', 'partnerprotein', 'partnerprotein_textbox', 'toxicto', 'nontoxic', 'dnasequence', 'publication', 'comment']
+        file_path = settings.MEDIA_ROOT + '/csv_files/PesticidalProteinDatabase.csv'
         print("file path", file_path)
         raw_data = open(file_path, 'rt', encoding='utf-8-sig')
         for row in csv.reader(raw_data):

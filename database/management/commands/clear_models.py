@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from database.models import PesticidalProteinDatabase, StructureDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
+from association.models import Association
 
 
 class Command(BaseCommand):
@@ -14,3 +15,5 @@ class Command(BaseCommand):
         PesticidalProteinPrivateDatabase.objects.all().delete()
         OldnameNewnameTableLeft.objects.all().delete()
         OldnameNewnameTableRight.objects.all().delete()
+        Association.objects.all().delete()
+        PesticidalProteinHiddenSequence.objects.all().delete()
