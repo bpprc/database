@@ -50,6 +50,8 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.4s;
 }
 
+
+
 .back-to-top i:hover {
   background: #57aae1;
   color: #fff;
@@ -1624,4 +1626,9 @@ section {
 
 #footer .footer-links a:hover {
   color: #3498db;
+}
+
+
+.container.d-flex.align-items-center {
+  max-width: none;
 }
