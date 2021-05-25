@@ -36,6 +36,6 @@ jobs:
         coverage report
     - name: Run Tests
       env:
-        SECRET_KEY: '4s3l2tsgm_j4gr0hs5c^_x&vnlhf3e@tyiib73vs&uk3up#7&$'
+        SECRET_KEY: 4s3l2tsgm_j4gr0hs5c^_x&vnlhf3e@tyiib73vs&uk3up#7&$
       run: |
         python manage.py test
