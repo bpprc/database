@@ -35,8 +35,8 @@ if os.environ.get('DEVELOPMENT'):
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'camtech-bpp.test.ifas.ufl.edu',
-                 'camtech-bpp.ifas.ufl.edu']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',
+                 'camtech-bpp.test.ifas.ufl.edu', 'camtech-bpp.ifas.ufl.edu']
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
