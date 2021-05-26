@@ -3,8 +3,13 @@ name: Django CI
 on:
   push:
     branches: [ database_test ]
-  pull_request:
-    branches: [ database_test ]
+
+env:
+  registry: my_registry_name
+  # Not sure these are actually being passed down to rails, set them as the default in database.yml
+  DB_HOST: localhost
+  DB_USERNAME: postgres
+  DB_PASSWORD: postgres
 
 jobs:
   build:
@@ -14,6 +19,22 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.7]
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -34,6 +55,8 @@ jobs:
         pip install coverage
         coverage run manage.py test
         coverage report
+    - name: Run migrations
+      run: python manage.py migrate
     - name: Run Tests
       run: |
         python manage.py test
