@@ -3,7 +3,6 @@ from database.models import PesticidalProteinDatabase, UserUploadData, ProteinDe
 from clustalanalysis.forms import AnalysisForm, DendogramForm, UserDataForm
 from django import forms
 from subprocess import Popen, PIPE
-from ete3 import Tree, TreeStyle, faces
 from Bio.Align.Applications import ClustalOmegaCommandline
 from django.http import HttpResponseRedirect, JsonResponse
 from Bio.Seq import Seq
