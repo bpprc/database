@@ -14,25 +14,24 @@ jobs:
         python-version: [3.7]
 
     services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_HOST: localhost
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+      # postgres:
+      #   image: postgres:latest
+      #   env:
+      #     POSTGRES_USER: postgres
+      #     POSTGRES_PASSWORD: postgres
+      #     POSTGRES_DB: github_actions
+      #   ports:
+      #     - 5432:5432
         # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        # options: >-
+        #   --health-cmd pg_isready
+        #   --health-interval 10s
+        #   --health-timeout 5s
+        #   --health-retries 5
       redis:
         image: redis:latest
         ports:
           - 6379/tcp
-
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.7
@@ -50,7 +49,8 @@ jobs:
     #     pip install flake8
     #     flake8
     - name: Run celery worker for tests
-      run: celery -A BPPRC worker --loglevel=info -B -Q celery -l DEBUG --detach
+      run: |
+        celery -A BPPRC worker -B -Q celery -l --detach
     - name: Coverage report
       run: |
         pip install coverage
