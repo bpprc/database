@@ -50,7 +50,7 @@ jobs:
     #     flake8
     - name: Run celery worker for tests
       run: |
-        celery -A BPPRC worker -B -Q celery -l --detach
+        celery -A BPPRC worker -B -Q celery -l DEBUG --detach
     - name: Coverage report
       run: |
         pip install coverage
