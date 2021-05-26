@@ -4,9 +4,6 @@ on:
   push:
     branches: [ database_test ]
 
-env:
-  DJANGO_SETTINGS_MODULE: "settings"
-
 jobs:
   build:
 
