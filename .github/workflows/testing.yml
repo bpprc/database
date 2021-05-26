@@ -35,6 +35,11 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      redis:
+        image: redis:latest
+        ports:
+          - 6379/tcp
+
 
     steps:
     - uses: actions/checkout@v2
@@ -50,6 +55,8 @@ jobs:
     #   run: |
     #     pip install flake8
     #     flake8
+    - name: Run celery worker for tests
+      run: celery -A BPPRC worker --loglevel=info -B -Q celery -l DEBUG --detach
     - name: Coverage report
       run: |
         pip install coverage
