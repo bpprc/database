@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # csv
-#*.csv
+*.csv
 *.json
 *.db
 
@@ -47,6 +47,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+coverage-report/
 htmlcov/
 .tox/
 .nox/
