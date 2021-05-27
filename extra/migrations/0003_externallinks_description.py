@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('extra', '0002_externallinks'),
+        ("extra", "0002_externallinks"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='externallinks',
-            name='description',
-            field=models.TextField(default='None'),
+            model_name="externallinks",
+            name="description",
+            field=models.TextField(default="None"),
         ),
     ]

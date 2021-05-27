@@ -2,9 +2,8 @@ import os
 from zipfile import ZipFile
 
 from celery import shared_task
-from PIL import Image
-
 from django.conf import settings
+from PIL import Image
 
 from bestmatchfinder import submit_single_sequence
 

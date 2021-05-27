@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('association', '0001_initial'),
+        ("association", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='association',
-            options={'verbose_name': 'Association data'},
+            name="association",
+            options={"verbose_name": "Association data"},
         ),
         migrations.AddField(
-            model_name='association',
-            name='non_toxic',
+            model_name="association",
+            name="non_toxic",
             field=models.TextField(blank=True),
         ),
     ]

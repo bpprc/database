@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('extra', '0003_externallinks_description'),
+        ("extra", "0003_externallinks_description"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='ExternalLinks',
-            new_name='Links',
+            old_name="ExternalLinks",
+            new_name="Links",
         ),
     ]

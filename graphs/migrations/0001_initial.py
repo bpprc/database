@@ -7,17 +7,35 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Products',
+            name="Products",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('color', models.CharField(choices=[('WHITE', 'white'), ('BLUE', 'Blue'), ('BLACK', 'Black'), ('GREEN', 'Green')], max_length=10)),
-                ('price', models.IntegerField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                (
+                    "color",
+                    models.CharField(
+                        choices=[
+                            ("WHITE", "white"),
+                            ("BLUE", "Blue"),
+                            ("BLACK", "Black"),
+                            ("GREEN", "Green"),
+                        ],
+                        max_length=10,
+                    ),
+                ),
+                ("price", models.IntegerField()),
             ],
         ),
     ]

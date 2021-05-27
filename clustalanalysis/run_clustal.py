@@ -9,7 +9,7 @@ def cmd(command):
         command,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        shell=True
+        shell=True,
     )
     out, error = process.communicate()
     print(out, error)
@@ -17,7 +17,13 @@ def cmd(command):
 
 
 def run_clustal(inputfile, outputfile):
-    cmd_line = CLUSTAL_PATH + 'clustalo -i ' + inputfile + \
-        ' --guidetree-out=' + outputfile + ' --force'
+    cmd_line = (
+        CLUSTAL_PATH
+        + "clustalo -i "
+        + inputfile
+        + " --guidetree-out="
+        + outputfile
+        + " --force"
+    )
     out, error = cmd(cmd_line)
     return out

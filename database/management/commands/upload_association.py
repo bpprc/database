@@ -1,6 +1,7 @@
-from django.core.management.base import BaseCommand
-from django.conf.urls.static import static, settings
 import csv
+
+from django.conf.urls.static import settings, static
+from django.core.management.base import BaseCommand
 
 # Import the model
 from association.models import Association
@@ -11,15 +12,15 @@ database with tables"""
 
 
 class Command(BaseCommand):
-    help = 'Loads data from Association.csv'
+    help = "Loads data from Association.csv"
 
     def handle(self, *args, **kwargs):
 
-        file_path = settings.MEDIA_ROOT + '/csv_files/Association.csv'
+        file_path = settings.MEDIA_ROOT + "/csv_files/Association.csv"
         print("file path", file_path)
         # Show this if the data already exist in the database
         if Association.objects.exists():
-            print('Data already loaded...exiting.')
+            print("Data already loaded...exiting.")
             print(ALREDY_LOADED_ERROR_MESSAGE)
             return
 
@@ -27,11 +28,29 @@ class Command(BaseCommand):
         print("Loading Association data")
 
         # Load the data into the database
-        fields = ['name', 'partnerprotein', 'partnerprotein_textbox', 'target_order', 'target_species', 'taxonid', 'activity', 'lc50', 'units',
-                  'percentage_mortality', 'publication', 'other_citations', 'life_stage', 'instar', 'assay_material', 'assay_method', 'comment', 'data_entered_by']
+        fields = [
+            "name",
+            "partnerprotein",
+            "partnerprotein_textbox",
+            "target_order",
+            "target_species",
+            "taxonid",
+            "activity",
+            "lc50",
+            "units",
+            "percentage_mortality",
+            "publication",
+            "other_citations",
+            "life_stage",
+            "instar",
+            "assay_material",
+            "assay_method",
+            "comment",
+            "data_entered_by",
+        ]
 
-        file_path = settings.MEDIA_ROOT + '/csv_files/Association.csv'
+        file_path = settings.MEDIA_ROOT + "/csv_files/Association.csv"
         print("file path", file_path)
-        raw_data = open(file_path, 'rt', encoding='utf-8-sig')
+        raw_data = open(file_path, "rt", encoding="utf-8-sig")
         for row in csv.reader(raw_data):
             Association.objects.create(**dict(zip(fields, row)))

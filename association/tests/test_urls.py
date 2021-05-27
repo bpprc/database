@@ -1,6 +1,5 @@
-from django.urls import reverse, resolve
-from bestmatchfinder import views
-
+# from django.urls import resolve, reverse
+# from bestmatchfinder import views
 
 # class TestUrls:
 #

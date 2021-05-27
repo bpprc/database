@@ -1,10 +1,6 @@
 from django.db import models
 
-
-TRUE_FALSE_CHOICES = (
-    (True, 'Yes'),
-    (False, 'No')
-)
+TRUE_FALSE_CHOICES = ((True, "Yes"), (False, "No"))
 
 
 # class KeywordDatabase(models.Model):
@@ -29,14 +25,17 @@ class Association(models.Model):
     # oldname = models.TextField(blank=True, verbose_name="Old Name")
     # accession = models.TextField(
     #     blank=True, verbose_name="NCBI accession number")
-    partnerprotein = models.CharField(max_length=7,
-                                      default='No', editable=True)
+    partnerprotein = models.CharField(
+        max_length=255, default="No", editable=True
+    )
     partnerprotein_textbox = models.TextField(
-        blank=True, default='No', editable=True)
+        blank=True, default="No", editable=True
+    )
     target_order = models.TextField(null=True)
     target_species = models.TextField(null=True)
-    activity = models.CharField(max_length=7,
-                                default='Yes', editable=True)
+    activity = models.CharField(
+        max_length=7, default="Yes", editable=True
+    )
     taxonid = models.TextField(null=True)
     lc50 = models.TextField(null=True)
     units = models.TextField(null=True)
@@ -75,4 +74,4 @@ class Association(models.Model):
     #     return json.loads(self.target_order)
 
     class Meta:
-        verbose_name = 'Association data'
+        verbose_name = "Association data"

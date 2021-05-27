@@ -1,6 +1,7 @@
-from django.core.management.base import BaseCommand
-from django.conf.urls.static import static, settings
 import csv
+
+from django.conf.urls.static import settings, static
+from django.core.management.base import BaseCommand
 
 # Import the model
 from database.models import PesticidalProteinHiddenSequence as PD
@@ -11,15 +12,17 @@ database with tables"""
 
 
 class Command(BaseCommand):
-    help = 'Loads data from HiddenSequence.csv'
+    help = "Loads data from HiddenSequence.csv"
 
     def handle(self, *args, **kwargs):
 
-        file_path = settings.MEDIA_ROOT + '/csv_files/HiddenSequence.csv'
+        file_path = (
+            settings.MEDIA_ROOT + "/csv_files/HiddenSequence.csv"
+        )
         print("file path", file_path)
         # Show this if the data already exist in the database
         if PD.objects.exists():
-            print('Data already loaded...exiting.')
+            print("Data already loaded...exiting.")
             print(ALREDY_LOADED_ERROR_MESSAGE)
             return
 
@@ -27,11 +30,27 @@ class Command(BaseCommand):
         print("Loading HiddenSequence data")
 
         # Load the data into the database
-        fields = ['name', 'othernames', 'accession', 'year', 'sequence', 'bacterium_textbox', 'strain',
-                  'publication', 'family', 'toxicto', 'nontoxic', 'mammalian_active', 'pdbcode', 'comment']
+        fields = [
+            "name",
+            "othernames",
+            "accession",
+            "year",
+            "sequence",
+            "bacterium_textbox",
+            "strain",
+            "publication",
+            "family",
+            "toxicto",
+            "nontoxic",
+            "mammalian_active",
+            "pdbcode",
+            "comment",
+        ]
 
-        file_path = settings.MEDIA_ROOT + '/csv_files/HiddenSequence.csv'
+        file_path = (
+            settings.MEDIA_ROOT + "/csv_files/HiddenSequence.csv"
+        )
         print("file path", file_path)
-        raw_data = open(file_path, 'rt', encoding='utf-8-sig')
+        raw_data = open(file_path, "rt", encoding="utf-8-sig")
         for row in csv.reader(raw_data):
             PD.objects.create(**dict(zip(fields, row)))

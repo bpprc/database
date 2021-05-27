@@ -6,83 +6,83 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('association', '0004_auto_20210503_2133'),
+        ("association", "0004_auto_20210503_2133"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='association',
-            name='assay_material',
+            model_name="association",
+            name="assay_material",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='assay_method',
+            model_name="association",
+            name="assay_method",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='comment',
+            model_name="association",
+            name="comment",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='data_entered_by',
+            model_name="association",
+            name="data_entered_by",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='instar',
+            model_name="association",
+            name="instar",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='lc50',
+            model_name="association",
+            name="lc50",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='life_stage',
+            model_name="association",
+            name="life_stage",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='non_toxic',
+            model_name="association",
+            name="non_toxic",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='other_citations',
+            model_name="association",
+            name="other_citations",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='percentage_mortality',
+            model_name="association",
+            name="percentage_mortality",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='publication',
+            model_name="association",
+            name="publication",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='target_order',
+            model_name="association",
+            name="target_order",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='target_species',
+            model_name="association",
+            name="target_species",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='taxonid',
+            model_name="association",
+            name="taxonid",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='association',
-            name='units',
+            model_name="association",
+            name="units",
             field=models.TextField(null=True),
         ),
     ]

@@ -7,43 +7,47 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('database', '0001_initial'),
+        ("database", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='structuredatabase',
-            name='accession',
+            model_name="structuredatabase",
+            name="accession",
             field=models.CharField(max_length=75, null=True),
         ),
         migrations.AlterField(
-            model_name='structuredatabase',
-            name='comment',
+            model_name="structuredatabase",
+            name="comment",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='structuredatabase',
-            name='name',
+            model_name="structuredatabase",
+            name="name",
             field=models.CharField(max_length=25, null=True),
         ),
         migrations.AlterField(
-            model_name='structuredatabase',
-            name='oldname',
+            model_name="structuredatabase",
+            name="oldname",
             field=models.CharField(max_length=75, null=True),
         ),
         migrations.AlterField(
-            model_name='structuredatabase',
-            name='pdbid',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=1000, null=True), default=list, size=None),
+            model_name="structuredatabase",
+            name="pdbid",
+            field=django.contrib.postgres.fields.ArrayField(
+                base_field=models.CharField(max_length=1000, null=True),
+                default=list,
+                size=None,
+            ),
         ),
         migrations.AlterField(
-            model_name='structuredatabase',
-            name='pubmedid',
+            model_name="structuredatabase",
+            name="pubmedid",
             field=models.CharField(max_length=75, null=True),
         ),
         migrations.AlterField(
-            model_name='structuredatabase',
-            name='year',
+            model_name="structuredatabase",
+            name="year",
             field=models.CharField(max_length=5, null=True),
         ),
     ]

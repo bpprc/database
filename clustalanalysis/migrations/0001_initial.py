@@ -7,21 +7,41 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='StoreResultFiles',
+            name="StoreResultFiles",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('taskid', models.CharField(blank=True, max_length=250)),
-                ('tempfile', models.CharField(max_length=1000, null=True)),
-                ('resultfile', models.FileField(blank=True, null=True, upload_to='store_result_files/')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "taskid",
+                    models.CharField(blank=True, max_length=250),
+                ),
+                (
+                    "tempfile",
+                    models.CharField(max_length=1000, null=True),
+                ),
+                (
+                    "resultfile",
+                    models.FileField(
+                        blank=True,
+                        null=True,
+                        upload_to="store_result_files/",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Store result file',
-                'verbose_name_plural': 'Store results files',
+                "verbose_name": "Store result file",
+                "verbose_name_plural": "Store results files",
             },
         ),
     ]

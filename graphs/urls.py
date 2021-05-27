@@ -1,10 +1,11 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
+
 from graphs import views
 
 urlpatterns = [
-    path('graphs_home/', views.graphs_home ,name='graphs_home'),
-    path('combo/', views.combo ,name='combo'),
+    path("graphs_home/", views.graphs_home, name="graphs_home"),
+    path("combo/", views.combo, name="combo"),
     path("programming/", views.programming, name="programming"),
     path("multiplot/", views.multiplot, name="multiplot"),
     path("products/", views.products, name="products"),

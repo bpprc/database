@@ -28,7 +28,9 @@ def next_alphabetic_character(character):
     return chr(ord(character) + 1)
 
 
-def rank2_naming(proteins_available: Iterable[str], best_match_protein_name: str) -> str:
+def rank2_naming(
+    proteins_available: Iterable[str], best_match_protein_name: str
+) -> str:
     """
     Given a list of proteins available as well as the best match name
     the function returns predicted name
@@ -57,10 +59,11 @@ def rank2_naming(proteins_available: Iterable[str], best_match_protein_name: str
     """
     # extract the three-letter pattern with number Xpp35
     protein_pattern = re.search(
-        r"[A-Z][a-z]{2}\d{1,3}", best_match_protein_name).group()
+        r"[A-Z][a-z]{2}\d{1,3}", best_match_protein_name
+    ).group()
 
     # re.compile('Xpp35([A-Z])')
-    base_pattern = re.compile('{}([A-Z])'.format(protein_pattern))
+    base_pattern = re.compile("{}([A-Z])".format(protein_pattern))
 
     # Available candidates ['A', 'A', 'A', 'B']
     candidates = []
@@ -77,10 +80,12 @@ def rank2_naming(proteins_available: Iterable[str], best_match_protein_name: str
 
     # Add the protein pattern, the next predicted letter and 'a1' at the suffix
     # predicted name Xpp35Ca1
-    return f'{protein_pattern}{new_letter}a1'
+    return f"{protein_pattern}{new_letter}a1"
 
 
-def rank3_naming(proteins_available: Iterable[str], best_match_protein_name: str) -> str:
+def rank3_naming(
+    proteins_available: Iterable[str], best_match_protein_name: str
+) -> str:
     """
     Given a list of proteins available as well as the best match name
     the function returns predicted name
@@ -109,10 +114,11 @@ def rank3_naming(proteins_available: Iterable[str], best_match_protein_name: str
     """
     # extract the three-letter pattern Xpp35A from best_match_protein_name Xpp35Ab1
     protein_pattern = re.search(
-        r"[A-Z][a-z]{2}\d{1,3}[A-Z]", best_match_protein_name).group()
+        r"[A-Z][a-z]{2}\d{1,3}[A-Z]", best_match_protein_name
+    ).group()
 
     # re.compile('Xpp35A([a-z])')
-    base_pattern = re.compile('{}([a-z])'.format(protein_pattern))
+    base_pattern = re.compile("{}([a-z])".format(protein_pattern))
 
     # ['a', 'b', 'd']
     candidates = []
@@ -129,10 +135,12 @@ def rank3_naming(proteins_available: Iterable[str], best_match_protein_name: str
 
     # Add the protein pattern, the next predicted letter and 'a1' at the suffix
     # Xpp35Ae1
-    return f'{protein_pattern}{new_letter}1'
+    return f"{protein_pattern}{new_letter}1"
 
 
-def rank4_naming(proteins_available: Iterable[str], best_match_protein_name: str) -> str:
+def rank4_naming(
+    proteins_available: Iterable[str], best_match_protein_name: str
+) -> str:
     """
     Given a list of proteins available as well as the best match name
     the function returns predicted name
@@ -161,10 +169,11 @@ def rank4_naming(proteins_available: Iterable[str], best_match_protein_name: str
     """
     # extract the pattern Xpp35Ab from the best_match_protein_name Xpp35Ab1
     protein_pattern = re.search(
-        r"[A-Z][a-z]{2}\d{1,3}[A-Z][a-z]", best_match_protein_name).group()
+        r"[A-Z][a-z]{2}\d{1,3}[A-Z][a-z]", best_match_protein_name
+    ).group()
 
     # re.compile('Xpp35Ab(\\d{1,3})')
-    base_pattern = re.compile(r'{}(\d{{1,3}})'.format(protein_pattern))
+    base_pattern = re.compile(r"{}(\d{{1,3}})".format(protein_pattern))
 
     # ['45']
     candidates = []
@@ -177,16 +186,18 @@ def rank4_naming(proteins_available: Iterable[str], best_match_protein_name: str
 
     # Add the protein pattern, the next predicted letter and 'a1' at the suffix
     # Xpp35Ab46
-    return f'{protein_pattern}{best_candidate+1}'
+    return f"{protein_pattern}{best_candidate+1}"
 
 
-def xpp_naming(proteins_available: Iterable[str], protein_name: str) -> str:
+def xpp_naming(
+    proteins_available: Iterable[str], protein_name: str
+) -> str:
 
     # extract the three-letter pattern with number Xpp35
     # protein_pattern = re.search(r"[A-Z][a-z]{2}\d{1,3}", best_match_protein_name).group()
 
     # re.compile('Xpp35([A-Z])')
-    base_pattern = re.compile('{}([A-Z])'.format(protein_name))
+    base_pattern = re.compile("{}([A-Z])".format(protein_name))
 
     # Available candidates ['A', 'A', 'A', 'B']
     candidates = []
@@ -199,9 +210,9 @@ def xpp_naming(proteins_available: Iterable[str], protein_name: str) -> str:
 
     # best candidate in this example 'B'
     if not candidates:
-        return 'Xpp'
+        return "Xpp"
     else:
         best_candidate = max(candidates)
         # next letter in this example 'C'
         new_letter = next_alphabetic_character(best_candidate)
-        return f'{protein_pattern}{new_letter}a1'
+        return f"{protein_pattern}{new_letter}a1"

@@ -1,10 +1,20 @@
 from django.core.management.base import BaseCommand
-from database.models import PesticidalProteinDatabase, StructureDatabase, UserUploadData, Description, ProteinDetail, PesticidalProteinPrivateDatabase, OldnameNewnameTableLeft, OldnameNewnameTableRight
+
 from association.models import Association
+from database.models import (
+    Description,
+    OldnameNewnameTableLeft,
+    OldnameNewnameTableRight,
+    PesticidalProteinDatabase,
+    PesticidalProteinPrivateDatabase,
+    ProteinDetail,
+    StructureDatabase,
+    UserUploadData,
+)
 
 
 class Command(BaseCommand):
-    help = 'Clear all the model data'
+    help = "Clear all the model data"
 
     def handle(self, *args, **options):
         PesticidalProteinDatabase.objects.all().delete()

@@ -6,38 +6,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('database', '0002_auto_20210503_2144'),
+        ("database", "0002_auto_20210503_2144"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='oldnamenewnametableleft',
-            name='alternative_name',
+            model_name="oldnamenewnametableleft",
+            name="alternative_name",
             field=models.CharField(max_length=250, null=True),
         ),
         migrations.AlterField(
-            model_name='oldnamenewnametableleft',
-            name='name_1998',
+            model_name="oldnamenewnametableleft",
+            name="name_1998",
             field=models.CharField(max_length=250, null=True),
         ),
         migrations.AlterField(
-            model_name='oldnamenewnametableleft',
-            name='name_2020',
+            model_name="oldnamenewnametableleft",
+            name="name_2020",
             field=models.CharField(max_length=250, null=True),
         ),
         migrations.AlterField(
-            model_name='oldnamenewnametableright',
-            name='alternative_name',
+            model_name="oldnamenewnametableright",
+            name="alternative_name",
             field=models.CharField(max_length=250, null=True),
         ),
         migrations.AlterField(
-            model_name='oldnamenewnametableright',
-            name='name_1998',
+            model_name="oldnamenewnametableright",
+            name="name_1998",
             field=models.CharField(max_length=250, null=True),
         ),
         migrations.AlterField(
-            model_name='oldnamenewnametableright',
-            name='name_2020',
+            model_name="oldnamenewnametableright",
+            name="name_2020",
             field=models.CharField(max_length=250, null=True),
         ),
     ]

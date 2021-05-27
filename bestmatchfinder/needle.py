@@ -1,12 +1,14 @@
 """This loads the bestmatchfinder homepage."""
 
-import re
-import os.path
 import os
+import os.path
+import re
 import subprocess
 import time
-from django.conf import settings
+
 from Bio.Emboss.Applications import NeedleCommandline
+from django.conf import settings
+
 from database.models import PesticidalProteinDatabase
 
 NEEDLE_PATH = os.environ.get("NEEDLE_PATH")
@@ -19,7 +21,7 @@ def cmdline(command):
         command,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        shell=True
+        shell=True,
     )
     out, error = process.communicate()
     # print("out", out)
@@ -30,22 +32,30 @@ def cmdline(command):
 def run_needle(file1, file2):
     """This loads the bestmatchfinder homepage."""
 
-    cmd = NEEDLE_PATH + 'needle -datafile EBLOSUM62 -auto Y' + ' -asequence ' + \
-        file1 + ' -bsequence ' + file2 + ' -sprotein1 Y -sprotein2 Y ' + ' -auto -stdout'
+    cmd = (
+        NEEDLE_PATH
+        + "needle -datafile EBLOSUM62 -auto Y"
+        + " -asequence "
+        + file1
+        + " -bsequence "
+        + file2
+        + " -sprotein1 Y -sprotein2 Y "
+        + " -auto -stdout"
+    )
     # print(cmd)
     results = cmdline(cmd).decode("utf-8")
     print(results)
     identity = re.search(r"\d{1,3}\.\d*\%", results)
     if identity:
         identity = identity.group()
-        identity = identity.replace('%', '')
+        identity = identity.replace("%", "")
     return results
 
 
 def run_blast(file1, file2):
     """This loads the bestmatchfinder homepage."""
 
-    cmd = BLAST_PATH + 'blastp -query ' + file1 + ' -subject ' + file2
+    cmd = BLAST_PATH + "blastp -query " + file1 + " -subject " + file2
     # print("cmd", cmd)
     results = cmdline(cmd).decode("utf-8")
 

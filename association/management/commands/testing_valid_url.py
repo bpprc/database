@@ -1,7 +1,8 @@
-from django.core.management.base import BaseCommand
-from association.models import Association
 import requests
+from django.core.management.base import BaseCommand
 from requests.exceptions import MissingSchema
+
+from association.models import Association
 
 
 def doi2bib(doi):
@@ -18,7 +19,7 @@ def doi2bib(doi):
 
 
 def return_final_url(url_link):
-    finalurl = ''
+    finalurl = ""
     try:
         response = requests.get(url_link)
         if response.history:
@@ -32,9 +33,11 @@ def return_final_url(url_link):
 
 
 class Command(BaseCommand):
-    help = 'Prints inactive urls (404)'
+    help = "Prints inactive urls (404)"
     headers = requests.utils.default_headers()
-    headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+    headers[
+        "User-Agent"
+    ] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
 
     def handle(self, *args, **kwargs):
         for item in Association.objects.all():

@@ -1,14 +1,16 @@
 """This loads the bestmatchfinder homepage."""
 
-import re
-import os.path
+import logging
 import os
+import os.path
+import re
 import subprocess
 import time
-from django.conf import settings
+
 from Bio.Emboss.Applications import NeedleCommandline
+from django.conf import settings
+
 from database.models import PesticidalProteinDatabase
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +23,7 @@ def cmdline(command):
         command,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        shell=True
+        shell=True,
     )
     out, error = process.communicate()
     print(error)
@@ -31,8 +33,16 @@ def cmdline(command):
 def blast_two_sequences(file1, file2):
     """This loads the bestmatchfinder homepage."""
 
-    cmd = NEEDLE_PATH + 'needle -datafile EBLOSUM62 -auto Y' + ' -asequence ' + \
-        file1 + ' -bsequence ' + file2 + ' -sprotein1 Y -sprotein2 Y ' + ' -auto -stdout'
+    cmd = (
+        NEEDLE_PATH
+        + "needle -datafile EBLOSUM62 -auto Y"
+        + " -asequence "
+        + file1
+        + " -bsequence "
+        + file2
+        + " -sprotein1 Y -sprotein2 Y "
+        + " -auto -stdout"
+    )
     # print(cmd)
     results = cmdline(cmd).decode("utf-8")
     # logger.error("results of needle command line")
@@ -40,7 +50,7 @@ def blast_two_sequences(file1, file2):
     identity = re.search(r"\d{1,3}\.\d*\%", results)
     if identity:
         identity = identity.group()
-        identity = identity.replace('%', '')
+        identity = identity.replace("%", "")
     return identity, results
 
 
@@ -48,12 +58,13 @@ def run_bug(query_data):
     """This loads the bestmatchfinder homepage."""
 
     PPD_proteins = PesticidalProteinDatabase.objects.exclude(
-        fastasequence_file__isnull=True).exclude(fastasequence_file='')
+        fastasequence_file__isnull=True
+    ).exclude(fastasequence_file="")
     # print('DB query time', time.time() - start_time)
     # for query in query_data:
     empty = []
     initial = 0
-    align = ''
+    align = ""
 
     # take the scaffold sequence one by one
     results_list = []
@@ -61,11 +72,13 @@ def run_bug(query_data):
     for protein in PPD_proteins:
 
         # If there is no file for this protein, ignore it.
-        if not hasattr(protein, 'fastasequence_file'):
+        if not hasattr(protein, "fastasequence_file"):
             continue
 
-        #print('fastasequence_file', protein.fastasequence_file)
-        s = os.path.join(settings.MEDIA_ROOT, protein.fastasequence_file.path)
+        # print('fastasequence_file', protein.fastasequence_file)
+        s = os.path.join(
+            settings.MEDIA_ROOT, protein.fastasequence_file.path
+        )
         my_blast = blast_two_sequences(query_data, s)
         # logger.error("paths")
         # logger.error(query_data, s)
@@ -100,5 +113,7 @@ def run_bug(query_data):
             initial = float(l[2])
             align = results
             # print(l)
-    results_list = sorted(results_list, key=lambda x: x[2], reverse=True)[:10]
+    results_list = sorted(
+        results_list, key=lambda x: x[2], reverse=True
+    )[:10]
     return results_list
