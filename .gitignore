@@ -13,7 +13,7 @@ logs/uwsgi.log
 *.so
 
 # csv
-*.csv
+# *.csv
 *.json
 *.db
 
