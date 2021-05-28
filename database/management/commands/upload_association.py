@@ -49,7 +49,7 @@ class Command(BaseCommand):
             "data_entered_by",
         ]
 
-        file_path = settings.MEDIA_ROOT + "/csv_files/Association.csv"
+        file_path = settings.MEDIA_ROOT + "/csv_files/meta_data.csv"
         print("file path", file_path)
         raw_data = open(file_path, "rt", encoding="utf-8-sig")
         for row in csv.reader(raw_data):
