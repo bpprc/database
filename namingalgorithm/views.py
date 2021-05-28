@@ -33,7 +33,7 @@ def naming_algorithm(request):
     return render(request, "newwebpage/naming_home.html")
 
 
-@login_required
+# @login_required
 def submit_home(request):
     context = {
         "form": UserSubmissionForm,
