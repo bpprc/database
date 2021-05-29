@@ -7,6 +7,10 @@ import textwrap
 from io import StringIO
 
 from bokeh.embed import components
+from bokeh.plotting import figure
+from bokeh.models import LassoSelectTool, WheelZoomTool, ColumnDataSource
+from bokeh.palettes import Category20
+from clustalanalysis.forms import AnalysisForm, UserDataForm
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
@@ -14,7 +18,6 @@ from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from rich.console import Console
 
-from clustalanalysis.forms import AnalysisForm, UserDataForm
 from database.admin import (
     OldnameNewnameTableLeftResource,
     OldnameNewnameTableRightResource,
