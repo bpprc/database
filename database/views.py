@@ -220,7 +220,7 @@ def categorize_database(request, category=None):
         ).order_by("name"),
     }
     return render(
-        request, "newwebpage/category_display_update.html", context
+        request, "newwebpage/category_display.html", context
     )
     # return render(request, 'portfolio-details.html', context)
 
