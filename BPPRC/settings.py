@@ -301,7 +301,45 @@ ADMIN_REORDER = [
             },
         ),
     },
-    "namingalgorithm",
+    {
+        "app": "database",
+        "models": (
+            {
+                "model": "database.Description",
+                "label": "Pesticdal Protein Category Descriptions",
+            },
+        ),
+    },
+    {
+        "app": "association",
+        "models": (
+            {
+                "model": "association.Association",
+                "label": "Specificity Metadatabase",
+            },
+        ),
+    },
+    {
+        "app": "namingalgorithm",
+        "models": (
+            {
+                "model": "namingalgorithm.UserSubmission",
+                "label": "User Submissions",
+            },
+            {
+                "model": "namingalgorithm.SendEmail",
+                "label": "Communicated emails to users",
+            },
+            {
+                "model": "namingalgorithm.Archive",
+                "label": "Archives",
+            },
+            {
+                "model": "namingalgorithm.AuditEntry",
+                "label": "User logged in information",
+            },
+        ),
+    },
     "extra",
     {
         "app": "auth",
@@ -312,7 +350,6 @@ ADMIN_REORDER = [
     },
     "django_ses",
     "clustalanalysis",
-    "association",
     "sites",
     "auth" "account",
     "socialaccount",
