@@ -27,6 +27,8 @@ class Links(models.Model):
     link = models.TextField()
 
     class Meta:
+        verbose_name = "Add External Link"
+        verbose_name_plural = "Add External Links"
         ordering = ("name",)
 
     def __str__(self):

@@ -74,4 +74,5 @@ class Association(models.Model):
     #     return json.loads(self.target_order)
 
     class Meta:
-        verbose_name = "Association data"
+        verbose_name = "Meta database"
+        verbose_name_plural = "Specificity Metadatabase"

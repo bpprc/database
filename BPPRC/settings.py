@@ -316,6 +316,7 @@ ADMIN_REORDER = [
     "sites",
     "auth" "account",
     "socialaccount",
+    "links",
 ]
 
 # SESSION
