@@ -91,7 +91,9 @@
 <script>
     $(document).ready( function () {
     $('#table_id').DataTable({
-
+      "paging":   false,
+      "ordering": false,
+      "info":     false,
     dom: 'B<"clear">lfrtip',
     buttons: {
         name: 'primary',
