@@ -25,9 +25,7 @@ def bestmatchfinder_home(request):
     """This loads the bestmatchfinder homepage."""
 
     form = SequenceForm()
-    return render(
-        request, "newwebpage/best_match_finder.html", {"form": form}
-    )
+    return render(request, "newwebpage/best_match_finder.html", {"form": form})
 
 
 def run_needle_server(request):
@@ -40,9 +38,7 @@ def run_needle_server(request):
 
             context = {"align": align}
             return render(request, "newwebpage/needle.html", context)
-        return render(
-            request, "newwebpage/best_match_finder.html", {"form": form}
-        )
+        return render(request, "newwebpage/best_match_finder.html", {"form": form})
     return HttpResponseRedirect("/bestmatchfinder_home/")
 
 
@@ -63,13 +59,9 @@ def run_needle_server_celery(request):
             context["task_status"] = task.status
             context["task"] = task.info
 
-            return render(
-                request, "newwebpage/needle_processing.html", context
-            )
+            return render(request, "newwebpage/needle_processing.html", context)
 
-        return render(
-            request, "newwebpage/best_match_finder.html", {"form": form}
-        )
+        return render(request, "newwebpage/best_match_finder.html", {"form": form})
     return HttpResponseRedirect("/bestmatchfinder_home/")
 
 
@@ -92,15 +84,11 @@ def taskstatus_needle_celery(request, task_id):
 
         elif task.status == "PENDING":
             context["results"] = task
-            return render(
-                request, "newwebpage/needle_processing.html", context
-            )
+            return render(request, "newwebpage/needle_processing.html", context)
 
         context["error"] = task
         # print(task)
-        return render(
-            request, "newwebpage/needle_processing.html", context
-        )
+        return render(request, "newwebpage/needle_processing.html", context)
 
 
 def celery_task_status(request, task_id):
@@ -161,25 +149,17 @@ def bestmatchfinder_database_sequence_run(request):
                 protein2 = form.cleaned_data["sequence2_in_form"]
 
             if tool == "needle":
-                align = submit_two_sequences.needle.needle_alignment(
-                    protein1, protein2
-                )
+                align = submit_two_sequences.needle.needle_alignment(protein1, protein2)
             else:
-                align = submit_two_sequences.needle.blast_alignment(
-                    protein1, protein2
-                )
+                align = submit_two_sequences.needle.blast_alignment(protein1, protein2)
                 removed_blast_title = align.split(">")[1]
                 removed_blast_title = removed_blast_title.lstrip()
                 filtered_result = removed_blast_title.split("Lambda")
-                align = (
-                    protein1 + protein2 + "\n\n" + filtered_result[0]
-                )
+                align = protein1 + protein2 + "\n\n" + filtered_result[0]
 
             context = {"align": align}
 
-            return render(
-                request, "newwebpage/two_sequence_needle.html", context
-            )
+            return render(request, "newwebpage/two_sequence_needle.html", context)
         return render(
             request,
             "newwebpage/best_match_finder_database.html",

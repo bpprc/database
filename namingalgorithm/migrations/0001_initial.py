@@ -53,9 +53,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "submittersname",
-                    models.CharField(
-                        blank=True, max_length=25, null=True
-                    ),
+                    models.CharField(blank=True, max_length=25, null=True),
                 ),
                 (
                     "submittersemail",
@@ -63,9 +61,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "accession",
-                    models.CharField(
-                        blank=True, max_length=25, null=True
-                    ),
+                    models.CharField(blank=True, max_length=25, null=True),
                 ),
                 ("message", models.TextField(blank=True, null=True)),
             ],
@@ -84,9 +80,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "submittersname",
-                    models.CharField(
-                        blank=True, max_length=25, null=True
-                    ),
+                    models.CharField(blank=True, max_length=25, null=True),
                 ),
                 (
                     "submittersemail",
@@ -103,9 +97,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "sequence",
-                    models.TextField(
-                        null=True, verbose_name="Protein Sequence"
-                    ),
+                    models.TextField(null=True, verbose_name="Protein Sequence"),
                 ),
                 (
                     "bacterium",
@@ -116,21 +108,15 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "bacterium_textbox",
-                    models.CharField(
-                        blank=True, max_length=250, null=True
-                    ),
+                    models.CharField(blank=True, max_length=250, null=True),
                 ),
                 (
                     "taxonid",
-                    models.CharField(
-                        blank=True, max_length=25, null=True
-                    ),
+                    models.CharField(blank=True, max_length=25, null=True),
                 ),
                 (
                     "year",
-                    models.CharField(
-                        blank=True, max_length=4, null=True
-                    ),
+                    models.CharField(blank=True, max_length=4, null=True),
                 ),
                 (
                     "accession",
@@ -149,9 +135,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "partnerprotein_textbox",
-                    models.CharField(
-                        blank=True, max_length=250, null=True
-                    ),
+                    models.CharField(blank=True, max_length=250, null=True),
                 ),
                 (
                     "toxicto",
@@ -249,9 +233,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "submittersname",
-                    models.CharField(
-                        blank=True, max_length=25, null=True
-                    ),
+                    models.CharField(blank=True, max_length=25, null=True),
                 ),
                 (
                     "submittersemail",
@@ -268,9 +250,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "sequence",
-                    models.TextField(
-                        null=True, verbose_name="Protein Sequence"
-                    ),
+                    models.TextField(null=True, verbose_name="Protein Sequence"),
                 ),
                 (
                     "bacterium",
@@ -281,21 +261,15 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "bacterium_textbox",
-                    models.CharField(
-                        blank=True, max_length=250, null=True
-                    ),
+                    models.CharField(blank=True, max_length=250, null=True),
                 ),
                 (
                     "taxonid",
-                    models.CharField(
-                        blank=True, max_length=25, null=True
-                    ),
+                    models.CharField(blank=True, max_length=25, null=True),
                 ),
                 (
                     "year",
-                    models.CharField(
-                        blank=True, max_length=4, null=True
-                    ),
+                    models.CharField(blank=True, max_length=4, null=True),
                 ),
                 (
                     "accession",
@@ -314,9 +288,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "partnerprotein_textbox",
-                    models.CharField(
-                        blank=True, max_length=250, null=True
-                    ),
+                    models.CharField(blank=True, max_length=250, null=True),
                 ),
                 (
                     "toxicto",

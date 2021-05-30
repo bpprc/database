@@ -51,17 +51,17 @@ def submit(request):
             # print("formset", formset)
             form.save()
 
-            return render(request, 'newwebpage/view.html', {'form': form})
+            return render(request, "newwebpage/view.html", {"form": form})
         # else:
         #     print(form.errors)
         #     print("Error in form")
-            # print("formset", formset)
+        # print("formset", formset)
     else:
         form = UserSubmissionForm()
     #     formset = ToxicToFormSet()
     # helper = ToxicFormSetHelper()
 
-    return render(request, 'newwebpage/submit.html', {'form': form})
+    return render(request, "newwebpage/submit.html", {"form": form})
 
 
 # @login_required
@@ -69,31 +69,31 @@ def submit(request):
 #     """Submit the sequence for the naming purpose through user form."""
 #     if request.method == "POST":
 #         form = UserSubmissionForm(request.POST)
-    # formset = ToxicToFormSet(request.POST)
-    # if form.is_valid():
-    # form.instance.submittersname = request.user
-    # form.instance.submittersemail = request.email
-    # print("formset", formset)
-    #     form.save()
-    #
-    #     return render(
-    #         request, "newwebpage/view.html", {"form": form}
-    #     )
-    # else:
-    #     print(form.errors)
-    #     print("Error in form")
+# formset = ToxicToFormSet(request.POST)
+# if form.is_valid():
+# form.instance.submittersname = request.user
+# form.instance.submittersemail = request.email
+# print("formset", formset)
+#     form.save()
+#
+#     return render(
+#         request, "newwebpage/view.html", {"form": form}
+#     )
+# else:
+#     print(form.errors)
+#     print("Error in form")
 
-    # else:
-    #     form = UserSubmissionForm(
-    #         initial={
-    #             "submittersname": request.user,
-    #             "submittersemail": request.user.email,
-    #         }
-    #     )
-    #     formset = ToxicToFormSet()
-    # helper = ToxicFormSetHelper()
+# else:
+#     form = UserSubmissionForm(
+#         initial={
+#             "submittersname": request.user,
+#             "submittersemail": request.user.email,
+#         }
+#     )
+#     formset = ToxicToFormSet()
+# helper = ToxicFormSetHelper()
 
-    # return render(request, "newwebpage/submit.html", {"form": form})
+# return render(request, "newwebpage/submit.html", {"form": form})
 
 
 def run_align(request):
@@ -106,14 +106,10 @@ def run_align(request):
         tmp_seq.close()
 
     align = run_data.predict_name.run_bug(tmp_seq.name)
-    user_submission = UserSubmission.objects.get(
-        id=request.GET.get("submission_id")
-    )
+    user_submission = UserSubmission.objects.get(id=request.GET.get("submission_id"))
     user_submission.alignresults = align
     user_submission.save()
-    return HttpResponseRedirect(
-        "/admin/namingalgorithm/usersubmission/"
-    )
+    return HttpResponseRedirect("/admin/namingalgorithm/usersubmission/")
 
 
 def align_results(request):
@@ -141,9 +137,7 @@ def run_naming_algorithm(request):
         predicted_name,
         name,
     ) = run_data.predict_name.run_bug(tmp_seq.name)
-    user_submission = UserSubmission.objects.get(
-        id=request.GET.get("submission_id")
-    )
+    user_submission = UserSubmission.objects.get(id=request.GET.get("submission_id"))
     user_submission.predict_name = predicted_name
     user_submission.save()
 
@@ -156,9 +150,7 @@ def run_naming_algorithm(request):
     return render(request, "namingalgorithm/needle.html", context)
 
 
-def _trigger_email_everyday(
-    submittersname, submittersemail, accession, message
-):
+def _trigger_email_everyday(submittersname, submittersemail, accession, message):
     recipient_list = []
     recipient_list.append(submittersemail)
     send_mail(
@@ -181,9 +173,7 @@ def contact_email(request):
             accession = form.cleaned_data["accession"]
             message = form.cleaned_data["message"]
             try:
-                _trigger_email_everyday(
-                    submittersname, submittersemail, accession, message
-                )
+                _trigger_email_everyday(submittersname, submittersemail, accession, message)
                 form.save()
             except:
                 return HttpResponse("Invalid header found.")
@@ -192,16 +182,12 @@ def contact_email(request):
                 "submittersname": submittersname,
                 "submittersemail": submittersemail,
             }
-            return render(
-                request, "namingalgorithm/email_success.html", context
-            )
+            return render(request, "namingalgorithm/email_success.html", context)
     return render(request, "namingalgorithm/email.html", {"form": form})
 
 
 def success_email(request):
-    return HttpResponse(
-        "Success! Your message sent. See SendEmail for the list of emails"
-    )
+    return HttpResponse("Success! Your message sent. See SendEmail for the list of emails")
 
 
 # def cloneUserSubmission(request):

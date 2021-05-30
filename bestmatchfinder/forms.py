@@ -37,11 +37,7 @@ NEEDLE_MAX_NUMBER_SEQ_IN_INPUT = 1
 NEEDLE_CORRECT_SEQ_ERROR_MSG = "please paste correct sequence!"
 NEEDLE_CORRECT_SEQ_TOO_SHORT_ERROR_MSG = "Too short sequence!"
 NEEDLE_SEQUENCE_TYPE = "Currently, protein sequence is allowed"
-NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG = (
-    "Too many sequences, maximum is {}".format(
-        NEEDLE_MAX_NUMBER_SEQ_IN_INPUT
-    )
-)
+NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG = "Too many sequences, maximum is {}".format(NEEDLE_MAX_NUMBER_SEQ_IN_INPUT)
 
 
 def write_sequence_file(sequence: str):
@@ -78,16 +74,11 @@ def guess_if_protein(seq, thresh=0.99):
     for letter in dna_letters:
         protein_alpha_count += seq.count(letter)
 
-    return (
-        len(seq) == 0
-        or float(protein_alpha_count) / float(len(seq)) >= thresh
-    )
+    return len(seq) == 0 or float(protein_alpha_count) / float(len(seq)) >= thresh
 
 
 class SequenceForm(forms.Form):
-    sequence_in_form = forms.CharField(
-        widget=forms.Textarea, required=False
-    )
+    sequence_in_form = forms.CharField(widget=forms.Textarea, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -107,14 +98,10 @@ class SequenceForm(forms.Form):
             sequence_is_protein = guess_if_protein(sequence_in_form)
 
         if not sequence_in_form:
-            raise forms.ValidationError(
-                "Please paste valid protein sequences"
-            )
+            raise forms.ValidationError("Please paste valid protein sequences")
 
         if sequence_is_protein:
-            raise forms.ValidationError(
-                "Currently, it supports only protein sequences"
-            )
+            raise forms.ValidationError("Currently, it supports only protein sequences")
 
         return self.cleaned_data
 
@@ -173,34 +160,22 @@ class SearchDatabaseForm(forms.Form):
         if sequence1_in_form:
             sequence_is_protein = guess_if_protein(sequence1_in_form)
             if sequence_is_protein:
-                raise forms.ValidationError(
-                    "Currently, it supports only protein sequences"
-                )
+                raise forms.ValidationError("Currently, it supports only protein sequences")
 
         if sequence2_in_form:
             sequence_is_protein = guess_if_protein(sequence2_in_form)
             if sequence_is_protein:
-                raise forms.ValidationError(
-                    "Currently, it supports only protein sequences"
-                )
+                raise forms.ValidationError("Currently, it supports only protein sequences")
 
         if protein1 and sequence1_in_form:
-            raise forms.ValidationError(
-                "Please select only one of Sequence / Choice"
-            )
+            raise forms.ValidationError("Please select only one of Sequence / Choice")
         elif not protein1 and not sequence1_in_form:
-            raise forms.ValidationError(
-                "Please select only one of Sequence / Choice"
-            )
+            raise forms.ValidationError("Please select only one of Sequence / Choice")
 
         if protein2 and sequence2_in_form:
-            raise forms.ValidationError(
-                "Please select only one of Sequence / Choice"
-            )
+            raise forms.ValidationError("Please select only one of Sequence / Choice")
         elif not protein2 and not sequence2_in_form:
-            raise forms.ValidationError(
-                "Please select only one of Sequence / Choice"
-            )
+            raise forms.ValidationError("Please select only one of Sequence / Choice")
 
         # if not sequence_is_protein1 and not sequence_is_protein2:
         #     raise forms.ValidationError("Currently, it supports only protien sequences")

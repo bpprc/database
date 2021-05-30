@@ -14,6 +14,4 @@ class Products(models.Model):
     price = models.IntegerField()
 
     def __str__(self):
-        return "{}: - {}: - {}:".format(
-            self.name, self.color, self.price
-        )
+        return "{}: - {}: - {}:".format(self.name, self.color, self.price)

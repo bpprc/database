@@ -17,13 +17,6 @@ def cmd(command):
 
 
 def run_clustal(inputfile, outputfile):
-    cmd_line = (
-        CLUSTAL_PATH
-        + "clustalo -i "
-        + inputfile
-        + " --guidetree-out="
-        + outputfile
-        + " --force"
-    )
+    cmd_line = CLUSTAL_PATH + "clustalo -i " + inputfile + " --guidetree-out=" + outputfile + " --force"
     out, error = cmd(cmd_line)
     return out

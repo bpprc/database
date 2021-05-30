@@ -45,15 +45,11 @@ class TestUrls:
         assert resolve(path).view_name == "dendogram_celery"
 
     def test_taskstatus_clustal_celery(self):
-        path = reverse(
-            "taskstatus_clustal_celery", kwargs={"task_id": "12"}
-        )
+        path = reverse("taskstatus_clustal_celery", kwargs={"task_id": "12"})
         assert resolve(path).view_name == "taskstatus_clustal_celery"
 
     def test_celery_task_status_clustal(self):
-        path = reverse(
-            "celery_task_status_clustal", kwargs={"task_id": "23434234"}
-        )
+        path = reverse("celery_task_status_clustal", kwargs={"task_id": "23434234"})
         assert resolve(path).view_name == "celery_task_status_clustal"
 
     def test_protein_analysis(self):

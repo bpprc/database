@@ -6,9 +6,7 @@ from celery.schedules import crontab
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "BPPRC.settings")
 
 celery_app = Celery("BPPRC")
-celery_app.config_from_object(
-    "django.conf.settings", namespace="CELERY"
-)
+celery_app.config_from_object("django.conf.settings", namespace="CELERY")
 
 # here is the beat schedule dictionary defined
 celery_app.conf.beat_schedule = {

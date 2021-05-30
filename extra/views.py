@@ -17,9 +17,7 @@ def feedback_home(request):
             subject = request.POST.get("subject")
             email = request.POST.get("email")
             message = request.POST.get("message")
-            feedback = Feedback.objects.create(
-                name=name, subject=subject, email=email, message=message
-            )
+            feedback = Feedback.objects.create(name=name, subject=subject, email=email, message=message)
 
             context = {
                 "name": name,
@@ -35,9 +33,7 @@ def feedback_home(request):
         else:
             # print(form.errors)
             # print("Error in form")
-            return render(
-                request, "newwebpage/feedback.html", {"form": form}
-            )
+            return render(request, "newwebpage/feedback.html", {"form": form})
 
     else:
         # print(form)
@@ -75,9 +71,7 @@ def signup(request):
         if form.is_valid():
             user = form.save(request)
             # Added this!
-            complete_signup(
-                request, user, app_settings.EMAIL_VERIFICATION, "/"
-            )
+            complete_signup(request, user, app_settings.EMAIL_VERIFICATION, "/")
 
 
 def links(request):

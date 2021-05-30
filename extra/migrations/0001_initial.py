@@ -25,15 +25,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.CharField(
-                        blank=True, max_length=75, null=True
-                    ),
+                    models.CharField(blank=True, max_length=75, null=True),
                 ),
                 (
                     "subject",
-                    models.CharField(
-                        blank=True, max_length=75, null=True
-                    ),
+                    models.CharField(blank=True, max_length=75, null=True),
                 ),
                 ("email", models.EmailField(max_length=70, null=True)),
                 ("message", models.TextField(blank=True)),

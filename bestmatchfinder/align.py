@@ -57,9 +57,9 @@ def blast_two_sequences(file1, file2):
 def run_bug(query_data):
     """This loads the bestmatchfinder homepage."""
 
-    PPD_proteins = PesticidalProteinDatabase.objects.exclude(
-        fastasequence_file__isnull=True
-    ).exclude(fastasequence_file="")
+    PPD_proteins = PesticidalProteinDatabase.objects.exclude(fastasequence_file__isnull=True).exclude(
+        fastasequence_file=""
+    )
     # print('DB query time', time.time() - start_time)
     # for query in query_data:
     empty = []
@@ -76,9 +76,7 @@ def run_bug(query_data):
             continue
 
         # print('fastasequence_file', protein.fastasequence_file)
-        s = os.path.join(
-            settings.MEDIA_ROOT, protein.fastasequence_file.path
-        )
+        s = os.path.join(settings.MEDIA_ROOT, protein.fastasequence_file.path)
         my_blast = blast_two_sequences(query_data, s)
         # logger.error("paths")
         # logger.error(query_data, s)
@@ -113,7 +111,5 @@ def run_bug(query_data):
             initial = float(l[2])
             align = results
             # print(l)
-    results_list = sorted(
-        results_list, key=lambda x: x[2], reverse=True
-    )[:10]
+    results_list = sorted(results_list, key=lambda x: x[2], reverse=True)[:10]
     return results_list

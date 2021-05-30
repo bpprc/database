@@ -54,9 +54,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteindatabase",
             name="comment",
-            field=models.TextField(
-                null=True, verbose_name="User comments"
-            ),
+            field=models.TextField(null=True, verbose_name="User comments"),
         ),
         migrations.AlterField(
             model_name="pesticidalproteindatabase",
@@ -104,16 +102,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteindatabase",
             name="fastasequence_file",
-            field=models.FileField(
-                null=True, upload_to="fastasequence_files/"
-            ),
+            field=models.FileField(null=True, upload_to="fastasequence_files/"),
         ),
         migrations.AlterField(
             model_name="pesticidalproteindatabase",
             name="name",
-            field=models.CharField(
-                max_length=15, null=True, verbose_name="Protein Name"
-            ),
+            field=models.CharField(max_length=15, null=True, verbose_name="Protein Name"),
         ),
         migrations.AlterField(
             model_name="pesticidalproteindatabase",
@@ -181,9 +175,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteindatabase",
             name="sequence",
-            field=models.TextField(
-                null=True, verbose_name="Protein Sequence"
-            ),
+            field=models.TextField(null=True, verbose_name="Protein Sequence"),
         ),
         migrations.AlterField(
             model_name="pesticidalproteindatabase",
@@ -193,9 +185,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteindatabase",
             name="submittersname",
-            field=models.CharField(
-                default="Uploaded by Suresh", max_length=125, null=True
-            ),
+            field=models.CharField(default="Uploaded by Suresh", max_length=125, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteindatabase",
@@ -247,37 +237,27 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="family",
-            field=models.CharField(
-                default="None", max_length=305, null=True
-            ),
+            field=models.CharField(default="None", max_length=305, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="mammalian_active",
-            field=models.CharField(
-                default="None", max_length=250, null=True
-            ),
+            field=models.CharField(default="None", max_length=250, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="name",
-            field=models.CharField(
-                default="None", max_length=15, null=True
-            ),
+            field=models.CharField(default="None", max_length=15, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="nontoxic",
-            field=models.CharField(
-                default="None", max_length=250, null=True
-            ),
+            field=models.CharField(default="None", max_length=250, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="oldname",
-            field=models.CharField(
-                default="None", max_length=305, null=True
-            ),
+            field=models.CharField(default="None", max_length=305, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
@@ -296,16 +276,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="partnerprotein_textbox",
-            field=models.CharField(
-                default="None", max_length=250, null=True
-            ),
+            field=models.CharField(default="None", max_length=250, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="pdbcode",
-            field=models.CharField(
-                default="None", max_length=10, null=True
-            ),
+            field=models.CharField(default="None", max_length=10, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
@@ -324,30 +300,22 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="strain",
-            field=models.CharField(
-                default="None", max_length=250, null=True
-            ),
+            field=models.CharField(default="None", max_length=250, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="submittersemail",
-            field=models.EmailField(
-                default="None", max_length=70, null=True
-            ),
+            field=models.EmailField(default="None", max_length=70, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="submittersname",
-            field=models.CharField(
-                default="None", max_length=25, null=True
-            ),
+            field=models.CharField(default="None", max_length=25, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="taxonid",
-            field=models.CharField(
-                default="None", max_length=25, null=True
-            ),
+            field=models.CharField(default="None", max_length=25, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
@@ -361,9 +329,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="toxicto",
-            field=models.CharField(
-                default="None", max_length=250, null=True
-            ),
+            field=models.CharField(default="None", max_length=250, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
@@ -377,9 +343,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteinhiddensequence",
             name="year",
-            field=models.CharField(
-                default="None", max_length=5, null=True
-            ),
+            field=models.CharField(default="None", max_length=5, null=True),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinprivatedatabase",
@@ -426,9 +390,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteinprivatedatabase",
             name="comment",
-            field=models.TextField(
-                null=True, verbose_name="User comments"
-            ),
+            field=models.TextField(null=True, verbose_name="User comments"),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinprivatedatabase",
@@ -471,16 +433,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteinprivatedatabase",
             name="fastasequence_file",
-            field=models.FileField(
-                null=True, upload_to="fastasequence_files/"
-            ),
+            field=models.FileField(null=True, upload_to="fastasequence_files/"),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinprivatedatabase",
             name="name",
-            field=models.CharField(
-                max_length=15, null=True, verbose_name="Protein Name"
-            ),
+            field=models.CharField(max_length=15, null=True, verbose_name="Protein Name"),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinprivatedatabase",
@@ -548,9 +506,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pesticidalproteinprivatedatabase",
             name="sequence",
-            field=models.TextField(
-                null=True, verbose_name="Protein Sequence"
-            ),
+            field=models.TextField(null=True, verbose_name="Protein Sequence"),
         ),
         migrations.AlterField(
             model_name="pesticidalproteinprivatedatabase",

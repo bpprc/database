@@ -21,9 +21,7 @@ FILE_PATH = Path(settings.MEDIA_ROOT, "fastasequence_files/")
 
 
 def cmdline(command):
-    process = subprocess.Popen(
-        args=command, stdout=subprocess.PIPE, shell=True
-    )
+    process = subprocess.Popen(args=command, stdout=subprocess.PIPE, shell=True)
     return process.communicate()[0]
 
 
@@ -61,18 +59,14 @@ def return_file_url(sequence):
 
 
 def return_proteins():
-    proteins = PesticidalProteinDatabase.objects.values_list(
-        "name", flat=True
-    )
+    proteins = PesticidalProteinDatabase.objects.values_list("name", flat=True)
     return proteins
 
 
 def filtered_proteins():
     proteins = return_proteins()
     proteins_endwith1 = filter_files_ending_with_one(list(proteins))
-    proteins_filtered = PesticidalProteinDatabase.objects.filter(
-        name__in=proteins_endwith1
-    )
+    proteins_filtered = PesticidalProteinDatabase.objects.filter(name__in=proteins_endwith1)
     return proteins_filtered
 
 
@@ -81,20 +75,14 @@ def filter_files_ending_with_one(SUBJECT_FASTAFILES):
     The function filters the files end with 1
     """
     return [
-        name
-        for name in SUBJECT_FASTAFILES
-        if name[-1].isdigit()
-        and not name[-2].isdigit() == 1
-        and int(name[-1]) == 1
+        name for name in SUBJECT_FASTAFILES if name[-1].isdigit() and not name[-2].isdigit() == 1 and int(name[-1]) == 1
     ]
 
 
 def write_files(objectname):
 
     for protein in objectname:
-        tmp_seq = tempfile.NamedTemporaryFile(
-            dir=FILE_PATH, mode="wb+", delete=False
-        )
+        tmp_seq = tempfile.NamedTemporaryFile(dir=FILE_PATH, mode="wb+", delete=False)
         fasta = textwrap.fill(protein.sequence, 80)
         str_to_write = f">{protein.name}\n{fasta}\n"
         tmp_seq.write(str_to_write.encode())
@@ -120,9 +108,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         accession_file_url = ""
         accession = kwargs["accession"]
-        proteins = UserSubmission.objects.filter(
-            accession__contains=accession
-        )
+        proteins = UserSubmission.objects.filter(accession__contains=accession)
         for protein in proteins:
             accession_file_url = return_file_url(protein.sequence)
         # align = run_data.predict_name.run_bug(file_url)

@@ -88,13 +88,9 @@ parser.add_option(
 parser.add_option(
     "--gapext",
     type=str,
-    help=(
-        "Pairwise alignment score for each additional residue in a gap."
-    ),
+    help=("Pairwise alignment score for each additional residue in a gap."),
 )
-parser.add_option(
-    "--endweight", action="store_true", help=("Apply end gap penalty")
-)
+parser.add_option("--endweight", action="store_true", help=("Apply end gap penalty"))
 parser.add_option(
     "--endopen",
     type=str,
@@ -108,9 +104,7 @@ parser.add_option(
         "the end gap. This is how long end gaps are penalized."
     ),
 )
-parser.add_option(
-    "--format", type=str, help=("Pairwise sequences format")
-)
+parser.add_option("--format", type=str, help=("Pairwise sequences format"))
 parser.add_option(
     "--stype",
     type=str,
@@ -155,35 +149,21 @@ parser.add_option("--email", help="E-mail address.")
 parser.add_option("--title", help="Job title.")
 parser.add_option("--outfile", help="File name for results.")
 parser.add_option("--outformat", help="Output format for results.")
-parser.add_option(
-    "--asyncjob", action="store_true", help="Asynchronous mode."
-)
+parser.add_option("--asyncjob", action="store_true", help="Asynchronous mode.")
 parser.add_option("--jobid", help="Job identifier.")
-parser.add_option(
-    "--polljob", action="store_true", help="Get job result."
-)
+parser.add_option("--polljob", action="store_true", help="Get job result.")
 parser.add_option(
     "--pollFreq",
     type="int",
     default=3,
     help="Poll frequency in seconds (default 3s).",
 )
-parser.add_option(
-    "--status", action="store_true", help="Get job status."
-)
-parser.add_option(
-    "--resultTypes", action="store_true", help="Get result types."
-)
-parser.add_option(
-    "--params", action="store_true", help="List input parameters."
-)
+parser.add_option("--status", action="store_true", help="Get job status.")
+parser.add_option("--resultTypes", action="store_true", help="Get result types.")
+parser.add_option("--params", action="store_true", help="List input parameters.")
 parser.add_option("--paramDetail", help="Get details for parameter.")
-parser.add_option(
-    "--quiet", action="store_true", help="Decrease output level."
-)
-parser.add_option(
-    "--verbose", action="store_true", help="Increase output level."
-)
+parser.add_option("--quiet", action="store_true", help="Decrease output level.")
+parser.add_option("--verbose", action="store_true", help="Increase output level.")
 parser.add_option(
     "--version",
     action="store_true",
@@ -195,9 +175,7 @@ parser.add_option(
     default=debugLevel,
     help="Debugging level.",
 )
-parser.add_option(
-    "--baseUrl", default=baseUrl, help="Base URL for service."
-)
+parser.add_option("--baseUrl", default=baseUrl, help="Base URL for service.")
 
 (options, args) = parser.parse_args()
 
@@ -288,9 +266,7 @@ def restRequest(url):
 def serviceGetParameters():
     printDebugMessage("serviceGetParameters", "Begin", 1)
     requestUrl = baseUrl + "/parameters"
-    printDebugMessage(
-        "serviceGetParameters", "requestUrl: " + requestUrl, 2
-    )
+    printDebugMessage("serviceGetParameters", "requestUrl: " + requestUrl, 2)
     xmlDoc = restRequest(requestUrl)
     doc = xmltramp.parse(xmlDoc)
     printDebugMessage("serviceGetParameters", "End", 1)
@@ -309,13 +285,9 @@ def printGetParameters():
 # Get input parameter information
 def serviceGetParameterDetails(paramName):
     printDebugMessage("serviceGetParameterDetails", "Begin", 1)
-    printDebugMessage(
-        "serviceGetParameterDetails", "paramName: " + paramName, 2
-    )
+    printDebugMessage("serviceGetParameterDetails", "paramName: " + paramName, 2)
     requestUrl = baseUrl + "/parameterdetails/" + paramName
-    printDebugMessage(
-        "serviceGetParameterDetails", "requestUrl: " + requestUrl, 2
-    )
+    printDebugMessage("serviceGetParameterDetails", "requestUrl: " + requestUrl, 2)
     xmlDoc = restRequest(requestUrl)
     doc = xmltramp.parse(xmlDoc)
     printDebugMessage("serviceGetParameterDetails", "End", 1)
@@ -336,12 +308,7 @@ def printGetParameterDetails(paramName):
             print("\t" + unicode(value.label))
             if hasattr(value, "properties"):
                 for wsProperty in value.properties:
-                    print(
-                        "\t"
-                        + unicode(wsProperty.key)
-                        + "\t"
-                        + unicode(wsProperty.value)
-                    )
+                    print("\t" + unicode(wsProperty.key) + "\t" + unicode(wsProperty.value))
     printDebugMessage("printGetParameterDetails", "End", 1)
 
 
@@ -366,9 +333,7 @@ def serviceRun(email, title, params):
         http_headers = {"User-Agent": user_agent}
         req = Request(requestUrl, None, http_headers)
         # Make the submission (HTTP POST).
-        reqH = urlopen(
-            req, requestData.encode(encoding="utf_8", errors="strict")
-        )
+        reqH = urlopen(req, requestData.encode(encoding="utf_8", errors="strict"))
         jobId = unicode(reqH.read(), "utf-8")
         reqH.close()
     except HTTPError as ex:
@@ -384,9 +349,7 @@ def serviceGetStatus(jobId):
     printDebugMessage("serviceGetStatus", "Begin", 1)
     printDebugMessage("serviceGetStatus", "jobId: " + jobId, 2)
     requestUrl = baseUrl + "/status/" + jobId
-    printDebugMessage(
-        "serviceGetStatus", "requestUrl: " + requestUrl, 2
-    )
+    printDebugMessage("serviceGetStatus", "requestUrl: " + requestUrl, 2)
     status = restRequest(requestUrl)
     printDebugMessage("serviceGetStatus", "status: " + status, 2)
     printDebugMessage("serviceGetStatus", "End", 1)
@@ -401,10 +364,7 @@ def printGetStatus(jobId):
         print("Getting status for job %s" % jobId)
     print(status)
     if outputLevel > 0 and status == "FINISHED":
-        print(
-            "To get results: python %s --polljob --jobid %s"
-            "" % (os.path.basename(__file__), jobId)
-        )
+        print("To get results: python %s --polljob --jobid %s" "" % (os.path.basename(__file__), jobId))
     printDebugMessage("printGetStatus", "End", 1)
 
 
@@ -413,9 +373,7 @@ def serviceGetResultTypes(jobId):
     printDebugMessage("serviceGetResultTypes", "Begin", 1)
     printDebugMessage("serviceGetResultTypes", "jobId: " + jobId, 2)
     requestUrl = baseUrl + "/resulttypes/" + jobId
-    printDebugMessage(
-        "serviceGetResultTypes", "requestUrl: " + requestUrl, 2
-    )
+    printDebugMessage("serviceGetResultTypes", "requestUrl: " + requestUrl, 2)
     xmlDoc = restRequest(requestUrl)
     doc = xmltramp.parse(xmlDoc)
     printDebugMessage("serviceGetResultTypes", "End", 1)
@@ -496,20 +454,10 @@ def getResult(jobId):
         # Derive the filename for the result
         if options.outfile:
             filename = (
-                options.outfile
-                + "."
-                + unicode(resultType["identifier"])
-                + "."
-                + unicode(resultType["fileSuffix"])
+                options.outfile + "." + unicode(resultType["identifier"]) + "." + unicode(resultType["fileSuffix"])
             )
         else:
-            filename = (
-                jobId
-                + "."
-                + unicode(resultType["identifier"])
-                + "."
-                + unicode(resultType["fileSuffix"])
-            )
+            filename = jobId + "." + unicode(resultType["identifier"]) + "." + unicode(resultType["fileSuffix"])
         # Write a result file
 
         outformat_parm = str(options.outformat).split(",")
@@ -519,22 +467,15 @@ def getResult(jobId):
             if outformat_type == "None":
                 outformat_type = None
 
-            if not outformat_type or outformat_type == unicode(
-                resultType["identifier"]
-            ):
+            if not outformat_type or outformat_type == unicode(resultType["identifier"]):
                 if outputLevel > 1:
-                    print(
-                        "Getting %s" % unicode(resultType["identifier"])
-                    )
+                    print("Getting %s" % unicode(resultType["identifier"]))
                 # Get the result
-                result = serviceGetResult(
-                    jobId, unicode(resultType["identifier"])
-                )
+                result = serviceGetResult(jobId, unicode(resultType["identifier"]))
                 if (
                     unicode(resultType["mediaType"]) == "image/png"
                     or unicode(resultType["mediaType"]) == "image/jpeg"
-                    or unicode(resultType["mediaType"])
-                    == "application/gzip"
+                    or unicode(resultType["mediaType"]) == "application/gzip"
                 ):
                     fmode = "wb"
                 else:
@@ -680,9 +621,7 @@ elif options.email and not options.jobid:
         else:  # Argument is a sequence id
             params["sequence"] = args[0]
     elif len(args) == 2 and "true" not in args and "false" not in args:
-        if os.path.exists(args[0]) and os.path.exists(
-            args[1]
-        ):  # Read file into content
+        if os.path.exists(args[0]) and os.path.exists(args[1]):  # Read file into content
             params["asequence"] = readFile(args[0])
             params["bsequence"] = readFile(args[1])
         else:  # Argument is a sequence id
@@ -692,18 +631,12 @@ elif options.email and not options.jobid:
         hasattr(options, "asequence") and hasattr(options, "bsequence")
     ):  # Specified via option
         if hasattr(options, "sequence"):
-            if os.path.exists(
-                options.sequence
-            ):  # Read file into content
+            if os.path.exists(options.sequence):  # Read file into content
                 params["sequence"] = readFile(options.sequence)
             else:  # Argument is a sequence id
                 params["sequence"] = options.sequence
-        elif hasattr(options, "asequence") and hasattr(
-            options, "bsequence"
-        ):
-            if os.path.exists(options.asequence) and os.path.exists(
-                options.bsequence
-            ):  # Read file into content
+        elif hasattr(options, "asequence") and hasattr(options, "bsequence"):
+            if os.path.exists(options.asequence) and os.path.exists(options.bsequence):  # Read file into content
                 params["asequence"] = readFile(options.asequence)
                 params["bsequence"] = readFile(options.bsequence)
             else:  # Argument is a sequence id
@@ -752,10 +685,7 @@ elif options.email and not options.jobid:
     if options.asyncjob:  # Async mode
         print(jobId)
         if outputLevel > 0:
-            print(
-                "To check status: python %s --status --jobid %s"
-                "" % (os.path.basename(__file__), jobId)
-            )
+            print("To check status: python %s --status --jobid %s" "" % (os.path.basename(__file__), jobId))
     else:
         # Sync mode
         if outputLevel > 0:
@@ -771,10 +701,7 @@ elif options.jobid and options.status:
 elif options.jobid and (options.resultTypes or options.polljob):
     status = serviceGetStatus(options.jobid)
     if status == "PENDING" or status == "RUNNING":
-        print(
-            "Error: Job status is %s. "
-            "To get result types the job must be finished." % status
-        )
+        print("Error: Job status is %s. " "To get result types the job must be finished." % status)
         quit()
     # List result types for job
     if options.resultTypes:
@@ -785,9 +712,7 @@ elif options.jobid and (options.resultTypes or options.polljob):
 else:
     # Checks for 'email' parameter
     if not options.email:
-        print(
-            '\nParameter "--email" is missing in your command. It is required!\n'
-        )
+        print('\nParameter "--email" is missing in your command. It is required!\n')
 
     print("Error: unrecognised argument combination", file=sys.stderr)
     print_usage()

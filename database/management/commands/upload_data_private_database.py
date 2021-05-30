@@ -15,9 +15,7 @@ class Command(BaseCommand):
     help = "Loads data from PesticidalProteinPrivateDatabase.csv. Please provide filename along with the path"
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            "filename", type=str, help="filename for csv file"
-        )
+        parser.add_argument("filename", type=str, help="filename for csv file")
 
     def handle(self, *args, **kwargs):
         filename = kwargs["filename"]

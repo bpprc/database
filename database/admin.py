@@ -334,9 +334,7 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
     def accession_availability(self, obj):
         accession = obj.accession
         if not accession:
-            return format_html(
-                "<body> <p>No accession number</p> </body>"
-            )
+            return format_html("<body> <p>No accession number</p> </body>")
         try:
             handle = Entrez.efetch(
                 db="nucleotide",
@@ -344,13 +342,9 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
                 rettype="fasta",
                 retmode="text",
             )
-            return format_html(
-                '<body> <p style="color:#FF0000";>Sequence is Public</p> </body>'
-            )
+            return format_html('<body> <p style="color:#FF0000";>Sequence is Public</p> </body>')
         except BaseException:
-            return format_html(
-                "<body> <p>Sequence is Private</p> </body>"
-            )
+            return format_html("<body> <p>Sequence is Private</p> </body>")
 
     accession_availability.allow_tags = True
     accession_availability.description = "Accession Available in NCBI"
@@ -577,16 +571,12 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     def Pfam_Info(self, obj):
         if obj.name.startswith("Cry"):
             try:
-                domain_details = ProteinDetail.objects.get(
-                    accession=obj.accession
-                )
+                domain_details = ProteinDetail.objects.get(accession=obj.accession)
             except ProteinDetail.DoesNotExist:
                 domain_details = None
             if domain_details:
                 return format_html("<p>Data Available</p>")
-            return format_html(
-                '<p style="color:#FF0000";>Pfam data needed</p>'
-            )
+            return format_html('<p style="color:#FF0000";>Pfam data needed</p>')
 
     ordering = ("name",)
     accession_url.allow_tags = True
@@ -635,9 +625,7 @@ class OldnameNewnameTableLeftAdmin(ImportExportModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         if change:
-            change_message = "{} - {} - {}".format(
-                obj.name_2020, obj.name_1998, obj.alternative_name
-            )
+            change_message = "{} - {} - {}".format(obj.name_2020, obj.name_1998, obj.alternative_name)
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
@@ -664,9 +652,7 @@ class OldnameNewnameTableRightAdmin(ImportExportModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         if change:
-            change_message = "{} - {} - {}".format(
-                obj.name_1998, obj.name_2020, obj.alternative_name
-            )
+            change_message = "{} - {} - {}".format(obj.name_1998, obj.name_2020, obj.alternative_name)
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
@@ -697,9 +683,7 @@ class ProteinDetailAdmin(ImportExportModelAdmin):
 
     formfield_overrides = {
         models.CharField: {"widget": TextInput(attrs={"size": "20"})},
-        models.TextField: {
-            "widget": Textarea(attrs={"rows": 4, "cols": 80})
-        },
+        models.TextField: {"widget": Textarea(attrs={"rows": 4, "cols": 80})},
     }
     fields = (
         "name",
@@ -748,9 +732,7 @@ class ProteinDetailAdmin(ImportExportModelAdmin):
     inlines = [ModelAdminLog]
 
     def Protein_Name(self, obj):
-        protein = PesticidalProteinDatabase.objects.get(
-            accession=obj.accession
-        )
+        protein = PesticidalProteinDatabase.objects.get(accession=obj.accession)
         if protein:
             return protein.name
 
@@ -766,9 +748,7 @@ admin.site.site_header = "BPPRC Admin Dashboard"
 admin.site.index_title = "BPPRC Available Features"
 admin.site.site_title = "BPPRC adminstration"
 
-admin.site.register(
-    PesticidalProteinDatabase, PesticidalProteinDatabaseAdmin
-)
+admin.site.register(PesticidalProteinDatabase, PesticidalProteinDatabaseAdmin)
 admin.site.register(Description, DescriptionAdmin)
 admin.site.register(ProteinDetail, ProteinDetailAdmin)
 admin.site.register(
@@ -780,10 +760,6 @@ admin.site.register(
     PesticidalProteinHiddenSequenceAdmin,
 )
 admin.site.register(StructureDatabase, StructureDatabaseAdmin)
-admin.site.register(
-    OldnameNewnameTableLeft, OldnameNewnameTableLeftAdmin
-)
-admin.site.register(
-    OldnameNewnameTableRight, OldnameNewnameTableRightAdmin
-)
+admin.site.register(OldnameNewnameTableLeft, OldnameNewnameTableLeftAdmin)
+admin.site.register(OldnameNewnameTableRight, OldnameNewnameTableRightAdmin)
 admin.site.unregister(Group)

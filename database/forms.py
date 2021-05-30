@@ -47,11 +47,7 @@ NEEDLE_MAX_NUMBER_SEQ_IN_INPUT = 1
 NEEDLE_CORRECT_SEQ_ERROR_MSG = "please paste correct sequence!"
 NEEDLE_CORRECT_SEQ_TOO_SHORT_ERROR_MSG = "Too short sequence!"
 NEEDLE_SEQUENCE_TYPE = "Currently, protein sequence is allowed"
-NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG = (
-    "Too many sequences, maximum is {}".format(
-        NEEDLE_MAX_NUMBER_SEQ_IN_INPUT
-    )
-)
+NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG = "Too many sequences, maximum is {}".format(NEEDLE_MAX_NUMBER_SEQ_IN_INPUT)
 
 
 def validate_sequence(sequence: str, sequence_is_protein=True):
@@ -74,9 +70,7 @@ def validate_sequence(sequence: str, sequence_is_protein=True):
         raise forms.ValidationError(NEEDLE_CORRECT_SEQ_ERROR_MSG)
 
     if record_count > NEEDLE_MAX_NUMBER_SEQ_IN_INPUT:
-        raise forms.ValidationError(
-            NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG
-        )
+        raise forms.ValidationError(NEEDLE_CORRECT_SEQ_MAX_SEQ_NUMB_ERROR_MSG)
 
     # read sequence from the written temporary file
     sequence_in_file = SeqIO.parse(tmp_seq.name, "fasta")
@@ -100,23 +94,16 @@ def check_allowed_letters(seq, allowed_letter_as_set):
     # set of unique letters in sequence
     seq_set = set(seq)
 
-    not_allowed_letters_in_seq = [
-        x
-        for x in seq_set
-        if str(x).upper() not in allowed_letter_as_set
-    ]
+    not_allowed_letters_in_seq = [x for x in seq_set if str(x).upper() not in allowed_letter_as_set]
 
     if len(not_allowed_letters_in_seq) > 0:
         raise forms.ValidationError(
-            "This sequence type cannot contain letters: "
-            + ", ".join(not_allowed_letters_in_seq)
+            "This sequence type cannot contain letters: " + ", ".join(not_allowed_letters_in_seq)
         )
 
 
 def check_protein_nucleotide(seq):
-    sequence_is_protein = check_allowed_letters(
-        str(sequence), ALLOWED_AMINOACIDS
-    )
+    sequence_is_protein = check_allowed_letters(str(sequence), ALLOWED_AMINOACIDS)
     return sequence_is_protein
 
 
@@ -135,22 +122,14 @@ class SearchForm(forms.Form):
         required=True,
         widget=forms.TextInput(attrs={"placeholder": "Search"}),
     )
-    search_fields = forms.ChoiceField(
-        choices=SEARCH_CHOICES, required=False
-    )
+    search_fields = forms.ChoiceField(choices=SEARCH_CHOICES, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["search_term"].error_messages = {
-            "required": "Please type a protein name"
-        }
+        self.fields["search_term"].error_messages = {"required": "Please type a protein name"}
         self.fields["search_term"].label = ""
 
-        validators = [
-            v
-            for v in self.fields["search_term"].validators
-            if not isinstance(v, MinLengthValidator)
-        ]
+        validators = [v for v in self.fields["search_term"].validators if not isinstance(v, MinLengthValidator)]
         min_length = 3
         validators.append(MinLengthValidator(min_length))
         # print(validators)
@@ -173,9 +152,7 @@ class SearchForm(forms.Form):
                 css_class="form-row",
             ),
             Row(
-                Column(
-                    "search_fields", css_class="form-group col-md-6"
-                ),
+                Column("search_fields", css_class="form-group col-md-6"),
                 css_class="form-row",
             ),
         )
@@ -184,29 +161,21 @@ class SearchForm(forms.Form):
         data = self.cleaned_data["search_term"]
 
         if data is None:
-            raise ValidationError(
-                "Please provide the keywords to search in the database"
-            )
+            raise ValidationError("Please provide the keywords to search in the database")
         elif data != "R1" and len(data) < 3:
-            raise ValidationError(
-                "Please keep the search term under 3 characters"
-            )
+            raise ValidationError("Please keep the search term under 3 characters")
 
         return data
 
 
 class UserSubmittedSequenceAnalysis(forms.ModelForm):
 
-    sequences_in_form = forms.CharField(
-        widget=forms.Textarea, required=False, label="protein sequence"
-    )
+    sequences_in_form = forms.CharField(widget=forms.Textarea, required=False, label="protein sequence")
 
     def clean_sequences_in_form(self):
         sequences_in_form = self.cleaned_data["sequences_in_form"]
         if sequences_in_form:
-            return validate_sequence(
-                sequences_in_form, sequence_is_protein=True
-            )
+            return validate_sequence(sequences_in_form, sequence_is_protein=True)
         return sequences_in_form
 
     class Meta:
@@ -234,9 +203,7 @@ class DownloadForm(forms.Form):
 
         self.helper.add_input(Submit("submit", "Download"))
 
-        categories = PesticidalProteinDatabase.objects.order_by(
-            "name"
-        ).values_list("name", flat=True)
+        categories = PesticidalProteinDatabase.objects.order_by("name").values_list("name", flat=True)
         description = Description.objects.order_by("name")
 
         self.category_prefixes = {}
@@ -249,9 +216,7 @@ class DownloadForm(forms.Form):
         for key, value in self.category_prefixes.items():
             for detail in description:
                 if detail.name.lower() == key.lower():
-                    self.category_description[key.lower()] = (
-                        value + "      :  " + detail.description
-                    )
+                    self.category_description[key.lower()] = value + "      :  " + detail.description
 
         self.category_options.extend(
             sorted(

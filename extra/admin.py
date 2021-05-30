@@ -22,9 +22,7 @@ class LinksAdmin(ImportExportModelAdmin):
         return self.name
 
     def link_url(self, obj):
-        return format_html(
-            '<a href="%s" target="_blank">%s</a>' % (obj.link, obj.link)
-        )
+        return format_html('<a href="%s" target="_blank">%s</a>' % (obj.link, obj.link))
 
 
 class FeedbackResource(resources.ModelResource):

@@ -21,9 +21,7 @@ class TestUrls:
         assert resolve(path).view_name == "run_needle_server_celery"
 
     def test_taskstatus_needle_celery(self):
-        path = reverse(
-            "taskstatus_needle_celery", kwargs={"str": "task_id"}
-        )
+        path = reverse("taskstatus_needle_celery", kwargs={"str": "task_id"})
         assert resolve(path).view_name == "taskstatus_needle_celery"
 
     def test_celery_task_status(self):
@@ -32,7 +30,4 @@ class TestUrls:
 
     def test_bestmatchfinder_database_sequence_run(self):
         path = reverse("bestmatchfinder_database_sequence_run")
-        assert (
-            resolve(path).view_name
-            == "bestmatchfinder_database_sequence_run"
-        )
+        assert resolve(path).view_name == "bestmatchfinder_database_sequence_run"

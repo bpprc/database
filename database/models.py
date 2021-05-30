@@ -89,9 +89,7 @@ class StructureDatabase(models.Model):
     # Protein Data Bank identifier
     # https://proteopedia.org/wiki/index.php/PDB_code
     # https://www.rcsb.org/pages/about-us/index
-    pdbid = ArrayField(
-        models.CharField(max_length=1000, null=True), default=list
-    )
+    pdbid = ArrayField(models.CharField(max_length=1000, null=True), default=list)
 
     # NCBI PubMed id
     # https://www.ncbi.nlm.nih.gov/pmc/pmctopmid/
@@ -102,9 +100,7 @@ class StructureDatabase(models.Model):
 
     # This field provides whether the protein sequence is modified or not
     # If modified "Yes" otherwise "No"
-    modified = models.CharField(
-        max_length=100, choices=CHOICES, default="Yes"
-    )
+    modified = models.CharField(max_length=100, choices=CHOICES, default="Yes")
 
     # Any other information related to the protein
     comment = models.TextField(null=True)
@@ -124,59 +120,35 @@ class PesticidalProteinHiddenSequence(models.Model):
     """
 
     name = models.CharField(max_length=15, default="None", null=True)
-    oldname = models.CharField(
-        max_length=305, default="None", null=True
-    )
+    oldname = models.CharField(max_length=305, default="None", null=True)
     othernames = models.TextField(null=True)
     accession = models.CharField(max_length=25, null=True)
     year = models.CharField(max_length=5, default="None", null=True)
     sequence = models.TextField(blank=True, null=False)
-    bacterium = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES, null=True
-    )
-    bacterium_textbox = models.CharField(
-        max_length=250, default="Bacillus Thuringiensis", null=True
-    )
+    bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES, null=True)
+    bacterium_textbox = models.CharField(max_length=250, default="Bacillus Thuringiensis", null=True)
     strain = models.CharField(max_length=250, default="None", null=True)
     publication = models.TextField(null=True, blank=True)
     family = models.CharField(max_length=305, null=True, default="None")
-    toxicto = models.CharField(
-        max_length=250, null=True, default="None"
-    )
-    nontoxic = models.CharField(
-        max_length=250, null=True, default="None"
-    )
-    mammalian_active = models.CharField(
-        max_length=250, null=True, default="None"
-    )
+    toxicto = models.CharField(max_length=250, null=True, default="None")
+    nontoxic = models.CharField(max_length=250, null=True, default="None")
+    mammalian_active = models.CharField(max_length=250, null=True, default="None")
 
     # Protein Data Bank identifier
     # https://proteopedia.org/wiki/index.php/PDB_code
     # https://www.rcsb.org/pages/about-us/index
     pdbcode = models.CharField(max_length=10, null=True, default="None")
     comment = models.TextField(null=True, blank=True)
-    submittersname = models.CharField(
-        max_length=25, default="None", null=True
-    )
-    submittersemail = models.EmailField(
-        max_length=70, default="None", null=True
-    )
+    submittersname = models.CharField(max_length=25, default="None", null=True)
+    submittersemail = models.EmailField(max_length=70, default="None", null=True)
     taxonid = models.CharField(max_length=25, default="None", null=True)
-    partnerprotein = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES, null=True
-    )
-    partnerprotein_textbox = models.CharField(
-        max_length=250, default="None", null=True
-    )
+    partnerprotein = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES, null=True)
+    partnerprotein_textbox = models.CharField(max_length=250, default="None", null=True)
     dnasequence = models.TextField(null=True, blank=False)
-    uploaded = models.DateTimeField(
-        "Uploaded", default=timezone.now, null=True
-    )
+    uploaded = models.DateTimeField("Uploaded", default=timezone.now, null=True)
     alignresults = models.TextField(null=True, blank=True)
     predict_name = models.TextField(null=True, blank=True)
-    terms_conditions = models.BooleanField(
-        default=False, choices=TRUE_FALSE_CHOICES, null=True
-    )
+    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES, null=True)
     admin_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -185,12 +157,8 @@ class PesticidalProteinHiddenSequence(models.Model):
     )
     admin_comments = models.TextField(null=True, blank=True)
     public = models.BooleanField(default=False, null=True)
-    private = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES, null=True
-    )
-    fastasequence_file = models.FileField(
-        upload_to="fastasequence_files/", null=True, blank=True
-    )
+    private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES, null=True)
+    fastasequence_file = models.FileField(upload_to="fastasequence_files/", null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -212,23 +180,17 @@ class PesticidalProteinPrivateDatabase(models.Model):
     submittersemail = models.EmailField(max_length=70, null=True)
 
     # 2020 Nomenclature New Name
-    name = models.CharField(
-        max_length=15, null=True, verbose_name="Protein Name"
-    )
+    name = models.CharField(max_length=15, null=True, verbose_name="Protein Name")
 
     # Protein sequence
-    sequence = models.TextField(
-        null=True, verbose_name="Protein Sequence"
-    )
+    sequence = models.TextField(null=True, verbose_name="Protein Sequence")
 
     # Is it a bacterium sequence?. If the choice is "yes" then name of the
     # bacteria should be in the bacterium textbox. If the choice is "no" then explanation about the source.
     # Note: The BPPRC doesn't normally assign names to proteins that are not
     # of bacterial origin. If user wish to make a special case for the
     # sequence, the explanation can be stored in the text box.
-    bacterium = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES, null=True
-    )
+    bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES, null=True)
     bacterium_textbox = models.CharField(max_length=250, null=True)
 
     # NCBI taxon id
@@ -241,15 +203,11 @@ class PesticidalProteinPrivateDatabase(models.Model):
     # National Center for Biotechnology Information (NCBI) accession number
     # https://www.ncbi.nlm.nih.gov/genbank/sequenceids/
     # https://www.ncbi.nlm.nih.gov/genbank/acc_prefix/
-    accession = models.CharField(
-        max_length=25, null=True, verbose_name="NCBI accession number"
-    )
+    accession = models.CharField(max_length=25, null=True, verbose_name="NCBI accession number")
 
     # Partner protein required for toxicity?. If the choice is "yes", then
     # user can mention name of the protein
-    partnerprotein = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES, null=True
-    )
+    partnerprotein = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES, null=True)
     partnerprotein_textbox = models.CharField(max_length=250, null=True)
 
     # If toxic to the organism. User can mention the name.
@@ -272,31 +230,21 @@ class PesticidalProteinPrivateDatabase(models.Model):
 
     # Any other comments from user
     comment = models.TextField(null=True, verbose_name="User comments")
-    uploaded = models.DateTimeField(
-        "Uploaded", default=timezone.now, null=True
-    )
+    uploaded = models.DateTimeField("Uploaded", default=timezone.now, null=True)
     alignresults = models.TextField(null=True)
     predict_name = models.TextField(null=True)
-    terms_conditions = models.BooleanField(
-        default=False, choices=TRUE_FALSE_CHOICES, null=True
-    )
-    admin_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
-    )
+    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES, null=True)
+    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     admin_comments = models.TextField(null=True)
 
     # If the sequence is public
     public = models.BooleanField(default=False, null=True)
 
     # If the sequence is private
-    private = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES, null=True
-    )
+    private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES, null=True)
     oldname = models.CharField(max_length=105, null=True)
     othernames = models.TextField(blank=True, null=True)
-    fastasequence_file = models.FileField(
-        upload_to="fastasequence_files/", null=True
-    )
+    fastasequence_file = models.FileField(upload_to="fastasequence_files/", null=True)
     name_category = models.CharField(max_length=15, null=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -304,18 +252,14 @@ class PesticidalProteinPrivateDatabase(models.Model):
         related_name="%(class)s_created_by",
         null=True,
     )
-    created_on = models.DateTimeField(
-        "Created on", null=True, default=timezone.now
-    )
+    created_on = models.DateTimeField("Created on", null=True, default=timezone.now)
     edited_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True,
         related_name="%(class)s_edited_by",
     )
-    edited_on = models.DateTimeField(
-        "Edited on", null=True, default=timezone.now
-    )
+    edited_on = models.DateTimeField("Edited on", null=True, default=timezone.now)
     # published = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
 
     def __str__(self):
@@ -333,17 +277,13 @@ class PesticidalProteinDatabase(models.Model):
     """
 
     # User who submits the sequence through "sequence submit form"
-    submittersname = models.CharField(
-        max_length=125, null=True, default="Uploaded by Suresh"
-    )
+    submittersname = models.CharField(max_length=125, null=True, default="Uploaded by Suresh")
 
     # User corresponding email
     submittersemail = models.EmailField(max_length=70, null=True)
 
     # 2020 Nomenclature New Name
-    name = models.CharField(
-        max_length=15, null=True, verbose_name="Protein Name"
-    )
+    name = models.CharField(max_length=15, null=True, verbose_name="Protein Name")
 
     # 1998 Nomenclature name
     oldname = models.CharField(max_length=105, null=True)
@@ -355,26 +295,20 @@ class PesticidalProteinDatabase(models.Model):
     # National Center for Biotechnology Information (NCBI) accession number
     # https://www.ncbi.nlm.nih.gov/genbank/sequenceids/
     # https://www.ncbi.nlm.nih.gov/genbank/acc_prefix/
-    accession = models.CharField(
-        max_length=25, null=True, verbose_name="NCBI accession number"
-    )
+    accession = models.CharField(max_length=25, null=True, verbose_name="NCBI accession number")
 
     # Sequence released year
     year = models.CharField(max_length=5, null=True)
 
     # Protein sequence
-    sequence = models.TextField(
-        null=True, verbose_name="Protein Sequence"
-    )
+    sequence = models.TextField(null=True, verbose_name="Protein Sequence")
 
     # Is it a bacterium sequence?. If the choice is "yes" then name of the
     # bacteria should be in the bacterium textbox. If the choice is "no" then explanation about the source.
     # Note: The BPPRC doesn't normally assign names to proteins that are not
     # of bacterial origin. If user wish to make a special case for the
     # sequence, the explanation can be stored in the text box.
-    bacterium = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES, null=True
-    )
+    bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES, null=True)
 
     # NCBI taxon id
     # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi
@@ -383,9 +317,7 @@ class PesticidalProteinDatabase(models.Model):
 
     # Partner protein required for toxicity?. If the choice is "yes", then
     # user can mention name of the protein
-    partnerprotein = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES, null=True
-    )
+    partnerprotein = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES, null=True)
     partnerprotein_textbox = models.CharField(max_length=250, null=True)
 
     # If toxic to the organism. User can mention the name.
@@ -401,9 +333,7 @@ class PesticidalProteinDatabase(models.Model):
     publication = models.TextField(null=True)
     comment = models.TextField(null=True, verbose_name="User comments")
     uploaded = models.DateTimeField("Uploaded", default=timezone.now)
-    fastasequence_file = models.FileField(
-        upload_to="fastasequence_files/", null=True
-    )
+    fastasequence_file = models.FileField(upload_to="fastasequence_files/", null=True)
     name_category = models.CharField(max_length=15, null=True)
 
     # If the sequence is public or not, based on the boolean operator
@@ -416,14 +346,10 @@ class PesticidalProteinDatabase(models.Model):
     predict_name = models.TextField(null=True)
 
     # Whether user accepted BPPRC terms & conditions
-    terms_conditions = models.BooleanField(
-        default=False, choices=TRUE_FALSE_CHOICES, null=True
-    )
+    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES, null=True)
 
     # Admin user who submits the sequence
-    admin_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
-    )
+    admin_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
     # Admin user comments for future reference
     admin_comments = models.TextField(null=True)
@@ -437,21 +363,15 @@ class PesticidalProteinDatabase(models.Model):
         related_name="%(class)s_created_by",
         null=True,
     )
-    created_on = models.DateTimeField(
-        "Created on", null=True, default=timezone.now
-    )
+    created_on = models.DateTimeField("Created on", null=True, default=timezone.now)
     edited_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True,
         related_name="%(class)s_edited_by",
     )
-    edited_on = models.DateTimeField(
-        "Edited on", null=True, default=timezone.now
-    )
-    published = models.BooleanField(
-        default=False, choices=TRUE_FALSE_CHOICES, null=True
-    )
+    edited_on = models.DateTimeField("Edited on", null=True, default=timezone.now)
+    published = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES, null=True)
 
     class Meta:
         ordering = ("name",)
@@ -466,12 +386,8 @@ class PesticidalProteinDatabase(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.name_category = re.search(
-            r"[A-Z][a-z]{2}\d{1,3}", self.name
-        ).group()
-        self.oldname_category = re.search(
-            r"[A-Z][a-z]{2}\d{1,3}", self.name
-        ).group()
+        self.name_category = re.search(r"[A-Z][a-z]{2}\d{1,3}", self.name).group()
+        self.oldname_category = re.search(r"[A-Z][a-z]{2}\d{1,3}", self.name).group()
         # TODO clear out old file before saving new one?
         filename = "fasta{}".format(self.name)
         file_contents = ">{}\n{}\n".format(self.name, self.sequence)
@@ -621,9 +537,7 @@ class ProteinDetail(models.Model):
     end_C = models.CharField(max_length=10, null=True)
 
     def save(self, *args, **kwargs):
-        p = PesticidalProteinDatabase.objects.get(
-            accession=self.accession
-        )
+        p = PesticidalProteinDatabase.objects.get(accession=self.accession)
         super(ProteinDetail).save(*args, **kwargs)
         ProteinDetail.filter(pk=self.pk).update(name=p.name)
 
@@ -679,9 +593,7 @@ class UserUploadData(models.Model):
     After the user adds to the cart. User can upload their sequence for the analysis. The model saves name, sequence, as well as session key to retrieve the tree later.
     """
 
-    session_key = models.CharField(
-        max_length=250, default=None, null=True
-    )
+    session_key = models.CharField(max_length=250, default=None, null=True)
     name = models.CharField(max_length=250, null=True)
     sequence = models.TextField(null=True)
 

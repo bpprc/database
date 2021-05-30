@@ -24,21 +24,15 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.TextField(
-                        blank=True, verbose_name="Protein Name"
-                    ),
+                    models.TextField(blank=True, verbose_name="Protein Name"),
                 ),
                 (
                     "oldname",
-                    models.TextField(
-                        blank=True, verbose_name="Old Name"
-                    ),
+                    models.TextField(blank=True, verbose_name="Old Name"),
                 ),
                 (
                     "accession",
-                    models.TextField(
-                        blank=True, verbose_name="NCBI accession number"
-                    ),
+                    models.TextField(blank=True, verbose_name="NCBI accession number"),
                 ),
                 (
                     "partnerprotein",

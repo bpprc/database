@@ -16,9 +16,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-        file_path = (
-            settings.MEDIA_ROOT + "/csv_files/HiddenSequence.csv"
-        )
+        file_path = settings.MEDIA_ROOT + "/csv_files/HiddenSequence.csv"
         print("file path", file_path)
         # Show this if the data already exist in the database
         if PD.objects.exists():
@@ -47,9 +45,7 @@ class Command(BaseCommand):
             "comment",
         ]
 
-        file_path = (
-            settings.MEDIA_ROOT + "/csv_files/HiddenSequence.csv"
-        )
+        file_path = settings.MEDIA_ROOT + "/csv_files/HiddenSequence.csv"
         print("file path", file_path)
         raw_data = open(file_path, "rt", encoding="utf-8-sig")
         for row in csv.reader(raw_data):

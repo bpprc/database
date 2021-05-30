@@ -34,9 +34,7 @@ def starter(request):
 
     script, div = components(plot)
 
-    return render(
-        request, "graphs/starter.html", {"script": script, "div": div}
-    )
+    return render(request, "graphs/starter.html", {"script": script, "div": div})
 
 
 def graphs_home(request):
@@ -66,9 +64,7 @@ def graphs_home(request):
         hover_line_color="white",
     )
 
-    plot.add_tools(
-        HoverTool(tooltips=None, renderers=[cr], mode="hline")
-    )
+    plot.add_tools(HoverTool(tooltips=None, renderers=[cr], mode="hline"))
     plot.title.text_font_size = "20pt"
     plot.line(
         x,
@@ -89,9 +85,7 @@ def graphs_home(request):
     # Store components
     script, div = components(plot)
 
-    return render(
-        request, "graphs/home.html", {"script": script, "div": div}
-    )
+    return render(request, "graphs/home.html", {"script": script, "div": div})
 
 
 def combo(request):
@@ -115,9 +109,7 @@ def combo(request):
 
     # add some renderers
     p.line(x, x, legend_label="y=x")  # thin blue line
-    p.circle(
-        x, x, legend_label="y=x", fill_color="white", size=8
-    )  # adds circles to y=x line
+    p.circle(x, x, legend_label="y=x", fill_color="white", size=8)  # adds circles to y=x line
     p.line(x, y0, legend_label="y=x^2", line_width=3)  # thick blue line
     p.line(x, y1, legend_label="y=10^x", line_color="red")  # red line
     p.circle(
@@ -138,9 +130,7 @@ def combo(request):
 
     script, div = components(p)
 
-    return render(
-        request, "graphs/combo.html", {"script": script, "div": div}
-    )
+    return render(request, "graphs/combo.html", {"script": script, "div": div})
 
 
 def programming(request):
@@ -187,11 +177,7 @@ def programming(request):
     )
     # Spectral =
 
-    source = ColumnDataSource(
-        data=dict(
-            language=language, counts=counts, color=Category20[20]
-        )
-    )
+    source = ColumnDataSource(data=dict(language=language, counts=counts, color=Category20[20]))
     p.add_tools(LassoSelectTool())
     p.add_tools(WheelZoomTool())
 
@@ -252,9 +238,7 @@ def multiplot(request):
         plot_width=600,
         plot_height=300,
     )
-    p1.scatter(
-        x1, y1, size=12, color="red", alpha=0.5, legend_label="Bread"
-    )
+    p1.scatter(x1, y1, size=12, color="red", alpha=0.5, legend_label="Bread")
 
     p2 = figure(
         x_range=xr1,
@@ -263,9 +247,7 @@ def multiplot(request):
         plot_width=600,
         plot_height=300,
     )
-    p2.scatter(
-        x2, y2, size=12, color="blue", alpha=0.5, legend_label="Milk"
-    )
+    p2.scatter(x2, y2, size=12, color="blue", alpha=0.5, legend_label="Milk")
 
     p3 = figure(
         x_range=xr2,
@@ -274,18 +256,14 @@ def multiplot(request):
         plot_width=600,
         plot_height=300,
     )
-    p3.scatter(
-        x3, y3, size=12, color="green", alpha=0.5, legend_label="Tofu"
-    )
+    p3.scatter(x3, y3, size=12, color="green", alpha=0.5, legend_label="Tofu")
 
     # plots can be a single Bokeh Model, a list/tuple, or even a dictionary
     plots = {"Red": p1, "Blue": p2, "Green": p3}
 
     script, div = components(plots)
 
-    return render(
-        request, "graphs/multiplot.html", {"script": script, "div": div}
-    )
+    return render(request, "graphs/multiplot.html", {"script": script, "div": div})
 
 
 def products(request):
@@ -328,9 +306,7 @@ def products(request):
 
     script, div = components(plot)
 
-    return render(
-        request, "graphs/products.html", {"script": script, "div": div}
-    )
+    return render(request, "graphs/products.html", {"script": script, "div": div})
 
 
 def pie(request):
@@ -350,11 +326,7 @@ def pie(request):
         "Spain": 29,
     }
 
-    data = (
-        pd.Series(x)
-        .reset_index(name="value")
-        .rename(columns={"index": "country"})
-    )
+    data = pd.Series(x).reset_index(name="value").rename(columns={"index": "country"})
     data["angle"] = data["value"] / data["value"].sum() * 2 * pi
     data["color"] = Category20c[len(x)]
 
@@ -381,9 +353,7 @@ def pie(request):
 
     script, div = components(p)
 
-    return render(
-        request, "graphs/pie.html", {"script": script, "div": div}
-    )
+    return render(request, "graphs/pie.html", {"script": script, "div": div})
 
 
 def test_html(request):
@@ -404,6 +374,4 @@ def test_html(request):
     # return render(request, 'test_html.html', {'script': script, 'div':div})
 
     # return render(request, 'test_html.html', script=script, div_plot1=divs['plot1'], div_plot2=divs['plot2'])
-    return render(
-        request, "graphs/test_html.html", {"script": script, "div": div}
-    )
+    return render(request, "graphs/test_html.html", {"script": script, "div": div})

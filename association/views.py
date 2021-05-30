@@ -29,10 +29,7 @@ def _sorted_nicely(l, sort_key=None):
     else:
 
         def alphanum_key(key):
-            return [
-                convert(c)
-                for c in re.split("([0-9]+)", getattr(key, sort_key))
-            ]
+            return [convert(c) for c in re.split("([0-9]+)", getattr(key, sort_key))]
 
     return sorted(l, key=alphanum_key)
 
@@ -40,17 +37,13 @@ def _sorted_nicely(l, sort_key=None):
 def data_association_links(request):
     context = {"items": Association.objects.all()}
 
-    return render(
-        request, "association/data_association_links.html", context
-    )
+    return render(request, "association/data_association_links.html", context)
 
 
 def display_protein_data(request, name):
     context = {"proteins": Association.objects.filter(name=name)}
 
-    return render(
-        request, "association/display_protein_data.html", context
-    )
+    return render(request, "association/display_protein_data.html", context)
 
 
 def example_content(request):
@@ -63,19 +56,13 @@ def data_teams(request):
 
 def search_association(request):
     form = SearchForm()
-    return render(
-        request, "association/search_page.html", {"form": form}
-    )
+    return render(request, "association/search_page.html", {"form": form})
 
 
 def list_proteins(request):
     category_endswith1 = []
 
-    categories = (
-        PesticidalProteinDatabase.objects.order_by("name")
-        .values_list("name", flat=True)
-        .distinct()
-    )
+    categories = PesticidalProteinDatabase.objects.order_by("name").values_list("name", flat=True).distinct()
     for category in categories:
         if category[-1] == "1" and not category[-2].isdigit():
             category_endswith1.append(category)
@@ -140,15 +127,11 @@ def search_data_association(request):
                     proteins = list(proteins1) + proteins2
                     proteins = _sorted_nicely(proteins, sort_key="name")
                 elif proteins1:
-                    proteins = _sorted_nicely(
-                        proteins1, sort_key="name"
-                    )
+                    proteins = _sorted_nicely(proteins1, sort_key="name")
                 elif proteins2:
                     filtered_protein = filter_one_name(proteins2)
                     proteins2 = filtered_protein
-                    proteins = _sorted_nicely(
-                        proteins2, sort_key="name"
-                    )
+                    proteins = _sorted_nicely(proteins2, sort_key="name")
 
             elif field_type == "target species taxon id":
                 q_objects = Q()
@@ -159,21 +142,11 @@ def search_data_association(request):
                 proteins = _sorted_nicely(proteins, sort_key="name")
 
                 if not proteins:
-                    words_taxonid = list(
-                        set(
-                            Association.objects.values_list(
-                                "taxonid", flat=True
-                            )
-                        )
-                    )
+                    words_taxonid = list(set(Association.objects.values_list("taxonid", flat=True)))
                     new_search = []
 
                     for search in searches:
-                        new_search.append(
-                            get_close_matches(
-                                search, words_taxonid, 1, 0.3
-                            )
-                        )
+                        new_search.append(get_close_matches(search, words_taxonid, 1, 0.3))
 
                     context = {"new_search": new_search}
                     return render(
@@ -185,32 +158,18 @@ def search_data_association(request):
             elif field_type == "target species":
                 q_objects = Q()
                 for search in searches:
-                    q_objects.add(
-                        Q(target_species__icontains=search), Q.OR
-                    )
+                    q_objects.add(Q(target_species__icontains=search), Q.OR)
 
                 proteins = Association.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key="name")
 
                 if not proteins:
-                    species = list(
-                        set(
-                            Association.objects.values_list(
-                                "target_species", flat=True
-                            )
-                        )
-                    )
-                    words_target_species = [
-                        i.split(" ", 1)[0] for i in species
-                    ]
+                    species = list(set(Association.objects.values_list("target_species", flat=True)))
+                    words_target_species = [i.split(" ", 1)[0] for i in species]
                     new_search = []
 
                     for search in searches:
-                        new_search.append(
-                            get_close_matches(
-                                search, words_target_species, 1, 0.3
-                            )
-                        )
+                        new_search.append(get_close_matches(search, words_target_species, 1, 0.3))
                     # new_search = [i.split(' ', 1)[0] for i in new_search]
 
                     context = {"new_search": new_search}
@@ -230,29 +189,17 @@ def search_data_association(request):
             elif field_type == "target order":
                 q_objects = Q()
                 for search in searches:
-                    q_objects.add(
-                        Q(target_order__icontains=search), Q.OR
-                    )
+                    q_objects.add(Q(target_order__icontains=search), Q.OR)
 
                 proteins = Association.objects.filter(q_objects)
                 proteins = _sorted_nicely(proteins, sort_key="name")
 
                 if not proteins:
-                    words_target_order = list(
-                        set(
-                            Association.objects.values_list(
-                                "target_order", flat=True
-                            )
-                        )
-                    )
+                    words_target_order = list(set(Association.objects.values_list("target_order", flat=True)))
                     new_search = []
 
                     for search in searches:
-                        new_search.append(
-                            get_close_matches(
-                                search, words_target_order, 1, 0.3
-                            )
-                        )
+                        new_search.append(get_close_matches(search, words_target_order, 1, 0.3))
 
                     context = {"new_search": new_search}
                     return render(

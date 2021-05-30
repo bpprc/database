@@ -77,9 +77,7 @@ class FeedbackForm(forms.ModelForm):
 
         try:
             if int(subject.isdigit()):
-                raise forms.ValidationError(
-                    "Subject doesn't accept numbers"
-                )
+                raise forms.ValidationError("Subject doesn't accept numbers")
         except:
             pass
 

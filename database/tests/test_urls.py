@@ -17,9 +17,7 @@ class TestUrls:
         assert resolve(path).view_name == "database"
 
     def test_categorize_database(self):
-        path = reverse(
-            "categorize_database", kwargs={"str": "category"}
-        )
+        path = reverse("categorize_database", kwargs={"str": "category"})
         assert resolve(path).view_name == "categorize_database"
 
     def test_search_database_home(self):

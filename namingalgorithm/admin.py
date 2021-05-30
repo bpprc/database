@@ -212,9 +212,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         """Submit the sequence by user and name of the protein is predicted."""
         if obj.alignresults:
             return format_html(
-                '<a href="/align_results/?submission_id={0}" target="_blank">View Result</a>'.format(
-                    obj.id
-                )
+                '<a href="/align_results/?submission_id={0}" target="_blank">View Result</a>'.format(obj.id)
             )
         return ""
 
@@ -224,9 +222,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
 
     def refresh(self, obj):
         """Submit the sequence by user and name of the protein is predicted."""
-        return format_html(
-            '<a href="/admin/namingalgorithm/usersubmission/">refresh</a>'
-        )
+        return format_html('<a href="/admin/namingalgorithm/usersubmission/">refresh</a>')
 
     def send_email(self, obj):
         return format_html(
@@ -238,32 +234,20 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
     def availability(self, obj):
         accession_number = obj.accession
         if not accession_number:
-            return format_html(
-                "<body> <p>No accession number</p> </body>"
-            )
-        public = PesticidalProteinDatabase.objects.filter(
-            accession=accession_number
-        )
-        private = PesticidalProteinPrivateDatabase.objects.filter(
-            accession=accession_number
-        )
+            return format_html("<body> <p>No accession number</p> </body>")
+        public = PesticidalProteinDatabase.objects.filter(accession=accession_number)
+        private = PesticidalProteinPrivateDatabase.objects.filter(accession=accession_number)
         if public:
             print(accession_number)
-            return format_html(
-                '<body> <p style="color:#FF0000";>Available in Public</p></body>'
-            )
+            return format_html('<body> <p style="color:#FF0000";>Available in Public</p></body>')
         if private:
-            return format_html(
-                '<body> <p style="color:#FF0000";>Available in Private</p></body>'
-            )
+            return format_html('<body> <p style="color:#FF0000";>Available in Private</p></body>')
 
     def Pfam(self, obj):
         return format_html()
 
     naming_algorithm.allow_tags = True
-    naming_algorithm.description = (
-        "Run the align link for the submission"
-    )
+    naming_algorithm.description = "Run the align link for the submission"
 
     align_results.allow_tags = True
     align_results.description = "View the align results"

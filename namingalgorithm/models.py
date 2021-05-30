@@ -20,14 +20,10 @@ class AuditEntry(models.Model):
     username = models.CharField(max_length=256, null=True)
 
     def __unicode__(self):
-        return "{0} - {1} - {2}".format(
-            self.action, self.username, self.ip
-        )
+        return "{0} - {1} - {2}".format(self.action, self.username, self.ip)
 
     def __str__(self):
-        return "{0} - {1} - {2}".format(
-            self.action, self.username, self.ip
-        )
+        return "{0} - {1} - {2}".format(self.action, self.username, self.ip)
 
     class Meta:
         verbose_name = "Audit Entry"
@@ -42,17 +38,13 @@ def user_logged_in_callback(sender, request, user, **kwargs):
     else:
         ip = request.META.get("REMOTE_ADDR")
     # ip = request.META.get('REMOTE_ADDR')
-    AuditEntry.objects.create(
-        action="user_logged_in", ip=ip, username=user.username
-    )
+    AuditEntry.objects.create(action="user_logged_in", ip=ip, username=user.username)
 
 
 @receiver(user_logged_out)
 def user_logged_out_callback(sender, request, user, **kwargs):
     ip = request.META.get("REMOTE_ADDR")
-    AuditEntry.objects.create(
-        action="user_logged_out", ip=ip, username=user.username
-    )
+    AuditEntry.objects.create(action="user_logged_out", ip=ip, username=user.username)
 
 
 @receiver(user_login_failed)
@@ -67,27 +59,17 @@ TRUE_FALSE_CHOICES = ((True, "Yes"), (False, "No"))
 
 
 class AbstractModel(models.Model):
-    submittersname = models.CharField(
-        max_length=25, null=True, blank=True
-    )
-    submittersemail = models.EmailField(
-        max_length=70, null=True, blank=False
-    )
+    submittersname = models.CharField(max_length=25, null=True, blank=True)
+    submittersemail = models.EmailField(max_length=70, null=True, blank=False)
     name = models.CharField(
         max_length=25,
         null=True,
         blank=True,
         verbose_name="Protein Name",
     )
-    sequence = models.TextField(
-        null=True, blank=False, verbose_name="Protein Sequence"
-    )
-    bacterium = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES
-    )
-    bacterium_textbox = models.CharField(
-        max_length=250, null=True, blank=True
-    )
+    sequence = models.TextField(null=True, blank=False, verbose_name="Protein Sequence")
+    bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+    bacterium_textbox = models.CharField(max_length=250, null=True, blank=True)
     taxonid = models.CharField(max_length=25, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
     accession = models.CharField(
@@ -96,28 +78,18 @@ class AbstractModel(models.Model):
         null=False,
         verbose_name="NCBI accession number",
     )
-    partnerprotein = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES
-    )
-    partnerprotein_textbox = models.CharField(
-        max_length=250, null=True, blank=True
-    )
+    partnerprotein = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
+    partnerprotein_textbox = models.CharField(max_length=250, null=True, blank=True)
     toxicto = models.CharField(max_length=250, blank=True, null=False)
     nontoxic = models.CharField(max_length=250, blank=True, null=False)
     dnasequence = models.TextField(null=True, blank=False)
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
     publication = models.TextField(null=True, blank=True)
-    comment = models.TextField(
-        null=True, blank=True, verbose_name="User comments"
-    )
+    comment = models.TextField(null=True, blank=True, verbose_name="User comments")
     # uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
-    predict_name = models.TextField(
-        null=True, blank=True, verbose_name="Predicted Name"
-    )
-    terms_conditions = models.BooleanField(
-        default=False, choices=TRUE_FALSE_CHOICES
-    )
+    predict_name = models.TextField(null=True, blank=True, verbose_name="Predicted Name")
+    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -126,14 +98,10 @@ class AbstractModel(models.Model):
     )
     admin_comments = models.TextField(null=True, blank=True)
     # public_or_private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
-    private = models.BooleanField(
-        default=True, choices=TRUE_FALSE_CHOICES
-    )
+    private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     public = models.BooleanField(default=False, blank=False)
     uploaded = models.DateTimeField("Uploaded", default=timezone.now)
-    user_provided_proteinname = models.CharField(
-        max_length=105, blank=True, null=False
-    )
+    user_provided_proteinname = models.CharField(max_length=105, blank=True, null=False)
 
     def __str__(self):
         return "User submission " + self.accession
@@ -191,12 +159,8 @@ def save_archive(sender, instance, **kwargs):
 
 
 class SendEmail(models.Model):
-    submittersname = models.CharField(
-        max_length=25, null=True, blank=True
-    )
-    submittersemail = models.EmailField(
-        max_length=70, null=True, blank=False
-    )
+    submittersname = models.CharField(max_length=25, null=True, blank=True)
+    submittersemail = models.EmailField(max_length=70, null=True, blank=False)
     accession = models.CharField(max_length=25, null=True, blank=True)
     message = models.TextField(null=True, blank=True)
 

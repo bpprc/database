@@ -171,9 +171,7 @@ class Migration(migrations.Migration):
                 (
                     "pdbid",
                     django.contrib.postgres.fields.ArrayField(
-                        base_field=models.CharField(
-                            blank=True, max_length=1000
-                        ),
+                        base_field=models.CharField(blank=True, max_length=1000),
                         default=list,
                         size=None,
                     ),
@@ -213,9 +211,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "session_key",
-                    models.CharField(
-                        default=None, max_length=250, null=True
-                    ),
+                    models.CharField(default=None, max_length=250, null=True),
                 ),
                 ("name", models.CharField(max_length=250, null=True)),
                 ("sequence", models.TextField(null=True)),
@@ -235,9 +231,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "submittersname",
-                    models.CharField(
-                        blank=True, max_length=25, null=True
-                    ),
+                    models.CharField(blank=True, max_length=25, null=True),
                 ),
                 (
                     "submittersemail",
@@ -253,9 +247,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "sequence",
-                    models.TextField(
-                        blank=True, verbose_name="Protein Sequence"
-                    ),
+                    models.TextField(blank=True, verbose_name="Protein Sequence"),
                 ),
                 (
                     "bacterium",
@@ -266,15 +258,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "bacterium_textbox",
-                    models.CharField(
-                        blank=True, max_length=250, null=True
-                    ),
+                    models.CharField(blank=True, max_length=250, null=True),
                 ),
                 (
                     "taxonid",
-                    models.CharField(
-                        blank=True, max_length=25, null=True
-                    ),
+                    models.CharField(blank=True, max_length=25, null=True),
                 ),
                 ("year", models.CharField(blank=True, max_length=5)),
                 (
@@ -294,9 +282,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "partnerprotein_textbox",
-                    models.CharField(
-                        blank=True, max_length=250, null=True
-                    ),
+                    models.CharField(blank=True, max_length=250, null=True),
                 ),
                 (
                     "toxicto",
@@ -459,9 +445,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "bacterium_textbox",
-                    models.CharField(
-                        default="Bacillus Thuringiensis", max_length=250
-                    ),
+                    models.CharField(default="Bacillus Thuringiensis", max_length=250),
                 ),
                 (
                     "strain",
@@ -473,33 +457,23 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "family",
-                    models.CharField(
-                        blank=True, default="None", max_length=305
-                    ),
+                    models.CharField(blank=True, default="None", max_length=305),
                 ),
                 (
                     "toxicto",
-                    models.CharField(
-                        blank=True, default="None", max_length=250
-                    ),
+                    models.CharField(blank=True, default="None", max_length=250),
                 ),
                 (
                     "nontoxic",
-                    models.CharField(
-                        blank=True, default="None", max_length=250
-                    ),
+                    models.CharField(blank=True, default="None", max_length=250),
                 ),
                 (
                     "mammalian_active",
-                    models.CharField(
-                        blank=True, default="None", max_length=250
-                    ),
+                    models.CharField(blank=True, default="None", max_length=250),
                 ),
                 (
                     "pdbcode",
-                    models.CharField(
-                        blank=True, default="None", max_length=10
-                    ),
+                    models.CharField(blank=True, default="None", max_length=10),
                 ),
                 ("comment", models.TextField(blank=True, null=True)),
                 (
@@ -636,9 +610,7 @@ class Migration(migrations.Migration):
                 ("year", models.CharField(blank=True, max_length=5)),
                 (
                     "sequence",
-                    models.TextField(
-                        blank=True, verbose_name="Protein Sequence"
-                    ),
+                    models.TextField(blank=True, verbose_name="Protein Sequence"),
                 ),
                 (
                     "bacterium",
@@ -649,15 +621,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "taxonid",
-                    models.CharField(
-                        blank=True, max_length=25, null=True
-                    ),
+                    models.CharField(blank=True, max_length=25, null=True),
                 ),
                 (
                     "bacterium_textbox",
-                    models.CharField(
-                        blank=True, max_length=250, null=True
-                    ),
+                    models.CharField(blank=True, max_length=250, null=True),
                 ),
                 (
                     "partnerprotein",
@@ -668,9 +636,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "partnerprotein_textbox",
-                    models.CharField(
-                        blank=True, max_length=250, null=True
-                    ),
+                    models.CharField(blank=True, max_length=250, null=True),
                 ),
                 (
                     "toxicto",

@@ -14,6 +14,4 @@ class EmailTest(TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, "That’s your subject")
-        self.assertEqual(
-            mail.outbox[0].body, "That’s your message body"
-        )
+        self.assertEqual(mail.outbox[0].body, "That’s your message body")

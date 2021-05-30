@@ -37,45 +37,35 @@ class Search:
 
     def is_single_digit(self):
         try:
-            name = re.match(
-                r"^[A-Za-z][A-Za-z]{2}\d{1}$", self.search_keyword
-            ).group()
+            name = re.match(r"^[A-Za-z][A-Za-z]{2}\d{1}$", self.search_keyword).group()
             return True
         except:
             return False
 
     def is_double_digit(self):
         try:
-            name = re.match(
-                r"^[A-Za-z][A-Za-z]{2}\d{2}$", self.search_keyword
-            ).group()
+            name = re.match(r"^[A-Za-z][A-Za-z]{2}\d{2}$", self.search_keyword).group()
             return True
         except:
             return False
 
     def is_triple_digit(self):
         try:
-            name = re.match(
-                r"^[A-Za-z][A-Za-z]{2}\d{3}$", self.search_keyword
-            ).group()
+            name = re.match(r"^[A-Za-z][A-Za-z]{2}\d{3}$", self.search_keyword).group()
             return True
         except:
             return False
 
     def is_three_letter(self):
         try:
-            name = re.match(
-                r"^[A-Za-z][A-Za-z]{2}$", self.search_keyword
-            ).group()
+            name = re.match(r"^[A-Za-z][A-Za-z]{2}$", self.search_keyword).group()
             return True
         except:
             return False
 
     def is_three_letter_case(self):
         try:
-            name = re.match(
-                r"^[A-Za-z][A-Za-z]{2}$", self.search_keyword
-            ).group()
+            name = re.match(r"^[A-Za-z][A-Za-z]{2}$", self.search_keyword).group()
             return True
         except:
             return False
@@ -95,10 +85,7 @@ class Search:
             return False
 
     def fulltext(self):
-        if (
-            self.search_keyword.isalpha()
-            and len(self.search_keyword) > 5
-        ):
+        if self.search_keyword.isalpha() and len(self.search_keyword) > 5:
             return True
         else:
             return False
@@ -159,9 +146,6 @@ def _sorted_nicely(l, sort_key=None):
     else:
 
         def alphanum_key(key):
-            return [
-                convert(c)
-                for c in re.split("([0-9]+)", getattr(key, sort_key))
-            ]
+            return [convert(c) for c in re.split("([0-9]+)", getattr(key, sort_key))]
 
     return sorted(l, key=alphanum_key)

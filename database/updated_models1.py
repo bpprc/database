@@ -18,9 +18,7 @@ class PesticidalProteinDatabase(models.Model):
     year = models.CharField(max_length=5, blank=True, null=False)
     sequence = models.TextField(blank=True, null=False)
     uploaded = models.DateTimeField("Uploaded", default=timezone.now)
-    fastasequence_file = models.FileField(
-        upload_to="fastasequence_files/", null=True, blank=True
-    )
+    fastasequence_file = models.FileField(upload_to="fastasequence_files/", null=True, blank=True)
 
     class Meta:
         ordering = ("name",)
@@ -35,9 +33,7 @@ class PesticidalProteinDatabase(models.Model):
     def save(self, *args, **kwargs):
         # TODO clear out old file before saving new one?
         filename = "fasta{}".format(self.name)
-        file_contents = ">{}\n{}\n".format(
-            self.name, self.fastasequence
-        )
+        file_contents = ">{}\n{}\n".format(self.name, self.fastasequence)
         # print(file_contents)
         content = ContentFile(file_contents)
         self.fastasequence_file.save(filename, content, save=False)

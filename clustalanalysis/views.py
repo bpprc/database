@@ -49,35 +49,23 @@ def domain_analysis_homepage(request):
         "userform": UserDataForm(),
         "descriptions": Description.objects.order_by("name"),
     }
-    return render(
-        request, "clustalanalysis/dendogram_homepage.html", context
-    )
+    return render(request, "clustalanalysis/dendogram_homepage.html", context)
 
 
 def domain_analysis(request):
     form = AnalysisForm()
     if request.method == "POST":
         post_values = request.POST.copy()
-        post_values["session_list_names"] = request.session.get(
-            "list_names", []
-        )
-        post_values["session_list_nterminal"] = request.session.get(
-            "list_nterminal", []
-        )
-        post_values["session_list_middle"] = request.session.get(
-            "list_middle", []
-        )
-        post_values["session_list_cterminal"] = request.session.get(
-            "list_cterminal", []
+        post_values["session_list_names"] = request.session.get("list_names", [])
+        post_values["session_list_nterminal"] = request.session.get("list_nterminal", [])
+        post_values["session_list_middle"] = request.session.get("list_middle", [])
+        post_values["session_list_cterminal"] = request.session.get("list_cterminal", [])
+
+        userdataids = UserUploadData.objects.filter(session_key=request.session.session_key).values_list(
+            "id", flat=True
         )
 
-        userdataids = UserUploadData.objects.filter(
-            session_key=request.session.session_key
-        ).values_list("id", flat=True)
-
-        post_values["userdataids"] = ",".join(
-            str(id) for id in userdataids
-        )
+        post_values["userdataids"] = ",".join(str(id) for id in userdataids)
 
         #
         # post_values['userdata'] = proteins
@@ -132,9 +120,7 @@ def dendogram_homepage2(request):
         "form": form,
         "descriptions": Description.objects.order_by("name"),
     }
-    return render(
-        request, "clustalanalysis/dendogram_homepage.html", context
-    )
+    return render(request, "clustalanalysis/dendogram_homepage.html", context)
 
 
 def dendogram_homepage(request):
@@ -158,14 +144,10 @@ def dendogram(request):
             context = {
                 "tree": rooted_tree,
             }
-            return render(
-                request, "clustalanalysis/dendogram.html", context
-            )
+            return render(request, "clustalanalysis/dendogram.html", context)
 
         context = {"form": form}
-        return render(
-            request, "clustalanalysis/dendogram.html", context
-        )
+        return render(request, "clustalanalysis/dendogram.html", context)
 
     return HttpResponseRedirect("/dendogram_homepage/")
 
@@ -246,28 +228,18 @@ def taskstatus_clustal_celery(request, task_id):
             (
                 context["file"],
                 created,
-            ) = StoreResultFiles.objects.get_or_create(
-                taskid=task.id, tempfile=task.get()
-            )
+            ) = StoreResultFiles.objects.get_or_create(taskid=task.id, tempfile=task.get())
             # context['file'] = StoreResultFiles.objects.filter(taskid=task.id)
             # context['align'] = task.get()
-            return render(
-                request, "clustalanalysis/dendogram.html", context
-            )
+            return render(request, "clustalanalysis/dendogram.html", context)
 
         elif task.status == "PENDING":
             # context['results'] = task
-            return render(
-                request, "clustalanalysis/dendogram.html", context
-            )
+            return render(request, "clustalanalysis/dendogram.html", context)
         else:
-            return render(
-                request, "clustalanalysis/dendogram.html", context
-            )
+            return render(request, "clustalanalysis/dendogram.html", context)
     else:
-        return render(
-            request, "clustalanalysis/dendogram.html", context
-        )
+        return render(request, "clustalanalysis/dendogram.html", context)
 
 
 def celery_task_status_clustal(request, task_id):
@@ -282,9 +254,7 @@ def celery_task_status_clustal(request, task_id):
 def protein_analysis(request):
 
     categories = (
-        PesticidalProteinDatabase.objects.order_by("name")
-        .values_list("name", flat=True)
-        .distinct()
+        PesticidalProteinDatabase.objects.order_by("name").values_list("name", flat=True).distinct()
     )  # why you need flat=True
 
     category_prefixes = []
@@ -297,9 +267,7 @@ def protein_analysis(request):
     dict_histo_category = {}
     for category in category_prefixes:
         fasta = ""
-        k = PesticidalProteinDatabase.objects.filter(
-            name__istartswith=category
-        )
+        k = PesticidalProteinDatabase.objects.filter(name__istartswith=category)
         for s in k:
             fasta += s.fastasequence
         dict_fasta_category[category] = fasta
@@ -328,11 +296,7 @@ def protein_analysis(request):
         tools="pan, wheel_zoom, box_zoom, reset, hover, tap, crosshair",
     )
 
-    source = ColumnDataSource(
-        data=dict(
-            language=language, counts=counts, color=Category20[20]
-        )
-    )
+    source = ColumnDataSource(data=dict(language=language, counts=counts, color=Category20[20]))
     p.add_tools(LassoSelectTool())
     p.add_tools(WheelZoomTool())
 
@@ -352,6 +316,4 @@ def protein_analysis(request):
 
     context = {"script": script, "div": div}
 
-    return render(
-        request, "clustalanalysis/protein_analysis.html", context
-    )
+    return render(request, "clustalanalysis/protein_analysis.html", context)

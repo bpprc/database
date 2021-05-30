@@ -93,10 +93,7 @@ def guess_if_protein(seq, thresh=0.99):
     for letter in dna_letters:
         protein_alpha_count += seq.count(letter)
 
-    return (
-        len(seq) == 0
-        or float(protein_alpha_count) / float(len(seq)) >= thresh
-    )
+    return len(seq) == 0 or float(protein_alpha_count) / float(len(seq)) >= thresh
 
 
 def guess_if_dna(seq, thresh=0.99):
@@ -114,10 +111,7 @@ def guess_if_dna(seq, thresh=0.99):
     for letter in protein_letters:
         protein_alpha_count += seq.count(letter)
 
-    return (
-        len(seq) == 0
-        or float(protein_alpha_count) / float(len(seq)) <= thresh
-    )
+    return len(seq) == 0 or float(protein_alpha_count) / float(len(seq)) <= thresh
 
 
 class SendEmailForm(forms.ModelForm):
@@ -316,9 +310,7 @@ class UserSubmissionForm(forms.ModelForm):
                 css_class="form-row",
             ),
             Row(
-                Column(
-                    "bacterium", css_class="form-group col-md-2 mb-0"
-                ),
+                Column("bacterium", css_class="form-group col-md-2 mb-0"),
                 Column(
                     "bacterium_textbox",
                     css_class="form-group col-md-6 mb-0",
@@ -328,9 +320,7 @@ class UserSubmissionForm(forms.ModelForm):
                 css_class="form-row",
             ),
             Row(
-                Column(
-                    "accession", css_class="form-group col-md-3 mb-0"
-                ),
+                Column("accession", css_class="form-group col-md-3 mb-0"),
                 css_class="form-row",
             ),
             "dnasequence",
@@ -367,28 +357,20 @@ class UserSubmissionForm(forms.ModelForm):
 
         # invalidsymbols = invalid_symbol(sequence_in_form)
         if invalidSymbol(sequence_in_form):
-            raise forms.ValidationError(
-                "There are invalid symbols in the sequence"
-            )
+            raise forms.ValidationError("There are invalid symbols in the sequence")
 
         if hasNumbers(sequence_in_form):
-            raise forms.ValidationError(
-                "There are numbers in the sequence. Please paste protein sequence only"
-            )
+            raise forms.ValidationError("There are numbers in the sequence. Please paste protein sequence only")
 
         if sequence_in_form:
             filename = write_sequence_file(sequence_in_form)
             sequence_is_protein = guess_if_protein(filename)
 
         if not sequence_in_form:
-            raise forms.ValidationError(
-                "Please paste valid protein sequences"
-            )
+            raise forms.ValidationError("Please paste valid protein sequences")
 
         if sequence_is_protein:
-            raise forms.ValidationError(
-                "Please paste only protein sequences here"
-            )
+            raise forms.ValidationError("Please paste only protein sequences here")
         # print(self.cleaned_data)
         formatted_sequence = textwrap.fill(sequence_in_form, 60)
 
@@ -398,28 +380,20 @@ class UserSubmissionForm(forms.ModelForm):
         dnasequence_in_form = self.cleaned_data["dnasequence"]
 
         if invalidSymbol(dnasequence_in_form):
-            raise forms.ValidationError(
-                "There are invalid symbols in the sequence"
-            )
+            raise forms.ValidationError("There are invalid symbols in the sequence")
 
         if hasNumbers(dnasequence_in_form):
-            raise forms.ValidationError(
-                "There are numbers in the sequence. Please paste DNA sequence only"
-            )
+            raise forms.ValidationError("There are numbers in the sequence. Please paste DNA sequence only")
 
         if dnasequence_in_form:
             filename = write_sequence_file(dnasequence_in_form)
             sequence_is_dna = guess_if_dna(filename)
 
         if not dnasequence_in_form:
-            raise forms.ValidationError(
-                "Please paste valid DNA sequences"
-            )
+            raise forms.ValidationError("Please paste valid DNA sequences")
 
         if sequence_is_dna:
-            raise forms.ValidationError(
-                "Please paste only DNA sequences here"
-            )
+            raise forms.ValidationError("Please paste only DNA sequences here")
 
         formatted_dnasequence = textwrap.fill(dnasequence_in_form, 60)
 

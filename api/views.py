@@ -15,9 +15,7 @@ def needle_api(request):
 
 def needle_api_form(request):
     form = NeedleAPIForm()
-    return render(
-        request, "api/best_match_finder_database.html", {"form": form}
-    )
+    return render(request, "api/best_match_finder_database.html", {"form": form})
 
 
 def needle_api_run(request):
