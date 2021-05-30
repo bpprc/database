@@ -41,7 +41,6 @@ def submit_home(request):
     return render(request, "newwebpage/submit.html", context)
 
 
-@login_required
 def submit(request):
     """Submit the sequence for the naming purpose through user form."""
     if request.method == "POST":
@@ -49,30 +48,52 @@ def submit(request):
         # formset = ToxicToFormSet(request.POST)
         # print(form)
         if form.is_valid():
-            print(request.user)
-            form.instance.submittersname = request.user
-            form.instance.submittersemail = request.email
             # print("formset", formset)
             form.save()
 
-            return render(
-                request, "newwebpage/view.html", {"form": form}
-            )
+            return render(request, 'newwebpage/view.html', {'form': form})
         # else:
         #     print(form.errors)
         #     print("Error in form")
-        # print("formset", formset)
+            # print("formset", formset)
     else:
-        form = UserSubmissionForm(
-            initial={
-                "submittersname": request.user,
-                "submittersemail": request.user.email,
-            }
-        )
+        form = UserSubmissionForm()
     #     formset = ToxicToFormSet()
     # helper = ToxicFormSetHelper()
 
-    return render(request, "newwebpage/submit.html", {"form": form})
+    return render(request, 'newwebpage/submit.html', {'form': form})
+
+
+# @login_required
+# def submit(request):
+#     """Submit the sequence for the naming purpose through user form."""
+#     if request.method == "POST":
+#         form = UserSubmissionForm(request.POST)
+    # formset = ToxicToFormSet(request.POST)
+    # if form.is_valid():
+    # form.instance.submittersname = request.user
+    # form.instance.submittersemail = request.email
+    # print("formset", formset)
+    #     form.save()
+    #
+    #     return render(
+    #         request, "newwebpage/view.html", {"form": form}
+    #     )
+    # else:
+    #     print(form.errors)
+    #     print("Error in form")
+
+    # else:
+    #     form = UserSubmissionForm(
+    #         initial={
+    #             "submittersname": request.user,
+    #             "submittersemail": request.user.email,
+    #         }
+    #     )
+    #     formset = ToxicToFormSet()
+    # helper = ToxicFormSetHelper()
+
+    # return render(request, "newwebpage/submit.html", {"form": form})
 
 
 def run_align(request):
