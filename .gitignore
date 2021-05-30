@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 #log files
+logs/djangologfile.log
 logs/access.log
 logs/error.log
 logs/test_error.log
