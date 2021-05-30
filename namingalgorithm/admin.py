@@ -5,7 +5,6 @@ from django.contrib.admin.checks import BaseModelAdminChecks
 from django.contrib.admin.models import LogEntry
 from django.contrib.admin.options import get_content_type_for_model
 from django.contrib.contenttypes.admin import GenericStackedInline
-from django.db import models
 from django.utils.html import format_html, mark_safe
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
@@ -212,7 +211,8 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         """Submit the sequence by user and name of the protein is predicted."""
         if obj.alignresults:
             return format_html(
-                '<a href="/align_results/?submission_id={0}" target="_blank">View Result</a>'.format(obj.id)
+                '<a href="/align_results/?submission_id={0}" target="_blank">View Result</a>'.format(
+                    obj.id)
             )
         return ""
 
@@ -235,8 +235,10 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         accession_number = obj.accession
         if not accession_number:
             return format_html("<body> <p>No accession number</p> </body>")
-        public = PesticidalProteinDatabase.objects.filter(accession=accession_number)
-        private = PesticidalProteinPrivateDatabase.objects.filter(accession=accession_number)
+        public = PesticidalProteinDatabase.objects.filter(
+            accession=accession_number)
+        private = PesticidalProteinPrivateDatabase.objects.filter(
+            accession=accession_number)
         if public:
             print(accession_number)
             return format_html('<body> <p style="color:#FF0000";>Available in Public</p></body>')

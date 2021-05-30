@@ -1,24 +1,12 @@
 import ast
-import subprocess
 import tempfile
 import textwrap
 
-from Bio import Seq, SeqIO
-from Bio.Align.Applications import ClustalOmegaCommandline
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import (
-    HTML,
-    ButtonHolder,
-    Column,
-    Layout,
-    Row,
     Submit,
 )
 from django import forms
-from django.core.files.base import ContentFile
-from django.core.files.storage import FileSystemStorage
-from django.db.models import Q
-from django.forms import widgets
 
 from database.models import (
     PesticidalProteinDatabase,
@@ -74,7 +62,8 @@ def guess_if_protein(seq, thresh=0.99):
 class UserDataForm(forms.Form):
 
     userdata = forms.CharField(
-        widget=forms.Textarea(attrs={"placeholder": "Paste your fasta sequence"}),
+        widget=forms.Textarea(
+            attrs={"placeholder": "Paste your fasta sequence"}),
         required=False,
         label="User Data",
     )
@@ -118,7 +107,8 @@ class UserDataForm(forms.Form):
             dna = guess_if_protein(userdata)
 
         else:
-            raise forms.ValidationError("Please paste valid fasta sequence file")
+            raise forms.ValidationError(
+                "Please paste valid fasta sequence file")
 
         if not dna:
             for rec in SeqIO.parse(userdata, "fasta"):
@@ -131,7 +121,8 @@ class UserDataForm(forms.Form):
                 )
 
         else:
-            raise forms.ValidationError("Please provide valid protein sequence file")
+            raise forms.ValidationError(
+                "Please provide valid protein sequence file")
 
         # return self.protein
 
@@ -140,11 +131,13 @@ class AnalysisForm(forms.Form):
 
     list_names = forms.CharField(widget=forms.HiddenInput(), required=False)
 
-    list_nterminal = forms.CharField(widget=forms.HiddenInput(), required=False)
+    list_nterminal = forms.CharField(
+        widget=forms.HiddenInput(), required=False)
 
     list_middle = forms.CharField(widget=forms.HiddenInput(), required=False)
 
-    list_cterminal = forms.CharField(widget=forms.HiddenInput(), required=False)
+    list_cterminal = forms.CharField(
+        widget=forms.HiddenInput(), required=False)
 
     userdataids = forms.CharField(widget=forms.HiddenInput(), required=False)
     tool = forms.ChoiceField(required=False, choices=[("clustal", "Clustal")])
@@ -168,22 +161,26 @@ class AnalysisForm(forms.Form):
     def clean(self):
         self.combined_selection = []
         try:
-            self.selected_values = ast.literal_eval(self.cleaned_data.get("list_names"))
+            self.selected_values = ast.literal_eval(
+                self.cleaned_data.get("list_names"))
         except:
             self.selected_values = []
 
         try:
-            self.list_nterminal = ast.literal_eval(self.cleaned_data.get("list_nterminal"))
+            self.list_nterminal = ast.literal_eval(
+                self.cleaned_data.get("list_nterminal"))
         except:
             self.list_nterminal = []
 
         try:
-            self.list_cterminal = ast.literal_eval(self.cleaned_data.get("list_cterminal"))
+            self.list_cterminal = ast.literal_eval(
+                self.cleaned_data.get("list_cterminal"))
         except:
             self.list_cterminal = []
 
         try:
-            self.list_middle = ast.literal_eval(self.cleaned_data.get("list_middle"))
+            self.list_middle = ast.literal_eval(
+                self.cleaned_data.get("list_middle"))
         except:
             self.list_middle = []
 
@@ -197,11 +194,13 @@ class AnalysisForm(forms.Form):
             self.combined_selection += self.selected_values
 
         if len(self.combined_selection) <= 3:
-            raise forms.ValidationError("Select more than three sequences for the analysis")
+            raise forms.ValidationError(
+                "Select more than three sequences for the analysis")
         elif self.combined_selection:
             self.combined_selection = list(set(self.combined_selection))
         else:
-            raise forms.ValidationError("Make some selection to do the analysis")
+            raise forms.ValidationError(
+                "Make some selection to do the analysis")
 
         # if not self.combined_selection:
         #     raise forms.ValidationError('Select some sequences')
@@ -228,23 +227,29 @@ class AnalysisForm(forms.Form):
         )
 
     def count_number_lines(self):
-        self.num_lines = sum(1 for line in open(self.clustalomega_in_tmp.name) if line.startswith(">"))
+        self.num_lines = sum(1 for line in open(
+            self.clustalomega_in_tmp.name) if line.startswith(">"))
 
     def write_files_for_clustal(self):
         """Validate protein sequence"""
-        self.clustalomega_in_tmp = tempfile.NamedTemporaryFile(mode="wb+", delete=False)
-        self.clustalomega_out_tmp = tempfile.NamedTemporaryFile(mode="wb+", delete=False)
-        self.guidetree_out_tmp = tempfile.NamedTemporaryFile(mode="wb+", delete=False)
+        self.clustalomega_in_tmp = tempfile.NamedTemporaryFile(
+            mode="wb+", delete=False)
+        self.clustalomega_out_tmp = tempfile.NamedTemporaryFile(
+            mode="wb+", delete=False)
+        self.guidetree_out_tmp = tempfile.NamedTemporaryFile(
+            mode="wb+", delete=False)
 
     def protein_detail_data(self):
         self.accession = {}
 
-        self.data = PesticidalProteinDatabase.objects.filter(name__in=self.combined_selection)
+        self.data = PesticidalProteinDatabase.objects.filter(
+            name__in=self.combined_selection)
         if self.data:
             for item in self.data:
                 self.accession[item.accession] = item
 
-        self.protein_detail = ProteinDetail.objects.filter(accession__in=list(self.accession.keys()))
+        self.protein_detail = ProteinDetail.objects.filter(
+            accession__in=list(self.accession.keys()))
 
     def write_input_file_clustal(self):
         userdata = UserUploadData.objects.filter(pk__in=self.userdata)
@@ -254,18 +259,21 @@ class AnalysisForm(forms.Form):
                 output = ""
                 item_name = item.name
                 if item.name in self.list_nterminal:
-                    nterminal = [protein for protein in self.protein_detail if protein.accession == item.accession]
+                    nterminal = [
+                        protein for protein in self.protein_detail if protein.accession == item.accession]
                     item_name += "_d1"
                     for item1 in nterminal:
                         output += item1.get_endotoxin_n()
                 if item.name in self.list_middle:
-                    middle = [protein for protein in self.protein_detail if protein.accession == item.accession]
+                    middle = [
+                        protein for protein in self.protein_detail if protein.accession == item.accession]
                     item_name += "_d2"
                     for item1 in middle:
                         output += item1.get_endotoxin_m()
                         # print("form", output)
                 if item.name in self.list_cterminal:
-                    cterminal = [protein for protein in self.protein_detail if protein.accession == item.accession]
+                    cterminal = [
+                        protein for protein in self.protein_detail if protein.accession == item.accession]
                     item_name += "_d3"
                     for item1 in cterminal:
                         output += item1.get_endotoxin_c()
@@ -289,7 +297,8 @@ class AnalysisForm(forms.Form):
 
 class DendogramForm(forms.Form):
 
-    category_type = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices="", required=False)
+    category_type = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple, choices="", required=False)
 
     def __init__(self, *args, **kwargs):
         super(DendogramForm, self).__init__(*args, **kwargs)
@@ -301,13 +310,15 @@ class DendogramForm(forms.Form):
 
         self.helper.add_input(Submit("submit", "Submit"))
 
-        categories = PesticidalProteinDatabase.objects.order_by("name").values_list("name", flat=True)
+        categories = PesticidalProteinDatabase.objects.order_by(
+            "name").values_list("name", flat=True)
         self.category_prefixes = {}
         self.category_options = [("all", "All")]
         for category in categories:
             prefix = category[0:3]
             self.category_prefixes[prefix.lower()] = prefix.title()
-        self.category_options.extend(sorted(self.category_prefixes.items(), key=lambda x: x[0][:3]))
+        self.category_options.extend(
+            sorted(self.category_prefixes.items(), key=lambda x: x[0][:3]))
 
         self.fields["category_type"].choices = self.category_options
         self.fields["category_type"].label = ""
@@ -319,7 +330,8 @@ class DendogramForm(forms.Form):
         self.count_number_lines()
 
         if self.numlines < 3:
-            raise forms.ValidationError("At least three or more sequences are needed")
+            raise forms.ValidationError(
+                "At least three or more sequences are needed")
 
     def save(self):
         # self.run_clustal()
@@ -329,7 +341,8 @@ class DendogramForm(forms.Form):
         )
 
     def count_number_lines(self):
-        self.numlines = sum(1 for line in open(self.clustalomega_in_tmp.name) if line.startswith(">"))
+        self.numlines = sum(1 for line in open(
+            self.clustalomega_in_tmp.name) if line.startswith(">"))
 
         # if self.num_lines <= 3:
         #     raise forms.ValidationError(
@@ -337,9 +350,12 @@ class DendogramForm(forms.Form):
 
     def open_files_for_clustal(self):
         """open files for clustal"""
-        self.clustalomega_in_tmp = tempfile.NamedTemporaryFile(mode="wb+", delete=False)
-        self.clustalomega_out_tmp = tempfile.NamedTemporaryFile(mode="wb+", delete=False)
-        self.guidetree_out_tmp = tempfile.NamedTemporaryFile(mode="wb+", delete=False)
+        self.clustalomega_in_tmp = tempfile.NamedTemporaryFile(
+            mode="wb+", delete=False)
+        self.clustalomega_out_tmp = tempfile.NamedTemporaryFile(
+            mode="wb+", delete=False)
+        self.guidetree_out_tmp = tempfile.NamedTemporaryFile(
+            mode="wb+", delete=False)
 
     def filter_categories(self):
         """ """
@@ -350,7 +366,8 @@ class DendogramForm(forms.Form):
                 self.data |= PesticidalProteinDatabase.objects.all()
                 print(self.data)
             else:
-                self.data |= PesticidalProteinDatabase.objects.filter(name__istartswith=category)
+                self.data |= PesticidalProteinDatabase.objects.filter(
+                    name__istartswith=category)
 
     def write_input_file_clustal(self):
         """ """

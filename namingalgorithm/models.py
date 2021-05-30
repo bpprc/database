@@ -1,11 +1,9 @@
 from django.conf import settings
-from django.contrib import admin
 from django.contrib.auth.signals import (
     user_logged_in,
     user_logged_out,
     user_login_failed,
 )
-from django.contrib.contenttypes.models import ContentType
 from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import post_save
@@ -38,13 +36,15 @@ def user_logged_in_callback(sender, request, user, **kwargs):
     else:
         ip = request.META.get("REMOTE_ADDR")
     # ip = request.META.get('REMOTE_ADDR')
-    AuditEntry.objects.create(action="user_logged_in", ip=ip, username=user.username)
+    AuditEntry.objects.create(action="user_logged_in",
+                              ip=ip, username=user.username)
 
 
 @receiver(user_logged_out)
 def user_logged_out_callback(sender, request, user, **kwargs):
     ip = request.META.get("REMOTE_ADDR")
-    AuditEntry.objects.create(action="user_logged_out", ip=ip, username=user.username)
+    AuditEntry.objects.create(action="user_logged_out",
+                              ip=ip, username=user.username)
 
 
 @receiver(user_login_failed)
@@ -67,7 +67,8 @@ class AbstractModel(models.Model):
         blank=True,
         verbose_name="Protein Name",
     )
-    sequence = models.TextField(null=True, blank=False, verbose_name="Protein Sequence")
+    sequence = models.TextField(
+        null=True, blank=False, verbose_name="Protein Sequence")
     bacterium = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     bacterium_textbox = models.CharField(max_length=250, null=True, blank=True)
     taxonid = models.CharField(max_length=25, null=True, blank=True)
@@ -78,18 +79,23 @@ class AbstractModel(models.Model):
         null=False,
         verbose_name="NCBI accession number",
     )
-    partnerprotein = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
-    partnerprotein_textbox = models.CharField(max_length=250, null=True, blank=True)
+    partnerprotein = models.BooleanField(
+        default=True, choices=TRUE_FALSE_CHOICES)
+    partnerprotein_textbox = models.CharField(
+        max_length=250, null=True, blank=True)
     toxicto = models.CharField(max_length=250, blank=True, null=False)
     nontoxic = models.CharField(max_length=250, blank=True, null=False)
     dnasequence = models.TextField(null=True, blank=False)
     pdbcode = models.CharField(max_length=10, blank=True, null=False)
     publication = models.TextField(null=True, blank=True)
-    comment = models.TextField(null=True, blank=True, verbose_name="User comments")
+    comment = models.TextField(
+        null=True, blank=True, verbose_name="User comments")
     # uploaded = models.DateTimeField('Uploaded', default=timezone.now)
     alignresults = models.TextField(null=True, blank=True)
-    predict_name = models.TextField(null=True, blank=True, verbose_name="Predicted Name")
-    terms_conditions = models.BooleanField(default=False, choices=TRUE_FALSE_CHOICES)
+    predict_name = models.TextField(
+        null=True, blank=True, verbose_name="Predicted Name")
+    terms_conditions = models.BooleanField(
+        default=False, choices=TRUE_FALSE_CHOICES)
     admin_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -101,7 +107,8 @@ class AbstractModel(models.Model):
     private = models.BooleanField(default=True, choices=TRUE_FALSE_CHOICES)
     public = models.BooleanField(default=False, blank=False)
     uploaded = models.DateTimeField("Uploaded", default=timezone.now)
-    user_provided_proteinname = models.CharField(max_length=105, blank=True, null=False)
+    user_provided_proteinname = models.CharField(
+        max_length=105, blank=True, null=False)
 
     def __str__(self):
         return "User submission " + self.accession

@@ -1,6 +1,5 @@
 from allauth.account import app_settings
 from allauth.account.utils import complete_signup
-from django.http import HttpResponse
 from django.shortcuts import render
 
 from extra.forms import FeedbackForm
@@ -17,7 +16,8 @@ def feedback_home(request):
             subject = request.POST.get("subject")
             email = request.POST.get("email")
             message = request.POST.get("message")
-            feedback = Feedback.objects.create(name=name, subject=subject, email=email, message=message)
+            feedback = Feedback.objects.create(
+                name=name, subject=subject, email=email, message=message)
 
             context = {
                 "name": name,
@@ -71,7 +71,8 @@ def signup(request):
         if form.is_valid():
             user = form.save(request)
             # Added this!
-            complete_signup(request, user, app_settings.EMAIL_VERIFICATION, "/")
+            complete_signup(
+                request, user, app_settings.EMAIL_VERIFICATION, "/")
 
 
 def links(request):

@@ -2,20 +2,17 @@
 
 import tempfile
 import textwrap
-from io import StringIO
 
-from Bio import Seq, SeqIO
+from Bio import SeqIO
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import (
     HTML,
-    ButtonHolder,
     Column,
     Layout,
     Row,
     Submit,
 )
 from django import forms
-from django.forms import modelformset_factory
 
 from .models import SendEmail, UserSubmission
 
@@ -357,10 +354,12 @@ class UserSubmissionForm(forms.ModelForm):
 
         # invalidsymbols = invalid_symbol(sequence_in_form)
         if invalidSymbol(sequence_in_form):
-            raise forms.ValidationError("There are invalid symbols in the sequence")
+            raise forms.ValidationError(
+                "There are invalid symbols in the sequence")
 
         if hasNumbers(sequence_in_form):
-            raise forms.ValidationError("There are numbers in the sequence. Please paste protein sequence only")
+            raise forms.ValidationError(
+                "There are numbers in the sequence. Please paste protein sequence only")
 
         if sequence_in_form:
             filename = write_sequence_file(sequence_in_form)
@@ -370,7 +369,8 @@ class UserSubmissionForm(forms.ModelForm):
             raise forms.ValidationError("Please paste valid protein sequences")
 
         if sequence_is_protein:
-            raise forms.ValidationError("Please paste only protein sequences here")
+            raise forms.ValidationError(
+                "Please paste only protein sequences here")
         # print(self.cleaned_data)
         formatted_sequence = textwrap.fill(sequence_in_form, 60)
 
@@ -380,10 +380,12 @@ class UserSubmissionForm(forms.ModelForm):
         dnasequence_in_form = self.cleaned_data["dnasequence"]
 
         if invalidSymbol(dnasequence_in_form):
-            raise forms.ValidationError("There are invalid symbols in the sequence")
+            raise forms.ValidationError(
+                "There are invalid symbols in the sequence")
 
         if hasNumbers(dnasequence_in_form):
-            raise forms.ValidationError("There are numbers in the sequence. Please paste DNA sequence only")
+            raise forms.ValidationError(
+                "There are numbers in the sequence. Please paste DNA sequence only")
 
         if dnasequence_in_form:
             filename = write_sequence_file(dnasequence_in_form)

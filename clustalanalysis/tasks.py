@@ -1,9 +1,4 @@
-import os
-from zipfile import ZipFile
-
 from celery import shared_task
-from django.conf import settings
-from PIL import Image
 
 from clustalanalysis import run_clustal
 

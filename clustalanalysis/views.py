@@ -1,30 +1,16 @@
-import os
-import tempfile
-import textwrap
-from subprocess import PIPE, Popen
 
-import pandas as pd
-from Bio import AlignIO
-from Bio.Align.Applications import ClustalOmegaCommandline
-from Bio.Seq import Seq
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
 from bokeh.embed import components
 from bokeh.models import (
     ColumnDataSource,
-    HoverTool,
     LassoSelectTool,
-    PointDrawTool,
     WheelZoomTool,
 )
-from bokeh.palettes import Category20, Category20c, Spectral6
-from bokeh.plotting import figure, output_file, show
-from bokeh.transform import cumsum
+from bokeh.palettes import Category20
+from bokeh.plotting import figure
 from celery import current_app
-from django import forms
-from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import redirect, render
-from numpy import pi
+from django.shortcuts import render
 
 from clustalanalysis.forms import (
     AnalysisForm,
@@ -36,7 +22,6 @@ from clustalanalysis.tasks import create_tree
 from database.models import (
     Description,
     PesticidalProteinDatabase,
-    ProteinDetail,
     UserUploadData,
 )
 
@@ -56,10 +41,14 @@ def domain_analysis(request):
     form = AnalysisForm()
     if request.method == "POST":
         post_values = request.POST.copy()
-        post_values["session_list_names"] = request.session.get("list_names", [])
-        post_values["session_list_nterminal"] = request.session.get("list_nterminal", [])
-        post_values["session_list_middle"] = request.session.get("list_middle", [])
-        post_values["session_list_cterminal"] = request.session.get("list_cterminal", [])
+        post_values["session_list_names"] = request.session.get(
+            "list_names", [])
+        post_values["session_list_nterminal"] = request.session.get(
+            "list_nterminal", [])
+        post_values["session_list_middle"] = request.session.get(
+            "list_middle", [])
+        post_values["session_list_cterminal"] = request.session.get(
+            "list_cterminal", [])
 
         userdataids = UserUploadData.objects.filter(session_key=request.session.session_key).values_list(
             "id", flat=True
@@ -254,7 +243,8 @@ def celery_task_status_clustal(request, task_id):
 def protein_analysis(request):
 
     categories = (
-        PesticidalProteinDatabase.objects.order_by("name").values_list("name", flat=True).distinct()
+        PesticidalProteinDatabase.objects.order_by(
+            "name").values_list("name", flat=True).distinct()
     )  # why you need flat=True
 
     category_prefixes = []
@@ -267,7 +257,8 @@ def protein_analysis(request):
     dict_histo_category = {}
     for category in category_prefixes:
         fasta = ""
-        k = PesticidalProteinDatabase.objects.filter(name__istartswith=category)
+        k = PesticidalProteinDatabase.objects.filter(
+            name__istartswith=category)
         for s in k:
             fasta += s.fastasequence
         dict_fasta_category[category] = fasta
@@ -296,7 +287,8 @@ def protein_analysis(request):
         tools="pan, wheel_zoom, box_zoom, reset, hover, tap, crosshair",
     )
 
-    source = ColumnDataSource(data=dict(language=language, counts=counts, color=Category20[20]))
+    source = ColumnDataSource(
+        data=dict(language=language, counts=counts, color=Category20[20]))
     p.add_tools(LassoSelectTool())
     p.add_tools(WheelZoomTool())
 

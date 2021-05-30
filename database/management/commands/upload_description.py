@@ -1,6 +1,6 @@
 import csv
 
-from django.conf.urls.static import settings, static
+from django.conf.urls.static import settings
 from django.core.management.base import BaseCommand
 
 # Import the model
