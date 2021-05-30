@@ -1,14 +1,12 @@
 import itertools
 import os
 import re
-import shutil
 import subprocess
 import tempfile
 import textwrap
 from pathlib import Path
 
 from django.conf import settings
-from django.core.files import File
 
 from database.models import (
     PesticidalProteinDatabase,
@@ -22,8 +20,7 @@ NEEDLE_PATH = os.environ.get("NEEDLE_PATH")
 
 def cmdline(command):
     process = subprocess.Popen(
-        args=command, stdout=subprocess.PIPE, shell=True
-    )
+        args=command, stdout=subprocess.PIPE, shell=True)
     return process.communicate()[0]
 
 
@@ -74,11 +71,7 @@ def filter_files_ending_with_one(SUBJECT_FASTAFILES):
     The function filters the files end with 1
     """
     return [
-        name
-        for name in SUBJECT_FASTAFILES
-        if name[-1].isdigit()
-        and not name[-2].isdigit() == 1
-        and int(name[-1]) == 1
+        name for name in SUBJECT_FASTAFILES if name[-1].isdigit() and not name[-2].isdigit() == 1 and int(name[-1]) == 1
     ]
 
 
@@ -88,11 +81,8 @@ def empty_path_private():
         t = PesticidalProteinPrivateDatabase.objects.get(id=protein.id)
 
         if t.fastasequence_file:
-            os.unlink(
-                os.path.join(
-                    settings.MEDIA_ROOT, t.fastasequence_file.name
-                )
-            )
+            os.unlink(os.path.join(settings.MEDIA_ROOT,
+                                   t.fastasequence_file.name))
             t.fastasequence_file = None
             t.save()
 
@@ -102,8 +92,7 @@ def write_files_private(objectname):
     # print("path", path)
     for protein in objectname:
         tmp_seq = tempfile.NamedTemporaryFile(
-            dir=path, mode="wb+", delete=False
-        )
+            dir=path, mode="wb+", delete=False)
         fasta = textwrap.fill(protein.sequence, 80)
         str_to_write = f">{protein.name}\n{fasta}\n"
         tmp_seq.write(str_to_write.encode())
@@ -117,22 +106,14 @@ def write_files_private(objectname):
 
 
 def update_private():
-    private_proteins = (
-        PesticidalProteinPrivateDatabase.objects.values_list(
-            "name", flat=True
-        )
-    )
-    private_endwith1 = filter_files_ending_with_one(
-        list(private_proteins)
-    )
+    private_proteins = PesticidalProteinPrivateDatabase.objects.values_list(
+        "name", flat=True)
+    private_endwith1 = filter_files_ending_with_one(list(private_proteins))
 
     # private_proteins = PesticidalProteinPrivateDatabase.objects.values_list(
     #     'name', flat=True)
-    private_proteins_filtered = (
-        PesticidalProteinPrivateDatabase.objects.filter(
-            name__in=private_endwith1
-        )
-    )
+    private_proteins_filtered = PesticidalProteinPrivateDatabase.objects.filter(
+        name__in=private_endwith1)
     write_files_private(private_proteins_filtered)
 
 
@@ -149,47 +130,33 @@ def run_bug(query_data):
 
     PPD_proteins = (
         PesticidalProteinDatabase.objects.exclude(
-            fastasequence_file__isnull=True
-        )
+            fastasequence_file__isnull=True)
         .exclude(fastasequence_file="")
         .values_list("name", flat=True)
     )
 
     hidden = (
         PesticidalProteinHiddenSequence.objects.exclude(
-            fastasequence_file__isnull=True
-        )
+            fastasequence_file__isnull=True)
         .exclude(fastasequence_file="")
         .values_list("name", flat=True)
     )
 
-    private_proteins = (
-        PesticidalProteinPrivateDatabase.objects.values_list(
-            "name", flat=True
-        )
-    )
+    private_proteins = PesticidalProteinPrivateDatabase.objects.values_list(
+        "name", flat=True)
 
     endwith1 = filter_files_ending_with_one(list(PPD_proteins))
     hidden_endwith = filter_files_ending_with_one(list(hidden))
-    private_endwith1 = filter_files_ending_with_one(
-        list(private_proteins)
-    )
+    private_endwith1 = filter_files_ending_with_one(list(private_proteins))
 
     PPD_proteins_filtered = PesticidalProteinDatabase.objects.filter(
-        name__in=endwith1
-    )
+        name__in=endwith1)
 
-    hidden_proteins_filtered = (
-        PesticidalProteinHiddenSequence.objects.filter(
-            name__in=hidden_endwith
-        )
-    )
+    hidden_proteins_filtered = PesticidalProteinHiddenSequence.objects.filter(
+        name__in=hidden_endwith)
 
-    private_proteins_filtered = (
-        PesticidalProteinPrivateDatabase.objects.filter(
-            name__in=private_endwith1
-        )
-    )
+    private_proteins_filtered = PesticidalProteinPrivateDatabase.objects.filter(
+        name__in=private_endwith1)
 
     # directory = create_directory()
 
@@ -204,13 +171,9 @@ def run_bug(query_data):
 
         print("I am running now", protein.name)
         # print(protein.fastasequence_file.path)
-        s = os.path.join(
-            settings.MEDIA_ROOT, protein.fastasequence_file.path
-        )
+        s = os.path.join(settings.MEDIA_ROOT, protein.fastasequence_file.path)
         print("combined_file", s)
-        identity_percentage, results = blast_two_sequences(
-            query_data, s
-        )
+        identity_percentage, results = blast_two_sequences(query_data, s)
 
         # identity_percentage, results = my_blast
 
@@ -218,11 +181,8 @@ def run_bug(query_data):
             identity_percentage = float(identity_percentage)
 
         except TypeError:
-            print(
-                "Unable to convert identity_percentage {} for object {}".format(
-                    identity_percentage, protein
-                )
-            )
+            print("Unable to convert identity_percentage {} for object {}".format(
+                identity_percentage, protein))
             identity_percentage = 0.0
 
         # this has scaffold file name , query file name and identity percentage
@@ -241,14 +201,13 @@ def run_bug(query_data):
         if float(empty[2]) >= 95 and float(empty[2]) <= 100:
             category = "95 to 100%"
             public = PesticidalProteinDatabase.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
-            hidden = PesticidalProteinHiddenSequence.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
-            private = PesticidalProteinPrivateDatabase.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
+                name__startswith=name[0:3]).values_list("name", flat=True)
+            hidden = PesticidalProteinHiddenSequence.objects.filter(name__startswith=name[0:3]).values_list(
+                "name", flat=True
+            )
+            private = PesticidalProteinPrivateDatabase.objects.filter(name__startswith=name[0:3]).values_list(
+                "name", flat=True
+            )
             categories = list(public)
             categories.extend(list(private))
             categories.extend(list(hidden))
@@ -257,14 +216,13 @@ def run_bug(query_data):
         elif float(empty[2]) >= 76 and float(empty[2]) <= 94.9:
             category = "76 to 94%"
             public = PesticidalProteinDatabase.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
-            hidden = PesticidalProteinHiddenSequence.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
-            private = PesticidalProteinPrivateDatabase.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
+                name__startswith=name[0:3]).values_list("name", flat=True)
+            hidden = PesticidalProteinHiddenSequence.objects.filter(name__startswith=name[0:3]).values_list(
+                "name", flat=True
+            )
+            private = PesticidalProteinPrivateDatabase.objects.filter(name__startswith=name[0:3]).values_list(
+                "name", flat=True
+            )
             categories = list(public)
             categories.extend(list(private))
             categories.extend(list(hidden))
@@ -273,14 +231,13 @@ def run_bug(query_data):
         elif float(empty[2]) >= 45 and float(empty[2]) <= 75.9:
             category = "45 to 75%"
             public = PesticidalProteinDatabase.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
-            hidden = PesticidalProteinHiddenSequence.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
-            private = PesticidalProteinPrivateDatabase.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
+                name__startswith=name[0:3]).values_list("name", flat=True)
+            hidden = PesticidalProteinHiddenSequence.objects.filter(name__startswith=name[0:3]).values_list(
+                "name", flat=True
+            )
+            private = PesticidalProteinPrivateDatabase.objects.filter(name__startswith=name[0:3]).values_list(
+                "name", flat=True
+            )
             categories = list(public)
             categories.extend(list(private))
             categories.extend(list(hidden))
@@ -289,14 +246,13 @@ def run_bug(query_data):
         elif float(empty[2]) >= 0 and float(empty[2]) <= 44.9:
             category = "0 to 44%"
             public = PesticidalProteinDatabase.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
-            hidden = PesticidalProteinHiddenSequence.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
-            private = PesticidalProteinPrivateDatabase.objects.filter(
-                name__startswith=name[0:3]
-            ).values_list("name", flat=True)
+                name__startswith=name[0:3]).values_list("name", flat=True)
+            hidden = PesticidalProteinHiddenSequence.objects.filter(name__startswith=name[0:3]).values_list(
+                "name", flat=True
+            )
+            private = PesticidalProteinPrivateDatabase.objects.filter(name__startswith=name[0:3]).values_list(
+                "name", flat=True
+            )
             categories = list(public)
             categories.extend(list(private))
             categories.extend(list(hidden))
