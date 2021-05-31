@@ -9,5 +9,7 @@ python manage.py upload_description_database
 python manage.py upload_newname_database
 python manage.py upload_oldname_database
 python manage.py upload_threedomain_data
+
+#https://pythoneatstail.com/en/overview-all-articles/backup-and-restore-django-site/
 python3 manage.py dbbackup
 python3 manage.py mediabackup
