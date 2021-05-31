@@ -235,7 +235,6 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
         "othernames",
         "accession",
         "year",
-        "private",
     )
     fields = (
         "name",
@@ -246,7 +245,6 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
         "sequence",
         "uploaded",
         "fastasequence_file",
-        "private",
         "submittersname",
         "submittersemail",
         "bacterium",
@@ -271,7 +269,6 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
         "accession_url",
         "accession_availability",
         "year",
-        "private",
     )
     ordering = ("name",)
 
@@ -366,7 +363,6 @@ class PesticidalProteinHiddenSequenceResource(resources.ModelResource):
             "admin_user",
             "admin_comments",
             "public",
-            "private",
             "fastasequence_file",
         )
         import_id_fields = (
@@ -571,7 +567,8 @@ class PesticidalProteinDatabaseAdmin(ImportExportModelAdmin):
     def Pfam_Info(self, obj):
         if obj.name.startswith("Cry"):
             try:
-                domain_details = ProteinDetail.objects.get(accession=obj.accession)
+                domain_details = ProteinDetail.objects.get(
+                    accession=obj.accession)
             except ProteinDetail.DoesNotExist:
                 domain_details = None
             if domain_details:
@@ -625,7 +622,8 @@ class OldnameNewnameTableLeftAdmin(ImportExportModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         if change:
-            change_message = "{} - {} - {}".format(obj.name_2020, obj.name_1998, obj.alternative_name)
+            change_message = "{} - {} - {}".format(
+                obj.name_2020, obj.name_1998, obj.alternative_name)
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
@@ -652,7 +650,8 @@ class OldnameNewnameTableRightAdmin(ImportExportModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         if change:
-            change_message = "{} - {} - {}".format(obj.name_1998, obj.name_2020, obj.alternative_name)
+            change_message = "{} - {} - {}".format(
+                obj.name_1998, obj.name_2020, obj.alternative_name)
             LogEntry.objects.create(
                 user=request.user,
                 content_type=get_content_type_for_model(obj),
@@ -732,7 +731,8 @@ class ProteinDetailAdmin(ImportExportModelAdmin):
     inlines = [ModelAdminLog]
 
     def Protein_Name(self, obj):
-        protein = PesticidalProteinDatabase.objects.get(accession=obj.accession)
+        protein = PesticidalProteinDatabase.objects.get(
+            accession=obj.accession)
         if protein:
             return protein.name
 
