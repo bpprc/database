@@ -136,6 +136,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    'dbbackup',  # django-dbbackup
     # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.twitter',
@@ -443,3 +444,5 @@ CELERY_TIMEZONE = "US/Eastern"
 #         'schedule': crontab(minute=28, hour=12),
 #     }
 # }
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, '../backups')}
