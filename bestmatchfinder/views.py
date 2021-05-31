@@ -5,8 +5,6 @@
 """This loads the bestmatchfinder homepage."""
 
 import os
-import tempfile
-import textwrap
 
 from celery import current_app
 from django.conf import settings
@@ -15,8 +13,6 @@ from django.shortcuts import render
 
 from bestmatchfinder import submit_single_sequence, submit_two_sequences
 from bestmatchfinder.forms import SearchDatabaseForm, SequenceForm
-from BPPRC.settings import TEMP_DIR, TEMP_LIFE
-from database.models import PesticidalProteinDatabase
 
 from .tasks import run_needle
 
@@ -149,9 +145,11 @@ def bestmatchfinder_database_sequence_run(request):
                 protein2 = form.cleaned_data["sequence2_in_form"]
 
             if tool == "needle":
-                align = submit_two_sequences.needle.needle_alignment(protein1, protein2)
+                align = submit_two_sequences.needle.needle_alignment(
+                    protein1, protein2)
             else:
-                align = submit_two_sequences.needle.blast_alignment(protein1, protein2)
+                align = submit_two_sequences.needle.blast_alignment(
+                    protein1, protein2)
                 removed_blast_title = align.split(">")[1]
                 removed_blast_title = removed_blast_title.lstrip()
                 filtered_result = removed_blast_title.split("Lambda")
