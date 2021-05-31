@@ -11,6 +11,9 @@ logs/test_error.log
 logs/uwsgi.log
 dump.rdb
 
+# media files
+run_bestmatchfinder/
+
 # C extensions
 *.so
 
