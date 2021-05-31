@@ -5,11 +5,8 @@ import os
 import os.path
 import re
 import subprocess
-import time
 
-from Bio.Emboss.Applications import NeedleCommandline
 from django.conf import settings
-
 from database.models import PesticidalProteinDatabase
 
 logger = logging.getLogger(__name__)
