@@ -135,8 +135,8 @@ class PesticidalProteinHiddenSequence(models.Model):
     publication = models.TextField(null=True, blank=True)
     family = models.CharField(
         max_length=305, blank=True, null=True, default="None")
-    taxonid = models.CharField(max_length=25, validators=[RegexValidator(
-        r'\d{25}', 'Number must digits', 'Invalid number')], blank=True, null=True)
+    toxicto = models.CharField(
+        max_length=250, blank=True, null=True, default="None")
     nontoxic = models.CharField(max_length=250, blank=True, null=True)
     mammalian_active = models.CharField(
         max_length=250, blank=True, null=True)
