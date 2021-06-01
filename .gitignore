@@ -13,6 +13,7 @@ dump.rdb
 
 # media files
 run_bestmatchfinder/
+search_namingalgorithm/
 
 # C extensions
 *.so
