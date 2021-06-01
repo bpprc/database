@@ -80,7 +80,7 @@ def domain_analysis(request):
 
             return render(
                 request,
-                "clustalanalysis/clustal_processing.html",
+                "newwebpage/clustal_processing.html",
                 context,
             )
         else:
@@ -109,7 +109,7 @@ def dendogram_homepage2(request):
         "form": form,
         "descriptions": Description.objects.order_by("name"),
     }
-    return render(request, "clustalanalysis/dendogram_homepage.html", context)
+    return render(request, "newwebpage/dendogram_homepage.html", context)
 
 
 def dendogram_homepage(request):
@@ -117,7 +117,7 @@ def dendogram_homepage(request):
     form = DendogramForm()
     return render(
         request,
-        "clustalanalysis/domain_cry_tree_d3js.html",
+        "newwebpage/domain_cry_tree_d3js.html",
         {"form": form},
     )
 
@@ -133,10 +133,10 @@ def dendogram(request):
             context = {
                 "tree": rooted_tree,
             }
-            return render(request, "clustalanalysis/dendogram.html", context)
+            return render(request, "newwebpage/dendogram.html", context)
 
         context = {"form": form}
-        return render(request, "clustalanalysis/dendogram.html", context)
+        return render(request, "newwebpage/dendogram.html", context)
 
     return HttpResponseRedirect("/dendogram_homepage/")
 
@@ -179,13 +179,13 @@ def dendogram_celery(request):
 
             return render(
                 request,
-                "clustalanalysis/clustal_processing.html",
+                "newwebpage/clustal_processing.html",
                 context,
             )
 
         return render(
             request,
-            "clustalanalysis/dendogram_homepage.html",
+            "newwebpage/dendogram_homepage.html",
             {"form": form},
         )
 
@@ -220,15 +220,15 @@ def taskstatus_clustal_celery(request, task_id):
             ) = StoreResultFiles.objects.get_or_create(taskid=task.id, tempfile=task.get())
             # context['file'] = StoreResultFiles.objects.filter(taskid=task.id)
             # context['align'] = task.get()
-            return render(request, "clustalanalysis/dendogram.html", context)
+            return render(request, "newwebpage/dendogram.html", context)
 
         elif task.status == "PENDING":
             # context['results'] = task
-            return render(request, "clustalanalysis/dendogram.html", context)
+            return render(request, "newwebpage/dendogram.html", context)
         else:
-            return render(request, "clustalanalysis/dendogram.html", context)
+            return render(request, "newwebpage/dendogram.html", context)
     else:
-        return render(request, "clustalanalysis/dendogram.html", context)
+        return render(request, "newwebpage/dendogram.html", context)
 
 
 def celery_task_status_clustal(request, task_id):

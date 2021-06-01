@@ -1,0 +1,77 @@
+{% extends "newwebpage/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                <a class="close" data-dismiss="alert">×</a>
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+</br>
+</br>
+</br>
+</br></br>
+</br>
+{% block content %}
+
+<h5>To analyse particular proteins/domains first select them using the <a href="{% url 'search_database_home' %}">Database/Search facility</a> and then go to the cart page</h5>
+</br>
+</br>
+<h2>Create a dendrogram from selected protein classes</h2>
+</br>
+</br>
+<div>
+  {% crispy form %}
+
+  {% if form.errors %}
+     {% for field in form %}
+        {% for error in field.errors %}
+            {{ error|escape }}
+        {% endfor %}
+     {% endfor %}
+  {% endif %}
+
+</div>
+</br>
+</br>
+</br>
+</br>
+
+{% for description in descriptions %}
+<div>
+		<p <a class="text-left font-weight-bold">{{description.name}}:</a> <span class="font-weight-light"> {{description.description}} </span> </p>
+</div>
+{% endfor %}
+
+
+{% endblock content %}
+
+{% block extrahead %}
+<style>
+
+label {
+    width:80px;
+    clear:left;
+    text-align:left;
+    padding-right:2px;
+}
+
+input, label {
+    float:left;
+}
+</style>
+{% endblock extrahead %}
+
+{% block extrajs %}
+<script>
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  })();
+</script>
+
+{% endblock extrajs %}
