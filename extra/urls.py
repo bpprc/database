@@ -7,4 +7,5 @@ urlpatterns = [
     path("github_home/", views.github_home, name="github_home"),
     path("faq/", views.faq, name="faq"),
     path("links/", views.links, name="links"),
+    path("tutorial/", views.tutorial, name="tutorial"),
 ]

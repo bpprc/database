@@ -78,3 +78,7 @@ def signup(request):
 def links(request):
     context = {"links": Links.objects.order_by("name")}
     return render(request, "newwebpage/links.html", context)
+
+
+def tutorial(request):
+    return render(request, "newwebpage/tutorial.html")
