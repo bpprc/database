@@ -105,8 +105,9 @@ def run_align(request):
         temp.write(format_data.encode())
         tmp_seq.close()
 
-    align = run_data.predict_name.run_bug(tmp_seq.name)
-    user_submission = UserSubmission.objects.get(id=request.GET.get("submission_id"))
+    align = run_data.run_naming_algorithm.run_bug(tmp_seq.name)
+    user_submission = UserSubmission.objects.get(
+        id=request.GET.get("submission_id"))
     user_submission.alignresults = align
     user_submission.save()
     return HttpResponseRedirect("/admin/namingalgorithm/usersubmission/")
@@ -137,7 +138,8 @@ def run_naming_algorithm(request):
         predicted_name,
         name,
     ) = run_data.predict_name.run_bug(tmp_seq.name)
-    user_submission = UserSubmission.objects.get(id=request.GET.get("submission_id"))
+    user_submission = UserSubmission.objects.get(
+        id=request.GET.get("submission_id"))
     user_submission.predict_name = predicted_name
     user_submission.save()
 
@@ -173,7 +175,8 @@ def contact_email(request):
             accession = form.cleaned_data["accession"]
             message = form.cleaned_data["message"]
             try:
-                _trigger_email_everyday(submittersname, submittersemail, accession, message)
+                _trigger_email_everyday(
+                    submittersname, submittersemail, accession, message)
                 form.save()
             except:
                 return HttpResponse("Invalid header found.")
