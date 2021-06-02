@@ -74,11 +74,8 @@ class FeedbackForm(forms.ModelForm):
     def clean_subject(self):
         subject = self.cleaned_data["subject"]
 
-        try:
-            if int(subject.isdigit()):
-                raise forms.ValidationError("Subject doesn't accept numbers")
-        except:
-            pass
+        if int(subject.isdigit()):
+            raise forms.ValidationError("Subject doesn't accept numbers")
 
     def clean(self):
         name = self.cleaned_data["name"]
