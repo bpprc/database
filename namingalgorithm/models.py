@@ -11,7 +11,14 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 
+TYPES_CHOICES = (
+    ('emailed', 'Emailed'),
+    ('pending', 'Pending'),
+)
+
 # https://stackoverflow.com/questions/37618473/how-can-i-log-both-successful-and-failed-login-and-logout-attempts-in-django
+
+
 class AuditEntry(models.Model):
     action = models.CharField(max_length=64)
     ip = models.GenericIPAddressField(null=True)
@@ -109,6 +116,8 @@ class AbstractModel(models.Model):
     uploaded = models.DateTimeField("Uploaded", default=timezone.now)
     user_provided_proteinname = models.CharField(
         max_length=105, blank=True, null=False)
+    contact_status = models.CharField(
+        choices=TYPES_CHOICES, default=TYPES_CHOICES[1][1], max_length=10)
 
     def __str__(self):
         return "User submission " + self.accession

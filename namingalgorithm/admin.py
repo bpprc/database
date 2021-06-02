@@ -135,6 +135,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
     """Submit the sequence by user and name of the protein is predicted."""
 
     search_fields = ["submittersemail", "submittersname", "accession"]
+    list_editable = ("contact_status",)
     list_display = (
         "submittersname",
         "accession_url",
@@ -143,6 +144,7 @@ class UserSubmissionAdmin(ImportExportModelAdmin):
         "refresh",
         "send_email",
         "uploaded",
+        "contact_status"
     )
     exclude = ["alignresults"]
 

@@ -32,8 +32,8 @@ class FeedbackResource(resources.ModelResource):
 
 class FeedbackAdmin(ImportExportModelAdmin):
     resource_class = FeedbackResource
-
-    list_display = ("name", "subject", "email")
+    list_editable = ("contact_status",)
+    list_display = ("name", "subject", "email", "contact_status",)
 
     def __str__(self):
         return self.name
