@@ -1,4 +1,5 @@
 {% extends "newwebpage/base.html" %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
 
@@ -11,49 +12,45 @@
       <h2>Feedback</h2>
     </div>
 
-    <div class="row">
+      <div class="col-md-12" data-aos="fade-up" data-aos-delay="300">
+        {% if context %}
 
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="contact-about">
-          <a href="www.bpprc.org"> <h3>BPPRC</h3> </a>
-          <p>Bacterial Pesticidal Protein Resource Center</p>
-          <div class="">
-            <a href="" class=""><i class=""></i></a>
-          </div>
-        </div>
-      </div>
+              <h3> Feedback successfully submitted</h3>
+              <br>
 
-      <div class="col-lg-5 col-md-12" data-aos="fade-up" data-aos-delay="300">
-        <form action="" method="post" role="form" class="php-email-form">
-          <div class="form-group">
-            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-            <div class="validate"></div>
-          </div>
-          <div class="form-group">
-            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-            <div class="validate"></div>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-            <div class="validate"></div>
-          </div>
-          <div class="form-group">
-            <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-            <div class="validate"></div>
-          </div>
-          <div class="mb-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your message has been sent. Thank you!</div>
-          </div>
-          <div class="text-center"><button type="submit">Send Message</button></div>
-        </form>
+        {% else %}
+
+          {% crispy form %}
+
+        {% endif %}
+
+        {% endblock content %}
       </div>
 
     </div>
 
-  </div>
 </section><!-- End Contact Section -->
 </div>
 
-{% endblock content %}
+{% block extrajs %}
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<script type="text/javascript">
+
+  $('.js-captcha-refresh').click(function (evt) {
+      evt.preventDefault();
+      $.getJSON("/captcha/refresh/", function (result) {
+          $('.captcha').attr('src', result['image_url']);
+          $('#id_captcha_0').val(result['key'])
+      });
+  });
+
+
+  $(function() {
+    $('.form-check').css('display', 'inline-block');
+  });
+
+</script>
+
+{% endblock %}
