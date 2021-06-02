@@ -328,7 +328,7 @@ ADMIN_REORDER = [
             },
             {
                 "model": "namingalgorithm.Archive",
-                "label": "Archives",
+                "label": "User Submissions Archives (backup)",
             },
             {
                 "model": "namingalgorithm.AuditEntry",
