@@ -22,7 +22,7 @@ from database.admin import (
     OldnameNewnameTableLeftResource,
     OldnameNewnameTableRightResource,
 )
-from database.filter_results import Search
+from database.filter_results import Search, filter_one_name
 from database.forms import (
     DownloadForm,
     HolotypeForm,
@@ -61,8 +61,10 @@ def about_protein(request, category=None):
 
     """
 
-    protein = PesticidalProteinDatabase.objects.filter(name__istartswith=category)
-    private = PesticidalProteinPrivateDatabase.objects.filter(name__istartswith=category)
+    protein = PesticidalProteinDatabase.objects.filter(
+        name__istartswith=category)
+    private = PesticidalProteinPrivateDatabase.objects.filter(
+        name__istartswith=category)
 
     protein_list = list(protein) + list(private)
 
@@ -92,7 +94,8 @@ def statistics(request):
     category_prefixes = []
     total_holotype = 0
 
-    categories = PesticidalProteinDatabase.objects.order_by("name").values_list("name", flat=True).distinct()
+    categories = PesticidalProteinDatabase.objects.order_by(
+        "name").values_list("name", flat=True).distinct()
 
     for category in categories:
         cat = category[:3]
@@ -110,7 +113,8 @@ def statistics(request):
             category_prefixes.append(prefix)
 
     for category in category_prefixes:
-        count = PesticidalProteinDatabase.objects.filter(name__istartswith=category).count()
+        count = PesticidalProteinDatabase.objects.filter(
+            name__istartswith=category).count()
         category_count[category] = [
             count,
             category_holotype_count.get(category, 0),
@@ -177,8 +181,10 @@ def categorize_database(request, category=None):
 
     """
 
-    protein = PesticidalProteinDatabase.objects.filter(name__istartswith=category)
-    private = PesticidalProteinPrivateDatabase.objects.filter(name__istartswith=category)
+    protein = PesticidalProteinDatabase.objects.filter(
+        name__istartswith=category)
+    private = PesticidalProteinPrivateDatabase.objects.filter(
+        name__istartswith=category)
 
     protein_list = list(protein) + list(private)
 
@@ -214,7 +220,8 @@ def database(request):
         See more details from the database.forms.py
     """
 
-    categories = PesticidalProteinDatabase.objects.order_by("name").values_list("name").distinct()
+    categories = PesticidalProteinDatabase.objects.order_by(
+        "name").values_list("name").distinct()
     category_prefixes = []
     for category in categories:
         prefix = category[0][:3]
@@ -305,9 +312,11 @@ def search_database(request):
                 proteins1 = PesticidalProteinDatabase.objects.none()
                 proteins2 = PesticidalProteinDatabase.objects.none()
                 if q_objects:
-                    proteins1 = PesticidalProteinDatabase.objects.filter(q_objects)
+                    proteins1 = PesticidalProteinDatabase.objects.filter(
+                        q_objects)
                 if q_search:
-                    proteins2 = PesticidalProteinDatabase.objects.filter(q_search)
+                    proteins2 = PesticidalProteinDatabase.objects.filter(
+                        q_search)
                 if proteins1 and proteins2:
                     filtered_protein = filter_one_name(proteins2)
                     proteins2 = filtered_protein
@@ -358,9 +367,11 @@ def search_database(request):
                 proteins1 = PesticidalProteinDatabase.objects.none()
                 proteins2 = PesticidalProteinDatabase.objects.none()
                 if q_objects:
-                    proteins1 = PesticidalProteinDatabase.objects.filter(q_objects)
+                    proteins1 = PesticidalProteinDatabase.objects.filter(
+                        q_objects)
                 if q_search:
-                    proteins2 = PesticidalProteinDatabase.objects.filter(q_search)
+                    proteins2 = PesticidalProteinDatabase.objects.filter(
+                        q_search)
                 if proteins1 and proteins2:
                     filtered_protein = filter_one_name(proteins2)
                     proteins2 = filtered_protein
@@ -389,12 +400,15 @@ def search_database(request):
                 for search in searches:
                     q_objects.add(Q(name__icontains=search), Q.OR)
 
-                categories = PesticidalProteinDatabase.objects.filter(q_objects)
+                categories = PesticidalProteinDatabase.objects.filter(
+                    q_objects)
 
                 for category in categories:
                     if category.name[-1] == "1" and not category.name[-2].isdigit():
-                        filtered_q_objects.add(Q(name__iexact=category.name), Q.OR)
-                proteins = PesticidalProteinDatabase.objects.filter(filtered_q_objects)
+                        filtered_q_objects.add(
+                            Q(name__iexact=category.name), Q.OR)
+                proteins = PesticidalProteinDatabase.objects.filter(
+                    filtered_q_objects)
                 proteins = _sorted_nicely(proteins, sort_key="name")
 
             elif field_type == "structure":
@@ -446,7 +460,7 @@ def search_database(request):
                 structures = _sorted_nicely(proteins, sort_key="name")
                 return render(
                     request,
-                    "database/filter_structures.html",
+                    "newwebpage/filter_structures.html",
                     {"structures": structures},
                 )
 
@@ -486,7 +500,8 @@ def add_cart(request):
         request.session["list_names"] = previously_selected_values
 
         selected_nterminal = request.POST.getlist("nterminal", [])
-        previously_selected_nterminal = request.session.get("list_nterminal", [])
+        previously_selected_nterminal = request.session.get(
+            "list_nterminal", [])
         previously_selected_nterminal.extend(selected_nterminal)
         request.session["list_nterminal"] = previously_selected_nterminal
 
@@ -496,7 +511,8 @@ def add_cart(request):
         request.session["list_middle"] = previously_selected_middle
 
         selected_cterminal = request.POST.getlist("cterminal", [])
-        previously_selected_cterminal = request.session.get("list_cterminal", [])
+        previously_selected_cterminal = request.session.get(
+            "list_cterminal", [])
         previously_selected_cterminal.extend(selected_cterminal)
         request.session["list_cterminal"] = previously_selected_cterminal
 
@@ -656,10 +672,12 @@ def view_cart(request):
         values += selected_values
     values = list(set(values))
 
-    userdata = UserUploadData.objects.filter(session_key=request.session.session_key)
+    userdata = UserUploadData.objects.filter(
+        session_key=request.session.session_key)
 
     if request.method == "POST":
-        userform = UserDataForm(request.POST, request.FILES, session=request.session)
+        userform = UserDataForm(
+            request.POST, request.FILES, session=request.session)
 
         if userform.is_valid():
             # print("form")
@@ -679,7 +697,8 @@ def view_cart(request):
 def clear_session_user_data(request):
     """Remove all the user uploaded proteins from the cart."""
 
-    UserUploadData.objects.filter(session_key=request.session.session_key).delete()
+    UserUploadData.objects.filter(
+        session_key=request.session.session_key).delete()
 
     return redirect("view_cart")
 
@@ -687,7 +706,8 @@ def clear_session_user_data(request):
 def user_data_remove(request, id):
     """Remove the user uploaded proteins individually"""
 
-    instance = UserUploadData.objects.get(session_key=request.session.session_key, id=id)
+    instance = UserUploadData.objects.get(
+        session_key=request.session.session_key, id=id)
     instance.delete()
 
     return redirect("view_cart")
@@ -724,7 +744,8 @@ def user_data(request):
     and stored temporarily using the session."""
 
     if request.method == "POST":
-        form = UserDataForm(request.POST, request.FILES, session=request.session)
+        form = UserDataForm(request.POST, request.FILES,
+                            session=request.session)
 
         if form.is_valid():
             # print("form")
@@ -757,7 +778,8 @@ def download_sequences(request):
     values = list(set(values))
     data = PesticidalProteinDatabase.objects.filter(name__in=values)
 
-    userdata = UserUploadData.objects.filter(session_key=request.session.session_key)
+    userdata = UserUploadData.objects.filter(
+        session_key=request.session.session_key)
 
     combined_selection = []
 
@@ -772,12 +794,14 @@ def download_sequences(request):
 
     accession = {}
 
-    data = PesticidalProteinDatabase.objects.filter(name__in=combined_selection)
+    data = PesticidalProteinDatabase.objects.filter(
+        name__in=combined_selection)
     if data:
         for item in data:
             accession[item.accession] = item
 
-    protein_detail = ProteinDetail.objects.filter(accession__in=list(accession.keys()))
+    protein_detail = ProteinDetail.objects.filter(
+        accession__in=list(accession.keys()))
 
     file = StringIO()
     # buffer = BytesIO()
@@ -786,17 +810,20 @@ def download_sequences(request):
         item_name = item.name
         # print("item_name", item_name)
         if item.name in list_nterminal:
-            nterminal = [protein for protein in protein_detail if protein.accession == item.accession]
+            nterminal = [
+                protein for protein in protein_detail if protein.accession == item.accession]
             item_name += "_d1"
             for item1 in nterminal:
                 output += item1.get_endotoxin_n()
         if item.name in list_middle:
-            middle = [protein for protein in protein_detail if protein.accession == item.accession]
+            middle = [
+                protein for protein in protein_detail if protein.accession == item.accession]
             item_name += "_d2"
             for item1 in middle:
                 output += item1.get_endotoxin_m()
         if item.name in list_cterminal:
-            cterminal = [protein for protein in protein_detail if protein.accession == item.accession]
+            cterminal = [
+                protein for protein in protein_detail if protein.accession == item.accession]
             # print(cterminal)
             item_name += "_d3"
             for item1 in cterminal:
@@ -829,7 +856,8 @@ def download_sequences(request):
 def download_data(request):
     """List the categories for download."""
 
-    categories = PesticidalProteinDatabase.objects.order_by("name").values_list("name").distinct()
+    categories = PesticidalProteinDatabase.objects.order_by(
+        "name").values_list("name").distinct()
 
     category_prefixes = []
     for category in categories:
@@ -899,7 +927,8 @@ def download_category(request, category=None):
 
             response = HttpResponse(file.getvalue(), content_type="text/plain")
             download_file = f"{category}_fasta_sequences.txt"
-            response["Content-Disposition"] = "attachment;filename=" + download_file
+            response["Content-Disposition"] = "attachment;filename=" + \
+                download_file
             response["Content-Length"] = file.tell()
             return response
     form = DownloadForm()
@@ -956,40 +985,47 @@ def threedomain_download(request):
         accession = {}
         output = ""
 
-        data = PesticidalProteinDatabase.objects.filter(name__istartswith="cry").order_by("name")
+        data = PesticidalProteinDatabase.objects.filter(
+            name__istartswith="cry").order_by("name")
         if data:
             for item in data:
                 # if item.name[-1] == '1' and not item.name[-2].isdigit():
                 accession[item.accession] = item
 
-        protein_detail = ProteinDetail.objects.filter(accession__in=list(accession.keys()))
+        protein_detail = ProteinDetail.objects.filter(
+            accession__in=list(accession.keys()))
 
-        protein_data = PesticidalProteinDatabase.objects.filter(accession__in=list(accession.keys()))
+        protein_data = PesticidalProteinDatabase.objects.filter(
+            accession__in=list(accession.keys()))
 
         count = 0
         for item in protein_data:
             output = ""
             domain_name = ""
             if "domain1" in type_option:
-                nterminal = [protein for protein in protein_detail if protein.accession == item.accession]
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
                 for item1 in nterminal:
                     count += 1
                     output += item1.get_endotoxin_n()
                     domain_name += "_d1"
             if "domain2" in type_option:
-                nterminal = [protein for protein in protein_detail if protein.accession == item.accession]
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
                 for item1 in nterminal:
                     count += 1
                     output += item1.get_endotoxin_m()
                     domain_name += "_d2"
             if "domain3" in type_option:
-                nterminal = [protein for protein in protein_detail if protein.accession == item.accession]
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
                 for item1 in nterminal:
                     count += 1
                     output += item1.get_endotoxin_c()
                     domain_name += "_d3"
             if "full_length" in type_option:
-                nterminal = [protein for protein in protein_detail if protein.accession == item.accession]
+                nterminal = [
+                    protein for protein in protein_detail if protein.accession == item.accession]
                 for item1 in nterminal:
                     count += 1
                     output += item1.sequence
@@ -1013,7 +1049,8 @@ def holotype_download(request):
         accession = {}
         output = ""
 
-        data = PesticidalProteinDatabase.objects.filter(name__istartswith="cry").order_by("name").distinct()
+        data = PesticidalProteinDatabase.objects.filter(
+            name__istartswith="cry").order_by("name").distinct()
         if data:
             for item in data:
                 if item.name[-1] == "1" and not item.name[-2].isdigit():
@@ -1044,7 +1081,8 @@ def protein_detail(request, name):
         tools="pan, wheel_zoom, box_zoom, reset, hover, tap, crosshair",
     )
 
-    source = ColumnDataSource(data=dict(language=language, counts=counts, color=Category20[20]))
+    source = ColumnDataSource(
+        data=dict(language=language, counts=counts, color=Category20[20]))
     p.add_tools(LassoSelectTool())
     p.add_tools(WheelZoomTool())
 
