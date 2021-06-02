@@ -17,7 +17,7 @@ class Feedback(models.Model):
     message = models.TextField(blank=True, null=False)
     uploaded = models.DateTimeField("Uploaded", default=timezone.now)
     contact_status = models.CharField(
-        choices=TYPES_CHOICES, default=TYPES_CHOICES[1][1], max_length=10)
+        choices=TYPES_CHOICES, default="Pending", max_length=10)
 
     def __str__(self):
         return "New Feedback " + self.email

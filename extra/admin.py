@@ -33,7 +33,7 @@ class FeedbackResource(resources.ModelResource):
 class FeedbackAdmin(ImportExportModelAdmin):
     resource_class = FeedbackResource
     list_editable = ("contact_status",)
-    list_display = ("name", "subject", "email", "contact_status",)
+    list_display = ("name", "subject", "email", "uploaded", "contact_status",)
 
     # def save_model(self, request, obj, form, change):
     #     obj.user = request.user
