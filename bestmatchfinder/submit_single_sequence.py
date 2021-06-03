@@ -1,1 +1,1 @@
-from bestmatchfinder import align
+from bestmatchfinder import align, run_bestmatchfinder
