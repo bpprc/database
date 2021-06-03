@@ -10,6 +10,7 @@ from django.core.files.base import ContentFile
 from django.db import models
 from django.utils import timezone
 from django.core.validators import RegexValidator
+from database.storage import OverwriteStorage
 
 TRUE_FALSE_CHOICES = ((True, "Yes"), (False, "No"))
 
@@ -372,7 +373,7 @@ class PesticidalProteinDatabase(models.Model):
         blank=True, null=True, verbose_name="User comments")
     uploaded = models.DateTimeField("Uploaded", default=timezone.now)
     fastasequence_file = models.FileField(
-        upload_to="fastasequence_files/", null=True)
+        upload_to="fastasequence_files/", storage=OverwriteStorage(), null=True)
     name_category = models.CharField(max_length=15, blank=True, null=True)
 
     # If the sequence is public or not, based on the boolean operator
@@ -435,7 +436,7 @@ class PesticidalProteinDatabase(models.Model):
         self.oldname_category = re.search(
             r"[A-Z][a-z]{2}\d{1,3}", self.name).group()
         # TODO clear out old file before saving new one?
-        filename = "fasta{}".format(self.name)
+        filename = "{}".format(self.name)
         file_contents = ">{}\n{}\n".format(self.name, self.sequence)
         # print(file_contents)
         content = ContentFile(file_contents)
