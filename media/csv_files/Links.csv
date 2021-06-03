@@ -1,0 +1,7 @@
+6,BPPRC,Bacterial Pesticidal Protein Resource Center,https://www.bpprc.org/
+3,BtToxin_Digger,"BtToxin_Digger is a Bt toxin mining tool which integrated BLAST, HMM (Hidden Markov Model) and SVM (Supporting Vector Machine) prediction modules. If you have massive genomic data of Bacillus thuringiensis, and you want to extract Bt toxins from those huge data, then you are at the right place.",http://bcam.hzau.edu.cn/BtToxin_Digger/
+4,GitHub,Get the development version of BPPRC database from Github,https://github.com/bpprc
+5,Old Bt nomenclature site,Old Bacillus thuringiensis Toxin Nomenclature,http://www.lifesci.sussex.ac.uk/home/Neil_Crickmore/Bt/
+7,Old Name/New Name table,Organized by Old Name and New Name,/old_name_new_name/
+8,Statistics,Number of proteins in the categories,/statistics/
+2,TOXiTAXi Database,"Activity of Bacillus thuringiensis Cry, Cyt and Vip toxins as well as other toxic agents towards taxonomic groups",http://150.254.120.147:7000/
