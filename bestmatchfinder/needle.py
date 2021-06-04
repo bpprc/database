@@ -4,12 +4,8 @@ import os
 import os.path
 import re
 import subprocess
-import time
-
-from Bio.Emboss.Applications import NeedleCommandline
 from django.conf import settings
 
-from database.models import PesticidalProteinDatabase
 
 NEEDLE_PATH = os.environ.get("NEEDLE_PATH")
 BLAST_PATH = os.environ.get("BLAST_PATH")
@@ -72,22 +68,26 @@ def run_blast(file1, file2):
     return results
 
 
+def string_replace(string):
+    path = os.path.join(settings.MEDIA_ROOT, "fastasequence_files/")
+    empty = ''
+    result = string.replace(path, empty)
+    return result
+
+
 def needle_alignment(file1, file2):
     """This loads the bestmatchfinder homepage."""
-
     results = run_needle(file1, file2)
-    # print(results)
-
-    return results
+    print(type(results))
+    result = string_replace(results)
+    return result
 
 
 def blast_alignment(file1, file2):
     """This loads the bestmatchfinder homepage."""
-
     results = run_blast(file1, file2)
-    # print(results)
-
-    return results
+    result = string_replace(results)
+    return result
 
 
 # def run_bug(query_data):
