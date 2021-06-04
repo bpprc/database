@@ -65,14 +65,14 @@ def server_error(request):
     return render(request, "extra/500.html", status=500)
 
 
-def signup(request):
-    if request.method == "POST":
-        form = UserCreateForm(request.POST)
-        if form.is_valid():
-            user = form.save(request)
-            # Added this!
-            complete_signup(
-                request, user, app_settings.EMAIL_VERIFICATION, "/")
+# def signup(request):
+#     if request.method == "POST":
+#         form = UserCreateForm(request.POST)
+#         if form.is_valid():
+#             user = form.save(request)
+#             # Added this!
+#             complete_signup(
+#                 request, user, app_settings.EMAIL_VERIFICATION, "/")
 
 
 def links(request):
