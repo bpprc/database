@@ -43,6 +43,21 @@ from database.models import (
 console = Console()
 
 
+def cite(request):
+    # return render(request, 'database/about_page.html')
+    return render(request, "newwebpage/about.html")
+
+
+def funding(request):
+    # return render(request, 'database/about_page.html')
+    return render(request, "newwebpage/about.html")
+
+
+def about(request):
+    # return render(request, 'database/about_page.html')
+    return render(request, "newwebpage/about.html")
+
+
 def homepage(request):
     # return render(request, 'database/about_page.html')
     return render(request, "newwebpage/about.html")
