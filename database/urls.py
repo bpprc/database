@@ -4,6 +4,9 @@ from database import views
 
 urlpatterns = [
     path("", views.homepage, name="homepage"),
+    path("about/", views.about, name="about"),
+    path("funding/", views.about, name="about"),
+    path("cite/", views.about, name="about"),
     path("homepage", views.homepage, name="homepage"),
     path("about_page", views.about_page, name="about_page"),
     path("database/", views.database, name="database"),
