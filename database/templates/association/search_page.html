@@ -1,11 +1,12 @@
-{% extends "base.html" %}
+{% extends "newwebpage/base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
 
 
 {% block content %}
 
-<h2>Search Toxicity and Non toxicity data for pesticidal proteins</h2>
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5">
+<h1 class="display-5"> Search Toxicity and Non toxicity data for pesticidal proteins</h1>
 <br>
 Examples:
 <br>
@@ -23,9 +24,10 @@ Examples:
        {{ form.search_term | as_crispy_field }}
        {{ form.search_fields | as_crispy_field }}
 
-      <button type="submit" class="btn btn-secondary" > Search </button>
+      <button type="submit" class="btn btn-primary" > Search </button>
 </form>
 
+</div>
 
 {% endblock content %}
 
