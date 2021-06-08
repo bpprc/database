@@ -1,9 +1,10 @@
-{% extends "base.html" %}
+{% extends "newwebpage/base.html" %}
 {% load static %}
 {% block content %}
 
 {% if proteins %}
-<p><h4>Toxicity and Non toxicity data for pesticidal proteins</h4></p>
+<div class="col-lg-12 pt-5 mt-5 pt-b mb-5">
+<p><h1>Toxicity and Non toxicity data for pesticidal proteins</h1></p>
 </br>
 		<table id="table_id" class="display table-bordered table-hover responsive nowrap" border='2' align="center" style="width=100%">
 			<thead>
@@ -113,6 +114,9 @@
 			{{ search }}
 			{% endfor %}
 {% endif %}
+
+</div>
+
 {% endblock content %}
 
 
