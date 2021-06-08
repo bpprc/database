@@ -41,4 +41,9 @@ urlpatterns = [
         views.heatmap_activity,
         name="heatmap_activity",
     ),
+    path(
+        "metadatabase_protein_detail/<slug:name>/",
+        views.metadatabase_protein_detail,
+        name="metadatabase_protein_detail",
+    ),
 ]
