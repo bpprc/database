@@ -23,7 +23,7 @@
           </br>
           </br>
 
-	<table id="table_id" class="display table-bordered table-hover nowrap" border='2' align="center" style="width=100%">
+	<table id="table_id" class="display table-bordered table-hover nowrap" border='2' align="left" >
 		<thead>
 			<tr>
 					<th>Name </th>
@@ -39,10 +39,10 @@
 			<tbody>
 				<tr>
 				{% for structure in structures %}
-          <TD class="C3" align="center">{{ structure.name}}</TD>
-          <TD class="C3" align="center">{{ structure.oldname}}</TD>
-          <TD class="C3" align="center"><a href="https://www.ncbi.nlm.nih.gov/protein/{{ structure.accession }}" target="_blank"> {{ structure.accession }} </a></TD>
-          <TD class="C3" align="center">
+          <TD class="C3" align="left">{{ structure.name}}</TD>
+          <TD class="C3" align="left">{{ structure.oldname}}</TD>
+          <TD class="C3" align="left"><a href="https://www.ncbi.nlm.nih.gov/protein/{{ structure.accession }}" target="_blank"> {{ structure.accession }} </a></TD>
+          <TD class="C3" align="left">
             {% for id in structure.pdbid %}
             {% if structure.pdbid|length > 1 %}
               <a href="https://www.rcsb.org/structure/{{ id }}" target="_blank">{{ id }},</a>
@@ -51,10 +51,10 @@
             {% endif %}
             {% endfor %}
           </TD>
-          <TD class="C3" align="center"> <a href="https://pubmed.ncbi.nlm.nih.gov/{{ structure.pubmedid }}" target="_blank"> {{ structure.pubmedid}}</TD>
-          <TD class="C3" align="center">{{ structure.year}}</TD>
-          <TD class="C3" align="center">{{ structure.modified}}</TD>
-          <TD class="C3" align="center">{{ structure.comment}}</TD>
+          <TD class="C3" align="left"> <a href="https://pubmed.ncbi.nlm.nih.gov/{{ structure.pubmedid }}" target="_blank"> {{ structure.pubmedid}}</TD>
+          <TD class="C3" align="left">{{ structure.year}}</TD>
+          <TD class="C3" align="left">{{ structure.modified}}</TD>
+          <TD class="C3" align="left">{{ structure.comment}}</TD>
 				</tr>
     {% endfor %}
 	</tbody>
