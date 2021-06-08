@@ -20,3 +20,5 @@ python manage.py loaddata /Users/suresh/Desktop/May_21.json -ignorenonexistent
 
 # Automatically change the .env file in git
 https://stackoverflow.com/questions/62841470/how-to-have-branch-specific-variables-in-git-and-python
+
+# how to add admin user name in the status page
