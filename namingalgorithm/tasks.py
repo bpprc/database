@@ -17,6 +17,7 @@ def run_needle(filename):
 
 
 def trigger_email_everyday():
+    #name, email = extract_email()
     sequence_message = """Dear Dr.Neil Crickmore and Dr.Colin Berry,
 There is a new sequence submission in the database. Please check the database admin page for more details."""
 
@@ -100,10 +101,21 @@ def filter_by_date():
     )
 
 
+def extract_email():
+    name, email = ''
+    id = UserSubmission.objects.latest('id')
+    if id.submittersname:
+        name = id.submittersname
+    if id.submittersemail:
+        email = id.submittersemail
+    return name, email
+
+
 @shared_task
 def run():
     print("I am the email job")
     if filter_by_date():
+        # Model.objects.latest('field')
         trigger_email_everyday()
     if feedback():
         trigger_email_everyday_feedback()
