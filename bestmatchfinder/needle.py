@@ -78,7 +78,6 @@ def string_replace(string):
 def needle_alignment(file1, file2):
     """This loads the bestmatchfinder homepage."""
     results = run_needle(file1, file2)
-    print(type(results))
     result = string_replace(results)
     return result
 
