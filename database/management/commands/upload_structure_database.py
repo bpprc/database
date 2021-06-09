@@ -33,6 +33,7 @@ class Command(BaseCommand):
             "oldname",
             "accession",
             "pdbid",
+            "doi",
             "pubmedid",
             "year",
             "modified",

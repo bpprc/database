@@ -30,6 +30,7 @@
 					<th>Old Name</th>
 					<th>Accession</th>
 					<th>PDBID</th>
+          <th>DOI</th>
 					<th>PubMed ID</th>
 					<th>Year</th>
 					<th>Modified</th>
@@ -51,6 +52,7 @@
             {% endif %}
             {% endfor %}
           </TD>
+          <TD class="C3" align="left"> <a href="https://doi.org/{{ structure.doi }}" target="_blank"> {{ structure.doi}}</TD>
           <TD class="C3" align="left"> <a href="https://pubmed.ncbi.nlm.nih.gov/{{ structure.pubmedid }}" target="_blank"> {{ structure.pubmedid}}</TD>
           <TD class="C3" align="left">{{ structure.year}}</TD>
           <TD class="C3" align="left">{{ structure.modified}}</TD>

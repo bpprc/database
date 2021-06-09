@@ -95,6 +95,7 @@ class StructureDatabase(models.Model):
 
     # NCBI PubMed id
     # https://www.ncbi.nlm.nih.gov/pmc/pmctopmid/
+    doi = models.TextField(null=True, blank=True)
     pubmedid = models.CharField(max_length=75, blank=True, null=True)
 
     # PDB id released year

@@ -124,16 +124,17 @@ class PesticidalProteinPrivateDatabaseResource(resources.ModelResource):
         model = PesticidalProteinPrivateDatabase
         skip_unchanged = True
         report_skipped = True
-        exclude = ("id",)
+        exclude = ("id", "fastasequence_file", "name_category", "terms_conditions", "predict_name", "uploaded", "alignresults",
+                   "created_by", "created_on", "edited_by", "edited_on")
         import_id_fields = (
+            "submittersname",
+            "submittersemail",
             "name",
             "oldname",
             "othernames",
             "accession",
             "year",
             "sequence",
-            "uploaded",
-            "fastasequence_file",
             "bacterium",
             "taxonid",
             "bacterium_textbox",
@@ -158,6 +159,7 @@ class StructureDatabaseResource(resources.ModelResource):
             "oldname",
             "accession",
             "pdbid",
+            "doi",
             "pubmedid",
             "year",
             "modified",
@@ -173,6 +175,7 @@ class StructureDatabaseAdmin(ImportExportModelAdmin):
         "oldname",
         "accession",
         "pdbid",
+        "doi",
         "pubmedid",
         "year",
     )
@@ -181,6 +184,7 @@ class StructureDatabaseAdmin(ImportExportModelAdmin):
         "oldname",
         "accession",
         "pdbid",
+        "doi",
         "modified",
         "pubmedid",
         "year",
@@ -191,6 +195,7 @@ class StructureDatabaseAdmin(ImportExportModelAdmin):
         "oldname",
         "accession",
         "pdbid",
+        "doi",
         "modified",
         "pubmedid",
         "year",
@@ -262,12 +267,13 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
         "created_on",
         "edited_by",
         "edited_on",
+        "public",
     )
     list_display = (
         "name",
         "oldname",
-        "accession_url",
-        "accession_availability",
+        # "accession_url",
+        # "accession_availability",
         "year",
     )
     ordering = ("name",)
@@ -315,36 +321,36 @@ class PesticidalProteinPrivateDatabaseAdmin(ImportExportModelAdmin):
                 object_repr=obj.__str__()[:200],
             )
 
-    def accession_url(self, obj):
-        return format_html(
-            '<a href="%s%s" target="_blank">%s</a>'
-            % (
-                "https://www.ncbi.nlm.nih.gov/protein/",
-                obj.accession,
-                obj.accession,
-            )
-        )
+    # def accession_url(self, obj):
+    #     return format_html(
+    #         '<a href="%s%s" target="_blank">%s</a>'
+    #         % (
+    #             "https://www.ncbi.nlm.nih.gov/protein/",
+    #             obj.accession,
+    #             obj.accession,
+    #         )
+    #     )
+    #
+    # accession_url.allow_tags = True
+    # accession_url.description = "View the accession number as an URL"
 
-    accession_url.allow_tags = True
-    accession_url.description = "View the accession number as an URL"
-
-    def accession_availability(self, obj):
-        accession = obj.accession
-        if not accession:
-            return format_html("<body> <p>No accession number</p> </body>")
-        try:
-            handle = Entrez.efetch(
-                db="nucleotide",
-                id=accession,
-                rettype="fasta",
-                retmode="text",
-            )
-            return format_html('<body> <p style="color:#FF0000";>Sequence is Public</p> </body>')
-        except BaseException:
-            return format_html("<body> <p>Sequence is Private</p> </body>")
-
-    accession_availability.allow_tags = True
-    accession_availability.description = "Accession Available in NCBI"
+    # def accession_availability(self, obj):
+    #     accession = obj.accession
+    #     if not accession:
+    #         return format_html("<body> <p>No accession number</p> </body>")
+    #     try:
+    #         handle = Entrez.efetch(
+    #             db="nucleotide",
+    #             id=accession,
+    #             rettype="fasta",
+    #             retmode="text",
+    #         )
+    #         return format_html('<body> <p style="color:#FF0000";>Sequence is Public</p> </body>')
+    #     except BaseException:
+    #         return format_html("<body> <p>Sequence is Private</p> </body>")
+    #
+    # accession_availability.allow_tags = True
+    # accession_availability.description = "Accession Available in NCBI"
 
 
 class PesticidalProteinHiddenSequenceResource(resources.ModelResource):
