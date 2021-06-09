@@ -106,6 +106,13 @@ def bestmatchfinder_database(request):
     )
 
 
+def string_replace(string):
+    path = os.path.join(settings.MEDIA_ROOT, "fastasequence_files/")
+    empty = ''
+    result = string.replace(path, empty)
+    return result
+
+
 def bestmatchfinder_database_sequence_run(request):
     """This runs bestmatchfinder from the database."""
     if request.method == "POST":
@@ -153,7 +160,12 @@ def bestmatchfinder_database_sequence_run(request):
                 removed_blast_title = align.split(">")[1]
                 removed_blast_title = removed_blast_title.lstrip()
                 filtered_result = removed_blast_title.split("Lambda")
-                align = protein1 + protein2 + "\n\n" + filtered_result[0]
+                protein1 = string_replace(protein1)
+                protein2 = string_replace(protein2)
+                protein1 = "Protein1 : " + protein1 + "\n"
+                protein2 = " Protein2 : " + protein2 + "\n"
+                align = protein1 + protein2 + \
+                    "\n\n" + filtered_result[0]
 
             context = {"align": align}
 
