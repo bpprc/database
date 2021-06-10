@@ -21,6 +21,11 @@
 <br>
 <br>
 
+{% if items_in_cart %}
+<div>
+  <h6> You have {{ items_in_cart|length }} proteins in the cart </h6>
+</div>
+{% endif %}
 <form method="post" action="/search_database/">
   {% csrf_token %}
 

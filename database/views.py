@@ -266,8 +266,9 @@ def search_database_home(request):
         Search form
         See database.forms.py
     """
+    items_in_cart = request.session.get("list_names", [])
     form = SearchForm()
-    return render(request, "newwebpage/search_page.html", {"form": form})
+    return render(request, "newwebpage/search_page.html", {"form": form, "items_in_cart": items_in_cart, })
 
 
 def search_database(request):
