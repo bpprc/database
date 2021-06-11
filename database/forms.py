@@ -8,6 +8,7 @@ from crispy_forms.layout import (
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
+from Bio import SeqIO
 
 from .models import Description, PesticidalProteinDatabase
 

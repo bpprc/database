@@ -1,6 +1,7 @@
 import ast
 import tempfile
 import textwrap
+from Bio import SeqIO
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import (
