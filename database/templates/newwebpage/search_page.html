@@ -27,6 +27,10 @@
   <div class="text-primary text-right">
     <h6> You have {{ items_in_cart|length }} proteins in the cart </h6>
   </div>
+  {% else %}
+  <div class="text-primary text-right">
+    <h6> You have {{ items_in_cart|length }} proteins in the cart </h6>
+  </div>
   {% endif %}
 
 <div class="col-md-12 pt-3 mt-3 pt-b mb-5 justify-content-center mx-auto">
