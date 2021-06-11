@@ -1,4 +1,5 @@
 import os
+import mimetypes
 
 from dotenv import load_dotenv
 
@@ -22,6 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 dotenv_path = os.path.join(BASE_DIR, ".env")
 load_dotenv(dotenv_path)
 
+mimetypes.add_type("text/css", ".css", True)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -30,8 +32,8 @@ load_dotenv(dotenv_path)
 SECRET_KEY = os.environ.get(
     "SECRET_KEY", "4s3l2tsgm_j4gr0hs5c^_x&vnlhf3e@tyiib73vs&uk3up#7&$")
 
+# if os.environ.get("DEVELOPMENT") == 'True':
 if os.environ.get("DEVELOPMENT"):
-if os.environ.get("DEVELOPMENT") == 'True':
     DEBUG = True
 else:
     DEBUG = False
@@ -202,6 +204,11 @@ MEDIA_URL = "/media/"
 
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "stat"),)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 # print("MEDIA_URL", "/media/")
 # print("MEDIA_ROOT", os.path.join(BASE_DIR, 'media'))
