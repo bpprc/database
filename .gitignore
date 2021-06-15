@@ -14,6 +14,7 @@ dump.rdb
 # media files
 run_bestmatchfinder/
 search_namingalgorithm/
+bestmatch_two_sequences/
 
 # C extensions
 *.so
