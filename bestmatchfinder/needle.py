@@ -40,7 +40,6 @@ def run_needle(file1, file2):
     )
     # print(cmd)
     results = cmdline(cmd).decode("utf-8")
-    print(results)
     identity = re.search(r"\d{1,3}\.\d*\%", results)
     if identity:
         identity = identity.group()
