@@ -24,29 +24,30 @@ This is the source code of BBPRC 2021 website developed in Python/Django. To run
 cat .env
 --------------------------------------------
 
-SECRET_KEY='un!=5p(zdcsel07a7awa&svy-w3g4&v3c0&i&ffxnyz*+q3y-m'
-DEVELOPMENT=False
-AWS_ACCESS_KEY_ID=''
-AWS_SECRET_ACCESS_KEY=''
-CRISPY_TEMPLATE_PACK='bootstrap4'
-RECAPTCHA_PRIVATE_KEY="6Lc-HfMUAAAAAI2H-DuGJKPETsB_ep3EQNKkdesC"
-NEEDLE_PATH='/usr/local/bin/'
-BLAST_PATH='/usr/local/bin/'
-CLUSTAL_PATH='/usr/local/bin/'
-DATABASE_NAME=''
-DATABASE_USER=''
-DATABASE_PASSWORD=''
-DATABASE_HOST='localhost'
-DATABASE_PORT='5432'
-DATABASE_ENGINE='django.db.backends.postgresql_psycopg2'
-CSRF_TRUSTED_ORIGINS= ['camtech-bpp.ifas.ufl.edu','camtech-bpp.test.ifas.ufl.edu', 'ifs-ent-camtech2.ifas.ufl.edu']
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS='True'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT='587'
-EMAIL_HOST_USER=''
-EMAIL_HOST_PASSWORD=''
-DEFAULT_FROM_EMAIL='<>'
+
+SECRET_KEY='un!=5p(zdcsel07a7awa&svy-w3g4&v3c0&i&ffxnyz*+q3y-m' <br />
+DEVELOPMENT=False <br />
+AWS_ACCESS_KEY_ID='' <br />
+AWS_SECRET_ACCESS_KEY='' <br />
+CRISPY_TEMPLATE_PACK='bootstrap4' <br />
+RECAPTCHA_PRIVATE_KEY="" <br />
+NEEDLE_PATH='/usr/local/bin/' <br />
+BLAST_PATH='/usr/local/bin/' <br />
+CLUSTAL_PATH='/usr/local/bin/' <br />
+DATABASE_NAME='' <br />
+DATABASE_USER='' <br />
+DATABASE_PASSWORD='' <br />
+DATABASE_HOST='localhost' <br />
+DATABASE_PORT='5432' <br />
+DATABASE_ENGINE='django.db.backends.postgresql_psycopg2' <br />
+CSRF_TRUSTED_ORIGINS= ['camtech-bpp.ifas.ufl.edu','camtech-bpp.test.ifas.ufl.edu', 'ifs-ent-camtech2.ifas.ufl.edu'] <br />
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend' <br />
+EMAIL_USE_TLS='True' <br />
+EMAIL_HOST='smtp.gmail.com' <br />
+EMAIL_PORT='587' <br />
+EMAIL_HOST_USER='' <br />
+EMAIL_HOST_PASSWORD='' <br />
+DEFAULT_FROM_EMAIL='<>' <br />
 
 
 
