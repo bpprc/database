@@ -19,7 +19,35 @@ Suresh Pannerselvam<sup>1</sup> ,  Neil Crickmore <sup>2</sup> ,  Colin Berry <s
 <sup>3</sup> School of Biosciences, Cardiff University, UK
 
 
-This is the source code of BBPRC 2019 website developed in Python/Django. To run the website locally, you need to install Django and a list of other Python packages which are listed in the requirements.txt file.
+This is the source code of BBPRC 2021 website developed in Python/Django. To run the website locally, you need to install Django and a list of other Python packages which are listed in the requirements.txt file. In addition, you can add an .env file to provide SECRET_KEY and other required softwares path (needle/blastp etc). You can see this [example](https://stackoverflow.com/questions/62925571/how-do-i-use-env-in-django).
+
+cat .env
+--------------------------------------------
+
+SECRET_KEY='un!=5p(zdcsel07a7awa&svy-w3g4&v3c0&i&ffxnyz*+q3y-m'
+DEVELOPMENT=False
+AWS_ACCESS_KEY_ID=''
+AWS_SECRET_ACCESS_KEY=''
+CRISPY_TEMPLATE_PACK='bootstrap4'
+RECAPTCHA_PRIVATE_KEY="6Lc-HfMUAAAAAI2H-DuGJKPETsB_ep3EQNKkdesC"
+NEEDLE_PATH='/usr/local/bin/'
+BLAST_PATH='/usr/local/bin/'
+CLUSTAL_PATH='/usr/local/bin/'
+DATABASE_NAME=''
+DATABASE_USER=''
+DATABASE_PASSWORD=''
+DATABASE_HOST='localhost'
+DATABASE_PORT='5432'
+DATABASE_ENGINE='django.db.backends.postgresql_psycopg2'
+CSRF_TRUSTED_ORIGINS= ['camtech-bpp.ifas.ufl.edu','camtech-bpp.test.ifas.ufl.edu', 'ifs-ent-camtech2.ifas.ufl.edu']
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS='True'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT='587'
+EMAIL_HOST_USER=''
+EMAIL_HOST_PASSWORD=''
+DEFAULT_FROM_EMAIL='<>'
+
 
 
 Get the development version from `Github`
