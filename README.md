@@ -24,7 +24,7 @@ This is the source code of BBPRC 2021 website developed in Python/Django. To run
 cat .env
 --------------------------------------------
 
-
+# Dummy secret keys
 SECRET_KEY='un!=5p(zdcsel07a7awa&svy-w3g4&v3c0&i&ffxnyz*+q3y-m' <br />
 DEVELOPMENT=False <br />
 AWS_ACCESS_KEY_ID='' <br />
