@@ -1,4 +1,4 @@
-# BPPRC 2021
+# BPPRC 2023
 
 [![Django CI](https://github.com/Amrithasuresh/database_test/actions/workflows/testing.yml/badge.svg?branch=database_test)](https://github.com/Amrithasuresh/database_test/actions/workflows/testing.yml)
 
